@@ -1,7 +1,66 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.AbbaAppAndroid" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/negro</item>
+
+        <item name="colorSecondary">@color/rojoF44336</item>
+        <item name="colorSecondaryVariant">@color/grisAAA</item>
+        <item name="colorOnSecondary">@color/rojoF44336</item>
+
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
+        <!-- ESTILO PARA EL DATE PICKER DIALOG -->
+        <item name="android:datePickerDialogTheme">@style/MyDatePickerDialogTheme</item>
+
+        <item name="android:colorPrimaryDark">@color/blanco</item>
+        <item name="android:textColorPrimary">@color/bottomNavigationItemColor</item>
+        <item name="bottomNavigationStyle">@style/AppBottomNavigationView</item>
+
     </style>
+
+    <!-- ESTILO PARA EL DATE PICKER DIALOG -->
+    <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>
+        <item name="android:textColorPrimaryInverse">@color/blanco</item> <!-- header date, month color && calendar text highlight color -->
+        <item name="android:textColorSecondaryInverse">@color/blanco</item> <!-- header year color -->
+
+        <item name="android:colorAccent">@color/negro</item> <!-- button color -->
+    </style>
+
+    <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.Light.DatePicker">
+        <item name="android:headerBackground">@color/negro</item> <!-- header background color -->
+    </style>
+
+    <style name="AppBottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <!-- Configurar el color de fondo en modo claro -->
+        <item name="android:background">@color/blanco</item>
+
+        <!-- Configurar el color del texto en modo claro -->
+        <item name="itemTextColor">@color/negro</item>
+
+        <!-- Configurar el color del texto seleccionado en modo claro -->
+        <item name="itemTextAppearanceActive">@style/AppBottomNavigationView.ActiveTextAppearance</item>
+
+        <!-- Configurar el color del texto no seleccionado en modo claro -->
+        <item name="itemTextAppearanceInactive">@style/AppBottomNavigationView.InactiveTextAppearance</item>
+    </style>
+
+    <style name="AppBottomNavigationView.ActiveTextAppearance" parent="Widget.Design.BottomNavigationView">
+        <!-- Configurar el color del texto seleccionado en modo claro -->
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+
+
+
+
+
+
+
+
 </resources>

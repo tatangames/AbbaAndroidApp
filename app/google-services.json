@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "169561196125",
+    "project_id": "apiandroid-5c5e6",
+    "storage_bucket": "apiandroid-5c5e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169561196125:android:e866433943e486115a2fb4",
+        "android_client_info": {
+          "package_name": "com.tatanstudios.abbaappandroid"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnSrvXuT0f7Yu6M2n1D5q1BDHj13jBkAc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
