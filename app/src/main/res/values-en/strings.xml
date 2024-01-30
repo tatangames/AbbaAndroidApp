@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Mi caminar con Dios</string>
+    <string name="version_app">V. 1.0.0</string>
+
+    <string name="abba_app">Mi caminar con Dios</string>
+    <string name="abba_internacional">Abba International</string>
+    <string name="logo">Logo</string>
+    <string name="continuar_con_correo">Continuar con correo</string>
+    <string name="registrarse">Register</string>
+    <string name="ya_tines_una_cuenta">¿Do you already have an account?</string>
+    <string name="ingresar">Enter</string>
+    <string name="primer_nombre">First Name</string>
+    <string name="apellido">Last Name</string>
+    <string name="correo_electronico">Email</string>
+    <string name="contrasena">Password</string>
+    <string name="crear_cuenta">Create Account</string>
+    <string name="direccion_correo_invalida">Sorry, this is not a valid email address</string>
+    <string name="contrasena_minimo_6">Sorry, passwords require a minimum of 6 characters</string>
+    <string name="error_intentar_de_nuevo">Error, try again</string>
+    <string name="editar">Edit</string>
+    <string name="se_ve_genial">Looks great</string>
+    <string name="bienvenidos_a_abba_app">Welcome to Abba App</string>
+    <string name="levantado_el_ejercito">\"Raising up the mighty army of God\"</string>
+    <string name="aceptar">Ok</string>
+    <string name="cancelar">Cancel</string>
+    <string name="seleccionar_genero">Select gender</string>
+    <string name="masculino">Male</string>
+    <string name="femenino">Female</string>
+    <string name="sin_conexion_a_internet">No internet connection</string>
+    <string name="correo_ya_registrado">The email is already registered</string>
+    <string name="enviar_codigo">Send code</string>
+    <string name="escribe_tu_correo_electronico">Enter your email, and we will send you a code to reset your password</string>
+    <string name="notificaciones">Notifications</string>
+    <string name="versiculo_del_dia">Verse of the Day</string>
+    <string name="flecha_atras">Back arrow</string>
+    <string name="registrado_correctamente">Registered Successfully</string>
+    <string name="continuar">Continue</string>
+    <string name="correo_o_contrasena_incorrectos">Incorrect email or password</string>
+    <string name="lo_siento_algo_salio_mal">Sorry, something went wrong :(</string>
+    <string name="olvido_su_contrasena">¿Forgot your password?</string>
+    <string name="correo">Email</string>
+    <string name="enviar">Send</string>
+    <string name="inicio">Start</string>
+    <string name="biblia">Bible</string>
+    <string name="planes">Plans</string>
+    <string name="mas">More</string>
+    <string name="por_favor_asegurate_tener">Please make sure you have internet service to use this feature.</string>
+    <string name="videos">Videos</string>
+    <string name="temas">Themes</string>
+    <string name="oscuro">Dark</string>
+    <string name="claro">Light</string>
+    <string name="eventos">Events</string>
+    <string name="insignias">Insignias</string>
+    <string name="acerca_de">About</string>
+    <string name="idioma">Language</string>
+    <string name="configuracion">Setting</string>
+    <string name="ayuda">Help</string>
+    <string name="marcadores">Markers</string>
+    <string name="notas">Notes</string>
+    <string name="amigos">Friends</string>
+    <string name="ora">Pray</string>
+    <string name="imagenes">Images</string>
+    <string name="resaltados">Highlights</string>
+    <string name="historial">History</string>
+    <string name="oracion">Prayer</string>
+    <string name="cerrar_sesion">Sign off</string>
+    <string name="si">Yes</string>
+    <string name="no">No</string>
+    <string name="ajustes">Settings</string>
+    <string name="seleccionar_edad">Select Age</string>
+    <string name="fecha_nacimiento_es_requerido">Date of Birth is required</string>
+    <string name="editar_perfil">Edit profile</string>
+    <string name="actualizar">Update</string>
+    <string name="fecha_de_nacimiento">Birthdate</string>
+    <string name="correo_no_disponible">Email not available</string>
+    <string name="actualizado">Updated</string>
+    <string name="editar_notificaciones">Edit Notifications</string>
+    <string name="tema_actualizado">Updated Theme</string>
+    <string name="cambiar_idioma">Change Language</string>
+    <string name="ingles">English</string>
+    <string name="espanol">Spanish</string>
+    <string name="idioma_actualizado">Language Update</string>
+    <string name="cambiar_tema">Change Theme</string>
+    <string name="tema_claro">Theme Light</string>
+    <string name="tema_oscuro">Theme Dark</string>
+    <string name="para_aplicar_efectos_se_debe_reiniciar">To apply effects you must restart</string>
+    <string name="reiniciar">Restart</string>
+    <string name="edad">Age</string>
+    <string name="telefono">Phone</string>
+    <string name="pais">Country</string>
+    <string name="area">Area</string>
+    <string name="iglesia">Church</string>
+    <string name="genero_es_requerido">Gender is required</string>
+    <string name="iglesia_es_requerido">Church is required</string>
+    <string name="completar_registro">Complete Registration</string>
+    <string name="correo_no_encontrado">Email not found</string>
+    <string name="ingresar_el_codigo_que_se">Enter the Code that has been sent to the following address: %1$s</string>
+    <string name="solicitar_codigo">Request code</string>
+    <string name="codigo">Code</string>
+    <string name="reintentar_en">Retry</string>
+    <string name="reenviar_codigo">Resend code</string>
+    <string name="codigo_enviado">Code sent</string>
+    <string name="codigo_incorrecto">Incorrect code</string>
+    <string name="nueva_contrasena">New Password</string>
+    <string name="lenguaje">Language</string>
+    <string name="esta_config_afecta_app">This setting affects the language of the entire application interface</string>
+    <string name="esta_config_afecta_planes">This setting affects the language you use to read the Plans or the Bible</string>
+    <string name="interfaz_de_la_aplicacion">Application interface.</string>
+    <string name="textos_planes_biblia">Text Plans and Bible.</string>
+    <string name="ver">See</string>
+    <string name="iniciar">Start</string>
+    <string name="plan_agregado">Added plan</string>
+    <string name="informacion_plan">Plan Information</string>
+    <string name="no_hay_planes_disponibles">No planes available</string>
+    <string name="devocional">Devotional</string>
+    <string name="interactivo">Interactive</string>
+    <string name="opciones">Options</string>
+    <string name="fuente">Source</string>
+    <string name="meditacion">Meditation</string>
+    <string name="no_hay_devocionales_disponibles">No Devotionals available</string>
+    <string name="no_hay_devocionales_seleccionados">No Devotional selected</string>
+    <string name="guardar">Save</string>
+    <string name="campo_requerido">Required field</string>
+    <string name="completar_campos">Complete fields</string>
+    <string name="meditacion_no_disponible">Meditación no disponible</string>
+    <string name="devocional_completado">Completed Devotional</string>
+    <string name="no_hay_devocionales_completados">No Devotionals completed</string>
+    <string name="mis_planes">My plans</string>
+    <string name="buscar_planes">Search plans</string>
+    <string name="completados">Completed</string>
+    <string name="compartidos">Shared</string>
+    <string name="comunidad">Community</string>
+    <string name="devocional_del_dia">Devotional of the day</string>
+    <string name="compartir_con">share with</string>
+    <string name="imagenes_del_dia">Images of the Day</string>
+    <string name="abrir_con">To open with</string>
+    <string name="informacion">Information</string>
+    <string name="compartir">Share</string>
+    <string name="todos_los_videos">All videos</string>
+    <string name="descargar">Download</string>
+    <string name="permiso_denegado">Permission denied</string>
+    <string name="permiso_autorizado">Permission success</string>
+    <string name="permiso_almacenamiento_es_requerido">Storage permission is required</string>
+    <string name="guardado">Saved</string>
+    <string name="error_al_guardar">Error when saving</string>
+    <string name="hitos">Milestones</string>
+    <string name="racha_mas_alta">Highest streak</string>
+    <string name="dias_seguidos">Consecutive days</string>
+    <string name="letra_lunes">M</string>
+    <string name="letra_martes">T</string>
+    <string name="letra_miercoles">W</string>
+    <string name="letra_jueves">T</string>
+    <string name="letra_viernes">F</string>
+    <string name="letra_sabado">S</string>
+    <string name="letra_domingo">S</string>
+    <string name="dias_app_este_anio">days in the app this year</string>
+
+
+
+
+
+
+
+
+
+
+    <string-array name="paises_array">
+        <item>Seleccionar País</item>
+        <item>El Salvador</item>
+        <item>Guatemala</item>
+    </string-array>
+
+    <string-array name="estados_elsalvador_array">
+        <item>Seleccionar Área</item>
+        <item>Santa Ana</item>
+        <item>Metapan</item>
+    </string-array>
+
+    <string-array name="estados_guatemala_array">
+        <item>Seleccionar Área</item>
+        <item>Chiquimula</item>
+        <item>Jalapa</item>
+    </string-array>
+
+    <string name="elsalvador_santaana_id_1">Iglesia santa ana 1</string>
+    <string name="elsalvador_santaana_id_2">Iglesia santa ana 2</string>
+
+    <string name="elsalvador_metapan_id_3">Iglesia metapan 3</string>
+    <string name="elsalvador_metapan_id_4">Iglesia metapan 4</string>
+    <string name="elsalvador_metapan_id_5">Iglesia metapan 5</string>
+
+    <string name="guatemala_chiquimula_id_6">Iglesia chiquimula 6</string>
+    <string name="guatemala_chiquimula_id_7">Iglesia chiquimula 7</string>
+
+    <string name="guatemala_jalapa_id_8">Iglesia jalapa 8</string>
+    <string name="guatemala_jalapa_id_9">Iglesia jalapa 9</string>
+    <string name="guatemala_jalapa_id_10">Iglesia jalapa 10</string>
+
+
+
+
+
+
+
+
+</resources>

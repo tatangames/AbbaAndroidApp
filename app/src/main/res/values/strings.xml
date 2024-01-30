@@ -1,0 +1,209 @@
+<resources>
+
+
+    <string name="app_name">Mi caminar con Dios</string>
+    <string name="version_app">V. 1.0.0</string>
+
+    <string name="abba_app">Mi caminar con Dios</string>
+    <string name="abba_internacional">Abba Internacional</string>
+    <string name="logo">Logo</string>
+    <string name="continuar_con_correo">Continuar con correo</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="ya_tines_una_cuenta">¿Ya tienes una cuenta?</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="primer_nombre">Primer Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="correo_electronico">Correo electrónico</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="crear_cuenta">Crear cuenta</string>
+    <string name="direccion_correo_invalida">Lo sentimos, no es una dirección de correo válida</string>
+    <string name="contrasena_minimo_6">Lo sentimos, contraseñas requieren mínimo 6 caracteres</string>
+    <string name="error_intentar_de_nuevo">Error, intentar de nuevo</string>
+    <string name="editar">Editar</string>
+    <string name="se_ve_genial">Se ve genial</string>
+    <string name="bienvenidos_a_abba_app">Bienvenidos a Abba App</string>
+    <string name="levantado_el_ejercito">\"Levantando el ejército poderoso de Dios\"</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="seleccionar_genero">Seleccionar Género</string>
+    <string name="masculino">Masculino</string>
+    <string name="femenino">Femenino</string>
+    <string name="sin_conexion_a_internet">Sin conexión a Internet</string>
+    <string name="correo_ya_registrado">El correo ya se encuentra registrado</string>
+    <string name="enviar_codigo">Enviar código</string>
+    <string name="escribe_tu_correo_electronico">Escribe tu correo electrónico, y te enviaremos un código para restablecer tu contraseña</string>
+    <string name="notificaciones">Notificaciones</string>
+    <string name="versiculo_del_dia">Versículo del Día</string>
+    <string name="flecha_atras">Flecha Atras</string>
+    <string name="registrado_correctamente">Registrado correctamente</string>
+    <string name="continuar">Continuar</string>
+    <string name="correo_o_contrasena_incorrectos">Correo o contraseña incorrectos</string>
+    <string name="lo_siento_algo_salio_mal">Lo siento, algo salio mal :(</string>
+    <string name="olvido_su_contrasena">¿Olvido su contraseña?</string>
+    <string name="correo">Correo</string>
+    <string name="enviar">Enviar</string>
+    <string name="inicio">Inicio</string>
+    <string name="biblia">Biblia</string>
+    <string name="planes">Planes</string>
+    <string name="mas">Más</string>
+    <string name="por_favor_asegurate_tener">Por favor asegúrate tener servicio de internet para usar esta función.</string>
+    <string name="videos">Videos</string>
+    <string name="temas">Temas</string>
+    <string name="oscuro">Oscuro</string>
+    <string name="claro">Claro</string>
+    <string name="eventos">Eventos</string>
+    <string name="insignias">Insignias</string>
+    <string name="acerca_de">Acerca de</string>
+    <string name="idioma">Idioma</string>
+    <string name="configuracion">Configuración</string>
+    <string name="ayuda">Ayuda</string>
+    <string name="marcadores">Marcadores</string>
+    <string name="notas">Notas</string>
+    <string name="amigos">Amigos</string>
+    <string name="ora">Ora</string>
+    <string name="imagenes">Imágenes</string>
+    <string name="resaltados">Resaltados</string>
+    <string name="historial">Historial</string>
+    <string name="oracion">Oración</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
+    <string name="si">Si</string>
+    <string name="no">No</string>
+    <string name="ajustes">Ajustes</string>
+    <string name="seleccionar_edad">Seleccionar Edad</string>
+    <string name="fecha_nacimiento_es_requerido">Fecha Nacimiento es requerido</string>
+    <string name="editar_perfil">Editar Perfil</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="fecha_de_nacimiento">Fecha de Nacimiento</string>
+    <string name="correo_no_disponible">Correo no disponible</string>
+    <string name="actualizado">Actualizado</string>
+    <string name="editar_notificaciones">Editar Notificaciones</string>
+    <string name="tema_actualizado">Tema Actualizado</string>
+    <string name="cambiar_idioma">Cambiar Idioma</string>
+    <string name="ingles">Ingles</string>
+    <string name="espanol">Español</string>
+    <string name="idioma_actualizado">Idioma Actualizado</string>
+    <string name="cambiar_tema">Cambiar Tema</string>
+    <string name="tema_claro">Tema Claro</string>
+    <string name="tema_oscuro">Tema Oscuro</string>
+    <string name="para_aplicar_efectos_se_debe_reiniciar">Para aplicar efectos se debe reiniciar</string>
+    <string name="reiniciar">Reiniciar</string>
+    <string name="edad">edad</string>
+    <string name="telefono">Teléfono</string>
+    <string name="pais">País</string>
+    <string name="area">Área</string>
+    <string name="iglesia">Iglesia</string>
+    <string name="genero_es_requerido">Género es requerido</string>
+    <string name="iglesia_es_requerido">Iglesia es requerido</string>
+    <string name="completar_registro">Completar Registro</string>
+    <string name="correo_no_encontrado">Correo no encontrado</string>
+    <string name="ingresar_el_codigo_que_se">Ingresar el Código que se ha enviado a la siguiente dirección: %1$s</string>
+    <string name="solicitar_codigo">Solicitar código</string>
+    <string name="codigo">Código</string>
+    <string name="reintentar_en">Reintentar en</string>
+    <string name="reenviar_codigo">Reenviar código</string>
+    <string name="codigo_enviado">Código enviado</string>
+    <string name="codigo_incorrecto">Código incorrecto</string>
+    <string name="nueva_contrasena">Nueva contraseña</string>
+    <string name="lenguaje">Lenguaje</string>
+    <string name="esta_config_afecta_app">Esta configuración afecta al idioma de toda la interfaz de la aplicación</string>
+    <string name="esta_config_afecta_planes">Esta configuración afecta al idioma que usas para leer los planes o la Biblia</string>
+    <string name="interfaz_de_la_aplicacion">Interfaz de la aplicación.</string>
+    <string name="textos_planes_biblia">Texto Planes y Biblia.</string>
+    <string name="ver">Ver</string>
+    <string name="iniciar">Iniciar</string>
+    <string name="plan_agregado">Plan agregado</string>
+    <string name="informacion_plan">Información Plan</string>
+    <string name="no_hay_planes_disponibles">No hay Planes disponibles</string>
+    <string name="devocional">Devocional</string>
+    <string name="interactivo">Interactivo</string>
+    <string name="opciones">Opciones</string>
+    <string name="fuente">Fuente</string>
+    <string name="meditacion">Meditación</string>
+    <string name="no_hay_devocionales_disponibles">No hay Devocionales disponibles</string>
+    <string name="no_hay_devocionales_seleccionados">No hay Devocionales seleccionados</string>
+    <string name="guardar">Guardar</string>
+    <string name="campo_requerido">Campo requerido</string>
+    <string name="completar_campos">Completar campos</string>
+    <string name="meditacion_no_disponible">Meditación no disponible</string>
+    <string name="devocional_completado">Devocional Completado</string>
+    <string name="no_hay_devocionales_completados">No hay Devocionales completados</string>
+    <string name="mis_planes">Mis planes</string>
+    <string name="buscar_planes">Buscar planes</string>
+    <string name="completados">Completados</string>
+    <string name="compartidos">Compartidos</string>
+    <string name="comunidad">Comunidad</string>
+    <string name="devocional_del_dia">Devocional del día</string>
+    <string name="compartir_con">Compartir con</string>
+    <string name="imagenes_del_dia">Imágenes del Día</string>
+    <string name="abrir_con">Abrir con...</string>
+    <string name="informacion">Información</string>
+    <string name="compartir">Compartir</string>
+    <string name="todos_los_videos">Todos los videos</string>
+    <string name="descargar">Descargar</string>
+    <string name="permiso_denegado">Permiso denegado</string>
+    <string name="permiso_autorizado">Permiso autorizado</string>
+    <string name="permiso_almacenamiento_es_requerido">Permiso almacenamiento es requerido</string>
+    <string name="guardado">Guardado</string>
+    <string name="error_al_guardar">Error al guardar</string>
+    <string name="hitos">Hitos</string>
+    <string name="racha_mas_alta">Racha más alta</string>
+    <string name="dias_seguidos">Días seguidos</string>
+    <string name="letra_lunes">L</string>
+    <string name="letra_martes">M</string>
+    <string name="letra_miercoles">M</string>
+    <string name="letra_jueves">J</string>
+    <string name="letra_viernes">V</string>
+    <string name="letra_sabado">S</string>
+    <string name="letra_domingo">D</string>
+    <string name="dias_app_este_anio">días en la app este año</string>
+
+
+
+
+
+
+
+
+
+    <string-array name="generos_array">
+        <item>Seleccionar Género</item>
+        <item>Masculino</item>
+        <item>Femenino</item>
+    </string-array>
+
+
+    <string-array name="paises_array">
+        <item>Seleccionar País</item>
+        <item>El Salvador</item>
+        <item>Guatemala</item>
+    </string-array>
+
+    <string-array name="estados_elsalvador_array">
+        <item>Seleccionar Área</item>
+        <item>Santa Ana</item>
+        <item>Metapan</item>
+    </string-array>
+
+    <string-array name="estados_guatemala_array">
+        <item>Seleccionar Área</item>
+        <item>Chiquimula</item>
+        <item>Jalapa</item>
+    </string-array>
+
+
+    <string name="elsalvador_santaana_id_1">Iglesia santa ana 1</string>
+    <string name="elsalvador_santaana_id_2">Iglesia santa ana 2</string>
+
+    <string name="elsalvador_metapan_id_3">Iglesia metapan 3</string>
+    <string name="elsalvador_metapan_id_4">Iglesia metapan 4</string>
+    <string name="elsalvador_metapan_id_5">Iglesia metapan 5</string>
+
+    <string name="guatemala_chiquimula_id_6">Iglesia chiquimula 6</string>
+    <string name="guatemala_chiquimula_id_7">Iglesia chiquimula 7</string>
+
+    <string name="guatemala_jalapa_id_8">Iglesia jalapa 8</string>
+    <string name="guatemala_jalapa_id_9">Iglesia jalapa 9</string>
+    <string name="guatemala_jalapa_id_10">Iglesia jalapa 10</string>
+
+
+</resources>
