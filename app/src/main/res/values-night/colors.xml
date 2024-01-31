@@ -14,12 +14,17 @@
     <color name="blanco">#FFFFFFFF</color>
     <color name="rojoF44336">#f44336</color>
     <color name="grisAAA">#aaa</color>
+    <color name="grisF5F5F5">#F5F5F5</color>
+    <color name="gris616161">#616161</color>
+    <color name="gris757575">#757575</color>
+    <color name="azul607D8B">#607D8B</color>
 
 
 
 
-    <!-- Para Item Vistas -->
     <color name="bottomNavigationItemColor">#000000</color>
+    <color name="fondo_negro_blanco_v1">#FFFFFF</color>
+    <color name="barraProgreso">#ff3d4d</color>
 
 
 

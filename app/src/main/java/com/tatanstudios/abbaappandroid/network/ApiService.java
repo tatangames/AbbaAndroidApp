@@ -1,5 +1,6 @@
 package com.tatanstudios.abbaappandroid.network;
 
+import com.tatanstudios.abbaappandroid.modelos.iglesias.ModeloDepartamentos;
 import com.tatanstudios.abbaappandroid.modelos.usuario.ModeloUsuario;
 
 import io.reactivex.Observable;
@@ -17,6 +18,11 @@ public interface ApiService {
                                            @Field("password") String password,
                                            @Field("idonesignal") String idonesignal);
 
+
+
+    @POST("app/solicitar/listado/iglesias")
+    @FormUrlEncoded
+    Observable<ModeloDepartamentos> solicitarListadoIglesias(@Field("iddepa") int idDepartamento);
 
 
     // registrarse

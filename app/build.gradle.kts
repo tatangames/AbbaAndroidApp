@@ -38,21 +38,33 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
+    implementation("androidx.navigation:navigation-fragment:2.7.6")
+    implementation("androidx.navigation:navigation-ui:2.7.6")
 
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.5.0") //rxjava
     implementation("com.squareup.retrofit2:converter-gson:2.5.0") //rxjava
     implementation("io.reactivex.rxjava2:rxandroid:2.1.0") //rxjava
     implementation("io.reactivex.rxjava2:rxjava:2.2.2") //rxjava
 
+    implementation("androidx.cardview:cardview:1.0.0")
+    implementation("com.github.GrenderG:Toasty:1.5.2")
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 
-
-
-
-
+    implementation("io.github.tutorialsandroid:kalertdialog:20.4.8")
+    implementation("com.github.TutorialsAndroid:progressx:v6.0.19")
 
     // notificaciones one signal
     implementation("com.onesignal:OneSignal:[5.0.0, 5.99.99]")
 
+    // confetii
+    implementation("nl.dionsegijn:konfetti:1.2.2")
+
+    // manejo de permisos
+    implementation("pub.devrel:easypermissions:3.0.0")
+
+    implementation("com.google.android.exoplayer:exoplayer:2.18.7")
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:custom-ui:12.1.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

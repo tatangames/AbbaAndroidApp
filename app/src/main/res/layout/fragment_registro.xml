@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootRelative"
+    style="@style/Fondo_Estilo_Tema_v1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!-- Texto -->
+                <ImageView
+                    android:id="@+id/imgFlechaAtras"
+                    android:layout_width="35dp"
+                    android:layout_height="30dp"
+                    style="@style/Flecha_Tema_V1"
+                    android:contentDescription="@string/flecha_atras"
+                    android:src="@drawable/ic_flecha_izquierda" />
+
+                <!-- Botón a la derecha del texto -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/fondo_negro_blanco_v1"
+                    android:layout_toEndOf="@id/imgFlechaAtras"
+                    android:text="@string/crear_cuenta"
+                    android:textSize="21sp" />
+            </RelativeLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:id="@+id/inputNombre"
+                style="@style/Text_Input_Layout_Estilo_v1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="45dp"
+                android:layout_marginEnd="16dp"
+                app:boxStrokeColor="@color/estilo_text_input_box_stroke"
+                app:boxStrokeWidth="1dp"
+                app:errorIconDrawable="@null"
+                app:errorTextAppearance="@style/Text_Input_Layout_Error_Apariencia"
+                app:hintTextColor="@color/gris616161"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtNombre"
+                    style="@style/Input_Edit_Text_Tema"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/primer_nombre"
+                    android:inputType="textPersonName"
+                    android:maxLength="50"
+                    android:textSize="20sp"
+                    android:textStyle="normal"
+                    app:hintTextAppearance="@style/Input_Edit_Text_Hint_Input" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputApellido"
+                style="@style/Text_Input_Layout_Estilo_v1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                app:boxStrokeColor="@color/estilo_text_input_box_stroke"
+                app:boxStrokeWidth="1dp"
+                app:errorIconDrawable="@null"
+                app:errorTextAppearance="@style/Text_Input_Layout_Error_Apariencia"
+                app:hintTextColor="@color/gris616161"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputNombre">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtApellido"
+                    style="@style/Input_Edit_Text_Tema"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/apellido"
+                    android:inputType="textPersonName"
+                    android:maxLength="50"
+                    android:textSize="20sp"
+                    android:textStyle="normal"
+                    app:hintTextAppearance="@style/Input_Edit_Text_Hint_Input" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/txtCalendario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="16dp"
+                android:drawableStart="@drawable/ic_calendario"
+                android:drawablePadding="5dp"
+                android:text="@string/seleccionar_edad"
+                android:textColor="@color/gris616161"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputApellido" />
+
+            <Spinner
+                android:id="@+id/generoSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="45dp"
+                style="@style/Spinner_Estilo_v1"
+                android:layout_marginEnd="28dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtCalendario" />
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/micardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_marginTop="45dp"
+                app:cardCornerRadius="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/generoSpinner">
+
+                <!-- Contenido de la tarjeta -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <Spinner
+                        android:id="@+id/paisSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginEnd="16dp"
+                        style="@style/Spinner_Estilo_v1" />
+
+
+                    <Spinner
+                        android:id="@+id/estadoSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="45dp"
+                        android:layout_marginEnd="16dp"
+                        style="@style/Spinner_Estilo_v1" />
+
+
+                    <Spinner
+                        android:id="@+id/ciudadSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="45dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="35dp"
+                        style="@style/Spinner_Estilo_v1" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:id="@+id/inputCorreo"
+                style="@style/Text_Input_Layout_Estilo_v1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="45dp"
+                android:layout_marginEnd="16dp"
+                app:boxStrokeColor="@color/estilo_text_input_box_stroke"
+                app:boxStrokeWidth="1dp"
+                app:errorIconDrawable="@null"
+                app:errorTextAppearance="@style/Text_Input_Layout_Error_Apariencia"
+                app:hintTextColor="@color/gris616161"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/micardview">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtCorreo"
+                    style="@style/Input_Edit_Text_Tema"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/correo_electronico"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="100"
+                    android:textSize="20sp"
+                    android:textStyle="normal"
+                    app:hintTextAppearance="@style/Input_Edit_Text_Hint_Input" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:id="@+id/inputContrasena"
+                style="@style/Text_Input_Layout_Estilo_v1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                app:boxStrokeColor="@color/estilo_text_input_box_stroke"
+                app:boxStrokeWidth="1dp"
+                app:errorIconDrawable="@null"
+                app:errorTextAppearance="@style/Text_Input_Layout_Error_Apariencia"
+                app:hintTextColor="@color/gris616161"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputCorreo"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtContrasena"
+                    style="@style/Input_Edit_Text_Tema"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/contrasena"
+                    android:inputType="textPassword"
+                    android:maxLength="30"
+                    android:textSize="20sp"
+                    android:textStyle="normal"
+                    app:hintTextAppearance="@style/Input_Edit_Text_Hint_Input" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <Button
+                android:id="@+id/btnRegistro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="100dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:background="@drawable/codigo_boton_redondeado_v1"
+                android:text="@string/crear_cuenta"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputContrasena" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</RelativeLayout>
+
+

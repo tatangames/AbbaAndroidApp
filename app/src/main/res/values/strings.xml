@@ -156,6 +156,47 @@
     <string name="letra_sabado">S</string>
     <string name="letra_domingo">D</string>
     <string name="dias_app_este_anio">días en la app este año</string>
+    <string name="seleccionar_opcion">Seleccionar Opción</string>
+    <string name="el_salvador">El Salvador</string>
+    <string name="guatemala">Guatemala</string>
+    <string name="honduras">Honduras</string>
+    <string name="nicaragua">Nicaragua</string>
+    <string name="mexico">México</string>
+    <string name="santa_ana">Santa Ana</string>
+    <string name="chalatengando">Chalatenango</string>
+    <string name="sonsonate">Sonsonate</string>
+    <string name="la_libertad">La Libertad</string>
+    <string name="ahuachapan">Ahuachapán</string>
+    <string name="san_marcos">San Marcos</string>
+    <string name="quetzaltenango">Quetzaltenango</string>
+    <string name="retalhuleu">Retalhuleu</string>
+    <string name="suchitepequez">Suchitepéquez</string>
+    <string name="solola">Sololá</string>
+    <string name="sacatepequez">Sacatepéquez</string>
+    <string name="Chimaltenango">Chimaltenango</string>
+    <string name="escuintla">Escuintla</string>
+    <string name="santa_rosa">Santa Rosa</string>
+    <string name="jalapa">Jalapa</string>
+    <string name="jutiapa">Jutiapa</string>
+    <string name="chiquimula">Chiquimula</string>
+    <string name="zacapa">Zacapa</string>
+    <string name="francisco_morazan">Francisco Morazán</string>
+    <string name="olancho">Olancho</string>
+    <string name="el_paraiso">El Paraíso</string>
+    <string name="esteli">Estelí</string>
+    <string name="madriz">Madriz</string>
+    <string name="nueva_segovia">Nueva Segovia</string>
+    <string name="hidalgo">Hidalgo</string>
+    <string name="chiapas">Chiapas</string>
+    <string name="chimaltenango">Chimaltenango</string>
+    <string name="seleccionar_pais">Seleccionar País</string>
+    <string name="seleccionar_iglesia">Seleccionar Iglesia</string>
+
+
+
+
+
+
 
 
     <string-array name="generos_array">
@@ -165,38 +206,53 @@
     </string-array>
 
 
-    <string-array name="paises_array">
-        <item>Seleccionar País</item>
-        <item>El Salvador</item>
-        <item>Guatemala</item>
-    </string-array>
+
 
     <string-array name="estados_elsalvador_array">
         <item>Seleccionar Área</item>
         <item>Santa Ana</item>
-        <item>Metapan</item>
+        <item>Chalatenango</item>
+        <item>Sonsonate</item>
+        <item>La Libertad</item>
+        <item>Ahuachapán</item>
     </string-array>
 
     <string-array name="estados_guatemala_array">
         <item>Seleccionar Área</item>
-        <item>Chiquimula</item>
+        <item>San Marcos</item>
+        <item>Quetzaltenango</item>
+        <item>Retalhuleu</item>
+        <item>Suchitepéquez</item>
+        <item>Sololá</item>
+        <item>Sacatepéquez</item>
+        <item>Chimaltenango</item>
+        <item>Guatemala</item>
+        <item>Escuintla</item>
+        <item>Santa Rosa</item>
         <item>Jalapa</item>
+        <item>Jutiapa</item>
+        <item>Chiquimula</item>
+        <item>Zacapa</item>
     </string-array>
 
+    <string-array name="estados_honduras_array">
+        <item>Seleccionar Área</item>
+        <item>Francisco Morazán</item>
+        <item>Olancho</item>
+        <item>El Paraíso</item>
+    </string-array>
 
-    <string name="elsalvador_santaana_id_1">Iglesia santa ana 1</string>
-    <string name="elsalvador_santaana_id_2">Iglesia santa ana 2</string>
+    <string-array name="estados_nicaragua_array">
+        <item>Seleccionar Área</item>
+        <item>Estelí</item>
+        <item>Madriz</item>
+        <item>Nueva Segovia</item>
+    </string-array>
 
-    <string name="elsalvador_metapan_id_3">Iglesia metapan 3</string>
-    <string name="elsalvador_metapan_id_4">Iglesia metapan 4</string>
-    <string name="elsalvador_metapan_id_5">Iglesia metapan 5</string>
-
-    <string name="guatemala_chiquimula_id_6">Iglesia chiquimula 6</string>
-    <string name="guatemala_chiquimula_id_7">Iglesia chiquimula 7</string>
-
-    <string name="guatemala_jalapa_id_8">Iglesia jalapa 8</string>
-    <string name="guatemala_jalapa_id_9">Iglesia jalapa 9</string>
-    <string name="guatemala_jalapa_id_10">Iglesia jalapa 10</string>
-
+    <string-array name="estados_mexico_array">
+        <item>Seleccionar Área</item>
+        <item>Hidalgo</item>
+        <item>Chiapas</item>
+    </string-array>
 
 </resources>

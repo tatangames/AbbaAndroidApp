@@ -46,6 +46,56 @@
     </style>
 
 
+    <!-- ESTILO BOTON CON ESTILO REDONDEADO SIN UTILIZAR TEMAS -->
+    <style name="BotonEstiloNoTemaV1" parent="Widget.MaterialComponents.Button">
+        <!-- Puedes quitar el atributo colorPrimary aquí -->
+        <item name="android:background">@drawable/codigo_boton_redondeado_v1</item>
+        <item name="android:textColor">@color/blanco</item>
+        <item name="backgroundTint">@color/negro</item>
+    </style>
+
+    <!-- ESTO LO LLEVARAN TODOS LOS FONDOS PARA COLOR  BLANCO/OSCURO SEGUN TEMA. -->
+    <style name="Fondo_Estilo_Tema_v1">
+        <item name="android:background">@color/blanco</item>
+    </style>
+
+    <!-- PARA TINTAR LAS FLECHAS SEGUN TEMA -->
+    <style name="Flecha_Tema_V1">
+        <item name="android:tint">@color/negro</item>
+    </style>
+
+    <!-- ESTO LO LLEVARA TODOS LOS TEXT INPUT LAYOUT -->
+    <style name="Text_Input_Layout_Estilo_v1" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <!-- Otros atributos de estilo aquí -->
+        <item name="android:background">@color/blanco</item>
+        <item name="hintTextColor">@color/gris616161</item>
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+        <item name="cursorColor">@color/colorPrimary</item>
+        <item name="boxStrokeColor">@color/gris616161</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
+
+    <!-- ESTO LO LLEVARA TODOS LOS TEXT INPUT LAYOUT PARA LOS ERRORES -->
+    <style name="Text_Input_Layout_Error_Apariencia" parent="@android:style/TextAppearance">
+        <item name="errorTextColor">@color/rojoF44336</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- ESTO LO LLEVARA TODOS LOS INPUT EDIT TEXT -->
+    <style name="Input_Edit_Text_Tema" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:textColor">@color/negro</item>
+    </style>
+
+    <!-- LO LLEVA TODOS LOS TEXT INPUT EDIT TEXT PARA EL app:hintTextAppearance -->
+    <style name="Input_Edit_Text_Hint_Input" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <!-- ESTO LO LLEVARA TODOS LOS SPINNER -->
+    <style name="Spinner_Estilo_v1" parent="Widget.AppCompat.Spinner">
+        <item name="android:background">@drawable/codigo_spinner_estilo_blanco</item>
+    </style>
+
 
 
 </resources>
