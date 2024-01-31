@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.tatanstudios.micaminarcondios"
-        minSdk = 23
+        minSdk = 25
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -39,7 +39,10 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
 
-
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.5.0") //rxjava
+    implementation("com.squareup.retrofit2:converter-gson:2.5.0") //rxjava
+    implementation("io.reactivex.rxjava2:rxandroid:2.1.0") //rxjava
+    implementation("io.reactivex.rxjava2:rxjava:2.2.2") //rxjava
 
 
 
