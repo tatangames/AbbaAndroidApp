@@ -1,0 +1,30 @@
+<RelativeLayout android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Texto -->
+    <ImageView
+        android:id="@+id/imgFlechaAtras"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        style="@style/Flecha_Tema_V1"
+        android:contentDescription="@string/flecha_atras"
+        android:src="@drawable/ic_flecha_izquierda" />
+
+    <!-- Botón a la derecha del texto -->
+    <TextView
+        android:id="@+id/txtToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/liberation_sans_bold"
+        android:textColor="@color/fondo_negro_blanco_v1"
+        android:layout_toEndOf="@id/imgFlechaAtras"
+        android:textSize="21sp" />
+</RelativeLayout>

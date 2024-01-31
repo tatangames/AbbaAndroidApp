@@ -191,19 +191,9 @@
     <string name="chimaltenango">Chimaltenango</string>
     <string name="seleccionar_pais">Seleccionar País</string>
     <string name="seleccionar_iglesia">Seleccionar Iglesia</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
 
 
-
-
-
-
-
-
-    <string-array name="generos_array">
-        <item>Seleccionar Género</item>
-        <item>Masculino</item>
-        <item>Femenino</item>
-    </string-array>
 
 
 

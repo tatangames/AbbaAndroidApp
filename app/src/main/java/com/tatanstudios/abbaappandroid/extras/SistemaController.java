@@ -36,7 +36,7 @@ public class SistemaController extends Application {
         OneSignal.initWithContext(this, ONESIGNAL_APP_ID);
 
 
-        String subscriptionId = OneSignal.getUser().getPushSubscription().getId();
+
 
 
 

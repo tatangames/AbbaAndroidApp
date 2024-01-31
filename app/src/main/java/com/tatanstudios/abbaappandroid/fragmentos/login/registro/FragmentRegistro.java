@@ -4,9 +4,17 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.util.Patterns;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +30,18 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.developer.kalert.KAlertDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.onesignal.OneSignal;
 import com.tatanstudios.abbaappandroid.R;
+import com.tatanstudios.abbaappandroid.activity.principal.PrincipalActivity;
 import com.tatanstudios.abbaappandroid.adaptadores.spinnerregistro.AdaptadorSpinnerDepartamento;
+import com.tatanstudios.abbaappandroid.adaptadores.spinnerregistro.AdaptadorSpinnerGenero;
 import com.tatanstudios.abbaappandroid.adaptadores.spinnerregistro.AdaptadorSpinnerIglesia;
 import com.tatanstudios.abbaappandroid.adaptadores.spinnerregistro.AdaptadorSpinnerPais;
 import com.tatanstudios.abbaappandroid.modelos.iglesias.ModeloDepartamentos;
+import com.tatanstudios.abbaappandroid.modelos.iglesias.ModeloGeneros;
 import com.tatanstudios.abbaappandroid.modelos.iglesias.ModeloIglesias;
 import com.tatanstudios.abbaappandroid.modelos.iglesias.ModeloPais;
 import com.tatanstudios.abbaappandroid.network.ApiService;
@@ -38,6 +51,7 @@ import com.tatanstudios.abbaappandroid.network.TokenManager;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -59,10 +73,9 @@ public class FragmentRegistro extends Fragment {
     private TokenManager tokenManager;
     private Spinner spinGenero, spinPais, spinEstado, spinIglesia;
 
+    private int idSpinnerIglesia = 0, idSpinnerGenero = 0;
 
-    private int idSpinnerIglesia = 0;
-
-    private TextView txtFecha;
+    private TextView txtFecha,txtToolbar;
 
     private static final String CERO = "0";
     private static final String BARRA = "-";
@@ -70,10 +83,9 @@ public class FragmentRegistro extends Fragment {
     private String fechaNacimiento = "";
     private boolean hayFecha = false;
 
+    private int colorBlanco = 0, colorBlack = 0, colorGris = 0;
 
-    private int colorBlanco = 0, colorBlack = 0;
-
-    private ColorStateList colorStateTintGrey, colorStateTintWhite, colorStateTintBlack;
+    private ColorStateList colorEstadoGris, colorEstadoBlanco, colorEstadoNegro;
 
     private DatePickerDialog datePickerDialog;
 
@@ -83,6 +95,10 @@ public class FragmentRegistro extends Fragment {
     private final int anio = c.get(Calendar.YEAR);
 
     private boolean tema = false;
+    private boolean puedeAddIglesiaSpin =  false, boolDialogoEnviar = true;
+    private boolean enviarDatosApi = true;
+
+    private String oneSignalId = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -106,6 +122,10 @@ public class FragmentRegistro extends Fragment {
         spinEstado = vista.findViewById(R.id.estadoSpinner);
         spinIglesia = vista.findViewById(R.id.ciudadSpinner);
         txtFecha = vista.findViewById(R.id.txtCalendario);
+        btnRegistro = vista.findViewById(R.id.btnRegistro);
+        txtToolbar = vista.findViewById(R.id.txtToolbar);
+
+        txtToolbar.setText(getString(R.string.crear_cuenta));
 
         tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs", MODE_PRIVATE));
         int colorProgressBar = ContextCompat.getColor(requireContext(), R.color.barraProgreso);
@@ -121,12 +141,212 @@ public class FragmentRegistro extends Fragment {
             tema = true;
         }
 
+        if(tokenManager.getToken().getTema() == 1){
+            inputNombre.setBoxStrokeColor(ContextCompat.getColor(getContext(), R.color.blanco));
+            inputNombre.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_FILLED);
+            inputApellido.setBoxStrokeColor(ContextCompat.getColor(getContext(), R.color.blanco));
+            inputApellido.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_FILLED);
+            inputCorreo.setBoxStrokeColor(ContextCompat.getColor(getContext(), R.color.blanco));
+            inputCorreo.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_FILLED);
+            inputContrasena.setBoxStrokeColor(ContextCompat.getColor(getContext(), R.color.blanco));
+            inputContrasena.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_FILLED);
+        }
+
+        colorGris = ContextCompat.getColor(requireContext(), R.color.gris616161);
+        colorBlanco = ContextCompat.getColor(requireContext(), R.color.blanco);
+        colorBlack = ContextCompat.getColor(requireContext(), R.color.negro);
+
+        colorEstadoGris = ColorStateList.valueOf(colorGris);
+        colorEstadoBlanco = ColorStateList.valueOf(colorBlanco);
+        colorEstadoNegro = ColorStateList.valueOf(colorBlack);
+        btnRegistro.setEnabled(false);
+        btnRegistro.setBackgroundTintList(colorEstadoGris);
+        btnRegistro.setTextColor(colorBlanco);
+
+        txtFecha.setPaintFlags(txtFecha.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        txtFecha.setPadding(0, 8, 0, 8);
+
+        txtFecha.setOnClickListener(v -> {
+            elegirFecha();
+        });
+
+        // volver atras
+        imgFlechaAtras.setOnClickListener(v -> {
+            requireActivity().getSupportFragmentManager().popBackStack();
+        });
+
+
+        btnRegistro.setOnClickListener(v -> {
+            closeKeyboard();
+            confirmarRegistro();
+        });
+
         llenarSpinner();
+
+
+        edtNombre.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Este método se llama para notificar que el texto está a punto de cambiar
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Este método se llama para notificar que el texto ha cambiado
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                verificarEntradas();
+            }
+        });
+
+        edtApellido.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Este método se llama para notificar que el texto está a punto de cambiar
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Este método se llama para notificar que el texto ha cambiado
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                verificarEntradas();
+            }
+        });
+
+        edtCorreo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Este método se llama para notificar que el texto está a punto de cambiar
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Este método se llama para notificar que el texto ha cambiado
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                String textoIngresado = editable.toString();
+
+                if(!Patterns.EMAIL_ADDRESS.matcher(textoIngresado).matches()){
+                    String valiCorreo = getString(R.string.direccion_correo_invalida);
+                    inputCorreo.setError(valiCorreo);
+                    boolCorreo = false;
+                }else{
+                    boolCorreo = true;
+                    inputCorreo.setError(null);
+                }
+
+                verificarEntradas();
+            }
+        });
+
+        edtContrasena.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Este método se llama para notificar que el texto está a punto de cambiar
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Este método se llama para notificar que el texto ha cambiado
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // Este método se llama después de que el texto ha cambiado
+                String textoIngresado = editable.toString();
+                // Hacer algo con el texto ingresado
+                if (!textoIngresado.isEmpty()) {
+
+                    if(textoIngresado.length() >= 6){
+                        inputContrasena.setError(null);
+                        boolContrasena = true;
+                    }else{
+                        String valiContrasena = getString(R.string.contrasena_minimo_6);
+                        inputContrasena.setError(valiContrasena);
+                        boolContrasena = false;
+                    }
+                }else{
+                    inputContrasena.setError(null);
+                    boolContrasena = false;
+                }
+
+                verificarEntradas();
+            }
+        });
+
+
+        // obtener identificador id one signal
+        oneSignalId = OneSignal.getUser().getPushSubscription().getId();
 
         return vista;
     }
 
+    private void verificarEntradas(){
+
+        String txtNombre = Objects.requireNonNull(edtNombre.getText()).toString();
+        String txtApellido = Objects.requireNonNull(edtApellido.getText()).toString();
+        String txtCorreo = Objects.requireNonNull(edtCorreo.getText()).toString();
+        String txtContrasena = Objects.requireNonNull(edtContrasena.getText()).toString();
+
+        if(TextUtils.isEmpty(txtNombre) || TextUtils.isEmpty(txtApellido)
+                || TextUtils.isEmpty(txtCorreo) || TextUtils.isEmpty(txtContrasena)){
+
+            desactivarBtnRegistro();
+        }else{
+
+            if(boolCorreo && boolContrasena){
+
+                activarBtnRegistro();
+            }else{
+                desactivarBtnRegistro();
+            }
+        }
+    }
+
+    private void activarBtnRegistro(){
+        btnRegistro.setEnabled(true);
+
+        if(tema){ // Dark
+            btnRegistro.setBackgroundTintList(colorEstadoBlanco);
+            btnRegistro.setTextColor(colorBlack);
+        }else{
+            btnRegistro.setBackgroundTintList(colorEstadoNegro);
+            btnRegistro.setTextColor(colorBlanco);
+        }
+    }
+
+    private void desactivarBtnRegistro(){
+        btnRegistro.setEnabled(false);
+
+        // igual para los 2 temas
+        btnRegistro.setBackgroundTintList(colorEstadoGris);
+        btnRegistro.setTextColor(colorBlanco);
+    }
+
+
     private void llenarSpinner(){
+
+        // *********** GENEROS ****************
+
+        List<ModeloGeneros> modeloGeneros = new ArrayList<>();
+        modeloGeneros.add(new ModeloGeneros(0, getString(R.string.seleccionar_genero)));
+        modeloGeneros.add(new ModeloGeneros(1, getString(R.string.masculino)));
+        modeloGeneros.add(new ModeloGeneros(2, getString(R.string.femenino)));
+
+
+        AdaptadorSpinnerGenero adaptadorGenero = new AdaptadorSpinnerGenero(getContext(), android.R.layout.simple_spinner_item, modeloGeneros, tema);
+        spinGenero.setAdapter(adaptadorGenero);
 
 
         // *********** PAISES ****************
@@ -160,6 +380,10 @@ public class FragmentRegistro extends Fragment {
                     closeKeyboard();
                     idSpinnerIglesia = 0;
 
+                    // para evitar llenado de spinner de iglesia si usuario mueve rapido de pais
+                    // y aun esta cargando iglesia de un departamento
+                    puedeAddIglesiaSpin = false;
+
                     updateAdapterEstado(paisSeleccionado.getId());
                 }
             }
@@ -179,7 +403,14 @@ public class FragmentRegistro extends Fragment {
 
                 if (depaSeleccionado != null) {
 
-                    idSpinnerIglesia = 0;
+                    if(depaSeleccionado.getId() == 0){
+                        idSpinnerIglesia = 0;
+                        limpiarSpinIglesia();
+                        puedeAddIglesiaSpin = false;
+                    }else{
+                        puedeAddIglesiaSpin = true;
+                    }
+
                     updateAdapterIglesias(depaSeleccionado.getId());
                 }
             }
@@ -210,6 +441,54 @@ public class FragmentRegistro extends Fragment {
             }
         });
 
+        spinGenero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                ModeloGeneros generoSeleccionado = (ModeloGeneros) parentView.getItemAtPosition(position);
+
+                if (generoSeleccionado != null) {
+
+                    // no importa que venga id 0, ya que en la comprobacion fina se resulve
+                    idSpinnerGenero = generoSeleccionado.getId();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // Implementa según sea necesario
+            }
+        });
+
+    }
+
+    private void elegirFecha(){
+        closeKeyboard();
+
+        if (datePickerDialog == null || !datePickerDialog.isShowing()) {
+            datePickerDialog = new DatePickerDialog(getContext(),  (view, year, month, dayOfMonth) -> {
+
+                //Esta variable lo que realiza es aumentar en uno el mes ya que comienza desde 0 = enero
+                final int mesActual = month + 1;
+                //Formateo el día obtenido: antepone el 0 si son menores de 10
+                String diaFormateado = (dayOfMonth < 10)? CERO + String.valueOf(dayOfMonth):String.valueOf(dayOfMonth);
+                //Formateo el mes obtenido: antepone el 0 si son menores de 10
+                String mesFormateado = (mesActual < 10)? CERO + String.valueOf(mesActual):String.valueOf(mesActual);
+                //Muestro la fecha con el formato deseado
+                txtFecha.setText(diaFormateado + BARRA + mesFormateado + BARRA + year);
+
+                if(tema) { // dark
+                    txtFecha.setTextColor(colorBlanco);
+                }else{
+                    txtFecha.setTextColor(colorBlack);
+                }
+
+                fechaNacimiento = year + BARRA + mesFormateado + BARRA + diaFormateado;
+                hayFecha = true;
+            },anio, mes, dia);
+            //Muestro el widget
+            datePickerDialog.show();
+        }
     }
 
 
@@ -262,8 +541,9 @@ public class FragmentRegistro extends Fragment {
                                         if(apiRespuesta != null) {
 
                                             if(apiRespuesta.getSuccess() == 1) {
-
-                                                llenarSpinnerIglesias(apiRespuesta.getModeloIglesias());
+                                                if(puedeAddIglesiaSpin){
+                                                    llenarSpinnerIglesias(apiRespuesta.getModeloIglesias());
+                                                }
                                             }
                                             else{
                                                 mensajeSinConexion();
@@ -276,6 +556,7 @@ public class FragmentRegistro extends Fragment {
                                         mensajeSinConexion();
                                     })
             );
+
         }
     }
 
@@ -374,6 +655,142 @@ public class FragmentRegistro extends Fragment {
     }
 
 
+    private void confirmarRegistro(){
+
+        if(!hayFecha){
+            Toasty.error(getContext(), getString(R.string.fecha_nacimiento_es_requerido)).show();
+            return;
+        }
+
+        if(idSpinnerGenero == 0){
+            Toasty.error(getContext(), getString(R.string.genero_es_requerido)).show();
+            return;
+        }
+
+
+        if(idSpinnerIglesia == 0){
+            Toasty.error(getContext(), getString(R.string.iglesia_es_requerido)).show();
+            return;
+        }
+        if(boolDialogoEnviar){
+            boolDialogoEnviar = false;
+
+            int colorVerdeSuccess = ContextCompat.getColor(requireContext(), R.color.verdeSuccess);
+            KAlertDialog pDialog = new KAlertDialog(getContext(), KAlertDialog.SUCCESS_TYPE, false);
+            pDialog.getProgressHelper().setBarColor(colorVerdeSuccess);
+
+            pDialog.setTitleText(getString(R.string.completar_registro));
+            pDialog.setTitleTextGravity(Gravity.CENTER);
+            pDialog.setTitleTextSize(19);
+
+            pDialog.setContentText(getString(R.string.se_ve_genial));
+            pDialog.setContentTextAlignment(View.TEXT_ALIGNMENT_VIEW_START, Gravity.START);
+            pDialog.setContentTextSize(17);
+
+            pDialog.setCancelable(false);
+            pDialog.setCanceledOnTouchOutside(false);
+            pDialog.confirmButtonColor(R.drawable.codigo_kalert_dialog_corners_confirmar);
+            pDialog.setConfirmClickListener(getString(R.string.enviar), sDialog -> {
+                sDialog.dismissWithAnimation();
+                boolDialogoEnviar = true;
+                registrarUsuario();
+            });
+
+            pDialog.cancelButtonColor(R.drawable.codigo_kalert_dialog_corners_cancelar);
+            pDialog.setCancelClickListener(getString(R.string.editar), sDialog -> {
+                sDialog.dismissWithAnimation();
+                boolDialogoEnviar = true;
+            });
+            pDialog.show();
+        }
+    }
+
+    private void registrarUsuario(){
+
+        if(enviarDatosApi){
+            enviarDatosApi = false;
+            progressBar.setVisibility(View.VISIBLE);
+
+            String version = getString(R.string.version_app);
+            String txtNombre = Objects.requireNonNull(edtNombre.getText()).toString();
+            String txtApellido = Objects.requireNonNull(edtApellido.getText()).toString();
+            String txtCorreo = Objects.requireNonNull(edtCorreo.getText()).toString();
+            String txtContrasena = Objects.requireNonNull(edtContrasena.getText()).toString();
+
+
+            compositeDisposable.add(
+                    service.registroUsuario(txtNombre, txtApellido, fechaNacimiento, idSpinnerGenero,
+                                    idSpinnerIglesia, txtCorreo, txtContrasena, oneSignalId, version)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread()) // NO RETRY
+                            .subscribe(apiRespuesta -> {
+
+                                        progressBar.setVisibility(View.GONE);
+                                        enviarDatosApi = true;
+
+                                        if(apiRespuesta != null) {
+
+                                            if(apiRespuesta.getSuccess() == 1) {
+                                                // correo ya esta registrado
+                                                correoYaRegistrado(txtCorreo);
+                                            }
+
+                                            else if(apiRespuesta.getSuccess() == 2){
+
+                                                tokenManager.guardarClienteTOKEN(apiRespuesta);
+                                                tokenManager.guardarClienteID(apiRespuesta);
+
+                                                finalizar();
+
+                                            }else{
+                                                mensajeSinConexion();
+                                            }
+                                        }else{
+                                            mensajeSinConexion();
+                                        }
+                                    },
+                                    throwable -> {
+                                        enviarDatosApi = true;
+                                        mensajeSinConexion();
+                                    })
+            );
+        }
+    }
+
+    void finalizar(){
+        Toasty.success(getActivity(), getString(R.string.registrado_correctamente)).show();
+
+        // Siguiente Actvity
+        Intent intent = new Intent(getActivity(), PrincipalActivity.class);
+        startActivity(intent);
+
+        // Animación personalizada de entrada
+        getActivity().overridePendingTransition(R.anim.slide_in_right_activity, R.anim.slide_out_left_activity);
+        getActivity().finish();
+    }
+
+    private void correoYaRegistrado(String correo){
+
+        KAlertDialog pDialog = new KAlertDialog(getContext(), KAlertDialog.WARNING_TYPE, false);
+
+        pDialog.setTitleText(getString(R.string.correo_ya_registrado));
+        pDialog.setTitleTextGravity(Gravity.CENTER);
+        pDialog.setTitleTextSize(19);
+
+        pDialog.setContentText(correo);
+        pDialog.setContentTextAlignment(View.TEXT_ALIGNMENT_VIEW_START, Gravity.START);
+        pDialog.setContentTextSize(17);
+
+        pDialog.setCancelable(false);
+        pDialog.setCanceledOnTouchOutside(false);
+        pDialog.confirmButtonColor(R.drawable.codigo_kalert_dialog_corners_confirmar);
+        pDialog.setConfirmClickListener(getString(R.string.aceptar), sDialog -> {
+            sDialog.dismissWithAnimation();
+
+        });
+        pDialog.show();
+    }
+
 
     void mensajeSinConexion(){
         progressBar.setVisibility(View.GONE);
@@ -402,4 +819,5 @@ public class FragmentRegistro extends Fragment {
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
 }

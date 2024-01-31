@@ -24,6 +24,7 @@
     <color name="bottomNavigationItemColor">#000000</color>
     <color name="fondo_negro_blanco_v1">#000000</color>
     <color name="barraProgreso">#ff3d4d</color>
+    <color name="verdeSuccess">#A5DC86</color>
 
 
 
