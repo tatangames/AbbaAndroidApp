@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <!-- Colores principales de la aplicacion -->
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#448AFF</color>
+    <!-- azul del logo de abba -->
+    <color name="azulLogoAbba">#010066</color>
+    <!-- rojo del logo de abba -->
+    <color name="rojoLogoAbba">#7c0000</color>
+
+    <color name="negro">#FF000000</color>
+    <color name="blanco">#FFFFFFFF</color>
+    <color name="rojoF44336">#f44336</color>
+    <color name="grisAAA">#aaa</color>
+
+
+
+
+    <!-- Para Item Vistas -->
+    <color name="bottomNavigationItemColor">#000000</color>
+
+
+
+
+
+</resources>

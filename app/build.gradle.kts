@@ -1,13 +1,14 @@
 plugins {
     id("com.android.application")
+
 }
 
 android {
     namespace = "com.tatanstudios.abbaappandroid"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.tatanstudios.abbaappandroid"
+        applicationId = "com.tatanstudios.micaminarcondios"
         minSdk = 23
         targetSdk = 33
         versionCode = 1
@@ -36,6 +37,20 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+
+
+
+
+
+
+
+
+
+    // notificaciones one signal
+    implementation("com.onesignal:OneSignal:[5.0.0, 5.99.99]")
+
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
