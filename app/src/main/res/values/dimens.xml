@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="icono_size_14">14dp</dimen>
+
+
+    <dimen name="grosor_progressbar">6.5dp</dimen>
+
+
+
+</resources>

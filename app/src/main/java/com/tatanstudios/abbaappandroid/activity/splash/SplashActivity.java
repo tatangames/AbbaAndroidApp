@@ -10,6 +10,7 @@ import android.view.WindowManager;
 
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.login.LoginActivity;
+import com.tatanstudios.abbaappandroid.activity.principal.PrincipalActivity;
 import com.tatanstudios.abbaappandroid.extras.LocaleManagerIdiomaAndroid;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
 
@@ -43,26 +44,28 @@ public class SplashActivity extends AppCompatActivity {
 
 
             if(valor.equals(APP_INGLES)){ // ingles
-                tokenManager.guardarIdiomaApp(1);
-                tokenManager.guardarIdiomaTexto(1);
+                tokenManager.guardarIdiomaApp(2);
+                tokenManager.guardarIdiomaTexto(2);
                 LocaleManagerIdiomaAndroid.setLocale(this, APP_INGLES);
             }else if(valor.equals(APP_ESPANOL)){ // espanol
-                tokenManager.guardarIdiomaApp(0);
-                tokenManager.guardarIdiomaTexto(0);
+                tokenManager.guardarIdiomaApp(1);
+                tokenManager.guardarIdiomaTexto(1);
                 LocaleManagerIdiomaAndroid.setLocale(this, APP_ESPANOL);
             }else{
                 // defecto sera espanol
-                tokenManager.guardarIdiomaApp(0);
-                tokenManager.guardarIdiomaTexto(0);
+                tokenManager.guardarIdiomaApp(1);
+                tokenManager.guardarIdiomaTexto(1);
                 LocaleManagerIdiomaAndroid.setLocale(this, APP_ESPANOL);
             }
 
             tokenManager.guardarIdiomaTelefono(1);
         }else{
-            if(tokenManager.getToken().getIdiomaApp() == 0){
+            // espanol
+            if(tokenManager.getToken().getIdiomaApp() == 1){
                 LocaleManagerIdiomaAndroid.setLocale(this, APP_ESPANOL);
             }
-            else if(tokenManager.getToken().getIdiomaApp() == 1){
+            // ingles
+            else if(tokenManager.getToken().getIdiomaApp() == 2){
                 LocaleManagerIdiomaAndroid.setLocale(this, APP_INGLES);
             }
             else{
@@ -77,15 +80,11 @@ public class SplashActivity extends AppCompatActivity {
             if(!TextUtils.isEmpty(tokenManager.getToken().getId())){
 
                 // Siguiente Actvity
-                /*Intent intent = new Intent(this, PrincipalActivity.class);
+                Intent intent = new Intent(this, PrincipalActivity.class);
                 startActivity(intent);
 
                 // Animación personalizada de entrada
                 overridePendingTransition(R.anim.slide_in_right_activity, R.anim.slide_out_left_activity);
-                finish();*/
-
-                Intent intentLogin = new Intent(this, LoginActivity.class);
-                startActivity(intentLogin);
                 finish();
 
             }else {

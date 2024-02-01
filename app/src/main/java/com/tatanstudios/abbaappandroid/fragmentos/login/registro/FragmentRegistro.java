@@ -155,10 +155,10 @@ public class FragmentRegistro extends Fragment {
         colorGris = ContextCompat.getColor(requireContext(), R.color.gris616161);
         colorBlanco = ContextCompat.getColor(requireContext(), R.color.blanco);
         colorBlack = ContextCompat.getColor(requireContext(), R.color.negro);
-
         colorEstadoGris = ColorStateList.valueOf(colorGris);
         colorEstadoBlanco = ColorStateList.valueOf(colorBlanco);
         colorEstadoNegro = ColorStateList.valueOf(colorBlack);
+
         btnRegistro.setEnabled(false);
         btnRegistro.setBackgroundTintList(colorEstadoGris);
         btnRegistro.setTextColor(colorBlanco);

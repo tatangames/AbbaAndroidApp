@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- NO LE AFECTARA NINGUN TEMA -->
+
+
+    <TextView
+        android:id="@+id/createText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="5dp"
+        android:padding="8dp"
+        android:fontFamily="@font/liberation_sans_bold"
+        android:text="@string/cambiar_tema"
+        android:textAlignment="viewStart"
+        android:textColor="@color/negro"
+        android:textSize="22sp" />
+
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchButtonTema"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+        android:textSize="18sp"
+        android:thumb="@drawable/codigo_thumb_tema"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:showText="false"
+        app:switchPadding="8dp"
+        app:track="@drawable/codigo_track_tema" />
+
+
+</LinearLayout>

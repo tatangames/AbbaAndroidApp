@@ -232,7 +232,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/contrasena"
                     android:inputType="textPassword"
-                    android:maxLength="30"
+                    android:maxLength="20"
                     android:textSize="20sp"
                     android:textStyle="normal"
                     app:hintTextAppearance="@style/Input_Edit_Text_Hint_Input" />

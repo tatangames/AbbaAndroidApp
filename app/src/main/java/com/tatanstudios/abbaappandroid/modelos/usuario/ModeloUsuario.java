@@ -34,6 +34,13 @@ public class ModeloUsuario {
     @SerializedName("plancompletado")
     public int planCompletado;
 
+    @SerializedName("letra")
+    public String letra;
+
+
+    public String getLetra() {
+        return letra;
+    }
 
     public int getPlanCompletado() {
         return planCompletado;
