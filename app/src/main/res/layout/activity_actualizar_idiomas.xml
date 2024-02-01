@@ -58,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/interfaz_de_la_aplicacion"
-                    android:textColor="@color/fondo_negro_blanco_v1"
+                    android:textColor="@color/fondo_textos_negro_blanco_v1"
                     android:textSize="16sp" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -72,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_editar_nota"
                         android:drawablePadding="8dp"
-                        android:textColor="@color/fondo_negro_blanco_v1"
+                        android:textColor="@color/fondo_textos_negro_blanco_v1"
                         android:textSize="27sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -87,7 +87,7 @@
                     android:layout_marginTop="15dp"
                     android:gravity="left"
                     android:text="@string/esta_config_afecta_app"
-                    android:textColor="@color/fondo_negro_blanco_v1"
+                    android:textColor="@color/fondo_textos_negro_blanco_v1"
                     android:textSize="14sp" />
 
 
@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
                     android:text="@string/textos_planes_biblia"
-                    android:textColor="@color/fondo_negro_blanco_v1"
+                    android:textColor="@color/fondo_textos_negro_blanco_v1"
                     android:textSize="16sp" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -119,7 +119,7 @@
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_editar_nota"
                         android:drawablePadding="8dp"
-                        android:textColor="@color/fondo_negro_blanco_v1"
+                        android:textColor="@color/fondo_textos_negro_blanco_v1"
                         android:textSize="27sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -134,7 +134,7 @@
                     android:layout_marginTop="15dp"
                     android:gravity="left"
                     android:text="@string/esta_config_afecta_planes"
-                    android:textColor="@color/fondo_negro_blanco_v1"
+                    android:textColor="@color/fondo_textos_negro_blanco_v1"
                     android:textSize="14sp" />
 
             </LinearLayout>

@@ -20,11 +20,11 @@
     <color name="azul607D8B">#607D8B</color>
     <color name="azulFF25316D">#FF25316D</color>
     <color name="naranjaFFFD841F">#FFFD841F</color>
-
-
+    <color name="gris7B7B7B">#7b7b7d</color>
 
     <color name="bottomNavigationItemColor">#000000</color>
-    <color name="fondo_negro_blanco_v1">#000000</color>
+    <color name="fondo_negro_blanco_v1">#FFFFFF</color>
+    <color name="fondo_textos_negro_blanco_v1">#000000</color>
     <color name="barraProgreso">#ff3d4d</color>
     <color name="verdeSuccess">#A5DC86</color>
     <color name="bottom_navigation_icon_color_selected">#000000</color>

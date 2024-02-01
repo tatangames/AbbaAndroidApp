@@ -248,51 +248,48 @@ public class FragmentAjustes extends Fragment {
             }
 
 
-            switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(final CompoundButton buttonView, boolean isChecked) {
-                    // Verifica si el cambio es causado por una animación
-                    if (buttonView.isPressed()) {
-                        // Crea una animación
-                        ObjectAnimator animator = ObjectAnimator.ofFloat(buttonView, "translationX", 0f);
-                        animator.setDuration(500); // Duración de la animación en milisegundos
+            switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                // Verifica si el cambio es causado por una animación
+                if (buttonView.isPressed()) {
+                    // Crea una animación
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(buttonView, "translationX", 0f);
+                    animator.setDuration(500); // Duración de la animación en milisegundos
 
-                        // Agrega un oyente para detectar el final de la animación
-                        animator.addListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
+                    // Agrega un oyente para detectar el final de la animación
+                    animator.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
 
-                                switchCompat.setEnabled(false);
-                                bloqueoPorTema = false;
+                            switchCompat.setEnabled(false);
+                            bloqueoPorTema = false;
 
 
-                                // Aquí puedes ejecutar el código después de que termina la animación
-                                if (buttonView.isChecked()) {
-                                    // El SwitchCompat está en la posición ON
-                                    // Tu código aquí
-                                    if(unaVezMlistener){
-                                        unaVezMlistener = false;
-                                        tokenManager.guardarEstiloTema(1);
-                                        mListener.onFragmentInteraction(1);
-                                    }
-
-                                } else {
-                                    // El SwitchCompat está en la posición OFF
-                                    // Tu código aquí
-                                    if(unaVezMlistener){
-                                        unaVezMlistener = false;
-                                        tokenManager.guardarEstiloTema(0);
-                                        mListener.onFragmentInteraction(0);
-                                    }
+                            // Aquí puedes ejecutar el código después de que termina la animación
+                            if (buttonView.isChecked()) {
+                                // El SwitchCompat está en la posición ON
+                                // Tu código aquí
+                                if(unaVezMlistener){
+                                    unaVezMlistener = false;
+                                    tokenManager.guardarEstiloTema(1);
+                                    mListener.onFragmentInteraction(1);
                                 }
 
-                                bottomSheetDialog.dismiss();
+                            } else {
+                                // El SwitchCompat está en la posición OFF
+                                // Tu código aquí
+                                if(unaVezMlistener){
+                                    unaVezMlistener = false;
+                                    tokenManager.guardarEstiloTema(0);
+                                    mListener.onFragmentInteraction(0);
+                                }
                             }
-                        });
 
-                        // Inicia la animación
-                        animator.start();
-                    }
+                            bottomSheetDialog.dismiss();
+                        }
+                    });
+
+                    // Inicia la animación
+                    animator.start();
                 }
             });
 

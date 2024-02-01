@@ -6,6 +6,8 @@
     android:background="@drawable/codigo_boton_redondeado_v1"
     android:orientation="vertical">
 
+    <!-- NO LLEVARA TEMAS -->
+
     <TextView
         android:id="@+id/createText"
         android:layout_width="wrap_content"

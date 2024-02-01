@@ -92,7 +92,7 @@
 
                 <TextView
                     android:id="@+id/txt"
-                    android:textColor="@color/fondo_negro_blanco_v1"
+                    android:textColor="@color/fondo_textos_negro_blanco_v1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -108,7 +108,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="16dp"
-                    android:textColor="@color/fondo_negro_blanco_v1"
+                    android:textColor="@color/fondo_textos_negro_blanco_v1"
                     android:drawableStart="@drawable/ic_calendario"
                     android:drawablePadding="5dp"
                     android:textSize="20sp"/>
