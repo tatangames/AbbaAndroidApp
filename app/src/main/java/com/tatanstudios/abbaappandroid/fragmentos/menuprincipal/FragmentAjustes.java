@@ -321,9 +321,6 @@ public class FragmentAjustes extends Fragment {
         someActivityResultLauncher.launch(intentLogin);
     }
 
-
-
-
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -333,6 +330,7 @@ public class FragmentAjustes extends Fragment {
             });
 
     boolean seguroCerrarSesion = true;
+
 
     void cerrarSesion(){
 
@@ -366,92 +364,6 @@ public class FragmentAjustes extends Fragment {
             pDialog.show();
         }
     }
-
-
-    private void cambiarIdiomaModal(){
-
-        if (!bottomDialogIdioma) {
-            bottomDialogIdioma = true;
-
-            BottomSheetDialog bottomSheetDialogIdioma = new BottomSheetDialog(requireContext());
-            View bottomSheetView = getLayoutInflater().inflate(R.layout.cardview_opcion_cambiar_idioma_app, null);
-            bottomSheetDialogIdioma.setContentView(bottomSheetView);
-
-            RadioButton radioIngles = bottomSheetDialogIdioma.findViewById(R.id.radio_button_english);
-            RadioButton radioEspanol = bottomSheetDialogIdioma.findViewById(R.id.radio_button_spanish);
-
-
-            if(tokenManager.getToken().getIdiomaApp() == 0){ // espanol
-                radioEspanol.setChecked(true);
-                radioIngles.setChecked(false);
-            }
-            else if(tokenManager.getToken().getIdiomaApp() == 1){ // ingles
-                radioIngles.setChecked(true);
-                radioEspanol.setChecked(false);
-            }else{
-                // defecto espanol
-                radioEspanol.setChecked(true);
-                radioIngles.setChecked(false);
-            }
-
-            radioIngles.setOnClickListener(v -> {
-                if(unaVezRadioIdioma){
-                    unaVezRadioIdioma = false;
-                    radioEspanol.setEnabled(false);
-                    tokenManager.guardarIdiomaApp(APP_INGLES);
-                    changeLanguage();
-                }
-
-            });
-
-            radioEspanol.setOnClickListener(v -> {
-                if(unaVezRadioIdioma){
-                    unaVezRadioIdioma = false;
-                    radioEspanol.setEnabled(false);
-                    tokenManager.guardarIdiomaApp(APP_ESPANOL);
-                    changeLanguage();
-
-                }
-            });
-
-            // Configura un oyente para saber cuándo se cierra el BottomSheetDialog
-            bottomSheetDialogIdioma.setOnDismissListener(dialog -> {
-                bottomDialogIdioma = false;
-            });
-
-            bottomSheetDialogIdioma.show();
-        }
-    }
-
-
-    private void changeLanguage() {
-
-        KAlertDialog pDialog = new KAlertDialog(getContext(), KAlertDialog.SUCCESS_TYPE, false);
-
-        pDialog.setTitleText(getString(R.string.idioma_actualizado));
-        pDialog.setTitleTextGravity(Gravity.CENTER);
-        pDialog.setTitleTextSize(19);
-
-        pDialog.setContentText(getString(R.string.para_aplicar_efectos_se_debe_reiniciar));
-        pDialog.setContentTextAlignment(View.TEXT_ALIGNMENT_VIEW_START, Gravity.START);
-        pDialog.setContentTextSize(17);
-
-        pDialog.setCancelable(false);
-        pDialog.setCanceledOnTouchOutside(false);
-        pDialog.confirmButtonColor(R.drawable.codigo_kalert_dialog_corners_confirmar);
-        pDialog.setConfirmClickListener(getString(R.string.reiniciar), sDialog -> {
-            sDialog.dismissWithAnimation();
-            reiniciarApp();
-        });
-        pDialog.show();
-    }
-
-    private void reiniciarApp(){
-        Intent intentLogin = new Intent(getContext(), SplashActivity.class);
-        startActivity(intentLogin);
-        getActivity().finish();
-    }
-
 
 
     void salir(){

@@ -1,9 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootRelative"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.notificacion.EditarPerfilActivity">
+    android:focusableInTouchMode="true"
+    style="@style/Fondo_Estilo_Tema_v1"
+    android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/toolbar_fecha_texto_v1"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/linearContenedor"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:visibility="invisible"
+                android:layout_height="wrap_content">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+
+                    android:id="@+id/inputNombre"
+                    style="@style/Text_Input_Layout_Estilo_v1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="45dp"
+                    android:layout_marginEnd="16dp"
+                    app:boxStrokeColor="@color/estilo_text_input_box_stroke"
+                    app:boxStrokeWidth="1dp"
+                    app:errorIconDrawable="@null"
+                    app:errorTextAppearance="@style/Text_Input_Layout_Error_Apariencia">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtNombre"
+                        style="@style/Input_Edit_Text_Tema"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxStrokeWidth="1dp"
+                        app:hintTextColor="@color/gris616161"
+                        android:hint="@string/primer_nombre"
+                        android:inputType="textPersonName"
+                        android:maxLength="50"
+                        android:textSize="20sp"
+                        android:textStyle="normal"
+                        app:hintTextAppearance="@style/Input_Edit_Text_Hint_Input" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputApellido"
+                    style="@style/Text_Input_Layout_Estilo_v1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="16dp"
+                    app:boxStrokeColor="@color/estilo_text_input_box_stroke"
+                    app:boxStrokeWidth="1dp"
+                    app:errorIconDrawable="@null"
+                    app:errorTextAppearance="@style/Text_Input_Layout_Error_Apariencia">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtApellido"
+                        style="@style/Input_Edit_Text_Tema"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/apellido"
+                        android:inputType="textPersonName"
+                        android:maxLength="50"
+                        android:textSize="20sp"
+                        android:textStyle="normal"
+                        app:hintTextAppearance="@style/Input_Edit_Text_Hint_Input" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:id="@+id/txt"
+                    android:textColor="@color/fondo_negro_blanco_v1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/fecha_de_nacimiento"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/txtCalendario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="16dp"
+                    android:textColor="@color/fondo_negro_blanco_v1"
+                    android:drawableStart="@drawable/ic_calendario"
+                    android:drawablePadding="5dp"
+                    android:textSize="20sp"/>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+
+                    android:id="@+id/inputCorreo"
+                    style="@style/Text_Input_Layout_Estilo_v1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="45dp"
+                    android:layout_marginEnd="16dp"
+                    app:boxStrokeColor="@color/estilo_text_input_box_stroke"
+                    app:boxStrokeWidth="1dp"
+                    app:errorIconDrawable="@null"
+                    app:errorTextAppearance="@style/Text_Input_Layout_Error_Apariencia">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtCorreo"
+                        style="@style/Input_Edit_Text_Tema"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/correo_electronico"
+                        android:inputType="textEmailAddress"
+                        android:maxLength="100"
+                        android:textSize="20sp"
+                        android:textStyle="normal"
+                        app:hintTextAppearance="@style/Input_Edit_Text_Hint_Input" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btnActualizar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="100dp"
+                    android:background="@drawable/codigo_boton_redondeado_v1"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/actualizar"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/inputContrasena" />
+
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+
+
+    </LinearLayout>
+</RelativeLayout>

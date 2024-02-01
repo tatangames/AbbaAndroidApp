@@ -71,10 +71,20 @@ public interface ApiService {
     Observable<ModeloUsuario> actualizarPassword(@Field("iduser") String iduser,
                                                  @Field("password") String password);
 
+    // informacion de un perfil
+    @POST("app/solicitar/informacion/perfil")
+    @FormUrlEncoded
+    Observable<ModeloUsuario> informacionPerfil(@Field("iduser") String idUsuario);
 
 
-
-
+    // editar la informacion del perfil
+    @POST("app/actualizar/perfil/usuario")
+    @FormUrlEncoded
+    Observable<ModeloUsuario> actualizarPerfilUsuario(@Field("iduser") String idUsuario,
+                                                      @Field("nombre") String nombre,
+                                                      @Field("apellido") String apellido,
+                                                      @Field("fechanac") String fechaNacimiento,
+                                                      @Field("correo") String correo);
 
 
 
