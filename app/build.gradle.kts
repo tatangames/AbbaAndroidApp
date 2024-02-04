@@ -62,6 +62,22 @@ dependencies {
     // manejo de permisos
     implementation("pub.devrel:easypermissions:3.0.0")
 
+
+
+
+
+    // manejador de imagenes
+    implementation("com.github.bumptech.glide:glide:4.13.2") // glide imagenes
+    annotationProcessor("com.github.bumptech.glide:compiler:4.13.2") // glide soporte
+
+
+
+
+
+
+
+
+
     implementation("com.google.android.exoplayer:exoplayer:2.18.7")
     implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
     implementation("com.pierfrancescosoffritti.androidyoutubeplayer:custom-ui:12.1.0")

@@ -1,9 +1,14 @@
 package com.tatanstudios.abbaappandroid.network;
 
 import com.tatanstudios.abbaappandroid.modelos.iglesias.ModeloDepartamentos;
+import com.tatanstudios.abbaappandroid.modelos.planes.ModeloBuscarPlanes;
+import com.tatanstudios.abbaappandroid.modelos.planes.ModeloBuscarPlanesPaginate;
+import com.tatanstudios.abbaappandroid.modelos.planes.ModeloBuscarPlanesPaginateMetaDatos;
+import com.tatanstudios.abbaappandroid.modelos.planes.ModeloBuscarPlanesPaginateRequest;
 import com.tatanstudios.abbaappandroid.modelos.usuario.ModeloUsuario;
 
 import io.reactivex.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -86,6 +91,19 @@ public interface ApiService {
                                                       @Field("fechanac") String fechaNacimiento,
                                                       @Field("correo") String correo);
 
+
+
+    // listado de planes nuevos con paginacion
+    @POST("app/buscar/planes/nuevos")
+    Observable<ModeloBuscarPlanesPaginate<ModeloBuscarPlanesPaginateMetaDatos>> listadoNuevosPlanes(
+            @Body ModeloBuscarPlanesPaginateRequest request);
+
+
+    // ver informacion de un plan para poder seleccionarlo
+    @POST("app/plan/seleccionado/informacion")
+    @FormUrlEncoded
+    Observable<ModeloBuscarPlanes> informacionPlanSeleccionado(@Field("idplan") int idplan,
+                                                               @Field("idiomaplan") int idiomaplan);
 
 
 

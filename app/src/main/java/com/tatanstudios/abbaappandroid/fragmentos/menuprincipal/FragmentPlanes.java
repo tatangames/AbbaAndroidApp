@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.adaptadores.menus.AdaptadorFragmentPlanesBotonera;
-import com.tatanstudios.abbaappandroid.fragmentos.planes.FragmentBuscarPlanes;
+import com.tatanstudios.abbaappandroid.fragmentos.planes.buscarplanes.FragmentBuscarPlanes;
 import com.tatanstudios.abbaappandroid.fragmentos.planes.FragmentMisPlanes;
 import com.tatanstudios.abbaappandroid.fragmentos.planes.FragmentPlanesCompletados;
 import com.tatanstudios.abbaappandroid.modelos.menus.ModeloFragmentPlanBotonera;

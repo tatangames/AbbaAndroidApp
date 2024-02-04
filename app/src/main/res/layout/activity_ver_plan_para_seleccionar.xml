@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootRelative"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo_negro_blanco_v1"
+    android:focusableInTouchMode="true">
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar_fecha_texto_v1" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgPlan"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:contentDescription="@string/logo"
+                    android:scaleType="fitCenter" />
+
+                <TextView
+                    android:id="@+id/txtSubtitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/liberation_sans_bold"
+                    android:textColor="@color/fondo_textos_negro_blanco_v1"
+                    android:textSize="26sp" />
+
+                <TextView
+                    android:id="@+id/txtTitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:textColor="@color/gris616161"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:textColor="@color/fondo_textos_negro_blanco_v1"
+                    android:textSize="32dp"
+                    android:visibility="gone" />
+
+
+                <Button
+                    android:id="@+id/botonComenzar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="80dp"
+                    android:background="@drawable/codigo_boton_redondeado_v1"
+                    android:fontFamily="@font/liberation_sans_bold"
+                    android:text="@string/iniciar"
+                    android:textAllCaps="false"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+</RelativeLayout>

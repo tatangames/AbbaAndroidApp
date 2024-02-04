@@ -100,6 +100,17 @@
         <item name="android:background">@drawable/codigo_spinner_estilo_negro</item>
     </style>
 
+    <!-- UTILIZADO POR ShapeableImageView -->
+    <style name="Radio_Shapeable_Imageview">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+
+
+
+
+
 
 
 
