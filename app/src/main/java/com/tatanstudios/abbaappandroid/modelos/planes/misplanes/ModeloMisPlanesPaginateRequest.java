@@ -1,8 +1,8 @@
-package com.tatanstudios.abbaappandroid.modelos.planes;
+package com.tatanstudios.abbaappandroid.modelos.planes.misplanes;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ModeloBuscarPlanesPaginateRequest {
+public class ModeloMisPlanesPaginateRequest {
 
     @SerializedName("page")
     private int page;

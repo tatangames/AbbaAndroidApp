@@ -5,15 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.core.widget.NestedScrollView;
-import androidx.core.widget.TextViewCompat;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.content.res.Configuration;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,7 +23,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.modelos.planes.ModeloBuscarPlanes;
+import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanes;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
@@ -118,7 +115,6 @@ public class VerPlanParaSeleccionarActivity extends AppCompatActivity {
             btnComenzar.setTextColor(colorBlanco);
         }
 
-
         if (getIntent().getExtras() != null) {
             Bundle bundle = getIntent().getExtras();
             idPlan = bundle.getInt("ID");
@@ -129,8 +125,7 @@ public class VerPlanParaSeleccionarActivity extends AppCompatActivity {
         });
 
         imgFlechaAtras.setOnClickListener(v ->{
-            //onBackPressedDispatcher.onBackPressed();
-            volverAtrasActualizado();
+            onBackPressedDispatcher.onBackPressed();
         });
 
         apiBuscarDatos();
@@ -168,7 +163,6 @@ public class VerPlanParaSeleccionarActivity extends AppCompatActivity {
     }
 
 
-
     private void setearCamposNuevosDatos(ModeloBuscarPlanes api){
 
         if(api.getImagen() != null && !TextUtils.isEmpty(api.getImagen())){
@@ -193,20 +187,13 @@ public class VerPlanParaSeleccionarActivity extends AppCompatActivity {
             txtDescripcion.setVisibility(View.VISIBLE);
         }
 
-
-
         nestedScrollView.setVisibility(View.VISIBLE);
     }
 
 
-
-
-
-
-
     private void apiSeleccionarPlan(){
 
-        /*progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
 
         String iduser = tokenManager.getToken().getId();
 
@@ -239,10 +226,8 @@ public class VerPlanParaSeleccionarActivity extends AppCompatActivity {
                                 throwable -> {
                                     mensajeSinConexion();
                                 })
-        );*/
+        );
     }
-
-
 
 
 

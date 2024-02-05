@@ -1,4 +1,4 @@
-package com.tatanstudios.abbaappandroid.modelos.planes;
+package com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes;
 
 import com.google.gson.annotations.SerializedName;
 

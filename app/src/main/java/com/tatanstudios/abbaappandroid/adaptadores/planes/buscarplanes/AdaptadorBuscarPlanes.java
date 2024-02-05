@@ -18,7 +18,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.fragmentos.planes.buscarplanes.FragmentBuscarPlanes;
-import com.tatanstudios.abbaappandroid.modelos.planes.ModeloBuscarPlanes;
+import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanes;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 
 import java.util.List;

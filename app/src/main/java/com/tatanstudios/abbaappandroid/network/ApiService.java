@@ -1,10 +1,13 @@
 package com.tatanstudios.abbaappandroid.network;
 
 import com.tatanstudios.abbaappandroid.modelos.iglesias.ModeloDepartamentos;
-import com.tatanstudios.abbaappandroid.modelos.planes.ModeloBuscarPlanes;
-import com.tatanstudios.abbaappandroid.modelos.planes.ModeloBuscarPlanesPaginate;
-import com.tatanstudios.abbaappandroid.modelos.planes.ModeloBuscarPlanesPaginateMetaDatos;
-import com.tatanstudios.abbaappandroid.modelos.planes.ModeloBuscarPlanesPaginateRequest;
+import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanes;
+import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginate;
+import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateMetaDatos;
+import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateRequest;
+import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginate;
+import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginateMetaDatos;
+import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginateRequest;
 import com.tatanstudios.abbaappandroid.modelos.usuario.ModeloUsuario;
 
 import io.reactivex.Observable;
@@ -104,6 +107,19 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<ModeloBuscarPlanes> informacionPlanSeleccionado(@Field("idplan") int idplan,
                                                                @Field("idiomaplan") int idiomaplan);
+
+
+    // seleccionar plan nuevo
+    @POST("app/plan/nuevo/seleccionar")
+    @FormUrlEncoded
+    Observable<ModeloUsuario> seleccionarPlanNuevo(@Field("idplan") int idplan,
+                                                   @Field("iduser") String iduser);
+
+
+    // listado de mis planes
+    @POST("app/plan/listado/misplanes")
+    Observable<ModeloMisPlanesPaginate<ModeloMisPlanesPaginateMetaDatos>> listadoMisPlanes(
+            @Body ModeloMisPlanesPaginateRequest request);
 
 
 

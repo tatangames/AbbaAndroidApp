@@ -5,7 +5,6 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,13 +22,12 @@ import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.planes.VerPlanParaSeleccionarActivity;
 import com.tatanstudios.abbaappandroid.adaptadores.planes.buscarplanes.AdaptadorBuscarPlanes;
 import com.tatanstudios.abbaappandroid.fragmentos.menuprincipal.FragmentPlanes;
-import com.tatanstudios.abbaappandroid.modelos.planes.ModeloBuscarPlanes;
-import com.tatanstudios.abbaappandroid.modelos.planes.ModeloBuscarPlanesPaginateRequest;
+import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanes;
+import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateRequest;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
