@@ -32,6 +32,10 @@
     <color name="bottom_navigation_icon_color_selected">#000000</color>
     <color name="bottom_navigation_background_color">#FFFFFF</color>
     <color name="bottom_navigation_text_color">#000000</color>
+    <color name="confetiAmarillo">#FFC107</color>
+    <color name="confetiRosado">#FF4081</color>
+    <color name="confetiCeleste">#2196F3</color>
+    <color name="fondo_vectores_negro_blanco_v1">#FFFFFF</color>
 
 
 

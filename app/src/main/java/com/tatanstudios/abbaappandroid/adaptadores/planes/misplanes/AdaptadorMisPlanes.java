@@ -112,7 +112,7 @@ public class AdaptadorMisPlanes extends RecyclerView.Adapter<RecyclerView.ViewHo
                         .into(((HolderVistaPlanes) holder).imgPlan);
             }
 
-            ((HolderVistaPlanes) holder).txtTitulo.setText(String.valueOf(bloque2.getIdPlanes()));
+            ((HolderVistaPlanes) holder).txtTitulo.setText(bloque2.getTitulo());
 
             holder.itemView.setOnClickListener(v -> {
                 fragmentMisPlanes.planesBloquesFecha(bloque2.getIdPlanes());

@@ -56,25 +56,14 @@ public class FragmentMisPlanes extends Fragment {
 
     private TextView txtSinPlanes;
 
-
-    //private AdaptadorBuscarPlanes adapter;
-
     private int RETORNO_ACTUALIZAR_100 = 100;
-
 
     private ArrayList<ModeloVistaMisPlanes> elementos;
 
     // para saver si hay mas de 1 elemento en la primera vez que se pide datos,
     // como es paginacion puede venir una pagina sin datos
-    private boolean unaVezPaginacion = true;
-    private boolean unaVezInfoData = true;
-
-    private boolean unaVezContinuar = true;
 
     private boolean unaVezRecyclerOcultar = true;
-
-    private int hayDatos = 0;
-
 
 
     // AJUSTES DE PAGINACION
@@ -108,7 +97,6 @@ public class FragmentMisPlanes extends Fragment {
         elementos = new ArrayList<>();
 
         // Configura el LinearLayoutManager y el ScrollListener para manejar la paginación
-        // Configura el LinearLayoutManager y el ScrollListener para manejar la paginación
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
@@ -124,12 +112,9 @@ public class FragmentMisPlanes extends Fragment {
 
                 if (puedeCargarYaPaginacion && !isLastPage()) {
 
-                    Log.i("PORTADA", "que pedi");
-
                     // Verificar si no se está cargando y si ha llegado al final de la lista
                     if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                             && firstVisibleItemPosition >= 0) {
-                        Log.i("PORTADA", "que pedi 2");
                         apiBuscarMisPlanesPaginate();
                     }
                 }
@@ -213,7 +198,6 @@ public class FragmentMisPlanes extends Fragment {
                                 throwable -> {
                                     mensajeSinConexion();
                                     String errorMessage = throwable.getMessage();
-                                    Log.i("PORTADA", "error: " + errorMessage);
                                 }
                         ));
 
@@ -242,7 +226,7 @@ public class FragmentMisPlanes extends Fragment {
             elementos.add(new ModeloVistaMisPlanes( ModeloVistaMisPlanes.TIPO_PLANES,
                  null,
                     new ModeloMisPlanesBloque2(
-                            m.getId(), // debe ser id plan
+                            m.getIdPlanes(), // debe ser id plan
                             m.getTitulo(),
                             m.getImagen(),
                             m.getSubtitulo()
@@ -261,10 +245,8 @@ public class FragmentMisPlanes extends Fragment {
     //*********************************
     private void apiBuscarMisPlanesPaginate(){
 
-        Log.i("PORTADA", "paginando");
         if(!estaCargandoApi){
             estaCargandoApi = true;
-            Log.i("PORTADA", "paginando222");
             progressBar.setVisibility(View.VISIBLE);
 
             String iduser = tokenManager.getToken().getId();
@@ -288,8 +270,6 @@ public class FragmentMisPlanes extends Fragment {
 
                                         if(apiRespuesta.getSuccess() == 1){
 
-
-
                                             // solo si hay datos nuevos de paginate
                                             if(apiRespuesta.getHayinfo() == 1){
                                                 if (!apiRespuesta.getData().getData().isEmpty()) {
@@ -302,7 +282,6 @@ public class FragmentMisPlanes extends Fragment {
                                                     estaCargandoApi = false;
                                                 }
                                             }
-
                                         }else{
                                             mensajeSinConexion();
                                             estaCargandoApi = false;
@@ -325,7 +304,7 @@ public class FragmentMisPlanes extends Fragment {
             elementos.add(new ModeloVistaMisPlanes( ModeloVistaMisPlanes.TIPO_PLANES,
                     null,
                     new ModeloMisPlanesBloque2(
-                            m.getId(),
+                            m.getIdPlanes(),
                             m.getTitulo(),
                             m.getImagen(),
                             m.getSubtitulo()

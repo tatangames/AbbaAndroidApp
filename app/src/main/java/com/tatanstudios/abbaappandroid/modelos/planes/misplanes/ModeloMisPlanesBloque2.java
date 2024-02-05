@@ -26,6 +26,8 @@ public class ModeloMisPlanesBloque2 {
         this.subtitulo = subtitulo;
     }
 
+
+
     public int getIdPlanes() {
         return idPlanes;
     }

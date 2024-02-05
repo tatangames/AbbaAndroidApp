@@ -5,9 +5,11 @@ import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarP
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginate;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateMetaDatos;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateRequest;
+import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.ModeloCuestionario;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginate;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginateMetaDatos;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginateRequest;
+import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.bloquefechas.ModeloBloqueFechaContenedor;
 import com.tatanstudios.abbaappandroid.modelos.usuario.ModeloUsuario;
 
 import io.reactivex.Observable;
@@ -120,6 +122,38 @@ public interface ApiService {
     @POST("app/plan/listado/misplanes")
     Observable<ModeloMisPlanesPaginate<ModeloMisPlanesPaginateMetaDatos>> listadoMisPlanes(
             @Body ModeloMisPlanesPaginateRequest request);
+
+
+    // informacion de bloque fechas de un plan
+    @POST("app/plan/misplanes/informacion/bloque")
+    @FormUrlEncoded
+    Observable<ModeloBloqueFechaContenedor> informacionPlanBloque(@Field("iduser") String iduser,
+                                                                  @Field("idiomaplan") int idiomaplan,
+                                                                  @Field("idplan") int idplan);
+
+    // actualizar check de bloque detalle fecha
+    @POST("app/plan/misplanes/actualizar/check")
+    @FormUrlEncoded
+    Observable<ModeloUsuario> actualizarBloqueFechaCheckbox(@Field("iduser") String iduser,
+                                                          @Field("idblockdeta") int idBlockDeta,
+                                                          @Field("valor") int valor,
+                                                          @Field("idplan") int idplan);
+
+
+    // buscar informacion del cuestionario de cada bloque detalle
+    @POST("app/plan/misplanes/cuestionario/bloque")
+    @FormUrlEncoded
+    Observable<ModeloCuestionario> informacionCuestionarioBloqueDetalle(@Field("iduser") String iduser,
+                                                                        @Field("idblockdeta") int idBlockDeta,
+                                                                        @Field("idiomaplan") int idiomaplan);
+
+
+
+
+
+
+
+
 
 
 
