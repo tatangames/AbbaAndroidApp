@@ -4,6 +4,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,8 +140,8 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
                                         if(apiRespuesta.getSuccess() == 1) {
 
-                                            String tituloP = apiRespuesta.getTitulo();
-                                            String descripcionP = apiRespuesta.getDescripcion();
+                                            // colcoado en un webview
+                                            String descripcionPregunta = apiRespuesta.getDescripcion();
 
                                             // para decirle al boton si debe guardar o actualizar
                                             if(apiRespuesta.getHayRespuesta() == 1){
@@ -170,7 +171,7 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
                                             modeloPreguntas = apiRespuesta.getModeloPreguntas();
 
-                                            setearAdaptador(tituloP, descripcionP);
+                                            setearAdaptador(descripcionPregunta);
                                         }
                                         else if(apiRespuesta.getSuccess() == 2) {
                                             // BLOQUE NO TIENE CUESTIONARIO
@@ -191,9 +192,9 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
     }
 
 
-    private void setearAdaptador(String tituloP, String descripcionP){
+    private void setearAdaptador(String descripcionP){
 
-        adapter = new AdaptadorPreguntas(getContext(), elementos, this, tituloP, descripcionP, temaActual);
+        adapter = new AdaptadorPreguntas(getContext(), elementos, this, descripcionP, temaActual);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -275,6 +276,28 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
     public void compartirDatosPreguntas(){
 
+        String textoGloblal = "";
+
+        boolean valor = false;
+        for (ModeloPreguntas m : modeloPreguntas){
+            if(adapter.getBoolFromEditText(m.getId())){
+                valor = true;
+            }
+        }
+
+        if(valor){
+            Toasty.error(getContext(), getString(R.string.completar_campos), Toasty.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Obtener textos de los input text
+
+        for (ModeloPreguntas m : modeloPreguntas){
+            String texto =  adapter.getTextoFromEditText(m.getId()) + "\n";
+            textoGloblal += texto;
+        }
+
+        Log.i("PORTADA", textoGloblal);
     }
 
 

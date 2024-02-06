@@ -8,6 +8,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,7 +41,6 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
     public ArrayList<ModeloVistasPreguntas> modeloVistasPreguntas;
     private FragmentPreguntasPlanBloque fragmentPreguntasPlanBloque;
 
-    private String tituloP = "";
     private String descripcionP = "";
 
     ColorStateList colorStateListBlack, colorStateListWhite;
@@ -57,11 +58,10 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
             .priority(Priority.NORMAL);
 
     public AdaptadorPreguntas(Context context, ArrayList<ModeloVistasPreguntas> modeloVistasPreguntas,
-                              FragmentPreguntasPlanBloque fragmentPreguntasPlanBloque, String tituloP, String descripcionP, boolean temaActual){
+                              FragmentPreguntasPlanBloque fragmentPreguntasPlanBloque, String descripcionP, boolean temaActual){
         this.context = context;
         this.fragmentPreguntasPlanBloque = fragmentPreguntasPlanBloque;
         this.modeloVistasPreguntas = modeloVistasPreguntas;
-        this.tituloP = tituloP;
         this.temaActual = temaActual;
         this.descripcionP = descripcionP;
 
@@ -106,32 +106,55 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
         // TITULAR
         if (holder instanceof HolderVistaTitular) {
 
-            if(tituloP != null && !TextUtils.isEmpty(tituloP)){
-                ((HolderVistaTitular) holder).txtTitulo.setText(HtmlCompat.fromHtml(tituloP, HtmlCompat.FROM_HTML_MODE_LEGACY));
-                ((HolderVistaTitular) holder).txtTitulo.setVisibility(View.VISIBLE);
+            if(descripcionP != null && !TextUtils.isEmpty(descripcionP)) {
+
+                ((HolderVistaTitular) holder).webViewDescripcion.loadDataWithBaseURL(null, descripcionP, "text/html", "UTF-8", null);
+
+                ((HolderVistaTitular) holder).webViewDescripcion.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+                        super.onPageFinished(view, url);
+
+                        if (temaActual) {
+                            String javascriptColor = String.format("document.body.style.color = '%s';", "white");
+                            ((HolderVistaTitular) holder).webViewDescripcion.evaluateJavascript(javascriptColor, null);
+                        } else {
+                            String javascriptColor = String.format("document.body.style.color = '%s';", "black");
+                            ((HolderVistaTitular) holder).webViewDescripcion.evaluateJavascript(javascriptColor, null);
+                        }
+                    }
+                });
             }else{
-                ((HolderVistaTitular) holder).txtTitulo.setVisibility(View.GONE);
+                ((HolderVistaTitular) holder).webViewDescripcion.setVisibility(View.GONE);
             }
 
-            if(descripcionP != null && !TextUtils.isEmpty(descripcionP)){
-                ((HolderVistaTitular) holder).txtDescription.setText(HtmlCompat.fromHtml(descripcionP, HtmlCompat.FROM_HTML_MODE_LEGACY));
-                ((HolderVistaTitular) holder).txtDescription.setVisibility(View.VISIBLE);
-            }else{
-                ((HolderVistaTitular) holder).txtDescription.setVisibility(View.GONE);
-            }
-
-
-            ((HolderVistaTitular) holder).txtTitulo.setOnClickListener(v -> {
+            ((HolderVistaTitular) holder).webViewDescripcion.setOnClickListener(v -> {
                 fragmentPreguntasPlanBloque.redireccionarBiblia();
             });
-
         }
 
         // BLOQUE PREGUNTAS
         else if (holder instanceof HolderVistaBloquePregunta) {
 
             ModeloPreguntas m = modelo.getModeloPreguntas();
-            ((HolderVistaBloquePregunta) holder).txtPregunta.setText(HtmlCompat.fromHtml(m.getTitulo(), HtmlCompat.FROM_HTML_MODE_LEGACY));
+
+            ((HolderVistaBloquePregunta) holder).webView.loadDataWithBaseURL(null, m.getTitulo(), "text/html", "UTF-8", null);
+
+            ((HolderVistaBloquePregunta) holder).webView.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+
+                    if (temaActual) {
+                        String javascriptColor = String.format("document.body.style.color = '%s';", "white");
+                        ((HolderVistaBloquePregunta) holder).webView.evaluateJavascript(javascriptColor, null);
+                    } else {
+                        String javascriptColor = String.format("document.body.style.color = '%s';", "black");
+                        ((HolderVistaBloquePregunta) holder).webView.evaluateJavascript(javascriptColor, null);
+                    }
+                }
+            });
+
 
             txtInputMap.put(m.getId(), ((HolderVistaBloquePregunta) holder).txtInput);
 
@@ -183,6 +206,7 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
             });
         }
 
+        // BOTONES GUARDAR Y COMPARTIR
         else if (holder instanceof HolderVistaBotonGuardar) {
 
             if(temaActual){ // dark
@@ -229,14 +253,12 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
     // HOLDER PARA VISTA TITULO
     private static class HolderVistaTitular extends RecyclerView.ViewHolder{
 
-        private TextView txtTitulo;
-        private TextView txtDescription;
+        private WebView webViewDescripcion;
 
         public HolderVistaTitular(@NonNull View itemView) {
             super(itemView);
 
-            txtTitulo = itemView.findViewById(R.id.txtTituloP);
-            txtDescription = itemView.findViewById(R.id.texto);
+            webViewDescripcion = itemView.findViewById(R.id.webView);
         }
     }
 
@@ -244,7 +266,7 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
     private static class HolderVistaBloquePregunta extends RecyclerView.ViewHolder {
         // Definir los elementos de la interfaz gráfica según el layout de la línea de separación
 
-        private TextView txtPregunta;
+        private WebView webView;
         private TextInputLayout txtInput;
         private TextInputEditText txtEdt;
 
@@ -254,14 +276,12 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
             super(itemView);
             // Inicializar elementos de la interfaz gráfica aquí
 
-            txtPregunta = itemView.findViewById(R.id.txtPregunta);
+            webView = itemView.findViewById(R.id.webView);
             txtInput = itemView.findViewById(R.id.inputNombre);
             txtEdt = itemView.findViewById(R.id.edtNombre);
             iconImageView = itemView.findViewById(R.id.iconImageView);
-
         }
     }
-
 
 
     private static class HolderVistaBotonGuardar extends RecyclerView.ViewHolder{

@@ -49,18 +49,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <TextView
-                android:id="@+id/txtPregunta"
+            <WebView
+                android:id="@+id/webView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="16dp"
-                android:textColor="@color/fondo_textos_negro_blanco_v1"
-                android:textSize="17sp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iconImageView" />
+
+
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -81,7 +80,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtPregunta">
+                app:layout_constraintTop_toBottomOf="@+id/webView">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtNombre"
