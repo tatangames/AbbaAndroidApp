@@ -7,9 +7,13 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -51,7 +55,6 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
     private RelativeLayout rootRelative;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    private TextView txtHtml, txtTitulo;
 
     private static final String ARG_DATO = "IDBLOQUE";
 
@@ -61,21 +64,18 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
 
     private boolean bottomSheetShowing = false;
 
-    private int tamanoTextoHtml = 18;
-    private final int minTextSize = 14;
-    private final int maxTextSize = 30;
+    private int textSize = 19; // Tamaño de fuente inicial
+    private static final int MIN_TEXT_SIZE = 19;
+    private static final int MAX_TEXT_SIZE = 28;
 
     private boolean tema = false;
 
 
-    private Typeface faceNotoSansCondensesMedium;
-    private Typeface faceNotoSansLight;
-    private Typeface faceTimeNewRoman;
 
     private ColorStateList colorStateTintWhite, colorStateTintBlack;
     private int colorBlanco, colorBlack = 0;
 
-
+    WebView webView;
     public static FragmentCuestionarioPlanBloque newInstance(int dato) {
         FragmentCuestionarioPlanBloque fragment = new FragmentCuestionarioPlanBloque();
         Bundle args = new Bundle();
@@ -89,13 +89,19 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_cuestionario_plan_bloque, container, false);
 
         rootRelative = vista.findViewById(R.id.rootRelative);
-        txtHtml = vista.findViewById(R.id.txtCuestionario);
+        //txtHtml = vista.findViewById(R.id.txtCuestionario);
         fabButton = vista.findViewById(R.id.fabButton);
         linear = vista.findViewById(R.id.linear);
-        txtTitulo = vista.findViewById(R.id.txtTitulo);
-
+        //txtTitulo = vista.findViewById(R.id.txtTitulo);
+        webView = vista.findViewById(R.id.webView);
         tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs", MODE_PRIVATE));
         service = RetrofitBuilder.createServiceAutentificacion(ApiService.class, tokenManager);
+
+
+        webView.setWebViewClient(new WebViewClient());
+
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
 
         idBloqueDeta = getArguments().getInt(ARG_DATO, 0);
 
@@ -116,45 +122,13 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
         colorBlanco = ContextCompat.getColor(requireContext(), R.color.blanco);
         colorBlack = ContextCompat.getColor(requireContext(), R.color.negro);
 
-        faceNotoSansCondensesMedium = ResourcesCompat.getFont(getContext(), R.font.notosans_condensed_medium);
-        faceNotoSansLight = ResourcesCompat.getFont(getContext(), R.font.notosans_light);
-        faceTimeNewRoman = ResourcesCompat.getFont(getContext(), R.font.times_new_normal_regular);
-
         if(tokenManager.getToken().getTema() == 1){ // dark
-            txtHtml.setTextColor(colorBlanco);
             tema = true;
         }else{
-            txtHtml.setTextColor(colorBlack);
         }
-
 
         colorStateTintWhite = ColorStateList.valueOf(colorBlanco);
         colorStateTintBlack = ColorStateList.valueOf(colorBlack);
-
-        // TIPOS DE LETRA POR DEFECTO
-        int tipoLetra = tokenManager.getToken().getTipoLetra();
-        switch (tipoLetra){
-            case 0:
-                // POR DEFECTO SERA NORMAL
-                txtHtml.setTypeface(null, Typeface.NORMAL);
-                break;
-            case 1:
-                // Noto Sans Condensed Medium
-                txtHtml.setTypeface(faceNotoSansCondensesMedium);
-                break;
-            case 2:
-                // Noto Sans Light
-                txtHtml.setTypeface(faceNotoSansLight);
-                break;
-            case 3:
-                // Time new roman
-                txtHtml.setTypeface(faceTimeNewRoman);
-                break;
-            default:
-                txtHtml.setTypeface(null, Typeface.NORMAL);
-                break;
-        }
-
 
         apiBuscarCuestionario();
 
@@ -180,10 +154,9 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
 
                                         if(apiRespuesta.getSuccess() == 1) {
 
-                                            String titulo = apiRespuesta.getTitulo();
                                             String texto = apiRespuesta.getTexto();
 
-                                            setearTexto(titulo, texto);
+                                            setearTexto(texto);
                                         }
                                         else if(apiRespuesta.getSuccess() == 2) {
                                             // BLOQUE NO TIENE CUESTIONARIO
@@ -222,10 +195,9 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
 
             AdaptadorSpinnerTipoLetraCuestionario adapterModelo = new AdaptadorSpinnerTipoLetraCuestionario(getContext(), android.R.layout.simple_spinner_item, tema);
 
-            estilosList.add(new ModeloTipoLetraCuestionario(0, "Sin Formato"));
+            estilosList.add(new ModeloTipoLetraCuestionario(0, "Noto Sans Light"));
             estilosList.add(new ModeloTipoLetraCuestionario(1, "Noto Sans Medium"));
-            estilosList.add(new ModeloTipoLetraCuestionario(2, "Noto Sans Light"));
-            estilosList.add(new ModeloTipoLetraCuestionario(3, "Time New Roman"));
+            estilosList.add(new ModeloTipoLetraCuestionario(2, "Time New Roman"));
 
             for (ModeloTipoLetraCuestionario listado : estilosList) {
                 adapterModelo.add(listado.getNombre());
@@ -248,30 +220,30 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
                 public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 
                     if(position == 0){
+                        // NOTO SANS LIGHT
+                        String fontName = "Fuente1";
                         tokenManager.guardarTipoLetraTexto(0);
-                        txtHtml.setTypeface(null ,Typeface.NORMAL);
-                        txtTitulo.setTypeface(null ,Typeface.NORMAL);
+                        webView.evaluateJavascript("document.body.style.fontFamily = '" + fontName + "';", null);
                     }
                     else if(position == 1){
+                        // NOTO SANS MEDIUM
+                        String fontName = "Fuente2";
                         tokenManager.guardarTipoLetraTexto(1);
-                        txtHtml.setTypeface(faceNotoSansCondensesMedium);
-                        txtTitulo.setTypeface(faceNotoSansCondensesMedium);
+                        webView.evaluateJavascript("document.body.style.fontFamily = '" + fontName + "';", null);
                     }
                     else if(position == 2){
+                        // TIMES NEW
+                        String fontName = "Fuente3";
                         tokenManager.guardarTipoLetraTexto(2);
-                        txtHtml.setTypeface(faceNotoSansLight);
-                        txtTitulo.setTypeface(faceNotoSansLight);
-                    }
-                    else if(position == 3){
-                        tokenManager.guardarTipoLetraTexto(3);
-                        txtHtml.setTypeface(faceTimeNewRoman);
-                        txtTitulo.setTypeface(faceTimeNewRoman);
-                    }
-                    else{
+                        webView.evaluateJavascript("document.body.style.fontFamily = '" + fontName + "';", null);
+                    }else{
+                        // NOTO SANS LIGHT
+                        String fontName = "Fuente1";
                         tokenManager.guardarTipoLetraTexto(0);
-                        txtHtml.setTypeface(null ,Typeface.NORMAL);
-                        txtTitulo.setTypeface(null ,Typeface.NORMAL);
+                        webView.evaluateJavascript("document.body.style.fontFamily = '" + fontName + "';", null);
                     }
+
+
                 }
 
                 @Override
@@ -279,8 +251,6 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
                     // Implementa según sea necesario
                 }
             });
-
-
 
             // CAMBIAR ESTILO BOTONES
 
@@ -302,17 +272,17 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
             // TAMANOS DE TEXTOS
 
             btnMenos.setOnClickListener(v ->{
-                if (tamanoTextoHtml > minTextSize) {
-                    tamanoTextoHtml--;
-                    updateTextSize();
-                }
 
+                if (textSize > MIN_TEXT_SIZE) {
+                    textSize--;
+                    disminuirTamañoTexto();
+                }
             });
 
             btnMas.setOnClickListener(v -> {
-                if (tamanoTextoHtml < maxTextSize) {
-                    tamanoTextoHtml++;
-                    updateTextSize();
+                if (textSize < MAX_TEXT_SIZE) {
+                    textSize++;
+                    aumentarTamañoTexto();
                 }
             });
 
@@ -325,29 +295,63 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
         }
     }
 
-    private void updateTextSize() {
-        txtHtml.setTextSize(tamanoTextoHtml);
-        txtTitulo.setTextSize(tamanoTextoHtml);
+
+    private void aumentarTamañoTexto() {
+        webView.evaluateJavascript("aumentarTamaño();", null);
+    }
+
+    private void disminuirTamañoTexto() {
+        webView.evaluateJavascript("disminuirTamaño();", null);
     }
 
 
+    private void setearTexto( String texto){
 
-    private void setearTexto(String titulo, String texto){
+        webView.loadDataWithBaseURL(null, texto, "text/html", "UTF-8", null);
 
-        // el titulo puede ser opcional
-        if(titulo != null && !TextUtils.isEmpty(titulo)){
-            txtTitulo.setText(HtmlCompat.fromHtml(titulo, HtmlCompat.FROM_HTML_MODE_LEGACY));
-            txtTitulo.setVisibility(View.VISIBLE);
-        }else{
-            txtTitulo.setVisibility(View.GONE);
-        }
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
 
-        if(texto != null){
-            if(!TextUtils.isEmpty(texto)){
-                txtHtml.setText(HtmlCompat.fromHtml(texto, HtmlCompat.FROM_HTML_MODE_LEGACY));
+                // Realiza el cambio de letra aquí
+                // TIPOS DE LETRA POR DEFECTO
+                int tipoLetra = tokenManager.getToken().getTipoLetra();
+
+                if(tipoLetra == 0){
+                    // NOTO SANS LIGHT
+                    String fontName = "Fuente1";
+                    webView.evaluateJavascript("document.body.style.fontFamily = '" + fontName + "';", null);
+                }
+                else if(tipoLetra == 1){
+                    // NOTO SANS MEDIUM
+                    String fontName = "Fuente2";
+                    webView.evaluateJavascript("document.body.style.fontFamily = '" + fontName + "';", null);
+                }
+                else if(tipoLetra == 2){
+                    // TIMES NEW
+                    String fontName = "Fuente3";
+                    webView.evaluateJavascript("document.body.style.fontFamily = '" + fontName + "';", null);
+                }else{
+                    // NOTO SANS LIGHT
+                    String fontName = "Fuente1";
+                    webView.evaluateJavascript("document.body.style.fontFamily = '" + fontName + "';", null);
+                }
+
+                String javascript = String.format("document.body.style.fontSize = '%dpx';", textSize);
+                webView.evaluateJavascript(javascript, null);
+
+                if(tema){
+                    String javascriptColor = String.format("document.body.style.color = '%s';", "white");
+                    webView.evaluateJavascript(javascriptColor, null);
+                }else{
+                    String javascriptColor = String.format("document.body.style.color = '%s';", "black");
+                    webView.evaluateJavascript(javascriptColor, null);
+                }
+
+                webView.setVisibility(View.VISIBLE);
             }
-        }
-
+        });
     }
 
 

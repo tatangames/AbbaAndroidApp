@@ -12,6 +12,7 @@
         android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
         android:orientation="vertical">
 
         <include layout="@layout/toolbar_fecha_texto_v1" />
