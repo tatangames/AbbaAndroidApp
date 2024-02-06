@@ -192,6 +192,13 @@
     <string name="seleccionar_pais">Seleccionar País</string>
     <string name="seleccionar_iglesia">Seleccionar Iglesia</string>
     <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="cuestionario_no_encontrado">Cuestionario no encontrado</string>
+
+
+
+
+
+
 
 
     <string-array name="estados_elsalvador_array">

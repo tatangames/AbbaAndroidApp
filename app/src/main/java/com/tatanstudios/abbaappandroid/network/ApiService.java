@@ -6,15 +6,19 @@ import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarP
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateMetaDatos;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateRequest;
 import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.ModeloCuestionario;
+import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.preguntas.ModeloPreguntasContenedor;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginate;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginateMetaDatos;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginateRequest;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.bloquefechas.ModeloBloqueFechaContenedor;
 import com.tatanstudios.abbaappandroid.modelos.usuario.ModeloUsuario;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
@@ -147,11 +151,19 @@ public interface ApiService {
                                                                         @Field("idblockdeta") int idBlockDeta,
                                                                         @Field("idiomaplan") int idiomaplan);
 
+    // listado de todas las preguntas
+    @POST("app/plan/misplanes/preguntas/bloque")
+    @FormUrlEncoded
+    Observable<ModeloPreguntasContenedor> informacionPreguntasBloqueDetalle(@Field("iduser") String iduser,
+                                                                            @Field("idblockdeta") int idBlockDeta,
+                                                                            @Field("idiomaplan") int idioma);
 
 
-
-
-
+    @POST("app/plan/misplanes/preguntas/usuario/actualizar")
+    @FormUrlEncoded
+    Observable<ModeloPreguntasContenedor> actualizarPreguntasUsuarioPlanes(@Field("iduser") String iduser,
+                                                                           @Field("idblockdeta") int idBlockDeta,
+                                                                           @FieldMap Map<String, String> listado);
 
 
 

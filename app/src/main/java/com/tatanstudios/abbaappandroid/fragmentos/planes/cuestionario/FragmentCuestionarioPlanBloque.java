@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -50,9 +51,11 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
     private RelativeLayout rootRelative;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    private TextView txtHtml;
+    private TextView txtHtml, txtTitulo;
 
     private static final String ARG_DATO = "IDBLOQUE";
+
+    private FrameLayout linear;
 
     private int idBloqueDeta = 0;
 
@@ -60,7 +63,7 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
 
     private int tamanoTextoHtml = 18;
     private final int minTextSize = 14;
-    private final int maxTextSize = 28;
+    private final int maxTextSize = 30;
 
     private boolean tema = false;
 
@@ -88,6 +91,8 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
         rootRelative = vista.findViewById(R.id.rootRelative);
         txtHtml = vista.findViewById(R.id.txtCuestionario);
         fabButton = vista.findViewById(R.id.fabButton);
+        linear = vista.findViewById(R.id.linear);
+        txtTitulo = vista.findViewById(R.id.txtTitulo);
 
         tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs", MODE_PRIVATE));
         service = RetrofitBuilder.createServiceAutentificacion(ApiService.class, tokenManager);
@@ -175,12 +180,15 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
 
                                         if(apiRespuesta.getSuccess() == 1) {
 
+                                            String titulo = apiRespuesta.getTitulo();
+                                            String texto = apiRespuesta.getTexto();
 
-                                            setearTexto(apiRespuesta.getTitulo());
+                                            setearTexto(titulo, texto);
                                         }
                                         else if(apiRespuesta.getSuccess() == 2) {
                                             // BLOQUE NO TIENE CUESTIONARIO
-
+                                            Toasty.info(getContext(), getString(R.string.cuestionario_no_encontrado), Toasty.LENGTH_SHORT).show();
+                                            linear.setVisibility(View.INVISIBLE);
                                         }
                                         else{
                                             mensajeSinConexion();
@@ -242,22 +250,27 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
                     if(position == 0){
                         tokenManager.guardarTipoLetraTexto(0);
                         txtHtml.setTypeface(null ,Typeface.NORMAL);
+                        txtTitulo.setTypeface(null ,Typeface.NORMAL);
                     }
                     else if(position == 1){
                         tokenManager.guardarTipoLetraTexto(1);
                         txtHtml.setTypeface(faceNotoSansCondensesMedium);
+                        txtTitulo.setTypeface(faceNotoSansCondensesMedium);
                     }
                     else if(position == 2){
                         tokenManager.guardarTipoLetraTexto(2);
                         txtHtml.setTypeface(faceNotoSansLight);
+                        txtTitulo.setTypeface(faceNotoSansLight);
                     }
                     else if(position == 3){
                         tokenManager.guardarTipoLetraTexto(3);
                         txtHtml.setTypeface(faceTimeNewRoman);
+                        txtTitulo.setTypeface(faceTimeNewRoman);
                     }
                     else{
                         tokenManager.guardarTipoLetraTexto(0);
                         txtHtml.setTypeface(null ,Typeface.NORMAL);
+                        txtTitulo.setTypeface(null ,Typeface.NORMAL);
                     }
                 }
 
@@ -293,6 +306,7 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
                     tamanoTextoHtml--;
                     updateTextSize();
                 }
+
             });
 
             btnMas.setOnClickListener(v -> {
@@ -313,15 +327,27 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
 
     private void updateTextSize() {
         txtHtml.setTextSize(tamanoTextoHtml);
+        txtTitulo.setTextSize(tamanoTextoHtml);
     }
 
-    private void setearTexto(String texto){
+
+
+    private void setearTexto(String titulo, String texto){
+
+        // el titulo puede ser opcional
+        if(titulo != null && !TextUtils.isEmpty(titulo)){
+            txtTitulo.setText(HtmlCompat.fromHtml(titulo, HtmlCompat.FROM_HTML_MODE_LEGACY));
+            txtTitulo.setVisibility(View.VISIBLE);
+        }else{
+            txtTitulo.setVisibility(View.GONE);
+        }
 
         if(texto != null){
             if(!TextUtils.isEmpty(texto)){
                 txtHtml.setText(HtmlCompat.fromHtml(texto, HtmlCompat.FROM_HTML_MODE_LEGACY));
             }
         }
+
     }
 
 

@@ -14,6 +14,12 @@ public class ModeloCuestionario {
     @SerializedName("titulo")
     public String titulo;
 
+    @SerializedName("texto")
+    public String texto;
+
+    public String getTexto() {
+        return texto;
+    }
 
     public Integer getSuccess() {
         return success;

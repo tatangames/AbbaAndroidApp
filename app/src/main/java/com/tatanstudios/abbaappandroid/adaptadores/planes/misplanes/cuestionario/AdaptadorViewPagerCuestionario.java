@@ -20,8 +20,8 @@ public class AdaptadorViewPagerCuestionario extends FragmentStateAdapter {
 
     @Override
     public Fragment createFragment(int position) {
-        return FragmentCuestionarioPlanBloque.newInstance(idBloqueDeta);
-        /*if(numberOfItems == 1){
+
+        if(numberOfItems == 1){
             switch (position) {
                 case 0:
                     return FragmentCuestionarioPlanBloque.newInstance(idBloqueDeta);
@@ -37,7 +37,7 @@ public class AdaptadorViewPagerCuestionario extends FragmentStateAdapter {
                 default:
                     return null;
             }
-        }*/
+        }
     }
 
     @Override
