@@ -47,7 +47,6 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
     private TextView txtSinPlanes;
 
     private boolean unaVezVisibilidad = true;
-    private boolean unaVezAdapter = true;
 
     private AdaptadorBuscarPlanes adapter;
 
@@ -102,7 +101,7 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
 
                     // Verificar si no se está cargando y si ha llegado al final de la lista
                     if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0 && dy > 0) {
-                        apiBuscarPlanesNuevos();
+                        apiBuscarPlanesNuevosPaginacion();
                     }
                 }
             }
@@ -125,6 +124,66 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
 
 
     private void apiBuscarPlanesNuevos(){
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        String iduser = tokenManager.getToken().getId();
+        int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
+
+        ModeloBuscarPlanesPaginateRequest paginationRequest = new ModeloBuscarPlanesPaginateRequest();
+        paginationRequest.setPage(currentPage);
+        paginationRequest.setLimit(10);
+        paginationRequest.setIdiomaplan(idiomaPlan);
+        paginationRequest.setIduser(iduser);
+
+        compositeDisposable.add(
+                service.listadoNuevosPlanes(paginationRequest)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .retry()
+                        .subscribe(
+                                apiRespuesta -> {
+
+                                    progressBar.setVisibility(View.GONE);
+                                    if(apiRespuesta.getSuccess() == 1){
+
+                                        if(apiRespuesta.getHayinfo() == 1){
+                                            if (!apiRespuesta.getData().getData().isEmpty()) {
+                                                List<ModeloBuscarPlanes> newData = apiRespuesta.getData().getData();
+
+                                                lastPage = apiRespuesta.getData().getLastPage();
+                                                currentPage++;
+
+                                                setearAdapter(newData);
+
+                                                unaVezVisibilidad = false;
+                                                puedeCargarYaPaginacion = true;
+                                                recyclerView.setVisibility(View.VISIBLE);
+                                            }
+                                        }else{
+                                            if(unaVezVisibilidad){
+                                                unaVezVisibilidad = false;
+                                                recyclerView.setVisibility(View.GONE);
+                                                txtSinPlanes.setVisibility(View.VISIBLE);
+                                            }
+                                        }
+
+                                    }else{
+                                        mensajeSinConexion();
+                                    }
+                                },
+                                throwable -> {
+                                    mensajeSinConexion();
+                                }
+                        ));
+    }
+
+
+
+
+
+    // UTILIZADO PARA PAGINACION
+    private void apiBuscarPlanesNuevosPaginacion(){
 
         if(!estaCargandoApi){
             estaCargandoApi = true;
@@ -159,24 +218,10 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
                                                     lastPage = apiRespuesta.getData().getLastPage();
                                                     currentPage++;
 
-                                                    if(unaVezAdapter){
-                                                        setearAdapter(newData);
-                                                    }
-                                                    else{
-                                                        adapter.addData(newData);
-                                                    }
+                                                    adapter.addData(newData);
 
-                                                    unaVezAdapter = false;
                                                     estaCargandoApi = false;
-                                                    unaVezVisibilidad = false;
-                                                    puedeCargarYaPaginacion = true;
                                                     recyclerView.setVisibility(View.VISIBLE);
-                                                }
-                                            }else{
-                                                if(unaVezVisibilidad){
-                                                    unaVezVisibilidad = false;
-                                                    recyclerView.setVisibility(View.GONE);
-                                                    txtSinPlanes.setVisibility(View.VISIBLE);
                                                 }
                                             }
 
@@ -194,11 +239,11 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
         }
     }
 
+
     private void setearAdapter(List<ModeloBuscarPlanes> modeloBuscarPlanes) {
         adapter = new AdaptadorBuscarPlanes(getContext(), modeloBuscarPlanes, this);
         recyclerView.setAdapter(adapter);
     }
-
 
 
     // vista para informacion del plan y seleccionarlo
@@ -208,23 +253,19 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
         someActivityResultLauncher.launch(intent);
     }
 
-
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
 
                 // DE ACTIVITY VerPlanParaSeleccionar.class
                 if(result.getResultCode() == RETORNO_ACTUALIZAR_100){
-                    recyclerView.setVisibility(View.INVISIBLE);
 
                     currentPage = 1;
-                    unaVezAdapter = true;
                     unaVezVisibilidad = true;
-
+                    recyclerView.setVisibility(View.INVISIBLE);
                     apiBuscarPlanesNuevos();
                 }
             });
-
 
 
     private void mensajeSinConexion(){

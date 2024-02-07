@@ -65,7 +65,6 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
 
     private boolean tema = false;
 
-    private boolean puedeActualizarCheck = true;
     private boolean boolActualizarVistaAtras = false;
     private boolean boolApiCompartir = true;
     private RecyclerView recyclerViewHorizontal, recyclerViewVertical;
@@ -199,42 +198,24 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
     }
 
 
-    /*ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-
-                // DE ACTIVITY CuestionarioPlanActivity
-                //
-                if(result.getResultCode() == ID_INTENT_RETORNO_11){
-
-                }
-            });*/
-
     public void actualizarCheck(int blockDeta, int valor){
 
-        if(puedeActualizarCheck){
-            puedeActualizarCheck = false;
 
             String iduser = tokenManager.getToken().getId();
 
-            // NO TENDRA RETRY
             compositeDisposable.add(
                     service.actualizarBloqueFechaCheckbox(iduser, blockDeta, valor, idPlan)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
+                            .retry()
                             .subscribe(apiRespuesta -> {
-
-                                        puedeActualizarCheck = true;
 
                                         if(apiRespuesta != null) {
 
                                             if (apiRespuesta.getSuccess() == 1) {
 
-
                                                 if(apiRespuesta.getPlanCompletado() == 1){
 
-
-                                                    // ejecutar confeti
                                                     boolActualizarVistaAtras = true;
                                                 }
 
@@ -246,11 +227,11 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                                         }
                                     },
                                     throwable -> {
-                                        puedeActualizarCheck = true;
+
                                         mensajeSinConexion();
                                     })
             );
-        }
+
     }
 
     public void informacionCompartir(int idblockdeta){
