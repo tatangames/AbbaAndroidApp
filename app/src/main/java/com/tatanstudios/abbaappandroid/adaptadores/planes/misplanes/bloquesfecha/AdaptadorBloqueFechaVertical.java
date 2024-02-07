@@ -71,6 +71,12 @@ public class AdaptadorBloqueFechaVertical extends RecyclerView.Adapter<Adaptador
             holder.idCheck.setChecked(false);
         }
 
+        if(m.getTienePreguntas() == 1){
+            holder.imgCompartir.setVisibility(View.VISIBLE);
+        }else{
+            holder.imgCompartir.setVisibility(View.GONE);
+        }
+
         holder.txtTitulo.setText(m.getTitulo());
 
         holder.idCheck.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -88,7 +94,13 @@ public class AdaptadorBloqueFechaVertical extends RecyclerView.Adapter<Adaptador
             int tienePreguntas = m.getTienePreguntas();
             misPlanesBloquesFechaActivity.redireccionarCuestionario(idBlockDeta, tienePreguntas);
         });
+
+        holder.imgCompartir.setOnClickListener(v ->{
+            misPlanesBloquesFechaActivity.informacionCompartir(m.getId());
+        });
     }
+
+
 
     @Override
     public int getItemCount() {

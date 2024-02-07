@@ -13,11 +13,11 @@ public class RetrofitBuilder {
    // private static final String BASE_URL = "http://143.198.154.209/api/";
     //public static final String urlImagenes = "http://143.198.154.209/storage/archivos/";
 
-   // private static final String BASE_URL = "http://192.168.1.29:8080/api/";
-  //  public static final String urlImagenes = "http://192.168.1.29:8080/storage/archivos/";
+    private static final String BASE_URL = "http://192.168.1.29:8080/api/";
+    public static final String urlImagenes = "http://192.168.1.29:8080/storage/archivos/";
 
-    private static final String BASE_URL = "http://192.168.70.3:8080/api/";
-    public static final String urlImagenes = "http://192.168.70.3:8080/storage/archivos/";
+   // private static final String BASE_URL = "http://192.168.70.3:8080/api/";
+   // public static final String urlImagenes = "http://192.168.70.3:8080/storage/archivos/";
 
 
     private final static OkHttpClient client = buildClient();

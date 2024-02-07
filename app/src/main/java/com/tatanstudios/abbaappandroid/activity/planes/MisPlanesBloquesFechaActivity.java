@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +14,7 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +30,8 @@ import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.planes.cuestionarios.CuestionarioPlanActivity;
 import com.tatanstudios.abbaappandroid.adaptadores.planes.misplanes.bloquesfecha.AdaptadorBloqueFechaHorizontal;
 import com.tatanstudios.abbaappandroid.adaptadores.planes.misplanes.bloquesfecha.AdaptadorBloqueFechaVertical;
+import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.preguntas.ModeloPreguntas;
+import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.preguntas.ModeloVistasPreguntas;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.bloquefechas.ModeloBloqueFechaDetalle;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
@@ -56,13 +60,14 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
 
     private OnBackPressedDispatcher onBackPressedDispatcher;
 
-    private final int ID_INTENT_RETORNO_10 = 10;
-    private final int ID_INTENT_RETORNO_11 = 11;
+    // si plan fue completado, al regresar a tras a mis planes, que se recargue
+    private final int RETORNO_ACTUALIZAR_100 = 100;
 
     private boolean tema = false;
 
     private boolean puedeActualizarCheck = true;
     private boolean boolActualizarVistaAtras = false;
+    private boolean boolApiCompartir = true;
     private RecyclerView recyclerViewHorizontal, recyclerViewVertical;
     private AdaptadorBloqueFechaHorizontal adapterHorizontal;
     private AdaptadorBloqueFechaVertical adapterVertical;
@@ -186,7 +191,7 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
 
 
     public void llenarDatosAdapterVertical(List<
-            ModeloBloqueFechaDetalle> modeloMisPlanesBloqueDetalles){
+        ModeloBloqueFechaDetalle> modeloMisPlanesBloqueDetalles){
 
         adapterVertical = new AdaptadorBloqueFechaVertical(this, modeloMisPlanesBloqueDetalles, this, tema);
         recyclerViewVertical.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -194,7 +199,7 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
     }
 
 
-    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+    /*ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
 
@@ -203,8 +208,7 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                 if(result.getResultCode() == ID_INTENT_RETORNO_11){
 
                 }
-
-            });
+            });*/
 
     public void actualizarCheck(int blockDeta, int valor){
 
@@ -226,7 +230,10 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
 
                                             if (apiRespuesta.getSuccess() == 1) {
 
+
                                                 if(apiRespuesta.getPlanCompletado() == 1){
+
+
                                                     // ejecutar confeti
                                                     boolActualizarVistaAtras = true;
                                                 }
@@ -246,6 +253,82 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
         }
     }
 
+    public void informacionCompartir(int idblockdeta){
+
+        if(boolApiCompartir){
+            boolApiCompartir = false;
+
+            progressBar.setVisibility(View.VISIBLE);
+
+            String iduser = tokenManager.getToken().getId();
+            int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
+
+            compositeDisposable.add(
+                    service.infoPreguntasTextosParaCompartir(iduser, idblockdeta, idiomaPlan)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .retry()
+                            .subscribe(apiRespuesta -> {
+
+                                        progressBar.setVisibility(View.GONE);
+                                        boolApiCompartir = true;
+
+                                        if(apiRespuesta != null) {
+
+                                            if(apiRespuesta.getSuccess() == 1) {
+
+                                                String textoGlobal = "";
+
+                                                if(apiRespuesta.getDescripcion() != null && !TextUtils.isEmpty(apiRespuesta.getDescripcion())){
+                                                    String textoSinHTML = HtmlCompat.fromHtml(apiRespuesta.getDescripcion(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
+                                                    textoGlobal += textoSinHTML + "\n" + "\n";
+                                                }
+
+                                                // Preguntas
+                                                for (ModeloPreguntas arrayPreguntas : apiRespuesta.getModeloPreguntas()) {
+
+                                                    if(arrayPreguntas.getTitulo() != null && !TextUtils.isEmpty(arrayPreguntas.getTitulo())){
+                                                        String textoSinHTMLTitulo = HtmlCompat.fromHtml(arrayPreguntas.getTitulo(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
+
+                                                        textoGlobal += textoSinHTMLTitulo + "\n";
+                                                    }
+
+                                                    if(arrayPreguntas.getTexto() != null && !TextUtils.isEmpty(arrayPreguntas.getTexto())){
+                                                        textoGlobal += arrayPreguntas.getTexto() + "\n";
+                                                    }
+                                                }
+
+                                                Intent intent = new Intent(Intent.ACTION_SEND);
+                                                intent.setType("text/plain");
+                                                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                                                intent.putExtra(Intent.EXTRA_TEXT, textoGlobal);
+
+                                                try {
+                                                    startActivity(Intent.createChooser(intent, getString(R.string.compartir)));
+                                                } catch (Exception e) {
+
+                                                }
+                                            }
+                                            else if(apiRespuesta.getSuccess() == 2) {
+
+                                                // no deberia salir, ya que se ocultara icono preguntas
+                                                Toasty.info(this, getString(R.string.no_hay_preguntas), Toasty.LENGTH_SHORT).show();
+                                            }
+                                            else{
+                                                mensajeSinConexion();
+                                            }
+                                        }else{
+                                            mensajeSinConexion();
+                                        }
+                                    },
+                                    throwable -> {
+                                        boolApiCompartir = true;
+                                        mensajeSinConexion();
+                                    })
+            );
+        }
+    }
+
 
     public void redireccionarCuestionario(int idBlockDeta, int tienePreguntas){
 
@@ -258,7 +341,7 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
     private void volverAtrasActualizar(){
         if(boolActualizarVistaAtras){
             Intent returnIntent = new Intent();
-            setResult(ID_INTENT_RETORNO_10, returnIntent);
+            setResult(RETORNO_ACTUALIZAR_100, returnIntent);
         }
         finish();
     }

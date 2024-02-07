@@ -2,8 +2,11 @@ package com.tatanstudios.abbaappandroid.fragmentos.planes.cuestionario;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +54,6 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
     private int idBloqueDeta = 0;
 
-    private boolean boolApiGuardar;
 
 
     private boolean temaActual = false;
@@ -77,14 +79,15 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
     private List<ModeloPreguntas> modeloPreguntas;
 
+    private boolean yaHabiaGuardado = false;
+    private boolean boolApiActualizar = true;
+    private boolean modalCompartir = false;
 
-    private boolean yaHabiaGuardado;
-    private boolean boolApiActualizar;
+    private String tituloPreguntaBloque = "";
 
     public boolean isYaHabiaGuardado() {
         return yaHabiaGuardado;
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_preguntas_plan_bloque, container, false);
@@ -106,9 +109,6 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
         rootRelative.addView(progressBar, params);
         progressBar.getIndeterminateDrawable().setColorFilter(colorProgress, PorterDuff.Mode.SRC_IN);
 
-        boolApiGuardar = true;
-        yaHabiaGuardado = false;
-        boolApiActualizar = true;
 
         if(tokenManager.getToken().getTema() == 1){ // dark
             temaActual = true;
@@ -140,10 +140,9 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
                                         if(apiRespuesta.getSuccess() == 1) {
 
-                                            // colcoado en un webview
-                                            String descripcionPregunta = apiRespuesta.getDescripcion();
+                                            // colocado en un webview
+                                            tituloPreguntaBloque = apiRespuesta.getDescripcion();
 
-                                            // para decirle al boton si debe guardar o actualizar
                                             if(apiRespuesta.getHayRespuesta() == 1){
                                                 yaHabiaGuardado = true;
                                             }
@@ -171,7 +170,7 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
                                             modeloPreguntas = apiRespuesta.getModeloPreguntas();
 
-                                            setearAdaptador(descripcionPregunta);
+                                            setearAdaptador();
                                         }
                                         else if(apiRespuesta.getSuccess() == 2) {
                                             // BLOQUE NO TIENE CUESTIONARIO
@@ -192,9 +191,9 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
     }
 
 
-    private void setearAdaptador(String descripcionP){
+    private void setearAdaptador(){
 
-        adapter = new AdaptadorPreguntas(getContext(), elementos, this, descripcionP, temaActual);
+        adapter = new AdaptadorPreguntas(getContext(), elementos, this, tituloPreguntaBloque, temaActual);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -202,8 +201,6 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
     }
-
-
 
 
     public void verificarDatosActualizar(){
@@ -225,6 +222,7 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
         // Obtener textos de los input text
 
         for (ModeloPreguntas m : modeloPreguntas){
+
             String texto = adapter.getTextoFromEditText(m.getId());
 
             hashMapPreguntas.put("idpregunta["+String.valueOf(m.getId())+"][txtpregunta]", texto);
@@ -272,15 +270,14 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
         }
     }
 
-
-
     public void compartirDatosPreguntas(){
 
-        String textoGloblal = "";
+        String textoGlobal = "";
 
         boolean valor = false;
         for (ModeloPreguntas m : modeloPreguntas){
             if(adapter.getBoolFromEditText(m.getId())){
+
                 valor = true;
             }
         }
@@ -290,14 +287,38 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
             return;
         }
 
-        // Obtener textos de los input text
+        if (!modalCompartir) {
+            modalCompartir = true;
 
-        for (ModeloPreguntas m : modeloPreguntas){
-            String texto =  adapter.getTextoFromEditText(m.getId()) + "\n";
-            textoGloblal += texto;
+            new Handler().postDelayed(() -> {
+                modalCompartir = false;
+            }, 1000);
+
+
+            if(tituloPreguntaBloque != null && !TextUtils.isEmpty(tituloPreguntaBloque)) {
+                textoGlobal += tituloPreguntaBloque + "\n" + "\n";
+            }
+
+            for (ModeloPreguntas m : modeloPreguntas){
+
+                String textoPregunta = adapter.getTextoPregunta(m.getId());
+                String textoEdt = adapter.getTextoFromEditText(m.getId());
+
+                String linea = textoPregunta + "\n" + "R// " + textoEdt + "\n" + "\n";
+                textoGlobal += linea;
+            }
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+            intent.putExtra(Intent.EXTRA_TEXT, textoGlobal);
+
+            try {
+                startActivity(Intent.createChooser(intent, getString(R.string.compartir)));
+            } catch (Exception e) {
+
+            }
         }
-
-        Log.i("PORTADA", textoGloblal);
     }
 
 

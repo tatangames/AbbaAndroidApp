@@ -3,6 +3,7 @@ package com.tatanstudios.abbaappandroid.fragmentos.planes.cuestionario;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.adaptadores.planes.misplanes.cuestionario.AdaptadorSpinnerTipoLetraCuestionario;
+import com.tatanstudios.abbaappandroid.adaptadores.planes.misplanes.preguntas.AdaptadorPreguntas;
 import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.ModeloTipoLetraCuestionario;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
@@ -122,9 +124,12 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
         colorBlanco = ContextCompat.getColor(requireContext(), R.color.blanco);
         colorBlack = ContextCompat.getColor(requireContext(), R.color.negro);
 
+
+        // transparente fondo
+        webView.setBackgroundColor(Color.TRANSPARENT);
+
         if(tokenManager.getToken().getTema() == 1){ // dark
             tema = true;
-        }else{
         }
 
         colorStateTintWhite = ColorStateList.valueOf(colorBlanco);

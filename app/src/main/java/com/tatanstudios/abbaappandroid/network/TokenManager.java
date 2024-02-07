@@ -67,10 +67,8 @@ public class TokenManager {
     // BORRAR UNAS REFERENCIAS
     public void deletePreferences(){
         editor.remove("ID").commit();
-        editor.remove("TEMA").commit();
         editor.remove("TOKEN").commit();
     }
-
 
     public ModeloUsuario getToken(){
         ModeloUsuario token = new ModeloUsuario();

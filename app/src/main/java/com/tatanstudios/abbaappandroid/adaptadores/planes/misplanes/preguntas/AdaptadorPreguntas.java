@@ -2,12 +2,15 @@ package com.tatanstudios.abbaappandroid.adaptadores.planes.misplanes.preguntas;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -48,14 +51,25 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
 
+    // obtiene la referencia del Text Input Layout
     private Map<Integer, TextInputLayout> txtInputMap = new HashMap<>();
+
+    // obtiene la referencia de ID identificador
     private Map<Integer, Integer> txtInputMapRequerido = new HashMap<>();
+
+
+    // obtener el texto de la pregunta para COMPARTIR
+    private Map<Integer, String> hashMapTextoPregunta = new HashMap<>();
 
     RequestOptions opcionesGlide = new RequestOptions()
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .skipMemoryCache(true)
             .placeholder(R.drawable.camaradefecto)
             .priority(Priority.NORMAL);
+
+    int colorBlanco = 0;
+    int colorNegro = 0;
+
 
     public AdaptadorPreguntas(Context context, ArrayList<ModeloVistasPreguntas> modeloVistasPreguntas,
                               FragmentPreguntasPlanBloque fragmentPreguntasPlanBloque, String descripcionP, boolean temaActual){
@@ -65,11 +79,11 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.temaActual = temaActual;
         this.descripcionP = descripcionP;
 
-        int colorWhite = context.getColor(R.color.blanco);
-        colorStateListWhite = ColorStateList.valueOf(colorWhite);
+        colorBlanco = context.getColor(R.color.blanco);
+        colorStateListWhite = ColorStateList.valueOf(colorBlanco);
 
-        int colorBlack = context.getColor(R.color.negro);
-        colorStateListBlack = ColorStateList.valueOf(colorBlack);
+        colorNegro = context.getColor(R.color.negro);
+        colorStateListBlack = ColorStateList.valueOf(colorNegro);
     }
 
     @NonNull
@@ -106,7 +120,11 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
         // TITULAR
         if (holder instanceof HolderVistaTitular) {
 
+
             if(descripcionP != null && !TextUtils.isEmpty(descripcionP)) {
+                ((HolderVistaTitular) holder).webViewDescripcion.setWebViewClient(new WebViewClient());
+                WebSettings webSettings = ((HolderVistaTitular) holder).webViewDescripcion.getSettings();
+                webSettings.setJavaScriptEnabled(true);
 
                 ((HolderVistaTitular) holder).webViewDescripcion.loadDataWithBaseURL(null, descripcionP, "text/html", "UTF-8", null);
 
@@ -115,13 +133,18 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
                     public void onPageFinished(WebView view, String url) {
                         super.onPageFinished(view, url);
 
-                        if (temaActual) {
+                        // sera color trasparente
+                        ((HolderVistaTitular) holder).webViewDescripcion.setBackgroundColor(Color.TRANSPARENT);
+
+                        if(temaActual){
+
                             String javascriptColor = String.format("document.body.style.color = '%s';", "white");
                             ((HolderVistaTitular) holder).webViewDescripcion.evaluateJavascript(javascriptColor, null);
-                        } else {
+                        }else{
                             String javascriptColor = String.format("document.body.style.color = '%s';", "black");
                             ((HolderVistaTitular) holder).webViewDescripcion.evaluateJavascript(javascriptColor, null);
                         }
+
                     }
                 });
             }else{
@@ -138,6 +161,10 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             ModeloPreguntas m = modelo.getModeloPreguntas();
 
+            ((HolderVistaBloquePregunta) holder).webView.setWebViewClient(new WebViewClient());
+            WebSettings webSettings = ((HolderVistaBloquePregunta) holder).webView.getSettings();
+            webSettings.setJavaScriptEnabled(true);
+
             ((HolderVistaBloquePregunta) holder).webView.loadDataWithBaseURL(null, m.getTitulo(), "text/html", "UTF-8", null);
 
             ((HolderVistaBloquePregunta) holder).webView.setWebViewClient(new WebViewClient() {
@@ -145,10 +172,13 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
                 public void onPageFinished(WebView view, String url) {
                     super.onPageFinished(view, url);
 
-                    if (temaActual) {
+                    // Sera fondo transparente
+                    ((HolderVistaBloquePregunta) holder).webView.setBackgroundColor(Color.TRANSPARENT);
+
+                    if(temaActual){
                         String javascriptColor = String.format("document.body.style.color = '%s';", "white");
                         ((HolderVistaBloquePregunta) holder).webView.evaluateJavascript(javascriptColor, null);
-                    } else {
+                    }else{
                         String javascriptColor = String.format("document.body.style.color = '%s';", "black");
                         ((HolderVistaBloquePregunta) holder).webView.evaluateJavascript(javascriptColor, null);
                     }
@@ -156,10 +186,19 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
             });
 
 
+            // EL INPUT EDIT TEXT TENDRA 5 MIL CARACTERES
+
+
+            String textoSinHTML = HtmlCompat.fromHtml(m.getTitulo(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
+
+
+            hashMapTextoPregunta.put(m.getId(), textoSinHTML);
+
             txtInputMap.put(m.getId(), ((HolderVistaBloquePregunta) holder).txtInput);
 
             txtInputMapRequerido.put(m.getId(), m.getRequerido());
 
+            // recupera y setea el texto de la pregunta
             if(m.getTexto() != null && !TextUtils.isEmpty(m.getTexto())){
                 ((HolderVistaBloquePregunta) holder).txtEdt.setText(m.getTexto());
             }
@@ -315,6 +354,7 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
     public boolean getBoolFromEditText(int uniqueId) {
 
         if (txtInputMap.containsKey(uniqueId)) {
+
             TextInputLayout editTextLayout = txtInputMap.get(uniqueId);
             TextInputEditText editText = (TextInputEditText) editTextLayout.getEditText();
 
@@ -342,6 +382,7 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
     public String getTextoFromEditText(int uniqueId) {
 
         if (txtInputMap.containsKey(uniqueId)) {
+
             TextInputLayout editTextLayout = txtInputMap.get(uniqueId);
             TextInputEditText editText = (TextInputEditText) editTextLayout.getEditText();
 
@@ -350,6 +391,21 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
 
             return "";
+        } else {
+            return "";
+        }
+    }
+
+    public String getTextoPregunta(int uniqueId) {
+
+        if (hashMapTextoPregunta.containsKey(uniqueId)) {
+
+            String texto = hashMapTextoPregunta.get(uniqueId);
+            if(texto != null && !TextUtils.isEmpty(texto)){
+                return texto;
+            }else{
+                return "";
+            }
         } else {
             return "";
         }

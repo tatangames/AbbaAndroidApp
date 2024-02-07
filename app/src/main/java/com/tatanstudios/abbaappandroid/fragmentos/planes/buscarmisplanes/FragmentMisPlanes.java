@@ -327,7 +327,6 @@ public class FragmentMisPlanes extends Fragment {
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
 
-                // DE ACTIVITY VerPlanParaSeleccionar.class
                 if(result.getResultCode() == RETORNO_ACTUALIZAR_100){
 
                     recyclerView.setVisibility(View.GONE);

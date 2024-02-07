@@ -167,7 +167,12 @@ public interface ApiService {
 
 
 
-
+    // informacion de listado de preguntas para compartirlas
+    @POST("app/plan/misplanes/preguntas/infocompartir")
+    @FormUrlEncoded
+    Observable<ModeloPreguntasContenedor> infoPreguntasTextosParaCompartir(@Field("iduser") String iduser,
+                                                                            @Field("idblockdeta") int idBlockDeta,
+                                                                            @Field("idiomaplan") int idioma);
 
 
 
