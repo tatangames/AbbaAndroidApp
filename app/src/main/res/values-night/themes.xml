@@ -107,10 +107,18 @@
     </style>
 
 
+    <!-- ESTILO PARA TAB LAYOUT DE FRAGMENT INICIO-->
+    <style name="TabLayoutFragmentInicio" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:dividerPadding">3dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 
 
-
-
+    <!-- DIVISION PARA SEPARADOR EN cardview_bottomsheet_racha-->
+    <style name="Separador_Racha_v1">
+        <item name="android:background">@color/negro</item>
+    </style>
 
 
 

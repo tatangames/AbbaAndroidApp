@@ -1,6 +1,7 @@
 package com.tatanstudios.abbaappandroid.network;
 
 import com.tatanstudios.abbaappandroid.modelos.iglesias.ModeloDepartamentos;
+import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloContenedorInicio;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanes;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginate;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateMetaDatos;
@@ -184,8 +185,11 @@ public interface ApiService {
             @Body ModeloPlanesCompletadosPaginateRequest request);
 
 
-
-
+    // informacion de tods el inicio
+    @POST("app/inicio/bloque/completa")
+    @FormUrlEncoded
+    Observable<ModeloContenedorInicio> informacionBloqueInicio(@Field("iduser") String iduser,
+                                                               @Field("idiomaplan") int idiomaplan);
 
 
 
