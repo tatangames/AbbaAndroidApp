@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.planes.VerPlanParaSeleccionarActivity;
+import com.tatanstudios.abbaappandroid.activity.planes.completados.MisPlanesBloquesFechaCompletadosActivity;
 import com.tatanstudios.abbaappandroid.adaptadores.planes.buscarplanes.AdaptadorBuscarPlanes;
 import com.tatanstudios.abbaappandroid.adaptadores.planes.completados.AdaptadorPlanesCompletados;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanes;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateRequest;
+import com.tatanstudios.abbaappandroid.modelos.planes.completados.ModeloPlanesCompletados;
+import com.tatanstudios.abbaappandroid.modelos.planes.completados.ModeloPlanesCompletadosPaginateRequest;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
@@ -94,13 +98,13 @@ public class FragmentPlanesCompletados extends Fragment {
 
                     // Verificar si no se está cargando y si ha llegado al final de la lista
                     if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0 && dy > 0) {
-                        apiBuscarPlanesNuevosPaginacion();
+                        apiBuscarPlanesCompletadosPaginacion();
                     }
                 }
             }
         });
 
-        apiBuscarPlanesNuevos();
+        apiBuscarPlanesCompletados();
 
         return vista;
     }
@@ -116,14 +120,14 @@ public class FragmentPlanesCompletados extends Fragment {
     }
 
 
-    private void apiBuscarPlanesNuevos(){
+    private void apiBuscarPlanesCompletados(){
 
         progressBar.setVisibility(View.VISIBLE);
 
         String iduser = tokenManager.getToken().getId();
         int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
 
-        ModeloBuscarPlanesPaginateRequest paginationRequest = new ModeloBuscarPlanesPaginateRequest();
+        ModeloPlanesCompletadosPaginateRequest paginationRequest = new ModeloPlanesCompletadosPaginateRequest();
         paginationRequest.setPage(currentPage);
         paginationRequest.setLimit(10);
         paginationRequest.setIdiomaplan(idiomaPlan);
@@ -142,7 +146,7 @@ public class FragmentPlanesCompletados extends Fragment {
 
                                         if(apiRespuesta.getHayinfo() == 1){
                                             if (!apiRespuesta.getData().getData().isEmpty()) {
-                                                List<ModeloBuscarPlanes> newData = apiRespuesta.getData().getData();
+                                                List<ModeloPlanesCompletados> newData = apiRespuesta.getData().getData();
 
                                                 lastPage = apiRespuesta.getData().getLastPage();
                                                 currentPage++;
@@ -154,6 +158,7 @@ public class FragmentPlanesCompletados extends Fragment {
                                                 recyclerView.setVisibility(View.VISIBLE);
                                             }
                                         }else{
+
                                             if(unaVezVisibilidad){
                                                 unaVezVisibilidad = false;
                                                 recyclerView.setVisibility(View.GONE);
@@ -173,10 +178,8 @@ public class FragmentPlanesCompletados extends Fragment {
 
 
 
-
-
     // UTILIZADO PARA PAGINACION
-    private void apiBuscarPlanesNuevosPaginacion(){
+    private void apiBuscarPlanesCompletadosPaginacion(){
 
         if(!estaCargandoApi){
             estaCargandoApi = true;
@@ -186,14 +189,14 @@ public class FragmentPlanesCompletados extends Fragment {
             String iduser = tokenManager.getToken().getId();
             int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
 
-            ModeloBuscarPlanesPaginateRequest paginationRequest = new ModeloBuscarPlanesPaginateRequest();
+            ModeloPlanesCompletadosPaginateRequest paginationRequest = new ModeloPlanesCompletadosPaginateRequest();
             paginationRequest.setPage(currentPage);
             paginationRequest.setLimit(10);
             paginationRequest.setIdiomaplan(idiomaPlan);
             paginationRequest.setIduser(iduser);
 
             compositeDisposable.add(
-                    service.listadoNuevosPlanes(paginationRequest)
+                    service.listadoPlanesCompletados(paginationRequest)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .retry()
@@ -206,7 +209,7 @@ public class FragmentPlanesCompletados extends Fragment {
 
                                             if(apiRespuesta.getHayinfo() == 1){
                                                 if (!apiRespuesta.getData().getData().isEmpty()) {
-                                                    List<ModeloBuscarPlanes> newData = apiRespuesta.getData().getData();
+                                                    List<ModeloPlanesCompletados> newData = apiRespuesta.getData().getData();
 
                                                     lastPage = apiRespuesta.getData().getLastPage();
                                                     currentPage++;
@@ -233,17 +236,17 @@ public class FragmentPlanesCompletados extends Fragment {
     }
 
 
-    private void setearAdapter(List<ModeloBuscarPlanes> modeloBuscarPlanes) {
-        adapter = new AdaptadorBuscarPlanes(getContext(), modeloBuscarPlanes, this);
+    private void setearAdapter(List<ModeloPlanesCompletados> modeloPlanesCompletados) {
+        adapter = new AdaptadorPlanesCompletados(getContext(), modeloPlanesCompletados, this);
         recyclerView.setAdapter(adapter);
     }
 
 
     // Vista para ver todos completados
     public void verBloquePlanesVista(int idplanes){
-        /*Intent intent = new Intent(getActivity(), VerPlanParaSeleccionarActivity.class);
-        intent.putExtra("ID", idplanes);
-        someActivityResultLauncher.launch(intent);*/
+        Intent intent = new Intent(getActivity(), MisPlanesBloquesFechaCompletadosActivity.class);
+        intent.putExtra("IDPLAN", idplanes);
+        someActivityResultLauncher.launch(intent);
     }
 
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
@@ -256,7 +259,7 @@ public class FragmentPlanesCompletados extends Fragment {
                     currentPage = 1;
                     unaVezVisibilidad = true;
                     recyclerView.setVisibility(View.INVISIBLE);
-                    apiBuscarPlanesNuevos();
+                    apiBuscarPlanesCompletados();
                 }
             });
 

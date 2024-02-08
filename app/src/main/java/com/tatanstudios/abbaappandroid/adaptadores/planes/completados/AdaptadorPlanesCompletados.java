@@ -82,9 +82,9 @@ public class AdaptadorPlanesCompletados extends RecyclerView.Adapter<AdaptadorPl
             holder.txtTitulo.setText("");
         }
 
-        // visualizar
+        // visualizar, pasar id plan
         holder.itemView.setOnClickListener(v -> {
-            fragmentPlanesCompletados.verBloquePlanesVista(m.getId());
+            fragmentPlanesCompletados.verBloquePlanesVista(m.getIdPlan());
         });
     }
 
@@ -114,7 +114,7 @@ public class AdaptadorPlanesCompletados extends RecyclerView.Adapter<AdaptadorPl
     }
 
     // ACTUALIZAR SOLO LAS POSICIONES NUEVAS QUE SE AGREGARAN
-    public void addData(List<ModeloBuscarPlanes> newData) {
+    public void addData(List<ModeloPlanesCompletados> newData) {
 
         int startPosition = modeloPlanesCompletados.size();
 

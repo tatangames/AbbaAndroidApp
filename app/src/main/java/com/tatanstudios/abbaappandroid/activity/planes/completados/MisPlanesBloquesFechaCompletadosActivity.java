@@ -1,9 +1,7 @@
-package com.tatanstudios.abbaappandroid.activity.planes;
+package com.tatanstudios.abbaappandroid.activity.planes.completados;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcher;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
@@ -27,11 +25,13 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.tatanstudios.abbaappandroid.R;
+import com.tatanstudios.abbaappandroid.activity.planes.completados.cuestionario.CuestionarioPlanCompletadoActivity;
 import com.tatanstudios.abbaappandroid.activity.planes.cuestionarios.CuestionarioPlanActivity;
+import com.tatanstudios.abbaappandroid.adaptadores.planes.completados.bloquefecha.AdaptadorBloqueFechaHorizontalCompletado;
+import com.tatanstudios.abbaappandroid.adaptadores.planes.completados.bloquefecha.AdaptadorBloqueFechaVerticalCompletado;
 import com.tatanstudios.abbaappandroid.adaptadores.planes.misplanes.bloquesfecha.AdaptadorBloqueFechaHorizontal;
 import com.tatanstudios.abbaappandroid.adaptadores.planes.misplanes.bloquesfecha.AdaptadorBloqueFechaVertical;
 import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.preguntas.ModeloPreguntas;
-import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.preguntas.ModeloVistasPreguntas;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.bloquefechas.ModeloBloqueFecha;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.bloquefechas.ModeloBloqueFechaDetalle;
 import com.tatanstudios.abbaappandroid.network.ApiService;
@@ -45,7 +45,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
+public class MisPlanesBloquesFechaCompletadosActivity extends AppCompatActivity {
+
 
     private int idPlan = 0;
     private RelativeLayout rootRelative;
@@ -69,8 +70,8 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
     private boolean boolActualizarVistaAtras = false;
     private boolean boolApiCompartir = true;
     private RecyclerView recyclerViewHorizontal, recyclerViewVertical;
-    private AdaptadorBloqueFechaHorizontal adapterHorizontal;
-    private AdaptadorBloqueFechaVertical adapterVertical;
+    private AdaptadorBloqueFechaHorizontalCompletado adapterHorizontal;
+    private AdaptadorBloqueFechaVerticalCompletado adapterVertical;
 
     private LinearLayout linearContenedor;
 
@@ -80,10 +81,11 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
             .placeholder(R.drawable.camaradefecto)
             .priority(Priority.NORMAL);
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mis_planes_bloques_fecha);
+        setContentView(R.layout.activity_mis_planes_bloques_fecha_completados);
 
         recyclerViewHorizontal = findViewById(R.id.recyclerViewHorizontal);
         imgFlechaAtras = findViewById(R.id.imgFlechaAtras);
@@ -129,6 +131,7 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
         };
 
         onBackPressedDispatcher.addCallback(onBackPressedCallback);
+
         apiBuscarPlanesbloques();
     }
 
@@ -152,13 +155,12 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                                             int hayDiaActual = apiRespuesta.getHayDiaActual();
                                             int idUltimoBloque = apiRespuesta.getIdUltimoBloque();
 
-                                            adapterHorizontal = new AdaptadorBloqueFechaHorizontal(this, apiRespuesta.getModeloBloqueFechas(), recyclerViewHorizontal, tema,
+                                            adapterHorizontal = new AdaptadorBloqueFechaHorizontalCompletado(this, apiRespuesta.getModeloBloqueFechas(), recyclerViewHorizontal, tema,
                                                     hayDiaActual, idUltimoBloque, this);
                                             recyclerViewHorizontal.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
                                             recyclerViewHorizontal.setAdapter(adapterHorizontal);
 
                                             setearAdapter(apiRespuesta.getPortada());
-
 
                                             if(apiRespuesta.getHayDiaActual() == 1){
 
@@ -179,7 +181,6 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                                                     adapterHorizontal.moverPosicionRecycler(ultimaPosicion);
                                                 }
                                             }
-
 
                                             linearContenedor.setVisibility(View.VISIBLE);
                                         }
@@ -214,48 +215,13 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
 
 
     public void llenarDatosAdapterVertical(List<
-        ModeloBloqueFechaDetalle> modeloMisPlanesBloqueDetalles){
+            ModeloBloqueFechaDetalle> modeloMisPlanesBloqueDetalles){
 
-        adapterVertical = new AdaptadorBloqueFechaVertical(this, modeloMisPlanesBloqueDetalles, this, tema);
+        adapterVertical = new AdaptadorBloqueFechaVerticalCompletado(this, modeloMisPlanesBloqueDetalles, this, tema);
         recyclerViewVertical.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerViewVertical.setAdapter(adapterVertical);
     }
 
-
-    public void actualizarCheck(int blockDeta, int valor){
-
-
-            String iduser = tokenManager.getToken().getId();
-
-            compositeDisposable.add(
-                    service.actualizarBloqueFechaCheckbox(iduser, blockDeta, valor, idPlan)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .retry()
-                            .subscribe(apiRespuesta -> {
-
-                                        if(apiRespuesta != null) {
-
-                                            if (apiRespuesta.getSuccess() == 1) {
-
-                                                if(apiRespuesta.getPlanCompletado() == 1){
-
-                                                    boolActualizarVistaAtras = true;
-                                                }
-
-                                            }else{
-                                                mensajeSinConexion();
-                                            }
-                                        }else{
-                                            mensajeSinConexion();
-                                        }
-                                    },
-                                    throwable -> {
-
-                                        mensajeSinConexion();
-                                    })
-            );
-    }
 
     public void informacionCompartir(int idblockdeta){
 
@@ -333,10 +299,9 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
         }
     }
 
-
     public void redireccionarCuestionario(int idBlockDeta, int tienePreguntas){
 
-        Intent intent = new Intent(this, CuestionarioPlanActivity.class);
+        Intent intent = new Intent(this, CuestionarioPlanCompletadoActivity.class);
         intent.putExtra("IDBLOQUE", idBlockDeta);
         intent.putExtra("PREGUNTAS", tienePreguntas);
         startActivity(intent);
@@ -370,3 +335,4 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
         super.onStop();
     }
 }
+

@@ -19,6 +19,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.planes.completados.cuestionario.CuestionarioPlanCompletadoActivity"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.planes.completados.MisPlanesBloquesFechaCompletadosActivity"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.planes.cuestionarios.CuestionarioPlanActivity"
             android:configChanges="uiMode"
             android:exported="false"

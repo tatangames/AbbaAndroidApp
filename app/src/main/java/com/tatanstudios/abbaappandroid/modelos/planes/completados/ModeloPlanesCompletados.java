@@ -10,6 +10,9 @@ public class ModeloPlanesCompletados {
     @SerializedName("id")
     private int id;
 
+    @SerializedName("idplan")
+    private int idPlan;
+
     @SerializedName("imagen")
     private String imagen;
 
@@ -22,6 +25,10 @@ public class ModeloPlanesCompletados {
     @SerializedName("descripcion")
     private String descripcion;
 
+
+    public int getIdPlan() {
+        return idPlan;
+    }
 
     public String getDescripcion() {
         return descripcion;

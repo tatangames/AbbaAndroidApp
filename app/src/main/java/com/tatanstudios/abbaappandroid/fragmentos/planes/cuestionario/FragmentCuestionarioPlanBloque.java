@@ -67,7 +67,7 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
     private boolean bottomSheetShowing = false;
 
     private int textSize = 19; // Tamaño de fuente inicial
-    private static final int MIN_TEXT_SIZE = 19;
+    private static final int MIN_TEXT_SIZE = 18;
     private static final int MAX_TEXT_SIZE = 28;
 
     private boolean tema = false;

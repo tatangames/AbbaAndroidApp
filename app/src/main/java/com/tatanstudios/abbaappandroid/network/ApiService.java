@@ -5,6 +5,9 @@ import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarP
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginate;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateMetaDatos;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateRequest;
+import com.tatanstudios.abbaappandroid.modelos.planes.completados.ModeloPlanesCompletadosPaginate;
+import com.tatanstudios.abbaappandroid.modelos.planes.completados.ModeloPlanesCompletadosPaginateMetaDatos;
+import com.tatanstudios.abbaappandroid.modelos.planes.completados.ModeloPlanesCompletadosPaginateRequest;
 import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.ModeloCuestionario;
 import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.preguntas.ModeloPreguntasContenedor;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginate;
@@ -173,6 +176,17 @@ public interface ApiService {
     Observable<ModeloPreguntasContenedor> infoPreguntasTextosParaCompartir(@Field("iduser") String iduser,
                                                                             @Field("idblockdeta") int idBlockDeta,
                                                                             @Field("idiomaplan") int idioma);
+
+
+    // listado de planes completados
+    @POST("app/plan/misplanes/completados")
+    Observable<ModeloPlanesCompletadosPaginate<ModeloPlanesCompletadosPaginateMetaDatos>> listadoPlanesCompletados(
+            @Body ModeloPlanesCompletadosPaginateRequest request);
+
+
+
+
+
 
 
 

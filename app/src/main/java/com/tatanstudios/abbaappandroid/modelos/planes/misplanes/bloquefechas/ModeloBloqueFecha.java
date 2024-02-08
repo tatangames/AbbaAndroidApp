@@ -36,6 +36,16 @@ public class ModeloBloqueFecha {
 
     private boolean estaPresionado;
 
+    private boolean primerBloqueDrawable = true;
+
+
+    public boolean getPrimerBloqueDrawable() {
+        return primerBloqueDrawable;
+    }
+
+    public void setPrimerBloqueDrawable(boolean primerBloqueDrawable) {
+        this.primerBloqueDrawable = primerBloqueDrawable;
+    }
 
     public boolean getEstaPresionado() {
         return estaPresionado;
