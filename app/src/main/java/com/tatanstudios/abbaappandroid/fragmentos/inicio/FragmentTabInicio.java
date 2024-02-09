@@ -3,6 +3,7 @@ package com.tatanstudios.abbaappandroid.fragmentos.inicio;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -65,6 +66,8 @@ import com.tatanstudios.abbaappandroid.network.TokenManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -98,7 +101,7 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
 
     int colorProgress = 0;
 
-    private ColorStateList colorStateTintGrey, colorStateTintWhite, colorStateTintBlack;
+    private ColorStateList  colorStateTintWhite, colorStateTintBlack;
 
     private int colorBlanco = 0;
     private int colorBlack = 0;
@@ -108,7 +111,7 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
     private boolean bottomSheetImagen = false;
     private final int MY_PERMISSION_STORAGE_101 = 101;
 
-    private Bitmap bitmapImgShare;
+    private Bitmap bitmapGlobal = null;
 
     private boolean boolCompartir = true;
     private boolean boolCompartirDevoDia = true;
@@ -154,9 +157,7 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
 
         colorBlanco = ContextCompat.getColor(requireContext(), R.color.blanco);
         colorBlack = ContextCompat.getColor(requireContext(), R.color.negro);
-        int colorGris = ContextCompat.getColor(requireContext(), R.color.gris616161);
 
-        colorStateTintGrey = ColorStateList.valueOf(colorGris);
         colorStateTintWhite = ColorStateList.valueOf(colorBlanco);
         colorStateTintBlack = ColorStateList.valueOf(colorBlack);
 
@@ -289,13 +290,10 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
             ));
         }
 
-
         setearAdaptador();
     }
 
     private void setearAdaptador(){
-
-
         adapter = new AdaptadorInicio(getContext(), elementos, this, tema, modeloInicioSeparador);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -304,6 +302,7 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
     }
+
 
 
     public void abrirModalImagenes(String urlImagen){
@@ -340,7 +339,7 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
                             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                                 // La imagen se ha cargado exitosamente, realizar acciones aquí
 
-                                bitmapImgShare = ((BitmapDrawable) resource).getBitmap();
+                                bitmapGlobal = ((BitmapDrawable) resource).getBitmap();
                                 bloqueCompartir = true;
 
                                 barraProgress.setVisibility(View.GONE);
@@ -374,10 +373,7 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
                 btnCompartir.setTextColor(colorBlanco);
             }
 
-
             btnDescargar.setOnClickListener(v -> {
-
-
                 String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
                 if(EasyPermissions.hasPermissions(getActivity(),
@@ -400,17 +396,30 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
 
 
             btnCompartir.setOnClickListener(v -> {
-                if(bloqueCompartir){
-                    bloqueCompartir = false;
-                    compartirImagen(urlImagen);
-                    bottomSheetProgreso.dismiss();
+                String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+
+                if(EasyPermissions.hasPermissions(getActivity(),
+                        perms)){
+
+                    if(bloqueCompartir){
+                        bloqueCompartir = false;
+                        compartirImagen();
+                        bottomSheetProgreso.dismiss();
+                    }
+
+                }else{
+                    // permiso denegado
+                    EasyPermissions.requestPermissions(getActivity(),
+                            getString(R.string.permiso_almacenamiento_es_requerido),
+                            MY_PERMISSION_STORAGE_101,
+                            perms);
                 }
             });
 
 
             // Configura un oyente para saber cuándo se cierra el BottomSheetDialog
             bottomSheetProgreso.setOnDismissListener(dialog -> {
-                bitmapImgShare = null;
+                bitmapGlobal = null;
                 bottomSheetImagen = false;
             });
 
@@ -418,32 +427,22 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
         }
     }
 
-    private void compartirImagen(String urlImagen){
-        if(bitmapImgShare != null){
+    private void compartirImagen(){
+        if(bitmapGlobal != null){
+            Intent intent = new Intent(Intent.ACTION_SEND);
 
-           /* Intent shareIntent = new Intent(Intent.ACTION_SEND);
-            shareIntent.setType("image/jpeg");
+            intent.setType("image/jpeg");
+            long currentTimeMillis = System.currentTimeMillis();
+            String fileName = "imagen_" + currentTimeMillis;
 
-            // Convertir la imagen Bitmap a un Uri
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            bitmapImgShare.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-            String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bitmapImgShare, "Image", null);
+            String path = MediaStore.Images.Media.insertImage(getContext().getContentResolver(), bitmapGlobal, fileName, null);
             Uri imageUri = Uri.parse(path);
 
-            // Adjuntar la imagen al Intent
-            shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+            intent.putExtra(Intent.EXTRA_STREAM, imageUri);
 
-            // Agregar permisos de lectura al Intent para otras aplicaciones
-            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-            // Iniciar el Intent para compartir
-            getActivity().startActivity(Intent.createChooser(shareIntent, getString(R.string.compartir)));
-            */
-
-
+            startActivity(Intent.createChooser(intent, getString(R.string.compartir)));
         }
     }
-
 
     private boolean guardarImagen(){
 
@@ -451,7 +450,7 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
 
         String fileName = "imagen_" + currentTimeMillis + ".png"; // nombre del archivo
 
-        Uri ur = ImageUtils.saveImageToGallery(bitmapImgShare, getContext(), fileName);
+        Uri ur = ImageUtils.saveImageToGallery(bitmapGlobal, getContext(), fileName);
 
         if(ur != null){
             Toasty.success(getActivity(), getString(R.string.guardado), Toasty.LENGTH_SHORT).show();

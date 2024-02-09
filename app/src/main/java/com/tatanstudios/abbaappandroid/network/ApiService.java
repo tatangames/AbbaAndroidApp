@@ -199,7 +199,10 @@ public interface ApiService {
                                                              @Field("idiomaplan") int idiomaplan);
 
 
-
+    // obtener listado de todos las imagenes
+    @POST("app/inicio/todos/lasimagenes")
+    @FormUrlEncoded
+    Observable<ModeloContenedorInicio> obtenerTodosLasImagenes(@Field("iduser") String iduser);
 
 
 
