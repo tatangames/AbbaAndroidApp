@@ -192,6 +192,17 @@ public interface ApiService {
                                                                @Field("idiomaplan") int idiomaplan);
 
 
+    // obtener listado de todos los videos
+    @POST("app/inicio/todos/losvideos")
+    @FormUrlEncoded
+    Observable<ModeloContenedorInicio> obtenerTodosLosVideos(@Field("iduser") String iduser,
+                                                             @Field("idiomaplan") int idiomaplan);
+
+
+
+
+
+
 
 
 }

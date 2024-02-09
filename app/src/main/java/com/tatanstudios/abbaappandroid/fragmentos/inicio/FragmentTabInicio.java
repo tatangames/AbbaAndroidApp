@@ -25,6 +25,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,7 +37,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.google.android.datatransport.backend.cct.BuildConfig;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.tatanstudios.abbaappandroid.R;
@@ -57,7 +60,15 @@ import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
 
-import java.io.ByteArrayOutputStream;
+
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -391,7 +402,7 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
             btnCompartir.setOnClickListener(v -> {
                 if(bloqueCompartir){
                     bloqueCompartir = false;
-                    compartirImagen();
+                    compartirImagen(urlImagen);
                     bottomSheetProgreso.dismiss();
                 }
             });
@@ -407,10 +418,10 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
         }
     }
 
-    private void compartirImagen(){
+    private void compartirImagen(String urlImagen){
         if(bitmapImgShare != null){
 
-            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+           /* Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("image/jpeg");
 
             // Convertir la imagen Bitmap a un Uri
@@ -427,6 +438,9 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
 
             // Iniciar el Intent para compartir
             getActivity().startActivity(Intent.createChooser(shareIntent, getString(R.string.compartir)));
+            */
+
+
         }
     }
 
@@ -478,12 +492,21 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
 
     public void redireccionamientoVideo(int tipoRedireccionamiento, String urlVideo) {
 
-        /*if (tipoRedireccionamiento == 4) { // SERVIDOR PROPIO
-            mostrarVideoServidor(urlVideo);
+        if (tipoRedireccionamiento == 4) {
+
+            // NO HARA NADA, HASTA FUTURA ACTUALIZACION SI SE DA
+
         } else {
             mostrarVideo(urlVideo); // Facebook, Instagram, Youtube
-        }*/
+        }
     }
+
+
+    private void mostrarVideo(String urlVideo){
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlVideo));
+        startActivity(Intent.createChooser(intent, getString(R.string.abrir_con)));
+    }
+
 
 
     public void redireccionarCuestionario(int idblockdeta){
@@ -549,11 +572,6 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
 
 
 
-
-    private void mostrarVideo(String urlVideo){
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlVideo));
-        startActivity(Intent.createChooser(intent, getString(R.string.abrir_con)));
-    }
 
 
     public void vistaTodosLosVideos(){

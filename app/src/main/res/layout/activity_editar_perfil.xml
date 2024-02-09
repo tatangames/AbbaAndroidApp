@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <include
-            layout="@layout/toolbar_fecha_texto_v1"/>
+            layout="@layout/toolbar_flecha_texto_v1"/>
 
         <ScrollView
             android:layout_width="match_parent"

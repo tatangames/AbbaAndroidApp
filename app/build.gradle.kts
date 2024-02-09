@@ -48,7 +48,6 @@ dependencies {
 
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("com.github.GrenderG:Toasty:1.5.2")
-    implementation("com.facebook.shimmer:shimmer:0.5.0")
 
     implementation("io.github.tutorialsandroid:kalertdialog:20.4.8")
     implementation("com.github.TutorialsAndroid:progressx:v6.0.19")

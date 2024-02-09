@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <include
-                layout="@layout/toolbar_fecha_texto_v1"
+                layout="@layout/toolbar_flecha_texto_v1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
