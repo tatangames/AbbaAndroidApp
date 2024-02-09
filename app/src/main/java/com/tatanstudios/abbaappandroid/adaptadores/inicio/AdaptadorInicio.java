@@ -2,10 +2,14 @@ package com.tatanstudios.abbaappandroid.adaptadores.inicio;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -35,6 +39,13 @@ import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloVistasInicio;
 import com.tatanstudios.abbaappandroid.modelos.inicio.bloques.separador.ModeloInicioSeparador;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Entities;
+import org.jsoup.nodes.Node;
+import org.jsoup.nodes.TextNode;
+
 import java.util.List;
 
 public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -50,6 +61,9 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
             .skipMemoryCache(true)
             .placeholder(R.drawable.camaradefecto)
             .priority(Priority.NORMAL);
+
+
+    private String textoCompartir = "";
 
     public AdaptadorInicio(Context context, List<ModeloVistasInicio> modeloVistasInicios, FragmentTabInicio fragmentTabInicio,
                            boolean tema, ModeloInicioSeparador modeloInicioSeparador) {
@@ -96,20 +110,42 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ModeloVistasInicio mVista = modeloVistasInicios.get(position);
 
         switch (mVista.getTipoVista()) {
+
             case ModeloVistasInicio.TIPO_DEVOCIONAL:
 
                 ModeloInicioDevocional m = mVista.getModeloInicioDevocional();
 
                 DevocionalViewHolder viewHolderDevocional = (DevocionalViewHolder) holder;
 
-                String textoCortado = obtenerTextoCortado(m.getDevocuestionario(), 400);
-                viewHolderDevocional.txtDevocional.setText(HtmlCompat.fromHtml(textoCortado, HtmlCompat.FROM_HTML_MODE_LEGACY));
+                Document document = Jsoup.parse(m.getDevocuestionario());
+                document.outputSettings().prettyPrint(true);
+                document.outputSettings().escapeMode(Entities.EscapeMode.xhtml);
 
-                viewHolderDevocional.imgCompartir.setOnClickListener(v -> {
-                    compartirTexto(HtmlCompat.fromHtml(m.getDevocuestionario(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString());
+                // 40 CARACTERES MAXIMO
+                String limitedHtmlText = document.html().substring(0, Math.min(document.html().length(), 400));
+                limitedHtmlText += " ...";
+
+                viewHolderDevocional.webView.loadDataWithBaseURL(null, limitedHtmlText , "text/html", "UTF-8", null);
+
+                viewHolderDevocional.webView.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+                        super.onPageFinished(view, url);
+
+                        String javascript = String.format("document.body.style.fontSize = '%dpx';", 19);
+                        viewHolderDevocional.webView.evaluateJavascript(javascript, null);
+
+
+                    }
                 });
 
-                viewHolderDevocional.txtDevocional.setOnClickListener(v -> {
+
+                viewHolderDevocional.imgCompartir.setOnClickListener(v -> {
+                    String mitexto = HtmlCompat.fromHtml(m.getDevocuestionario(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
+                    fragmentTabInicio.compartirTextoDevocionalDia(mitexto);
+                });
+
+                viewHolderDevocional.webView.setOnClickListener(v -> {
                     fragmentTabInicio.redireccionarCuestionario(m.getDevoidblockdeta());
                 });
 
@@ -298,13 +334,14 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
     // BLOQUE DEVOCIONAL
     private static class DevocionalViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView txtDevocional;
         private ImageView imgCompartir;
         private ImageView imgOpciones;
 
+        private WebView webView;
+
         DevocionalViewHolder(View itemView) {
             super(itemView);
-            txtDevocional = itemView.findViewById(R.id.txtDevocional);
+            webView = itemView.findViewById(R.id.webView);
             imgCompartir = itemView.findViewById(R.id.imgShare);
             imgOpciones = itemView.findViewById(R.id.imgOpciones);
         }
@@ -386,32 +423,6 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
             txtToolbar = itemView.findViewById(R.id.txtToolbar);
             imgFlechaDerecha = itemView.findViewById(R.id.imgFlechaDerecha);
         }
-    }
-
-
-
-    private String obtenerTextoCortado(String texto, int maxCaracteres) {
-        // Elimina las etiquetas HTML del texto para contar solo los caracteres visibles
-        String textoSinHTML =  HtmlCompat.fromHtml(texto, HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
-
-
-        // Limita el texto a la longitud máxima
-        if (textoSinHTML.length() > maxCaracteres) {
-            textoSinHTML = textoSinHTML.substring(0, maxCaracteres) + "...";
-        }
-
-        return textoSinHTML;
-    }
-
-
-    private void compartirTexto(String texto) {
-        // Crea un Intent para compartir texto
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, texto);
-
-        // Inicia el Intent para mostrar el diálogo de compartir
-        context.startActivity(Intent.createChooser(intent, context.getString(R.string.compartir_con)));
     }
 
 }

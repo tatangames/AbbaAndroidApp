@@ -92,7 +92,7 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
     private int colorBlanco = 0;
     private int colorBlack = 0;
 
-    private boolean temaActual = false;
+    private boolean tema = false;
     private boolean bloqueCompartir = true;
     private boolean bottomSheetImagen = false;
     private final int MY_PERMISSION_STORAGE_101 = 101;
@@ -100,7 +100,7 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
     private Bitmap bitmapImgShare;
 
     private boolean boolCompartir = true;
-
+    private boolean boolCompartirDevoDia = true;
 
 
     RequestOptions opcionesGlideOriginal = new RequestOptions()
@@ -132,14 +132,13 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
         colorProgress = ContextCompat.getColor(requireContext(), R.color.barraProgreso);
 
         if(tokenManager.getToken().getTema() == 1){
-            temaActual = true;
+            tema = true;
         }
 
         progressBar = new ProgressBar(getActivity(), null, android.R.attr.progressBarStyleLarge);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         rootRelative.addView(progressBar, params);
-        // Aplicar el ColorFilter al Drawable del ProgressBar
         progressBar.getIndeterminateDrawable().setColorFilter(colorProgress, PorterDuff.Mode.SRC_IN);
 
         colorBlanco = ContextCompat.getColor(requireContext(), R.color.blanco);
@@ -220,7 +219,7 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
 
             elementos.add(new ModeloVistasInicio( ModeloVistasInicio.TIPO_DEVOCIONAL,
                     new ModeloInicioDevocional(apiRespuesta.getDevohaydevocional(),
-                            apiRespuesta.getDevocuestionario(),
+                            apiRespuesta.getDevocuestionario(), // DEVOCIONAL SIN HTML
                             apiRespuesta.getDevoidblockdeta()),
                     null,
                     null,
@@ -285,12 +284,8 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
 
     private void setearAdaptador(){
 
-        boolean temaActual = false;
-        if(tokenManager.getToken().getTema() == 1){
-            temaActual = true;
-        }
 
-        adapter = new AdaptadorInicio(getContext(), elementos, this, temaActual, modeloInicioSeparador);
+        adapter = new AdaptadorInicio(getContext(), elementos, this, tema, modeloInicioSeparador);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -354,7 +349,7 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
                         .into(imgImagen);
             }
 
-            if(temaActual){ // Dark
+            if(tema){ // Dark
                 btnDescargar.setBackgroundTintList(colorStateTintWhite);
                 btnDescargar.setTextColor(colorBlack);
 
@@ -513,7 +508,7 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
             boolCompartir = false;
 
             new Handler().postDelayed(() -> {
-                boolCompartir = false;
+                boolCompartir = true;
             }, 1000);
 
             String packageName = getContext().getPackageName();
@@ -531,6 +526,27 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
             }
         }
     }
+
+
+    public void compartirTextoDevocionalDia(String texto){
+
+        if(boolCompartirDevoDia){
+            boolCompartirDevoDia = false;
+
+            new Handler().postDelayed(() -> {
+                boolCompartirDevoDia = true;
+            }, 1000);
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, texto);
+
+            // Inicia el Intent para mostrar el diálogo de compartir
+            startActivity(Intent.createChooser(intent, getString(R.string.compartir_con)));
+        }
+    }
+
+
 
 
 

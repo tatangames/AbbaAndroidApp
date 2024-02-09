@@ -63,6 +63,7 @@ dependencies {
     implementation("pub.devrel:easypermissions:3.0.0")
 
 
+    implementation("org.jsoup:jsoup:1.14.3")
 
 
 
