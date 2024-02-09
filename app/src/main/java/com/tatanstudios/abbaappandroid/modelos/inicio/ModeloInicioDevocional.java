@@ -13,11 +13,22 @@ public class ModeloInicioDevocional {
     @SerializedName("devoidblockdeta")
     private int devoidblockdeta;
 
+    // saver si mostra bloque preguntas
+    @SerializedName("devopreguntas")
+    private int devopreguntas;
 
-    public ModeloInicioDevocional(int devohaydevocional, String devocuestionario, int devoidblockdeta) {
+
+
+    public ModeloInicioDevocional(int devohaydevocional, String devocuestionario, int devoidblockdeta, int devopreguntas) {
         this.devohaydevocional = devohaydevocional;
         this.devocuestionario = devocuestionario;
         this.devoidblockdeta = devoidblockdeta;
+        this.devopreguntas = devopreguntas;
+    }
+
+
+    public int getDevopreguntas() {
+        return devopreguntas;
     }
 
     public int getDevohaydevocional() {

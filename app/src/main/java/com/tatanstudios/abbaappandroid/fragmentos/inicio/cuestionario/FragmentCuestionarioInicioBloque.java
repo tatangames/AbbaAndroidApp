@@ -1,14 +1,11 @@
-package com.tatanstudios.abbaappandroid.fragmentos.planes.cuestionario;
+package com.tatanstudios.abbaappandroid.fragmentos.inicio.cuestionario;
 
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,18 +18,15 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.adaptadores.planes.misplanes.cuestionario.AdaptadorSpinnerTipoLetraCuestionario;
-import com.tatanstudios.abbaappandroid.adaptadores.planes.misplanes.preguntas.AdaptadorPreguntas;
+import com.tatanstudios.abbaappandroid.fragmentos.planes.cuestionario.FragmentCuestionarioPlanBloque;
 import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.ModeloTipoLetraCuestionario;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
@@ -46,7 +40,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class FragmentCuestionarioPlanBloque extends Fragment {
+public class FragmentCuestionarioInicioBloque extends Fragment {
+
 
     private ProgressBar progressBar;
     private TokenManager tokenManager;
@@ -86,6 +81,7 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
         return fragment;
     }
 
+    // SE OCUPARA EL MISMO LAYOUT YA QUE NO HABRA DIFERENCIAS
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_cuestionario_plan_bloque, container, false);
@@ -377,4 +373,3 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
         super.onStop();
     }
 }
-

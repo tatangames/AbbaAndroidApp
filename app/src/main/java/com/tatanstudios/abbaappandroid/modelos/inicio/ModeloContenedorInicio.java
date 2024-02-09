@@ -47,6 +47,11 @@ public class ModeloContenedorInicio {
 
     // *********************
 
+    @SerializedName("devopreguntas")
+    private int devopreguntas;
+
+    // *********************
+
 
     @SerializedName("imageneshayhoy")
     private int imageneshayhoy;
@@ -95,6 +100,10 @@ public class ModeloContenedorInicio {
     @SerializedName("insigniasmayor5")
     private int insigniasmayor5;
 
+
+    public int getDevopreguntas() {
+        return devopreguntas;
+    }
 
     public List<ModeloRachas> getModeloRachas() {
         return modeloRachas;

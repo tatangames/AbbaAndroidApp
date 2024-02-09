@@ -18,16 +18,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.tatanstudios.abbaappandroid.fileprovider"
+        <activity
+            android:name=".activity.inicio.cuestionario.CuestionarioInicioActivity"
+            android:configChanges="uiMode"
             android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
-        </provider>
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".activity.inicio.insignias.ListadoInsigniasActivity"
@@ -38,7 +33,7 @@
             android:name=".activity.inicio.imagenes.ListadoImagenesActivity"
             android:configChanges="uiMode"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.inicio.videos.ListadoVideosActivity"
             android:configChanges="uiMode"
@@ -118,10 +113,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-
-
     </application>
 
 </manifest>

@@ -146,7 +146,7 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 });
 
                 viewHolderDevocional.webView.setOnClickListener(v -> {
-                    fragmentTabInicio.redireccionarCuestionario(m.getDevoidblockdeta());
+                    fragmentTabInicio.redireccionarCuestionario(m.getDevoidblockdeta(), m.getDevopreguntas());
                 });
 
 
@@ -170,7 +170,7 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             if (item.getItemId() == R.id.opcion1) {
 
                                 // IR A CUESTIONARIO Y PREGUNTAS
-                                fragmentTabInicio.redireccionarCuestionario(m.getDevoidblockdeta());
+                                fragmentTabInicio.redireccionarCuestionario(m.getDevoidblockdeta(), m.getDevopreguntas());
 
                                 return true;
                             } else {

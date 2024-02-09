@@ -205,7 +205,12 @@ public interface ApiService {
     Observable<ModeloContenedorInicio> obtenerTodosLasImagenes(@Field("iduser") String iduser);
 
 
-
+    // guardar texto de preguntas, sino esta el plan asociado, se asociara al usuario
+    @POST("app/plan/inicio/preguntas/guardar/actualizar")
+    @FormUrlEncoded
+    Observable<ModeloPreguntasContenedor> guardarPreguntasCuestionarioInicio(@Field("iduser") String iduser,
+                                                                             @Field("idblockdeta") int idBlockDeta,
+                                                                             @FieldMap Map<String, String> listado);
 
 
 }

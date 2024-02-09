@@ -44,6 +44,7 @@ import com.google.android.datatransport.backend.cct.BuildConfig;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.tatanstudios.abbaappandroid.R;
+import com.tatanstudios.abbaappandroid.activity.inicio.cuestionario.CuestionarioInicioActivity;
 import com.tatanstudios.abbaappandroid.activity.inicio.imagenes.ListadoImagenesActivity;
 import com.tatanstudios.abbaappandroid.activity.inicio.insignias.ListadoInsigniasActivity;
 import com.tatanstudios.abbaappandroid.activity.inicio.videos.ListadoVideosActivity;
@@ -232,7 +233,8 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
             elementos.add(new ModeloVistasInicio( ModeloVistasInicio.TIPO_DEVOCIONAL,
                     new ModeloInicioDevocional(apiRespuesta.getDevohaydevocional(),
                             apiRespuesta.getDevocuestionario(), // DEVOCIONAL SIN HTML
-                            apiRespuesta.getDevoidblockdeta()),
+                            apiRespuesta.getDevoidblockdeta(),
+                            apiRespuesta.getDevopreguntas()),
                     null,
                     null,
                     null,
@@ -508,13 +510,17 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
 
 
 
-    public void redireccionarCuestionario(int idblockdeta){
-        /*Intent intent = new Intent(getContext(), CuestionarioInicioActivity.class);
+    public void redireccionarCuestionario(int idblockdeta, int devoPreguntas){
+
+        // devoPreguntas
+        // 1: devocional
+        // 2: devo y preguntas
+
+        Intent intent = new Intent(getContext(), CuestionarioInicioActivity.class);
         intent.putExtra("IDBLOCKDETA", idblockdeta);
-        startActivity(intent);*/
+        intent.putExtra("PREGUNTAS", devoPreguntas);
+        startActivity(intent);
     }
-
-
 
 
     public void vistaInformacionInsignia(int tipoinsignia){
