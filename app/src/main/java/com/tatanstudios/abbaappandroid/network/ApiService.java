@@ -250,7 +250,11 @@ public interface ApiService {
 
 
 
-
+    // enviar solicitud a otro usuario para ver su info
+    @POST("app/comunidad/enviar/solicitud")
+    @FormUrlEncoded
+    Observable<ModeloUsuario> enviarSolicitudComunidad(@Field("iduser") String iduser,
+                                                       @Field("correo") String correo);
 
 
 

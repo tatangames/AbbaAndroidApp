@@ -19,6 +19,23 @@ public class ModeloComunidad {
     @SerializedName("pais")
     private String pais;
 
+    @SerializedName("idpais")
+    private int idpais;
+
+
+
+    public ModeloComunidad(int id, String nombre, String iglesia, String correo, String pais, int idpais) {
+        this.id = id;
+        this.nombre = nombre;
+        this.iglesia = iglesia;
+        this.correo = correo;
+        this.pais = pais;
+        this.idpais = idpais;
+    }
+
+    public int getIdpais() {
+        return idpais;
+    }
 
     public int getId() {
         return id;

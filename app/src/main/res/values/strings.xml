@@ -196,6 +196,20 @@
     <string name="no_hay_preguntas">No hay preguntas</string>
     <string name="insignias_por_ganar">Insignias por ganar</string>
     <string name="no_hay_insignias_disponibles">No hay Insignias disponibles</string>
+    <string name="agregar_amigo">Agregar amigo</string>
+    <string name="pendientes">Pendientes</string>
+    <string name="no_hay_solicitudes_aceptadas">No hay solicitudes aceptadas</string>
+    <string name="nombre_dos_puntos">Nombre:</string>
+    <string name="correo_dos_puntos">Correo:</string>
+    <string name="pais_dos_puntos">País:</string>
+    <string name="iglesia_dos_puntos">Iglesia:</string>
+    <string name="ingresa_correo_amigo">Ingresa el correo de un amigo para enviarle una solicitud</string>
+    <string name="solicitud_pendiente_aceptacion">solicitud pendiente de aceptación</string>
+    <string name="solicitud_ya_esta_aceptada">Solicitud ya esta aceptada</string>
+    <string name="solicitud_enviada">Solicitud enviada</string>
+
+
+
 
 
 

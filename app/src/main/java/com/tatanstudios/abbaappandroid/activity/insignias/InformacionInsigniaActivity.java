@@ -57,9 +57,6 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
     private OnBackPressedDispatcher onBackPressedDispatcher;
     private RecyclerView recyclerView;
 
-    private boolean tema;
-
-
     private AdaptadorInsigniaHitos adaptadorInsigniaHitos;
 
     private ArrayList<ModeloVistaHitos> elementos = new ArrayList<>();;
@@ -94,9 +91,7 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
 
         onBackPressedDispatcher = getOnBackPressedDispatcher();
 
-        if(tokenManager.getToken().getTema() == 1){
-            tema = true;
-        }
+
 
         imgFlechaAtras.setOnClickListener(v -> {
             volverAtras();

@@ -2,6 +2,7 @@ package com.tatanstudios.abbaappandroid.fragmentos.inicio;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -13,11 +14,18 @@ import android.widget.RelativeLayout;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tatanstudios.abbaappandroid.R;
+import com.tatanstudios.abbaappandroid.activity.comunidad.AgregarAmigoComunidadActivity;
+import com.tatanstudios.abbaappandroid.adaptadores.comunidad.AdaptadorComunidadAceptadas;
+import com.tatanstudios.abbaappandroid.adaptadores.inicio.insignias.individual.AdaptadorInsigniaHitos;
+import com.tatanstudios.abbaappandroid.modelos.comunidad.ModeloComunidad;
 import com.tatanstudios.abbaappandroid.modelos.comunidad.ModeloContedorComunidad;
 import com.tatanstudios.abbaappandroid.modelos.comunidad.ModeloVistaComunidad;
+import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloDescripcionHitos;
+import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloVistaHitos;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
@@ -49,6 +57,7 @@ public class FragmentTabComunidad extends Fragment {
 
     private boolean tema = false;
 
+    private AdaptadorComunidadAceptadas adaptadorComunidadAceptadas;
 
     private ArrayList<ModeloVistaComunidad> elementos = new ArrayList<>();
 
@@ -84,13 +93,13 @@ public class FragmentTabComunidad extends Fragment {
         colorStateTintWhite = ColorStateList.valueOf(colorBlanco);
         colorStateTintBlack = ColorStateList.valueOf(colorBlack);
 
-        apiSolicutesAceptadas();
+        apiSolicitudesAceptadas();
 
         return vista;
     }
 
 
-    private void apiSolicutesAceptadas(){
+    private void apiSolicitudesAceptadas(){
 
         String iduser = tokenManager.getToken().getId();
 
@@ -128,16 +137,41 @@ public class FragmentTabComunidad extends Fragment {
 
     private void setearCampos(ModeloContedorComunidad apiRespuesta){
 
-
-
+        // botonera siempre ira
+        elementos.add(new ModeloVistaComunidad( ModeloVistaComunidad.TIPO_BOTONERA,
+                null
+        ));
 
 
         if(apiRespuesta.getHayinfo() == 1){
 
-        }else{
+            for (ModeloComunidad mm : apiRespuesta.getModeloComunidads()){
+                elementos.add(new ModeloVistaComunidad( ModeloVistaComunidad.TIPO_RECYCLER,
+                        new ModeloComunidad(mm.getId(), mm.getNombre(),
+                                mm.getIglesia(), mm.getCorreo(), mm.getPais(),
+                                mm.getIdpais())
+                ));
+            }
 
+        }else{
+            elementos.add(new ModeloVistaComunidad( ModeloVistaComunidad.TIPO_NOAMIGO,
+                    null
+            ));
         }
+
+        adaptadorComunidadAceptadas = new AdaptadorComunidadAceptadas(getContext(), elementos, this, tema);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(adaptadorComunidadAceptadas);
     }
+
+
+    public void vistaEnviarSolicitud(){
+        Intent intent = new Intent(getContext(), AgregarAmigoComunidadActivity.class);
+        startActivity(intent);
+    }
+
+
+
 
     private void mensajeSinConexion(){
         progressBar.setVisibility(View.GONE);

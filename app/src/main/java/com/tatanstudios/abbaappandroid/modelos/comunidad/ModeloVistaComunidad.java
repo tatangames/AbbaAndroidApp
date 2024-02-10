@@ -1,5 +1,7 @@
 package com.tatanstudios.abbaappandroid.modelos.comunidad;
 
+import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesBloque1;
+
 import java.util.List;
 
 public class ModeloVistaComunidad {
@@ -10,11 +12,13 @@ public class ModeloVistaComunidad {
 
     public static final int TIPO_RECYCLER = 1;
 
+    public static final int TIPO_NOAMIGO = 2;
 
-    private List<ModeloComunidad> modeloComunidad;
+
+    private ModeloComunidad modeloComunidad;
 
 
-    public ModeloVistaComunidad(int tipoVista, List<ModeloComunidad> modeloComunidad
+    public ModeloVistaComunidad(int tipoVista, ModeloComunidad modeloComunidad
 
     ) {
         this.tipoVista = tipoVista;
@@ -25,7 +29,7 @@ public class ModeloVistaComunidad {
         return tipoVista;
     }
 
-    public List<ModeloComunidad> getModeloComunidad() {
+    public ModeloComunidad getModeloComunidad() {
         return modeloComunidad;
     }
 }

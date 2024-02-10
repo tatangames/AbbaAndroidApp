@@ -196,8 +196,17 @@
     <string name="no_hay_preguntas">There are no questions</string>
     <string name="insignias_por_ganar">Badges to earn</string>
     <string name="no_hay_insignias_disponibles">No Badges available</string>
-
-
+    <string name="agregar_amigo">Add friend</string>
+    <string name="pendientes">Pending</string>
+    <string name="no_hay_solicitudes_aceptadas">No friend requests accepted</string>
+    <string name="nombre_dos_puntos">Name:</string>
+    <string name="correo_dos_puntos">Email:</string>
+    <string name="pais_dos_puntos">Country:</string>
+    <string name="iglesia_dos_puntos">Church:</string>
+    <string name="ingresa_correo_amigo">Enter a friends email to send a request</string>
+    <string name="solicitud_pendiente_aceptacion">Application pending acceptance</string>
+    <string name="solicitud_ya_esta_aceptada">Application is already accepted</string>
+    <string name="solicitud_enviada">Request sent</string>
 
 
 

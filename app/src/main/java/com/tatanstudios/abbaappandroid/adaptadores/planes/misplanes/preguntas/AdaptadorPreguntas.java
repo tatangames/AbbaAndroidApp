@@ -46,7 +46,7 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private String descripcionP = "";
 
-    ColorStateList colorStateListBlack, colorStateListWhite;
+    private ColorStateList colorStateListBlack, colorStateListWhite;
     private boolean temaActual;
 
 
