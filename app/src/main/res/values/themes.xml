@@ -115,6 +115,9 @@
         <item name="android:background">@color/blanco</item>
     </style>
 
+    <style name="Separador_Hitos_v1">
+        <item name="android:background">@color/negro</item>
+    </style>
 
 
 </resources>

@@ -18,6 +18,7 @@ import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -79,8 +80,9 @@ public class FragmentAjustes extends Fragment {
 
     private boolean bloqueoPorTema = false;
     private boolean unaVezMlistener = false;
-    private boolean unaVezRadioIdioma;
     private InterfaceActualizarTema mListener;
+
+    private TextView txtToolbar;
 
 
     @Override
@@ -89,6 +91,9 @@ public class FragmentAjustes extends Fragment {
 
         rootRelative = vista.findViewById(R.id.rootRelative);
         recyclerMas = vista.findViewById(R.id.recyclerMas);
+        txtToolbar = vista.findViewById(R.id.txtToolbar);
+
+        txtToolbar.setText(getText(R.string.ajustes));
 
         tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs", MODE_PRIVATE));
         service = RetrofitBuilder.createServiceAutentificacion(ApiService.class, tokenManager);
@@ -103,7 +108,6 @@ public class FragmentAjustes extends Fragment {
 
         bloqueoPorTema = true;
         unaVezMlistener = true;
-        unaVezRadioIdioma = true;
 
         apiInformacionListado();
 

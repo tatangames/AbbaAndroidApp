@@ -2,6 +2,7 @@ package com.tatanstudios.abbaappandroid.network;
 
 import com.tatanstudios.abbaappandroid.modelos.iglesias.ModeloDepartamentos;
 import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloContenedorInicio;
+import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloContenedorInsignias;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanes;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginate;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateMetaDatos;
@@ -211,6 +212,46 @@ public interface ApiService {
     Observable<ModeloPreguntasContenedor> guardarPreguntasCuestionarioInicio(@Field("iduser") String iduser,
                                                                              @Field("idblockdeta") int idBlockDeta,
                                                                              @FieldMap Map<String, String> listado);
+
+
+    // informacion de la insignia seleccionada
+    @POST("app/insignia/individual/informacion")
+    @FormUrlEncoded
+    Observable<ModeloContenedorInsignias> informacionInsigniaSeleccionada(@Field("iduser") String iduser,
+                                                                          @Field("idiomaplan") int idiomaplan,
+                                                                          @Field("idinsignia") int idinsignia);
+
+
+
+    // obtener listado de todas las insignias
+    @POST("app/inicio/todos/lasinsignias")
+    @FormUrlEncoded
+    Observable<ModeloContenedorInicio> obtenerTodosLasInsignias(@Field("iduser") String iduser,
+                                                                @Field("idiomaplan") int idiomaplan);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
