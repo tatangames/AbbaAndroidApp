@@ -1,8 +1,10 @@
 package com.tatanstudios.abbaappandroid.network;
 
+import com.tatanstudios.abbaappandroid.modelos.comunidad.ModeloContedorComunidad;
 import com.tatanstudios.abbaappandroid.modelos.iglesias.ModeloDepartamentos;
 import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloContenedorInicio;
 import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloContenedorInsignias;
+import com.tatanstudios.abbaappandroid.modelos.insignias.faltantes.ModeloInsigniaFaltantesContenedor;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanes;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginate;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateMetaDatos;
@@ -232,8 +234,19 @@ public interface ApiService {
 
 
 
+    // obtener listado de todas las insignias faltantes por ganar
+    @POST("app/listado/insignias/faltantes")
+    @FormUrlEncoded
+    Observable<ModeloInsigniaFaltantesContenedor> obtenerTodosLasInsigniasFaltantes(@Field("iduser") String iduser,
+                                                                                    @Field("idiomaplan") int idiomaplan);
 
 
+
+
+    // listado de solicitudes de comunidad aceptados
+    @POST("app/comunidad/listado/solicitud/aceptadas")
+    @FormUrlEncoded
+    Observable<ModeloContedorComunidad> listadoComunidadAceptado(@Field("iduser") String iduser);
 
 
 

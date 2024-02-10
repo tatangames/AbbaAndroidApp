@@ -194,6 +194,8 @@
     <string name="iniciar_sesion">Log in</string>
     <string name="cuestionario_no_encontrado">Questionnaire not found</string>
     <string name="no_hay_preguntas">There are no questions</string>
+    <string name="insignias_por_ganar">Badges to earn</string>
+    <string name="no_hay_insignias_disponibles">No Badges available</string>
 
 
 

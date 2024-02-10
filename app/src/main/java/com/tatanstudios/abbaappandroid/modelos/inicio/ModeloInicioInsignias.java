@@ -38,8 +38,8 @@ public class ModeloInicioInsignias {
     @SerializedName("imageninsignia")
     private String imageninsignia;
 
-
-
+    @SerializedName("imagen")
+    private String imagen;
 
 
     public ModeloInicioInsignias(int id, String titulo, String descripcion, int nivelVoy, String imageninsignia) {
@@ -50,6 +50,10 @@ public class ModeloInicioInsignias {
         this.imageninsignia = imageninsignia;
     }
 
+
+    public String getImagen() {
+        return imagen;
+    }
 
     public int getHitohaynextlevel() {
         return hitohaynextlevel;

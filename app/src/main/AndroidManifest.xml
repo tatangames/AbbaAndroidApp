@@ -19,11 +19,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.insignias.InsigniasPorGanarActivity"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.inicio.cuestionario.CuestionarioInicioActivity"
             android:configChanges="uiMode"
             android:exported="false"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.inicio.insignias.ListadoInsigniasActivity"
             android:configChanges="uiMode"

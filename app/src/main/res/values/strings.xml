@@ -194,6 +194,9 @@
     <string name="iniciar_sesion">Iniciar sesión</string>
     <string name="cuestionario_no_encontrado">Cuestionario no encontrado</string>
     <string name="no_hay_preguntas">No hay preguntas</string>
+    <string name="insignias_por_ganar">Insignias por ganar</string>
+    <string name="no_hay_insignias_disponibles">No hay Insignias disponibles</string>
+
 
 
     <string-array name="estados_elsalvador_array">
