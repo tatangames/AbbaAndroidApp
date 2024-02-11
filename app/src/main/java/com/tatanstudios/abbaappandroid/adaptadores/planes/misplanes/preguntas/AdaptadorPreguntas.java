@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
@@ -95,8 +96,8 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (viewType == ModeloVistasPreguntas.TIPO_IMAGEN) {
             View view = inflater.inflate(R.layout.cardview_bloque_portada_preguntas, parent, false);
             return new HolderVistaImagen(view);
-
         }
+
         else if (viewType == ModeloVistasPreguntas.TIPO_TITULOP) {
             View view = inflater.inflate(R.layout.cardview_titulo_principal_pregunta, parent, false);
             return new HolderVistaTitular(view);
@@ -137,7 +138,6 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
                         ((HolderVistaTitular) holder).webViewDescripcion.setBackgroundColor(Color.TRANSPARENT);
 
                         if(temaActual){
-
                             String javascriptColor = String.format("document.body.style.color = '%s';", "white");
                             ((HolderVistaTitular) holder).webViewDescripcion.evaluateJavascript(javascriptColor, null);
                         }else{
@@ -151,9 +151,26 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ((HolderVistaTitular) holder).webViewDescripcion.setVisibility(View.GONE);
             }
 
-            ((HolderVistaTitular) holder).webViewDescripcion.setOnClickListener(v -> {
-                fragmentPreguntasPlanBloque.redireccionarBiblia();
+
+            // DETECTA SI SE TOCO EL WEBVIEW
+            ((HolderVistaTitular) holder).webViewDescripcion.setOnTouchListener((v, event) -> {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Obtener las coordenadas del evento de clic
+                        float x = event.getX();
+                        float y = event.getY();
+
+                        // Verificar si el clic se encuentra dentro del WebView
+                        if (x >= 0 && x <= v.getWidth() && y >= 0 && y <= v.getHeight()) {
+
+                        }
+                        break;
+                }
+                return false;
             });
+
+
+
         }
 
         // BLOQUE PREGUNTAS

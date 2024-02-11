@@ -207,8 +207,12 @@
     <string name="solicitud_pendiente_aceptacion">solicitud pendiente de aceptación</string>
     <string name="solicitud_ya_esta_aceptada">Solicitud ya esta aceptada</string>
     <string name="solicitud_enviada">Solicitud enviada</string>
-
-
+    <string name="no_hay_solicitudes_pendientes">No hay solicitudes Pendientes</string>
+    <string name="fecha">Fecha</string>
+    <string name="fecha_de_solicitud">Fecha de Solicitud</string>
+    <string name="borrar_solicitud">Borrar</string>
+    <string name="eliminado">Eliminado</string>
+    <string name="sitio_en_construccion">Sitio en construcción</string>
 
 
 

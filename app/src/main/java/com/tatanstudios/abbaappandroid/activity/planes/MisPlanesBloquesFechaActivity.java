@@ -283,10 +283,11 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
 
                                                 String textoGlobal = "";
 
-                                                if(apiRespuesta.getDescripcion() != null && !TextUtils.isEmpty(apiRespuesta.getDescripcion())){
+                                                // SOLO LLEVARA TEXTOS DE PREGUNTAS
+                                                /*if(apiRespuesta.getDescripcion() != null && !TextUtils.isEmpty(apiRespuesta.getDescripcion())){
                                                     String textoSinHTML = HtmlCompat.fromHtml(apiRespuesta.getDescripcion(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
                                                     textoGlobal += textoSinHTML + "\n" + "\n";
-                                                }
+                                                }*/
 
                                                 // Preguntas
                                                 for (ModeloPreguntas arrayPreguntas : apiRespuesta.getModeloPreguntas()) {

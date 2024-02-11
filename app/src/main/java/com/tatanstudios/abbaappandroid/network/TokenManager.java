@@ -62,6 +62,10 @@ public class TokenManager {
         editor.putInt("IDIOMACEL", code).commit();
     }
 
+    // TAMANO DE LETRA PARA CUESTIONARIOS
+    public void guardarTamanoLetraCuestionario(int tamano) {
+            editor.putInt("TAMANOLETRA", tamano).commit();
+    }
 
 
     // BORRAR UNAS REFERENCIAS
@@ -79,6 +83,7 @@ public class TokenManager {
         token.setToken(prefs.getString("TOKEN", ""));
         token.setTipoLetra(prefs.getInt("TIPOTEXTO", 0));
         token.setIdiomaCel(prefs.getInt("IDIOMACEL", 0));
+        token.setTamanoLetra(prefs.getInt("TAMANOLETRA", 0));
 
         return token;
     }

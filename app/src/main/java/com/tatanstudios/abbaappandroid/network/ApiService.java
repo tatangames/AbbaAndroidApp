@@ -257,8 +257,16 @@ public interface ApiService {
                                                        @Field("correo") String correo);
 
 
+    // listado solicitudes pendientes comunidad
+    @POST("app/comunidad/listado/solicitud/pendientes")
+    @FormUrlEncoded
+    Observable<ModeloContedorComunidad> listadoSolicitudPendiente(@Field("iduser") String iduser);
 
-
+    // elimina solicitud ya sea aceptada o pendiente
+    @POST("app/comunidad/solicitud/eliminar")
+    @FormUrlEncoded
+    Observable<ModeloContedorComunidad> borrarSolicitudPendiente(@Field("iduser") String iduser,
+                                                                 @Field("idsolicitud") int idsolicitud );
 
 
 

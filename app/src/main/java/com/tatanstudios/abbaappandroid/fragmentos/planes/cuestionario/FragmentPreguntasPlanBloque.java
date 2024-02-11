@@ -49,12 +49,9 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
     private RelativeLayout rootRelative;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-
     private static final String ARG_DATO = "IDBLOQUE";
 
     private int idBloqueDeta = 0;
-
-
 
     private boolean temaActual = false;
 
@@ -72,12 +69,11 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
     }
 
 
-    private ArrayList<ModeloVistasPreguntas> elementos;
-
+    private ArrayList<ModeloVistasPreguntas> elementos = new ArrayList<>();
 
     private AdaptadorPreguntas adapter;
 
-    private List<ModeloPreguntas> modeloPreguntas;
+    private List<ModeloPreguntas> modeloPreguntas = new ArrayList<>();
 
     private boolean yaHabiaGuardado = false;
     private boolean boolApiActualizar = true;
@@ -114,8 +110,7 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
             temaActual = true;
         }
 
-        elementos = new ArrayList<>();
-        modeloPreguntas = new ArrayList<>();
+
 
         apiBuscarPreguntas();
 
@@ -294,18 +289,22 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
                 modalCompartir = false;
             }, 1000);
 
-
-            if(tituloPreguntaBloque != null && !TextUtils.isEmpty(tituloPreguntaBloque)) {
-                textoGlobal += tituloPreguntaBloque + "\n" + "\n";
-            }
+            // se ignora el primer cuadro
+            boolean vuelta1 = true;
 
             for (ModeloPreguntas m : modeloPreguntas){
 
-                String textoPregunta = adapter.getTextoPregunta(m.getId());
-                String textoEdt = adapter.getTextoFromEditText(m.getId());
+                if(vuelta1){
+                    // no hacer nada
+                }else{
+                    String textoPregunta = adapter.getTextoPregunta(m.getId());
+                    String textoEdt = adapter.getTextoFromEditText(m.getId());
 
-                String linea = textoPregunta + "\n" + "R// " + textoEdt + "\n" + "\n";
-                textoGlobal += linea;
+                    String linea = textoPregunta + "\n" + "R// " + textoEdt + "\n" + "\n";
+                    textoGlobal += linea;
+                }
+
+                vuelta1 = false;
             }
 
             Intent intent = new Intent(Intent.ACTION_SEND);
@@ -324,7 +323,7 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
     public void redireccionarBiblia(){
 
-
+        Toasty.success(getActivity(), "biblia").show();
     }
 
 

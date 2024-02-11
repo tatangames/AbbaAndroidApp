@@ -64,8 +64,8 @@ public class AgregarAmigoComunidadActivity extends AppCompatActivity {
         edtCorreo = findViewById(R.id.edtCorreo);
         rootRelative = findViewById(R.id.rootRelative);
 
-        service = RetrofitBuilder.createServiceNoAuth(ApiService.class);
         tokenManager = TokenManager.getInstance(this.getSharedPreferences("prefs", MODE_PRIVATE));
+        service = RetrofitBuilder.createServiceAutentificacion(ApiService.class, tokenManager);
 
         int colorProgress = ContextCompat.getColor(this, R.color.barraProgreso);
 
@@ -148,6 +148,7 @@ public class AgregarAmigoComunidadActivity extends AppCompatActivity {
                                         // 1: solicitud esta pendiente de aceptacion
                                         // 2: solicitud ya esta aceptada
                                         // 3: solicitud enviada
+                                        // 4: correo no encontrado
 
                                         if(apiRespuesta.getSuccess() == 1) {
                                             alertaMensaje(getString(R.string.solicitud_pendiente_aceptacion));
@@ -155,9 +156,14 @@ public class AgregarAmigoComunidadActivity extends AppCompatActivity {
                                         else if(apiRespuesta.getSuccess() == 2){
                                             alertaMensaje(getString(R.string.solicitud_ya_esta_aceptada));
                                         }else if(apiRespuesta.getSuccess() == 3){
-                                            edtCorreo.setText("");
                                             Toasty.success(this, getString(R.string.solicitud_enviada), Toasty.LENGTH_SHORT).show();
-                                        }else{
+                                            edtCorreo.setText("");
+                                            inputCorreo.setError(null);
+                                        }
+                                        else if(apiRespuesta.getSuccess() == 4){
+                                            alertaMensaje(getString(R.string.correo_no_encontrado));
+                                        }
+                                        else{
                                             mensajeSinConexion();
                                         }
                                     }else{

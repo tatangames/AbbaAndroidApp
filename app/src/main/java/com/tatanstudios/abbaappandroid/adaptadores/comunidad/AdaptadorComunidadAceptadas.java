@@ -106,7 +106,7 @@ public class AdaptadorComunidadAceptadas extends RecyclerView.Adapter<RecyclerVi
             });
 
             ((HolderVistaBotonera) holder).btnPendiente.setOnClickListener(v -> {
-
+                fragmentTabComunidad.vistaSolicitudPendientes();
             });
         }
 

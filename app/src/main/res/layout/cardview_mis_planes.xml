@@ -25,8 +25,9 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="16dp"
         android:layout_toRightOf="@id/imageView"
+        android:fontFamily="@font/liberation_sans_bold"
         android:textColor="@color/fondo_textos_negro_blanco_v1"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView" />

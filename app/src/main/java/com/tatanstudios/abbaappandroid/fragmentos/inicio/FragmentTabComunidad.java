@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.comunidad.AgregarAmigoComunidadActivity;
+import com.tatanstudios.abbaappandroid.activity.comunidad.SolicitudesPendientesActivity;
 import com.tatanstudios.abbaappandroid.adaptadores.comunidad.AdaptadorComunidadAceptadas;
 import com.tatanstudios.abbaappandroid.adaptadores.inicio.insignias.individual.AdaptadorInsigniaHitos;
 import com.tatanstudios.abbaappandroid.modelos.comunidad.ModeloComunidad;
@@ -170,7 +171,10 @@ public class FragmentTabComunidad extends Fragment {
         startActivity(intent);
     }
 
-
+    public void vistaSolicitudPendientes(){
+        Intent intent = new Intent(getContext(), SolicitudesPendientesActivity.class);
+        startActivity(intent);
+    }
 
 
     private void mensajeSinConexion(){

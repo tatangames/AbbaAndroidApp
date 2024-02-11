@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class ModeloComunidad {
 
-    @SerializedName("success")
+    @SerializedName("id")
     private int id;
 
     @SerializedName("nombre")
@@ -22,7 +22,8 @@ public class ModeloComunidad {
     @SerializedName("idpais")
     private int idpais;
 
-
+    @SerializedName("fecha")
+    private String fecha;
 
     public ModeloComunidad(int id, String nombre, String iglesia, String correo, String pais, int idpais) {
         this.id = id;
@@ -31,6 +32,11 @@ public class ModeloComunidad {
         this.correo = correo;
         this.pais = pais;
         this.idpais = idpais;
+    }
+
+
+    public String getFecha() {
+        return fecha;
     }
 
     public int getIdpais() {

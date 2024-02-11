@@ -545,7 +545,7 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
             intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.compartir) + playStoreLink);
+            intent.putExtra(Intent.EXTRA_TEXT, playStoreLink);
 
             try {
                 startActivity(Intent.createChooser(intent, getString(R.string.compartir)));

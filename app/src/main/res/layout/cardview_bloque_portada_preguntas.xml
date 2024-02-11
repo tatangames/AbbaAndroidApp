@@ -7,10 +7,12 @@
     <ImageView
         android:id="@+id/imgPortada"
         android:layout_width="match_parent"
-        android:layout_height="175dp"
+        android:layout_height="190dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/logo"
         android:scaleType="fitXY"
         android:src="@drawable/ic_nino_leyendo"
-        android:contentDescription="@string/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

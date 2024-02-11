@@ -207,7 +207,12 @@
     <string name="solicitud_pendiente_aceptacion">Application pending acceptance</string>
     <string name="solicitud_ya_esta_aceptada">Application is already accepted</string>
     <string name="solicitud_enviada">Request sent</string>
-
+    <string name="no_hay_solicitudes_pendientes">There are no pending requests</string>
+    <string name="fecha">Date</string>
+    <string name="fecha_de_solicitud">Request Date</string>
+    <string name="borrar_solicitud">Delete request</string>
+    <string name="eliminado">Removed</string>
+    <string name="sitio_en_construccion">Site under construction</string>
 
 
 

@@ -134,8 +134,6 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                         String javascript = String.format("document.body.style.fontSize = '%dpx';", 19);
                         viewHolderDevocional.webView.evaluateJavascript(javascript, null);
-
-
                     }
                 });
 

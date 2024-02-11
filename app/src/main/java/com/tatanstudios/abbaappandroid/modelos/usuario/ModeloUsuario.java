@@ -53,6 +53,18 @@ public class ModeloUsuario {
     private int tipoLetra; // tipo de letra que tiene asignado en leer devocional
     private int idiomaCel; // saber el idioma del telefono
 
+    private int tamanoLetra; // Tamano de letra para cuestioanrios
+
+
+    public int getTamanoLetra() {
+        return tamanoLetra;
+    }
+
+
+    public void setTamanoLetra(int tamanoLetra) {
+        this.tamanoLetra = tamanoLetra;
+    }
+
     public int getIdiomaCel() {
         return idiomaCel;
     }
