@@ -289,18 +289,24 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                                                     textoGlobal += textoSinHTML + "\n" + "\n";
                                                 }*/
 
+                                                boolean noevitarPrimero = false;
+
                                                 // Preguntas
                                                 for (ModeloPreguntas arrayPreguntas : apiRespuesta.getModeloPreguntas()) {
 
-                                                    if(arrayPreguntas.getTitulo() != null && !TextUtils.isEmpty(arrayPreguntas.getTitulo())){
-                                                        String textoSinHTMLTitulo = HtmlCompat.fromHtml(arrayPreguntas.getTitulo(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
+                                                    if(noevitarPrimero){
+                                                        if(arrayPreguntas.getTitulo() != null && !TextUtils.isEmpty(arrayPreguntas.getTitulo())){
+                                                            String textoSinHTMLTitulo = HtmlCompat.fromHtml(arrayPreguntas.getTitulo(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
 
-                                                        textoGlobal += textoSinHTMLTitulo + "\n";
+                                                            textoGlobal += textoSinHTMLTitulo + "\n";
+                                                        }
+
+                                                        if(arrayPreguntas.getTexto() != null && !TextUtils.isEmpty(arrayPreguntas.getTexto())){
+                                                            textoGlobal += arrayPreguntas.getTexto() + "\n";
+                                                        }
                                                     }
 
-                                                    if(arrayPreguntas.getTexto() != null && !TextUtils.isEmpty(arrayPreguntas.getTexto())){
-                                                        textoGlobal += arrayPreguntas.getTexto() + "\n";
-                                                    }
+                                                    noevitarPrimero = true;
                                                 }
 
                                                 Intent intent = new Intent(Intent.ACTION_SEND);

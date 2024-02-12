@@ -32,7 +32,6 @@ public class FragmentInicio extends Fragment implements OnDataUpdateListenerRach
 
     private TextView txtRacha;
 
-    private int colorProgress;
 
     private boolean hayInfoRachas = false;
 
@@ -49,45 +48,17 @@ public class FragmentInicio extends Fragment implements OnDataUpdateListenerRach
 
         tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs", MODE_PRIVATE));
 
-
-        colorProgress = ContextCompat.getColor(requireContext(), R.color.barraProgreso);
-
         if (tokenManager.getToken().getTema() == 1) {
             colorPrimary = ContextCompat.getColor(getContext(), R.color.gris616161); // Obtén el color para tema dark
             tabTextColor = ContextCompat.getColor(getContext(), R.color.negro); // Obtén el color para tema dark
             tabStrokeColor = ContextCompat.getColor(getContext(), R.color.blanco); // Obtén el color para tema dark
 
-            int color = ContextCompat.getColor(getContext(), R.color.blanco);
-
-            Drawable iconDrawable = txtRacha.getCompoundDrawables()[0];
-
-            // Cambiar el color del Drawable
-            DrawableCompat.setTint(iconDrawable, color);
-            DrawableCompat.setTintMode(iconDrawable, PorterDuff.Mode.SRC_IN);
-
-            // Establecer el Drawable actualizado en el TextView
-            txtRacha.setCompoundDrawablesWithIntrinsicBounds(iconDrawable, null, null, null);
-
-            imgNoti.setColorFilter(color);
 
         } else {
             colorPrimary = ContextCompat.getColor(getContext(), R.color.blanco); // Obtén el color para tema light
             tabTextColor = ContextCompat.getColor(getContext(), R.color.gris616161); // Obtén el color para tema light
             tabStrokeColor = ContextCompat.getColor(getContext(), R.color.negro); // Obtén el color para tema light
 
-
-            int color = ContextCompat.getColor(getContext(), R.color.negro);
-
-            Drawable iconDrawable = txtRacha.getCompoundDrawables()[0];
-
-            // Cambiar el color del Drawable
-            DrawableCompat.setTint(iconDrawable, color);
-            DrawableCompat.setTintMode(iconDrawable, PorterDuff.Mode.SRC_IN);
-
-            // Establecer el Drawable actualizado en el TextView
-            txtRacha.setCompoundDrawablesWithIntrinsicBounds(iconDrawable, null, null, null);
-
-            imgNoti.setColorFilter(color);
         }
 
         tabLayout.setBackgroundColor(colorPrimary);

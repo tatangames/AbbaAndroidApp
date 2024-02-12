@@ -249,23 +249,29 @@ public class MisPlanesBloquesFechaCompletadosActivity extends AppCompatActivity 
 
                                                 String textoGlobal = "";
 
-                                                if(apiRespuesta.getDescripcion() != null && !TextUtils.isEmpty(apiRespuesta.getDescripcion())){
+                                                /*if(apiRespuesta.getDescripcion() != null && !TextUtils.isEmpty(apiRespuesta.getDescripcion())){
                                                     String textoSinHTML = HtmlCompat.fromHtml(apiRespuesta.getDescripcion(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
                                                     textoGlobal += textoSinHTML + "\n" + "\n";
-                                                }
+                                                }*/
+
+                                                boolean noprimeraVuelta = false;
 
                                                 // Preguntas
                                                 for (ModeloPreguntas arrayPreguntas : apiRespuesta.getModeloPreguntas()) {
 
-                                                    if(arrayPreguntas.getTitulo() != null && !TextUtils.isEmpty(arrayPreguntas.getTitulo())){
-                                                        String textoSinHTMLTitulo = HtmlCompat.fromHtml(arrayPreguntas.getTitulo(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
+                                                    if(noprimeraVuelta){
+                                                        if(arrayPreguntas.getTitulo() != null && !TextUtils.isEmpty(arrayPreguntas.getTitulo())){
+                                                            String textoSinHTMLTitulo = HtmlCompat.fromHtml(arrayPreguntas.getTitulo(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
 
-                                                        textoGlobal += textoSinHTMLTitulo + "\n";
+                                                            textoGlobal += textoSinHTMLTitulo + "\n";
+                                                        }
+
+                                                        if(arrayPreguntas.getTexto() != null && !TextUtils.isEmpty(arrayPreguntas.getTexto())){
+                                                            textoGlobal += arrayPreguntas.getTexto() + "\n";
+                                                        }
                                                     }
 
-                                                    if(arrayPreguntas.getTexto() != null && !TextUtils.isEmpty(arrayPreguntas.getTexto())){
-                                                        textoGlobal += arrayPreguntas.getTexto() + "\n";
-                                                    }
+                                                    noprimeraVuelta = true;
                                                 }
 
                                                 Intent intent = new Intent(Intent.ACTION_SEND);

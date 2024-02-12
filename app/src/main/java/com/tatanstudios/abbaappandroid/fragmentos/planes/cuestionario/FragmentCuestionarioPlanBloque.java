@@ -71,6 +71,7 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
     private ColorStateList colorStateTintWhite, colorStateTintBlack;
     private int colorBlanco, colorBlack = 0;
     private WebView webViewTitulo, webViewTexto;
+
     public static FragmentCuestionarioPlanBloque newInstance(int dato) {
         FragmentCuestionarioPlanBloque fragment = new FragmentCuestionarioPlanBloque();
         Bundle args = new Bundle();
@@ -312,6 +313,7 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
 
                 if (textSize > MIN_TEXT_SIZE) {
                     textSize--;
+                    tokenManager.guardarTamanoLetraCuestionario(textSize);
                     disminuirTamañoTexto();
                 }
             });
@@ -319,6 +321,7 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
             btnMas.setOnClickListener(v -> {
                 if (textSize < MAX_TEXT_SIZE) {
                     textSize++;
+                    tokenManager.guardarTamanoLetraCuestionario(textSize);
                     aumentarTamañoTexto();
                 }
             });

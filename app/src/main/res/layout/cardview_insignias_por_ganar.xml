@@ -40,7 +40,7 @@
 
             <TextView
                 android:id="@+id/txtTitulo"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
@@ -56,7 +56,7 @@
 
             <TextView
                 android:id="@+id/txtDescripcion"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
@@ -64,8 +64,8 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="15dp"
                 android:gravity="center"
-                android:textSize="15sp"
                 android:textColor="@color/fondo_textos_negro_blanco_v1"
+                android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

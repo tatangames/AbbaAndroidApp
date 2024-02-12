@@ -29,7 +29,7 @@
                 android:layout_gravity="start"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="1"
+                android:text="0"
                 android:textColor="@color/gris616161"
                 android:textSize="35sp" />
 
