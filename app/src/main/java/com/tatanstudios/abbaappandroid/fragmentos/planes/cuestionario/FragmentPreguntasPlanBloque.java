@@ -110,8 +110,6 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
             temaActual = true;
         }
 
-
-
         apiBuscarPreguntas();
 
         return vista;
@@ -290,13 +288,11 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
             }, 1000);
 
             // se ignora el primer cuadro
-            boolean vuelta1 = true;
+            boolean vuelta1 = false;
 
             for (ModeloPreguntas m : modeloPreguntas){
 
                 if(vuelta1){
-                    // no hacer nada
-                }else{
                     String textoPregunta = adapter.getTextoPregunta(m.getId());
                     String textoEdt = adapter.getTextoFromEditText(m.getId());
 
@@ -304,7 +300,7 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
                     textoGlobal += linea;
                 }
 
-                vuelta1 = false;
+                vuelta1 = true;
             }
 
             Intent intent = new Intent(Intent.ACTION_SEND);

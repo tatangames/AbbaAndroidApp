@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.onesignal.OneSignal;
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.principal.PrincipalActivity;
 import com.tatanstudios.abbaappandroid.fragmentos.login.olvidepass.FragmentOlvidePassword;
@@ -57,6 +58,8 @@ public class FragmentLoginDatos extends Fragment {
 
     private ColorStateList colorEstadoGris, colorEstadoBlanco, colorEstadoNegro;
     private boolean tema;
+
+    private String oneSignalId = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -136,6 +139,10 @@ public class FragmentLoginDatos extends Fragment {
 
         edtCorreo.addTextChangedListener(textWatcher);
         edtContrasena.addTextChangedListener(textWatcher);
+
+
+        // obtener identificador id one signal
+        oneSignalId = OneSignal.getUser().getPushSubscription().getId();
 
         return vista;
     }
@@ -224,10 +231,9 @@ public class FragmentLoginDatos extends Fragment {
 
         String txtCorreo = Objects.requireNonNull(edtCorreo.getText()).toString();
         String txtContrasena = Objects.requireNonNull(edtContrasena.getText()).toString();
-        String idfirebase = "1234";
 
         compositeDisposable.add(
-                service.inicioSesion(txtCorreo, txtContrasena, idfirebase)
+                service.inicioSesion(txtCorreo, txtContrasena, oneSignalId)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .retry()

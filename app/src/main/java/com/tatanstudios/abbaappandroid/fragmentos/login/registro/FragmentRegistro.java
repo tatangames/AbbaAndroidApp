@@ -98,7 +98,7 @@ public class FragmentRegistro extends Fragment {
     private boolean puedeAddIglesiaSpin =  false, boolDialogoEnviar = true;
     private boolean enviarDatosApi = true;
 
-    private String oneSignalId = "";
+    private String oneSignalId = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

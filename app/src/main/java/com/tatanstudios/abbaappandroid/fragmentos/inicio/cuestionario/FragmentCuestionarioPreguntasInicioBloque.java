@@ -291,17 +291,20 @@ public class FragmentCuestionarioPreguntasInicioBloque extends Fragment {
             }, 1000);
 
 
-            if(tituloPreguntaBloque != null && !TextUtils.isEmpty(tituloPreguntaBloque)) {
-                textoGlobal += tituloPreguntaBloque + "\n" + "\n";
-            }
+            // se ignora el primer cuadro
+            boolean vuelta1 = false;
 
             for (ModeloPreguntas m : modeloPreguntas){
 
-                String textoPregunta = adapter.getTextoPregunta(m.getId());
-                String textoEdt = adapter.getTextoFromEditText(m.getId());
+                if(vuelta1){
+                    String textoPregunta = adapter.getTextoPregunta(m.getId());
+                    String textoEdt = adapter.getTextoFromEditText(m.getId());
 
-                String linea = textoPregunta + "\n" + "R// " + textoEdt + "\n" + "\n";
-                textoGlobal += linea;
+                    String linea = textoPregunta + "\n" + "R// " + textoEdt + "\n" + "\n";
+                    textoGlobal += linea;
+                }
+
+                vuelta1 = true;
             }
 
             Intent intent = new Intent(Intent.ACTION_SEND);

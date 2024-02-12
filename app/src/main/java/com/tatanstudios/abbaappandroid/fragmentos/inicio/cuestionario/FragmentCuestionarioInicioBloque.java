@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
@@ -95,7 +96,6 @@ public class FragmentCuestionarioInicioBloque extends Fragment {
 
 
         webView.setWebViewClient(new WebViewClient());
-
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
@@ -119,6 +119,14 @@ public class FragmentCuestionarioInicioBloque extends Fragment {
         colorBlack = ContextCompat.getColor(requireContext(), R.color.negro);
 
 
+        // verificar tamano de letra, es cuando es primera vez
+        if(tokenManager.getToken().getTamanoLetra() == 0){
+            tokenManager.guardarTamanoLetraCuestionario(textSize);
+        }else{
+            textSize = tokenManager.getToken().getTamanoLetra();
+        }
+
+
         // transparente fondo
         webView.setBackgroundColor(Color.TRANSPARENT);
 
@@ -130,6 +138,25 @@ public class FragmentCuestionarioInicioBloque extends Fragment {
         colorStateTintBlack = ColorStateList.valueOf(colorBlack);
 
         apiBuscarCuestionario();
+
+        // DETECTA SI SE TOCO EL WEBVIEW, Y AQUI SE OBTIENE A CUAL VERSICULO REDIRECCIONAR.
+
+        webView.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    // Obtener las coordenadas del evento de clic
+                    float x = event.getX();
+                    float y = event.getY();
+
+                    // Verificar si el clic se encuentra dentro del WebView
+                    if (x >= 0 && x <= v.getWidth() && y >= 0 && y <= v.getHeight()) {
+
+
+                    }
+                    break;
+            }
+            return false;
+        });
 
         return vista;
     }
@@ -274,6 +301,7 @@ public class FragmentCuestionarioInicioBloque extends Fragment {
 
                 if (textSize > MIN_TEXT_SIZE) {
                     textSize--;
+                    tokenManager.guardarTamanoLetraCuestionario(textSize);
                     disminuirTamañoTexto();
                 }
             });
@@ -281,6 +309,7 @@ public class FragmentCuestionarioInicioBloque extends Fragment {
             btnMas.setOnClickListener(v -> {
                 if (textSize < MAX_TEXT_SIZE) {
                     textSize++;
+                    tokenManager.guardarTamanoLetraCuestionario(textSize);
                     aumentarTamañoTexto();
                 }
             });

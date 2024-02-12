@@ -101,8 +101,6 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
         webSettingsTexto.setJavaScriptEnabled(true);
 
 
-
-
         idBloqueDeta = getArguments().getInt(ARG_DATO, 0);
 
         int colorProgress = ContextCompat.getColor(requireContext(), R.color.barraProgreso);
@@ -443,10 +441,7 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
             }
         });
 
-        new Handler().postDelayed(() -> {
-            webViewTitulo.setVisibility(View.VISIBLE);
-            webViewTexto.setVisibility(View.VISIBLE);
-        }, 1000);
+
 
     }
 
