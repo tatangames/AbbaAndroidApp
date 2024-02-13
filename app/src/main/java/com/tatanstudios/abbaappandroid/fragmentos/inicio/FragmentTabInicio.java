@@ -531,7 +531,6 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
 
     public void compartirAplicacion(){
 
-
         if(boolCompartir){
             boolCompartir = false;
 
@@ -552,6 +551,23 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
             } catch (Exception e) {
 
             }
+
+            // enviar peticion de compartir app
+
+            String iduser = tokenManager.getToken().getId();
+            int idioma = tokenManager.getToken().getIdiomaTextos();
+
+            compositeDisposable.add(
+                    service.compartirApp(iduser, idioma)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread()) // NO RETRY
+                            .subscribe(apiRespuesta -> {
+
+                                    },
+                                    throwable -> {
+                                        mensajeSinConexion();
+                                    })
+            );
         }
     }
 

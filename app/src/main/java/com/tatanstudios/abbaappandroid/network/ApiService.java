@@ -266,8 +266,14 @@ public interface ApiService {
     @POST("app/comunidad/solicitud/eliminar")
     @FormUrlEncoded
     Observable<ModeloContedorComunidad> borrarSolicitudPendiente(@Field("iduser") String iduser,
-                                                                 @Field("idsolicitud") int idsolicitud );
+                                                                 @Field("idsolicitud") int idsolicitud);
 
+
+    // compartir aplicacion, solo para insginia
+    @POST("app/compartir/aplicacion")
+    @FormUrlEncoded
+    Observable<ModeloContedorComunidad> compartirApp(@Field("iduser") String iduser,
+                                                     @Field("idiomaplan") int idiomaplan);
 
 
 
