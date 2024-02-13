@@ -117,6 +117,7 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
     private boolean boolCompartir = true;
     private boolean boolCompartirDevoDia = true;
 
+    private boolean boolCompartirApi = true;
 
     RequestOptions opcionesGlideOriginal = new RequestOptions()
             .diskCacheStrategy(DiskCacheStrategy.ALL) // Forzar la carga desde la memoria caché para mejorar la velocidad
@@ -554,20 +555,25 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
 
             // enviar peticion de compartir app
 
-            String iduser = tokenManager.getToken().getId();
-            int idioma = tokenManager.getToken().getIdiomaTextos();
+            if(boolCompartirApi){
+                boolCompartirApi = false;
 
-            compositeDisposable.add(
-                    service.compartirApp(iduser, idioma)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread()) // NO RETRY
-                            .subscribe(apiRespuesta -> {
+                String iduser = tokenManager.getToken().getId();
+                int idioma = tokenManager.getToken().getIdiomaTextos();
 
-                                    },
-                                    throwable -> {
-                                        mensajeSinConexion();
-                                    })
-            );
+                compositeDisposable.add(
+                        service.compartirApp(iduser, idioma)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread()) // NO RETRY
+                                .subscribe(apiRespuesta -> {
+                                            boolCompartirApi = true;
+                                        },
+                                        throwable -> {
+                                            boolCompartirApi = true;
+                                        })
+                );
+            }
+
         }
     }
 
