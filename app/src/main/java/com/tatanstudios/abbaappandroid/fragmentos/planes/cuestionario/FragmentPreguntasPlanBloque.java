@@ -234,9 +234,11 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
             progressBar.setVisibility(View.VISIBLE);
 
             String iduser = tokenManager.getToken().getId();
+            int idioma = tokenManager.getToken().getIdiomaTextos();
+
 
             compositeDisposable.add(
-                    service.actualizarPreguntasUsuarioPlanes(iduser, idBloqueDeta, hashMapPreguntas)
+                    service.actualizarPreguntasUsuarioPlanes(iduser, idBloqueDeta, idioma, hashMapPreguntas)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread()) // NO RETRY
                             .subscribe(apiRespuesta -> {

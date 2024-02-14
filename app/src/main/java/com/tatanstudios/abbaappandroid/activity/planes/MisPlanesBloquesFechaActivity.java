@@ -157,10 +157,10 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                                             recyclerViewHorizontal.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
                                             recyclerViewHorizontal.setAdapter(adapterHorizontal);
 
-                                            setearAdapter(apiRespuesta.getPortada());
+                                            setearPortada(apiRespuesta.getPortada());
 
 
-                                            if(apiRespuesta.getHayDiaActual() == 1){
+                                            /*if(apiRespuesta.getHayDiaActual() == 1){
 
                                                 // conocer la posicion para mover
                                                 for (int i = 0; i < apiRespuesta.getModeloBloqueFechas().size(); i++) {
@@ -178,7 +178,7 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                                                 if (ultimaPosicion >= 0) {
                                                     adapterHorizontal.moverPosicionRecycler(ultimaPosicion);
                                                 }
-                                            }
+                                            }*/
 
 
                                             linearContenedor.setVisibility(View.VISIBLE);
@@ -196,7 +196,7 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
         );
     }
 
-    private void setearAdapter(String urlPortada){
+    private void setearPortada(String urlPortada){
 
         if(urlPortada != null && !TextUtils.isEmpty(urlPortada)){
             Glide.with(this)

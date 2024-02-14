@@ -2,6 +2,7 @@ package com.tatanstudios.abbaappandroid.fragmentos.menuprincipal;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ public class FragmentPlanes extends Fragment {
 
     private boolean tema = false;
     private TextView txtToolbar;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
