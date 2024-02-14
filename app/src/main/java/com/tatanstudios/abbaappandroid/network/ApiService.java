@@ -276,8 +276,16 @@ public interface ApiService {
                                                      @Field("idiomaplan") int idiomaplan);
 
 
-
-
+    // compartir devocional
+    // AQUI SE UTILIZA EN PANTALLAS BOTON COMPARTIR EN 2
+    // FragmentCuestionarioPreguntasInicioBloque
+    // FragmentPreguntasPlanBloque
+    // Es al llenar todos los input edit text, puede darle al boton compartir
+    // aqui no se mostrara titulo de blockdeta
+    @POST("app/compartir/devocional")
+    @FormUrlEncoded
+    Observable<ModeloContedorComunidad> compartirDevocional(@Field("iduser") String iduser,
+                                                     @Field("idiomaplan") int idiomaplan);
 
 
 

@@ -245,21 +245,31 @@ public class MisPlanesBloquesFechaCompletadosActivity extends AppCompatActivity 
 
                                         if(apiRespuesta != null) {
 
-                                            if(apiRespuesta.getSuccess() == 1) {
+                                            // AUNQUE AQUI, SOLO ESTRARIA ESTADO 2 Y 3
 
+
+                                            if(apiRespuesta.getSuccess() == 1) {
+                                                // falta responder preguntas
+                                                Toasty.info(this, getString(R.string.completar_devocional),Toasty.LENGTH_SHORT).show();
+                                            }
+                                            else if(apiRespuesta.getSuccess() == 2) {
+
+                                                int ignorar = apiRespuesta.getIgnorarpre();
                                                 String textoGlobal = "";
 
-                                                /*if(apiRespuesta.getDescripcion() != null && !TextUtils.isEmpty(apiRespuesta.getDescripcion())){
-                                                    String textoSinHTML = HtmlCompat.fromHtml(apiRespuesta.getDescripcion(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
-                                                    textoGlobal += textoSinHTML + "\n" + "\n";
-                                                }*/
+                                                boolean noevitarPrimero = true;
+                                                if(ignorar == 1){
+                                                    noevitarPrimero = false;
+                                                }
 
-                                                boolean noprimeraVuelta = false;
+                                                if(apiRespuesta.getDescripcion() != null && !TextUtils.isEmpty(apiRespuesta.getDescripcion())){
+                                                    textoGlobal += apiRespuesta.getDescripcion() + "\n";
+                                                }
 
                                                 // Preguntas
                                                 for (ModeloPreguntas arrayPreguntas : apiRespuesta.getModeloPreguntas()) {
 
-                                                    if(noprimeraVuelta){
+                                                    if(noevitarPrimero){
                                                         if(arrayPreguntas.getTitulo() != null && !TextUtils.isEmpty(arrayPreguntas.getTitulo())){
                                                             String textoSinHTMLTitulo = HtmlCompat.fromHtml(arrayPreguntas.getTitulo(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
 
@@ -271,7 +281,7 @@ public class MisPlanesBloquesFechaCompletadosActivity extends AppCompatActivity 
                                                         }
                                                     }
 
-                                                    noprimeraVuelta = true;
+                                                    noevitarPrimero = true;
                                                 }
 
                                                 Intent intent = new Intent(Intent.ACTION_SEND);
@@ -285,14 +295,16 @@ public class MisPlanesBloquesFechaCompletadosActivity extends AppCompatActivity 
 
                                                 }
                                             }
-                                            else if(apiRespuesta.getSuccess() == 2) {
 
-                                                // no deberia salir, ya que se ocultara icono preguntas
-                                                Toasty.info(this, getString(R.string.no_hay_preguntas), Toasty.LENGTH_SHORT).show();
+                                            else if(apiRespuesta.getSuccess() == 3) {
+
+                                                // no hay preguntas disponibles, es que estan inactivas
+                                                Toasty.info(this, getString(R.string.devocional_no_disponible), Toasty.LENGTH_SHORT).show();
                                             }
                                             else{
                                                 mensajeSinConexion();
                                             }
+
                                         }else{
                                             mensajeSinConexion();
                                         }

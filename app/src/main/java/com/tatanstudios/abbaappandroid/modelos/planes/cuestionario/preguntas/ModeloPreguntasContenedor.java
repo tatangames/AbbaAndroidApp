@@ -18,9 +18,17 @@ public class ModeloPreguntasContenedor{
     @SerializedName("hayrespuesta")
     private int hayRespuesta;
 
+    @SerializedName("ignorarpre")
+    private int ignorarpre;
+
+
     @SerializedName("listado")
     public List<ModeloPreguntas> modeloPreguntas;
 
+
+    public int getIgnorarpre() {
+        return ignorarpre;
+    }
 
     public int getSuccess() {
         return success;

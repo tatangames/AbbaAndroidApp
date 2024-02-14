@@ -59,6 +59,7 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
     private TextView txtSinPreguntas;
 
+    private boolean boolCompartirDevo = true;
 
     public static FragmentPreguntasPlanBloque newInstance(int dato) {
         FragmentPreguntasPlanBloque fragment = new FragmentPreguntasPlanBloque();
@@ -313,8 +314,34 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
             } catch (Exception e) {
 
             }
+
+            compartirDevoApi();
         }
     }
+
+
+    private void compartirDevoApi(){
+
+        if(boolCompartirDevo){
+            boolCompartirDevo = false;
+
+            String iduser = tokenManager.getToken().getId();
+            int idioma = tokenManager.getToken().getIdiomaTextos();
+
+            compositeDisposable.add(
+                    service.compartirDevocional(iduser, idioma)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread()) // NO RETRY
+                            .subscribe(apiRespuesta -> {
+                                        boolCompartirDevo = true;
+                                    },
+                                    throwable -> {
+                                        boolCompartirDevo = true;
+                                    })
+            );
+        }
+    }
+
 
 
     public void redireccionarBiblia(){

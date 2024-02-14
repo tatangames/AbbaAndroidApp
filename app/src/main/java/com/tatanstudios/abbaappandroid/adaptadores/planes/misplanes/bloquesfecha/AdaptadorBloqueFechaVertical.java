@@ -18,8 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.planes.MisPlanesBloquesFechaActivity;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.bloquefechas.ModeloBloqueFechaDetalle;
+import com.tatanstudios.abbaappandroid.network.ApiService;
 
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class AdaptadorBloqueFechaVertical extends RecyclerView.Adapter<AdaptadorBloqueFechaVertical.ViewHolder> {
     private List<ModeloBloqueFechaDetalle> modeloMisPlanesBloqueDetalles;
@@ -31,8 +37,11 @@ public class AdaptadorBloqueFechaVertical extends RecyclerView.Adapter<Adaptador
     private int colorBlanco;
     private int colorNegro;
 
+
+
     public AdaptadorBloqueFechaVertical(Context context, List<ModeloBloqueFechaDetalle> modeloMisPlanesBloqueDetalles,
-                                        MisPlanesBloquesFechaActivity misPlanesBloquesFechaActivity, boolean tema) {
+                                        MisPlanesBloquesFechaActivity misPlanesBloquesFechaActivity, boolean tema
+                                        ) {
         this.context = context;
         this.modeloMisPlanesBloqueDetalles = modeloMisPlanesBloqueDetalles;
         this.misPlanesBloquesFechaActivity = misPlanesBloquesFechaActivity;
@@ -99,6 +108,7 @@ public class AdaptadorBloqueFechaVertical extends RecyclerView.Adapter<Adaptador
             misPlanesBloquesFechaActivity.informacionCompartir(m.getId());
         });
     }
+
 
 
 

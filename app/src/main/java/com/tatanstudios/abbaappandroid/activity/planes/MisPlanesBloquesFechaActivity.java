@@ -217,6 +217,7 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
         ModeloBloqueFechaDetalle> modeloMisPlanesBloqueDetalles){
 
         adapterVertical = new AdaptadorBloqueFechaVertical(this, modeloMisPlanesBloqueDetalles, this, tema);
+
         recyclerViewVertical.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerViewVertical.setAdapter(adapterVertical);
     }
@@ -224,6 +225,7 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
 
     public void actualizarCheck(int blockDeta, int valor){
 
+            progressBar.setVisibility(View.VISIBLE);
 
             String iduser = tokenManager.getToken().getId();
 
@@ -234,9 +236,19 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                             .retry()
                             .subscribe(apiRespuesta -> {
 
+                                        progressBar.setVisibility(View.GONE);
+
                                         if(apiRespuesta != null) {
 
+
                                             if (apiRespuesta.getSuccess() == 1) {
+                                                // no ha respondido preguntas y hay activas y requeridas
+
+                                                Toasty.info(this, getString(R.string.completar_devocional),Toasty.LENGTH_SHORT).show();
+
+                                            }
+                                            else if (apiRespuesta.getSuccess() == 2) {
+                                                Toasty.success(this, getString(R.string.actualizado),Toasty.LENGTH_SHORT).show();
 
                                                 if(apiRespuesta.getPlanCompletado() == 1){
 
@@ -256,6 +268,7 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                                     })
             );
     }
+
 
     public void informacionCompartir(int idblockdeta){
 
@@ -280,16 +293,22 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                                         if(apiRespuesta != null) {
 
                                             if(apiRespuesta.getSuccess() == 1) {
+                                                // falta responder preguntas
+                                                Toasty.info(this, getString(R.string.completar_devocional),Toasty.LENGTH_SHORT).show();
+                                            }
+                                            else if(apiRespuesta.getSuccess() == 2) {
 
+                                                int ignorar = apiRespuesta.getIgnorarpre();
                                                 String textoGlobal = "";
 
-                                                // SOLO LLEVARA TEXTOS DE PREGUNTAS
-                                                /*if(apiRespuesta.getDescripcion() != null && !TextUtils.isEmpty(apiRespuesta.getDescripcion())){
-                                                    String textoSinHTML = HtmlCompat.fromHtml(apiRespuesta.getDescripcion(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
-                                                    textoGlobal += textoSinHTML + "\n" + "\n";
-                                                }*/
+                                                boolean noevitarPrimero = true;
+                                                if(ignorar == 1){
+                                                    noevitarPrimero = false;
+                                                }
 
-                                                boolean noevitarPrimero = false;
+                                                if(apiRespuesta.getDescripcion() != null && !TextUtils.isEmpty(apiRespuesta.getDescripcion())){
+                                                    textoGlobal += apiRespuesta.getDescripcion() + "\n";
+                                                }
 
                                                 // Preguntas
                                                 for (ModeloPreguntas arrayPreguntas : apiRespuesta.getModeloPreguntas()) {
@@ -320,10 +339,11 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
 
                                                 }
                                             }
-                                            else if(apiRespuesta.getSuccess() == 2) {
 
-                                                // no deberia salir, ya que se ocultara icono preguntas
-                                                Toasty.info(this, getString(R.string.no_hay_preguntas), Toasty.LENGTH_SHORT).show();
+                                            else if(apiRespuesta.getSuccess() == 3) {
+
+                                                // no hay preguntas disponibles, es que estan inactivas
+                                                Toasty.info(this, getString(R.string.devocional_no_disponible), Toasty.LENGTH_SHORT).show();
                                             }
                                             else{
                                                 mensajeSinConexion();

@@ -213,7 +213,8 @@
     <string name="borrar_solicitud">Delete request</string>
     <string name="eliminado">Removed</string>
     <string name="sitio_en_construccion">Site under construction</string>
-
+    <string name="completar_devocional">Complete Devotional</string>
+    <string name="devocional_no_disponible">Devotional not available</string>
 
 
 

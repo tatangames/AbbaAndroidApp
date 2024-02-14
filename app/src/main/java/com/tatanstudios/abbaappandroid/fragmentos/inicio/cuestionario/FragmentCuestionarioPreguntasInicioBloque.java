@@ -79,6 +79,8 @@ public class FragmentCuestionarioPreguntasInicioBloque extends Fragment {
     private boolean boolApiActualizar = true;
     private boolean modalCompartir = false;
 
+    private boolean boolCompartirDevo = true;
+
     private String tituloPreguntaBloque = "";
 
     public boolean isYaHabiaGuardado() {
@@ -266,6 +268,7 @@ public class FragmentCuestionarioPreguntasInicioBloque extends Fragment {
         }
     }
 
+
     public void compartirDatosPreguntas(){
 
         String textoGlobal = "";
@@ -317,6 +320,31 @@ public class FragmentCuestionarioPreguntasInicioBloque extends Fragment {
             } catch (Exception e) {
 
             }
+
+            compartirDevoApi();
+        }
+    }
+
+
+    private void compartirDevoApi(){
+
+        if(boolCompartirDevo){
+            boolCompartirDevo = false;
+
+            String iduser = tokenManager.getToken().getId();
+            int idioma = tokenManager.getToken().getIdiomaTextos();
+
+            compositeDisposable.add(
+                    service.compartirDevocional(iduser, idioma)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread()) // NO RETRY
+                            .subscribe(apiRespuesta -> {
+                                        boolCompartirDevo = true;
+                                    },
+                                    throwable -> {
+                                        boolCompartirDevo = true;
+                                    })
+            );
         }
     }
 
