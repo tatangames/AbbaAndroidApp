@@ -106,7 +106,7 @@ public class FragmentMisPlanes extends Fragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                int visibleItemCount = layoutManager.getChildCount();
+                /*int visibleItemCount = layoutManager.getChildCount();
                 int totalItemCount = layoutManager.getItemCount();
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
 
@@ -117,7 +117,14 @@ public class FragmentMisPlanes extends Fragment {
                             && firstVisibleItemPosition >= 0) {
                         apiBuscarMisPlanesPaginate();
                     }
+                }*/
+                if (puedeCargarYaPaginacion && !isLastPage()) {
+                    if (!recyclerView.canScrollVertically(1)) {
+                        // Estamos en el fondo, carga más elementos
+                        apiBuscarMisPlanesPaginate();
+                    }
                 }
+
             }
         });
 

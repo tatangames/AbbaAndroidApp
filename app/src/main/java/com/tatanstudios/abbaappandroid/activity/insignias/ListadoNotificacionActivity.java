@@ -1,29 +1,30 @@
-package com.tatanstudios.abbaappandroid.fragmentos.planes.buscarplanes;
+package com.tatanstudios.abbaappandroid.activity.insignias;
 
-import static android.content.Context.MODE_PRIVATE;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.activity.planes.VerPlanParaSeleccionarActivity;
-import com.tatanstudios.abbaappandroid.adaptadores.planes.buscarplanes.AdaptadorBuscarPlanes;
-import com.tatanstudios.abbaappandroid.fragmentos.menuprincipal.FragmentPlanes;
-import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanes;
-import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateRequest;
+import com.tatanstudios.abbaappandroid.activity.planes.completados.MisPlanesBloquesFechaCompletadosActivity;
+import com.tatanstudios.abbaappandroid.adaptadores.notificacion.AdaptadorListaNotificaciones;
+import com.tatanstudios.abbaappandroid.adaptadores.planes.completados.AdaptadorPlanesCompletados;
+import com.tatanstudios.abbaappandroid.modelos.notificacion.ModeloListaNotificacion;
+import com.tatanstudios.abbaappandroid.modelos.notificacion.ModeloListaNotificacionPaginateRequest;
+import com.tatanstudios.abbaappandroid.modelos.planes.completados.ModeloPlanesCompletados;
+import com.tatanstudios.abbaappandroid.modelos.planes.completados.ModeloPlanesCompletadosPaginateRequest;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
@@ -35,7 +36,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class FragmentBuscarPlanes extends FragmentPlanes {
+public class ListadoNotificacionActivity extends AppCompatActivity {
+
 
     private ProgressBar progressBar;
     private TokenManager tokenManager;
@@ -43,15 +45,9 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
     private ApiService service;
     private RelativeLayout rootRelative;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-
-    private TextView txtSinPlanes;
-
+    private TextView txtSinNotificacion;
     private boolean unaVezVisibilidad = true;
-
-    private AdaptadorBuscarPlanes adapter;
-
-    private int RETORNO_ACTUALIZAR_100 = 100;
-
+    private AdaptadorListaNotificaciones adapter;
 
 
     // AJUSTES DE PAGINACION
@@ -62,29 +58,29 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
     private int lastPage = 1;
 
 
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View vista = inflater.inflate(R.layout.fragment_buscar_planes, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_listado_notificacion);
 
-        recyclerView = vista.findViewById(R.id.recyclerView);
-        rootRelative = vista.findViewById(R.id.rootRelative);
-        txtSinPlanes = vista.findViewById(R.id.txtSinPlanes);
 
-        tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs", MODE_PRIVATE));
+        recyclerView = findViewById(R.id.recyclerView);
+        rootRelative = findViewById(R.id.rootRelative);
+        txtSinNotificacion = findViewById(R.id.txtSinNotificacion);
+
+        tokenManager = TokenManager.getInstance(getSharedPreferences("prefs", MODE_PRIVATE));
         service = RetrofitBuilder.createServiceAutentificacion(ApiService.class, tokenManager);
 
-        int colorProgress = ContextCompat.getColor(requireContext(), R.color.barraProgreso);
+        int colorProgress = ContextCompat.getColor(this, R.color.barraProgreso);
 
-        progressBar = new ProgressBar(getActivity(), null, android.R.attr.progressBarStyleLarge);
+        progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleLarge);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         rootRelative.addView(progressBar, params);
         progressBar.getIndeterminateDrawable().setColorFilter(colorProgress, PorterDuff.Mode.SRC_IN);
 
         // Configura el LinearLayoutManager y el ScrollListener para manejar la paginación
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
         // PAGINACION
@@ -93,30 +89,19 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-               /* int visibleItemCount = layoutManager.getChildCount();
-                int totalItemCount = layoutManager.getItemCount();
-                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-
                 if (puedeCargarYaPaginacion && !isLastPage()) {
 
-                    // Verificar si no se está cargando y si ha llegado al final de la lista
-                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0 && dy > 0) {
-                        apiBuscarPlanesNuevosPaginacion();
-                    }
-                }*/
-                if (puedeCargarYaPaginacion && !isLastPage()) {
                     if (!recyclerView.canScrollVertically(1)) {
                         // Estamos en el fondo, carga más elementos
-                        apiBuscarPlanesNuevosPaginacion();
+                        apiBuscarNotificacionesPaginacion();
                     }
                 }
             }
         });
 
-        apiBuscarPlanesNuevos();
-
-        return vista;
+        apiBuscarNotificaciones();
     }
+
 
 
     // verificar estado de carga para paginacion
@@ -129,21 +114,21 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
     }
 
 
-    private void apiBuscarPlanesNuevos(){
+    private void apiBuscarNotificaciones(){
 
         progressBar.setVisibility(View.VISIBLE);
 
         String iduser = tokenManager.getToken().getId();
         int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
 
-        ModeloBuscarPlanesPaginateRequest paginationRequest = new ModeloBuscarPlanesPaginateRequest();
+        ModeloListaNotificacionPaginateRequest paginationRequest = new ModeloListaNotificacionPaginateRequest();
         paginationRequest.setPage(currentPage);
-        paginationRequest.setLimit(10);
+        paginationRequest.setLimit(75);
         paginationRequest.setIdiomaplan(idiomaPlan);
         paginationRequest.setIduser(iduser);
 
         compositeDisposable.add(
-                service.listadoNuevosPlanes(paginationRequest)
+                service.listadoNotificaciones(paginationRequest)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .retry()
@@ -155,7 +140,7 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
 
                                         if(apiRespuesta.getHayinfo() == 1){
                                             if (!apiRespuesta.getData().getData().isEmpty()) {
-                                                List<ModeloBuscarPlanes> newData = apiRespuesta.getData().getData();
+                                                List<ModeloListaNotificacion> newData = apiRespuesta.getData().getData();
 
                                                 lastPage = apiRespuesta.getData().getLastPage();
                                                 currentPage++;
@@ -167,10 +152,11 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
                                                 recyclerView.setVisibility(View.VISIBLE);
                                             }
                                         }else{
+
                                             if(unaVezVisibilidad){
                                                 unaVezVisibilidad = false;
                                                 recyclerView.setVisibility(View.GONE);
-                                                txtSinPlanes.setVisibility(View.VISIBLE);
+                                                txtSinNotificacion.setVisibility(View.VISIBLE);
                                             }
                                         }
 
@@ -186,10 +172,8 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
 
 
 
-
-
     // UTILIZADO PARA PAGINACION
-    private void apiBuscarPlanesNuevosPaginacion(){
+    private void apiBuscarNotificacionesPaginacion(){
 
         if(!estaCargandoApi){
             estaCargandoApi = true;
@@ -199,14 +183,15 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
             String iduser = tokenManager.getToken().getId();
             int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
 
-            ModeloBuscarPlanesPaginateRequest paginationRequest = new ModeloBuscarPlanesPaginateRequest();
+
+            ModeloListaNotificacionPaginateRequest paginationRequest = new ModeloListaNotificacionPaginateRequest();
             paginationRequest.setPage(currentPage);
-            paginationRequest.setLimit(10);
+            paginationRequest.setLimit(75);
             paginationRequest.setIdiomaplan(idiomaPlan);
             paginationRequest.setIduser(iduser);
 
             compositeDisposable.add(
-                    service.listadoNuevosPlanes(paginationRequest)
+                    service.listadoNotificaciones(paginationRequest)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .retry()
@@ -219,7 +204,7 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
 
                                             if(apiRespuesta.getHayinfo() == 1){
                                                 if (!apiRespuesta.getData().getData().isEmpty()) {
-                                                    List<ModeloBuscarPlanes> newData = apiRespuesta.getData().getData();
+                                                    List<ModeloListaNotificacion> newData = apiRespuesta.getData().getData();
 
                                                     lastPage = apiRespuesta.getData().getLastPage();
                                                     currentPage++;
@@ -246,37 +231,18 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
     }
 
 
-    private void setearAdapter(List<ModeloBuscarPlanes> modeloBuscarPlanes) {
-        adapter = new AdaptadorBuscarPlanes(getContext(), modeloBuscarPlanes, this);
+    private void setearAdapter(List<ModeloListaNotificacion> modeloListaNotificacions) {
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+        adapter = new AdaptadorListaNotificaciones(this, modeloListaNotificacions);
         recyclerView.setAdapter(adapter);
     }
 
 
-    // vista para informacion del plan y seleccionarlo
-    public void verBloquePlanesVista(int idplanes){
-        Intent intent = new Intent(getActivity(), VerPlanParaSeleccionarActivity.class);
-        intent.putExtra("ID", idplanes);
-        someActivityResultLauncher.launch(intent);
-    }
-
-    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-
-                // DE ACTIVITY VerPlanParaSeleccionar.class
-                if(result.getResultCode() == RETORNO_ACTUALIZAR_100){
-
-                    currentPage = 1;
-                    unaVezVisibilidad = true;
-                    recyclerView.setVisibility(View.INVISIBLE);
-                    apiBuscarPlanesNuevos();
-                }
-            });
-
 
     private void mensajeSinConexion(){
         progressBar.setVisibility(View.GONE);
-        Toasty.error(getActivity(), getString(R.string.error_intentar_de_nuevo)).show();
+        Toasty.error(this, getString(R.string.error_intentar_de_nuevo)).show();
     }
 
     @Override
@@ -292,6 +258,7 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
         }
         super.onStop();
     }
+
 
 
 

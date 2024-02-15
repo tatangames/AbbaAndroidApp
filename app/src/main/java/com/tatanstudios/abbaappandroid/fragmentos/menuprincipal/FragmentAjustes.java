@@ -14,9 +14,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,12 +31,11 @@ import com.developer.kalert.KAlertDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.insignias.InsigniasPorGanarActivity;
+import com.tatanstudios.abbaappandroid.activity.insignias.ListadoNotificacionActivity;
 import com.tatanstudios.abbaappandroid.activity.login.LoginActivity;
 import com.tatanstudios.abbaappandroid.activity.notificacion.ActualizarIdiomasActivity;
 import com.tatanstudios.abbaappandroid.activity.notificacion.ActualizarPasswordActivity;
 import com.tatanstudios.abbaappandroid.activity.notificacion.EditarPerfilActivity;
-import com.tatanstudios.abbaappandroid.activity.notificacion.VerNotificacionesActivity;
-import com.tatanstudios.abbaappandroid.activity.splash.SplashActivity;
 import com.tatanstudios.abbaappandroid.adaptadores.menus.AdaptadorFragmentAjustes;
 import com.tatanstudios.abbaappandroid.extras.InterfaceActualizarTema;
 import com.tatanstudios.abbaappandroid.modelos.ajustes.ModeloFragmentConfiguracion;
@@ -313,7 +310,7 @@ public class FragmentAjustes extends Fragment {
 
 
     private void verNotificaciones(){
-        Intent intentLogin = new Intent(getContext(), VerNotificacionesActivity.class);
+        Intent intentLogin = new Intent(getContext(), ListadoNotificacionActivity.class);
         startActivity(intentLogin);
     }
 

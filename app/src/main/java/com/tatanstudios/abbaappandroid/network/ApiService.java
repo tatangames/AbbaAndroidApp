@@ -5,6 +5,9 @@ import com.tatanstudios.abbaappandroid.modelos.iglesias.ModeloDepartamentos;
 import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloContenedorInicio;
 import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloContenedorInsignias;
 import com.tatanstudios.abbaappandroid.modelos.insignias.faltantes.ModeloInsigniaFaltantesContenedor;
+import com.tatanstudios.abbaappandroid.modelos.notificacion.ModeloListaNotificacionPaginate;
+import com.tatanstudios.abbaappandroid.modelos.notificacion.ModeloListaNotificacionPaginateMetaDato;
+import com.tatanstudios.abbaappandroid.modelos.notificacion.ModeloListaNotificacionPaginateRequest;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanes;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginate;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateMetaDatos;
@@ -252,10 +255,7 @@ public interface ApiService {
                                                        @Field("correo") String correo);
 
 
-    // listado solicitudes pendientes comunidad
-    @POST("app/comunidad/listado/solicitud/pendientes")
-    @FormUrlEncoded
-    Observable<ModeloContedorComunidad> listadoSolicitudPendiente(@Field("iduser") String iduser);
+
 
     // elimina solicitud ya sea aceptada o pendiente
     @POST("app/comunidad/solicitud/eliminar")
@@ -284,6 +284,34 @@ public interface ApiService {
 
 
     // Listado de Notificaciones
+    @POST("app/notificaciones/listado")
+    Observable<ModeloListaNotificacionPaginate<ModeloListaNotificacionPaginateMetaDato>> listadoNotificaciones(
+            @Body ModeloListaNotificacionPaginateRequest request);
+
+
+
+
+    // listado solicitudes pendientes comunidad Enviadas
+    @POST("app/comunidad/listado/solicitud/pendientes/enviadas")
+    @FormUrlEncoded
+    Observable<ModeloContedorComunidad> listadoSolicitudPendienteEnviadas(@Field("iduser") String iduser);
+
+
+
+    // listado solicitudes pendientes comunidad Recibidas
+    @POST("app/comunidad/listado/solicitud/pendientes/recibidas")
+    @FormUrlEncoded
+    Observable<ModeloContedorComunidad> listadoSolicitudPendienteRecibidas(@Field("iduser") String iduser);
+
+    // aceptar solicitud que he recibido
+    @POST("app/comunidad/aceptarsolicitud/recibido")
+    @FormUrlEncoded
+    Observable<ModeloUsuario> aceptarSolicitudRecibida(@Field("iduser") String iduser,
+                                                       @Field("idsolicitud") int idsolicitud);
+
+
+
+
 
 
 

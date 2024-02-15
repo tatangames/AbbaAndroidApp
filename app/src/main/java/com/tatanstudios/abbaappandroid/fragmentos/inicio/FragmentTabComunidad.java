@@ -16,17 +16,16 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.comunidad.AgregarAmigoComunidadActivity;
-import com.tatanstudios.abbaappandroid.activity.comunidad.SolicitudesPendientesActivity;
+import com.tatanstudios.abbaappandroid.activity.comunidad.SolicitudPendienteEnviadaActivity;
+import com.tatanstudios.abbaappandroid.activity.comunidad.SolicitudPendienteRecibidaActivity;
 import com.tatanstudios.abbaappandroid.adaptadores.comunidad.AdaptadorComunidadAceptadas;
-import com.tatanstudios.abbaappandroid.adaptadores.inicio.insignias.individual.AdaptadorInsigniaHitos;
 import com.tatanstudios.abbaappandroid.modelos.comunidad.ModeloComunidad;
 import com.tatanstudios.abbaappandroid.modelos.comunidad.ModeloContedorComunidad;
 import com.tatanstudios.abbaappandroid.modelos.comunidad.ModeloVistaComunidad;
-import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloDescripcionHitos;
-import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloVistaHitos;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
@@ -62,6 +61,8 @@ public class FragmentTabComunidad extends Fragment {
 
     private ArrayList<ModeloVistaComunidad> elementos = new ArrayList<>();
 
+    private SwipeRefreshLayout refresh;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class FragmentTabComunidad extends Fragment {
 
         recyclerView = vista.findViewById(R.id.recyclerView);
         rootRelative = vista.findViewById(R.id.rootRelative);
+        refresh = vista.findViewById(R.id.swipe);
 
         tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs", MODE_PRIVATE));
         service = RetrofitBuilder.createServiceAutentificacion(ApiService.class, tokenManager);
@@ -94,7 +96,14 @@ public class FragmentTabComunidad extends Fragment {
         colorStateTintWhite = ColorStateList.valueOf(colorBlanco);
         colorStateTintBlack = ColorStateList.valueOf(colorBlack);
 
+        refresh.setEnabled(false);
+
         apiSolicitudesAceptadas();
+
+        refresh.setOnRefreshListener(() -> {
+            refresh.setEnabled(false);
+            apiSolicitudesAceptadas();
+        });
 
         return vista;
     }
@@ -103,6 +112,7 @@ public class FragmentTabComunidad extends Fragment {
     private void apiSolicitudesAceptadas(){
 
         String iduser = tokenManager.getToken().getId();
+        refresh.setRefreshing(true);
 
         elementos = new ArrayList<>();
 
@@ -114,14 +124,15 @@ public class FragmentTabComunidad extends Fragment {
                         .subscribe(apiRespuesta -> {
 
                                     progressBar.setVisibility(View.GONE);
+                                    refresh.setRefreshing(false);
+                                    refresh.setEnabled(true);
 
                                     if(apiRespuesta != null) {
 
                                         if(apiRespuesta.getSuccess() == 1) {
-
                                            setearCampos(apiRespuesta);
-
                                         }
+
                                         else{
                                             mensajeSinConexion();
                                         }
@@ -171,9 +182,19 @@ public class FragmentTabComunidad extends Fragment {
         startActivity(intent);
     }
 
-    public void vistaSolicitudPendientes(){
-        Intent intent = new Intent(getContext(), SolicitudesPendientesActivity.class);
-        startActivity(intent);
+    public void vistaSolicitudPendientes(int vista){
+        // 1: enviadas
+        // 2: recibidas
+
+        if(vista == 1){
+            Intent intent = new Intent(getContext(), SolicitudPendienteEnviadaActivity.class);
+            startActivity(intent);
+        }else{
+            Intent intent = new Intent(getContext(), SolicitudPendienteRecibidaActivity.class);
+            startActivity(intent);
+        }
+
+
     }
 
 

@@ -210,11 +210,17 @@
     <string name="no_hay_solicitudes_pendientes">No hay solicitudes Pendientes</string>
     <string name="fecha">Fecha</string>
     <string name="fecha_de_solicitud">Fecha de Solicitud</string>
-    <string name="borrar_solicitud">Borrar</string>
+    <string name="borrar_solicitud">Borrar solicitud</string>
     <string name="eliminado">Eliminado</string>
     <string name="sitio_en_construccion">Sitio en construcción</string>
     <string name="completar_devocional">Completar Devocional</string>
     <string name="devocional_no_disponible">Devocional no disponible</string>
+    <string name="no_hay_notificaciones">No hay notificaciones</string>
+    <string name="enviadas">Enviadas</string>
+    <string name="recibidas">Recibidas</string>
+    <string name="aceptar_solicitud">Aceptar solicitud</string>
+    <string name="eliminar">Eliminar</string>
+
 
 
 

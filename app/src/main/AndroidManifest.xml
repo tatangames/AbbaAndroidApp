@@ -19,7 +19,22 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activity.comunidad.SolicitudesPendientesActivity"
+            android:name=".activity.comunidad.SolicitudPendienteEnviadaActivity"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.comunidad.SolicitudPendienteRecibidaActivity"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.insignias.ListadoNotificacionActivity"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.comunidad.SolicitudesPendientesRecibidaActivity"
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait" />

@@ -215,8 +215,11 @@
     <string name="sitio_en_construccion">Site under construction</string>
     <string name="completar_devocional">Complete Devotional</string>
     <string name="devocional_no_disponible">Devotional not available</string>
-
-
+    <string name="no_hay_notificaciones">No notifications</string>
+    <string name="enviadas">Sent</string>
+    <string name="recibidas">Received</string>
+    <string name="aceptar_solicitud">Accept request</string>
+    <string name="eliminar">Delete</string>
 
 
 

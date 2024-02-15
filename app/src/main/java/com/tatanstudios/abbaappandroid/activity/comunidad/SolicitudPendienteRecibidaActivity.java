@@ -7,20 +7,16 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.adaptadores.comunidad.AdaptadorSolicitudesPendientes;
-import com.tatanstudios.abbaappandroid.adaptadores.inicio.videos.AdaptadorTodosVideos;
+import com.tatanstudios.abbaappandroid.adaptadores.comunidad.AdaptadorSolicitudPendientesRecibidas;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
@@ -30,7 +26,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class SolicitudesPendientesActivity extends AppCompatActivity {
+public class SolicitudPendienteRecibidaActivity extends AppCompatActivity {
 
 
     private RecyclerView recyclerView;
@@ -50,21 +46,20 @@ public class SolicitudesPendientesActivity extends AppCompatActivity {
 
     private OnBackPressedDispatcher onBackPressedDispatcher;
 
-    private AdaptadorSolicitudesPendientes adaptadorSolicitudesPendientes;
+    private AdaptadorSolicitudPendientesRecibidas adaptadorSolicitudPendientesRecibidas;
 
-    private boolean menuAbierto = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_solicitudes_pendientes);
+        setContentView(R.layout.activity_solicitud_pendiente_recibida);
         recyclerView = findViewById(R.id.recyclerView);
         imgFlechaAtras = findViewById(R.id.imgFlechaAtras);
         txtToolbar = findViewById(R.id.txtToolbar);
         rootRelative = findViewById(R.id.rootRelative);
         txtSinDatos = findViewById(R.id.txtSinDatos);
 
-        txtToolbar.setText(getString(R.string.pendientes));
+        txtToolbar.setText(getString(R.string.recibidas));
 
         int colorProgress = ContextCompat.getColor(this, R.color.barraProgreso);
 
@@ -101,7 +96,7 @@ public class SolicitudesPendientesActivity extends AppCompatActivity {
         String iduser = tokenManager.getToken().getId();
 
         compositeDisposable.add(
-                service.listadoSolicitudPendiente(iduser)
+                service.listadoSolicitudPendienteRecibidas(iduser)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .retry()
@@ -113,9 +108,9 @@ public class SolicitudesPendientesActivity extends AppCompatActivity {
                                         if(apiRespuesta.getSuccess() == 1) {
 
                                             if(apiRespuesta.getHayinfo() == 1){
-                                                adaptadorSolicitudesPendientes = new AdaptadorSolicitudesPendientes(getApplicationContext(), apiRespuesta.getModeloComunidads(), this);
+                                                adaptadorSolicitudPendientesRecibidas = new AdaptadorSolicitudPendientesRecibidas(getApplicationContext(), apiRespuesta.getModeloComunidads(), this);
                                                 recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-                                                recyclerView.setAdapter(adaptadorSolicitudesPendientes);
+                                                recyclerView.setAdapter(adaptadorSolicitudPendientesRecibidas);
                                             }else{
                                                 recyclerView.setVisibility(View.GONE);
                                                 txtSinDatos.setVisibility(View.VISIBLE);
@@ -177,9 +172,9 @@ public class SolicitudesPendientesActivity extends AppCompatActivity {
                                     progressBar.setVisibility(View.GONE);
                                     if(apiRespuesta != null) {
 
+                                        // SOLO DECIR QUE FUE ELIMINADO, SEA CUAL SEA EL ESTADO
+
                                         if(apiRespuesta.getSuccess() == 1) {
-
-
                                             Toasty.success(this, getString(R.string.eliminado), Toasty.LENGTH_SHORT).show();
                                             apiBuscarSolicitudesPendientes();
                                         }else{
@@ -197,6 +192,40 @@ public class SolicitudesPendientesActivity extends AppCompatActivity {
         );
     }
 
+    public void aceptarSolicitud(int idsolicitud) {
 
+        String id = tokenManager.getToken().getId();
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        compositeDisposable.add(
+                service.aceptarSolicitudRecibida(id, idsolicitud)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .retry()
+                        .subscribe(apiRespuesta -> {
+
+                                    progressBar.setVisibility(View.GONE);
+                                    if(apiRespuesta != null) {
+
+                                        // SOLO SE DIRA ACTUALIZADO
+
+                                        if(apiRespuesta.getSuccess() == 1) {
+                                            Toasty.success(this, getString(R.string.actualizado), Toasty.LENGTH_SHORT).show();
+                                            apiBuscarSolicitudesPendientes();
+                                        }else{
+
+                                            mensajeSinConexion();
+                                        }
+                                    }else{
+                                        mensajeSinConexion();
+                                    }
+                                },
+                                throwable -> {
+
+                                    mensajeSinConexion();
+                                })
+        );
+    }
 
 }

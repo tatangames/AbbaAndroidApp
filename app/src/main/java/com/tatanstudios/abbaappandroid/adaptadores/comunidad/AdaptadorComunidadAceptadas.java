@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -106,7 +107,48 @@ public class AdaptadorComunidadAceptadas extends RecyclerView.Adapter<RecyclerVi
             });
 
             ((HolderVistaBotonera) holder).btnPendiente.setOnClickListener(v -> {
-                fragmentTabComunidad.vistaSolicitudPendientes();
+                //fragmentTabComunidad.vistaSolicitudPendientes();
+
+
+                // Crea un PopupMenu
+                PopupMenu popupMenu = new PopupMenu(context, ((HolderVistaBotonera) holder).btnPendiente);
+
+                // Infla el menú en el PopupMenu
+                popupMenu.inflate(R.menu.menu_opciones_pendientes_opcion);
+
+                // Establece un listener para manejar los clics en los elementos del menú
+                popupMenu.setOnMenuItemClickListener(item -> {
+                    // Marcar que el menú está cerrado
+                    // menuAbierto = false;
+
+                    // Enviadas
+                    if (item.getItemId() == R.id.opcion1) {
+
+                        fragmentTabComunidad.vistaSolicitudPendientes(1);
+
+                        return true;
+                    }
+
+                    // recibidas
+                    else if (item.getItemId() == R.id.opcion2) {
+
+                        fragmentTabComunidad.vistaSolicitudPendientes(2);
+
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                });
+
+                // Agrega un listener para detectar cuando se cierra el menú
+                popupMenu.setOnDismissListener(menu -> {
+                    // Marcar que el menú está cerrado
+                    // menuAbierto = false;
+                });
+
+                // Muestra el menú emergente
+                popupMenu.show();
             });
         }
 

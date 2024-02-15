@@ -11,46 +11,36 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.material.imageview.ShapeableImageView;
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.activity.comunidad.SolicitudesPendientesActivity;
-import com.tatanstudios.abbaappandroid.activity.inicio.videos.ListadoVideosActivity;
+import com.tatanstudios.abbaappandroid.activity.comunidad.SolicitudPendienteRecibidaActivity;
 import com.tatanstudios.abbaappandroid.extras.IOnRecyclerViewClickListener;
 import com.tatanstudios.abbaappandroid.modelos.comunidad.ModeloComunidad;
-import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloInicioVideos;
-import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 
 import java.util.List;
 
-import es.dmoral.toasty.Toasty;
-
-public class AdaptadorSolicitudesPendientes extends RecyclerView.Adapter<AdaptadorSolicitudesPendientes.ViewHolder> {
+public class AdaptadorSolicitudPendientesRecibidas extends RecyclerView.Adapter<AdaptadorSolicitudPendientesRecibidas.ViewHolder> {
 
     private List<ModeloComunidad> modeloComunidad;
     private Context context;
 
-    private SolicitudesPendientesActivity solicitudesPendientesActivity;
+    private SolicitudPendienteRecibidaActivity solicitudPendienteRecibidaActivity;
 
-    public AdaptadorSolicitudesPendientes(Context context, List<ModeloComunidad> modeloComunidad, SolicitudesPendientesActivity solicitudesPendientesActivity) {
+    public AdaptadorSolicitudPendientesRecibidas(Context context, List<ModeloComunidad> modeloComunidad, SolicitudPendienteRecibidaActivity solicitudPendienteRecibidaActivity) {
         this.context = context;
         this.modeloComunidad = modeloComunidad;
-        this.solicitudesPendientesActivity = solicitudesPendientesActivity;
+        this.solicitudPendienteRecibidaActivity = solicitudPendienteRecibidaActivity;
     }
 
     @NonNull
     @Override
-    public AdaptadorSolicitudesPendientes.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdaptadorSolicitudPendientesRecibidas.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.cardview_solicitudes_pendientes, parent, false);
-        return new AdaptadorSolicitudesPendientes.ViewHolder(itemView);
+        return new AdaptadorSolicitudPendientesRecibidas.ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdaptadorSolicitudesPendientes.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdaptadorSolicitudPendientesRecibidas.ViewHolder holder, int position) {
         ModeloComunidad m = modeloComunidad.get(position);
 
         if(m.getCorreo() != null && !TextUtils.isEmpty(m.getCorreo())){
@@ -64,14 +54,12 @@ public class AdaptadorSolicitudesPendientes extends RecyclerView.Adapter<Adaptad
         }
 
         holder.setListener((view, po) -> {
-            //solicitudesPendientesActivity.abrirPanelMenu(holder.txtFecha);
-
 
             // Crea un PopupMenu
             PopupMenu popupMenu = new PopupMenu(context, holder.txtFecha);
 
             // Infla el menú en el PopupMenu
-            popupMenu.inflate(R.menu.menu_opciones_pendientes);
+            popupMenu.inflate(R.menu.menu_opciones_pendientes_opciones);
 
             // Establece un listener para manejar los clics en los elementos del menú
             popupMenu.setOnMenuItemClickListener(item -> {
@@ -79,11 +67,14 @@ public class AdaptadorSolicitudesPendientes extends RecyclerView.Adapter<Adaptad
                // menuAbierto = false;
 
                 if (item.getItemId() == R.id.opcion1) {
-
-                    solicitudesPendientesActivity.borrarSolicitud(m.getId());
-
+                    solicitudPendienteRecibidaActivity.aceptarSolicitud(m.getId());
                     return true;
-                } else {
+                }
+                else if (item.getItemId() == R.id.opcion2) {
+                    solicitudPendienteRecibidaActivity.borrarSolicitud(m.getId());
+                    return true;
+                }
+                else {
                     return false;
                 }
             });

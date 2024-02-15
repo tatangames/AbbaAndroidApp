@@ -90,7 +90,7 @@ public class FragmentPlanesCompletados extends Fragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                int visibleItemCount = layoutManager.getChildCount();
+                /*int visibleItemCount = layoutManager.getChildCount();
                 int totalItemCount = layoutManager.getItemCount();
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
 
@@ -98,6 +98,13 @@ public class FragmentPlanesCompletados extends Fragment {
 
                     // Verificar si no se está cargando y si ha llegado al final de la lista
                     if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0 && dy > 0) {
+                        apiBuscarPlanesCompletadosPaginacion();
+                    }
+                }*/
+                if (puedeCargarYaPaginacion && !isLastPage()) {
+
+                    if (!recyclerView.canScrollVertically(1)) {
+                        // Estamos en el fondo, carga más elementos
                         apiBuscarPlanesCompletadosPaginacion();
                     }
                 }
