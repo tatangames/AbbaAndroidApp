@@ -193,9 +193,8 @@ public class FragmentTabComunidad extends Fragment {
             Intent intent = new Intent(getContext(), SolicitudPendienteRecibidaActivity.class);
             startActivity(intent);
         }
-
-
     }
+
 
 
     private void mensajeSinConexion(){

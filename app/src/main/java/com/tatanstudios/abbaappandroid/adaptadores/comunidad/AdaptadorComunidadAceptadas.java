@@ -107,7 +107,6 @@ public class AdaptadorComunidadAceptadas extends RecyclerView.Adapter<RecyclerVi
             });
 
             ((HolderVistaBotonera) holder).btnPendiente.setOnClickListener(v -> {
-                //fragmentTabComunidad.vistaSolicitudPendientes();
 
 
                 // Crea un PopupMenu
@@ -212,6 +211,49 @@ public class AdaptadorComunidadAceptadas extends RecyclerView.Adapter<RecyclerVi
 
 
             holder.itemView.setOnClickListener(v -> {
+
+
+
+
+                // Crea un PopupMenu
+                PopupMenu popupMenu = new PopupMenu(context, holder.itemView);
+
+                // Infla el menú en el PopupMenu
+                popupMenu.inflate(R.menu.menu_opciones_comunidad);
+
+                // Establece un listener para manejar los clics en los elementos del menú
+                popupMenu.setOnMenuItemClickListener(item -> {
+
+                    // Planes
+                    if (item.getItemId() == R.id.opcion1) {
+
+                        //fragmentTabComunidad.planesComunidad(1);
+
+                        return true;
+                    }
+
+                    // Insignias
+                    else if (item.getItemId() == R.id.opcion2) {
+
+                        //fragmentTabComunidad.insigniasComunidad(2);
+
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                });
+
+                // Agrega un listener para detectar cuando se cierra el menú
+                popupMenu.setOnDismissListener(menu -> {
+                    // Marcar que el menú está cerrado
+                    // menuAbierto = false;
+                });
+
+                // Muestra el menú emergente
+                popupMenu.show();
+
+
 
             });
 

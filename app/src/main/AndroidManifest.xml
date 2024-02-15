@@ -19,15 +19,18 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.comunidad.ComunidadInsigniaActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.comunidad.SolicitudPendienteEnviadaActivity"
             android:configChanges="uiMode"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.comunidad.SolicitudPendienteRecibidaActivity"
             android:configChanges="uiMode"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.insignias.ListadoNotificacionActivity"
             android:configChanges="uiMode"
