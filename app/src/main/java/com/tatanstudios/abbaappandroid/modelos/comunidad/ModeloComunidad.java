@@ -13,6 +13,9 @@ public class ModeloComunidad {
     @SerializedName("iglesia")
     private String iglesia;
 
+    @SerializedName("idusuario")
+    private int idusuario;
+
     @SerializedName("correo")
     private String correo;
 
@@ -25,6 +28,10 @@ public class ModeloComunidad {
     @SerializedName("fecha")
     private String fecha;
 
+
+    private boolean checkValor;
+
+
     public ModeloComunidad(int id, String nombre, String iglesia, String correo, String pais, int idpais) {
         this.id = id;
         this.nombre = nombre;
@@ -34,6 +41,18 @@ public class ModeloComunidad {
         this.idpais = idpais;
     }
 
+
+    public int getIdusuario() {
+        return idusuario;
+    }
+
+    public boolean getCheckValor() {
+        return checkValor;
+    }
+
+    public void setCheckValor(boolean checkValor) {
+        this.checkValor = checkValor;
+    }
 
     public String getFecha() {
         return fecha;

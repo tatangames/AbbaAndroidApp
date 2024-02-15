@@ -212,7 +212,7 @@ public class AdaptadorComunidadAceptadas extends RecyclerView.Adapter<RecyclerVi
 
             holder.itemView.setOnClickListener(v -> {
 
-
+                ModeloComunidad mModelo = modelo2.getModeloComunidad();
 
 
                 // Crea un PopupMenu
@@ -235,7 +235,7 @@ public class AdaptadorComunidadAceptadas extends RecyclerView.Adapter<RecyclerVi
                     // Insignias
                     else if (item.getItemId() == R.id.opcion2) {
 
-                        //fragmentTabComunidad.insigniasComunidad(2);
+                        fragmentTabComunidad.insigniasComunidad(mModelo.getId());
 
                         return true;
                     }

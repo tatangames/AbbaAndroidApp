@@ -122,7 +122,6 @@ public class ListadoVideosActivity extends AppCompatActivity {
                                     }
                                 },
                                 throwable -> {
-
                                     mensajeSinConexion();
                                 })
         );

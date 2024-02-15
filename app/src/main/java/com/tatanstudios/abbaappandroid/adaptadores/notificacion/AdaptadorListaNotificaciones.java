@@ -17,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.tatanstudios.abbaappandroid.R;
+import com.tatanstudios.abbaappandroid.adaptadores.inicio.cuestionario.preguntas.AdaptadorPreguntasInicio;
 import com.tatanstudios.abbaappandroid.fragmentos.planes.completados.FragmentPlanesCompletados;
 import com.tatanstudios.abbaappandroid.modelos.notificacion.ModeloListaNotificacion;
 import com.tatanstudios.abbaappandroid.modelos.planes.completados.ModeloPlanesCompletados;
@@ -55,6 +56,24 @@ public class AdaptadorListaNotificaciones extends RecyclerView.Adapter<Adaptador
 
         ModeloListaNotificacion m = modeloListaNotificacions.get(position);
 
+        if(m.getHayimagen() == 1){
+            if(m.getImagen() != null && !TextUtils.isEmpty(m.getImagen())){
+
+
+                Glide.with(context)
+                        .load(RetrofitBuilder.urlImagenes + m.getImagen())
+                        .apply(opcionesGlide)
+                        .into(holder.imgImagen);
+            }else{
+                int resourceId = R.drawable.ic_campana_vector;
+                Glide.with(context)
+                        .load(resourceId)
+                        .apply(opcionesGlide)
+                        .into(holder.imgImagen);
+            }
+        }
+
+
         if(m.getTitulo() != null && !TextUtils.isEmpty(m.getTitulo())){
             holder.txtTitulo.setText(m.getTitulo());
         }else{
@@ -74,12 +93,13 @@ public class AdaptadorListaNotificaciones extends RecyclerView.Adapter<Adaptador
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         private TextView txtTitulo;
-
+        private ImageView imgImagen;
 
         public MyViewHolder(View itemView){
             super(itemView);
 
             txtTitulo = itemView.findViewById(R.id.txtTitulo);
+            imgImagen = itemView.findViewById(R.id.imgImagen);
         }
     }
 

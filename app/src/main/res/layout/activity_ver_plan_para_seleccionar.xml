@@ -75,10 +75,23 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="35dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="80dp"
                     android:background="@drawable/codigo_boton_redondeado_v1"
                     android:fontFamily="@font/liberation_sans_bold"
                     android:text="@string/iniciar"
+                    android:textAllCaps="false"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/botonComunidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="80dp"
+                    android:background="@drawable/codigo_boton_redondeado_v1"
+                    android:fontFamily="@font/liberation_sans_bold"
+                    android:text="@string/iniciar_con_amigos"
                     android:textAllCaps="false"
                     android:textSize="18sp" />
 

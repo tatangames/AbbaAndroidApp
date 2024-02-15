@@ -1,6 +1,8 @@
 package com.tatanstudios.abbaappandroid.activity.planes;
 
 import androidx.activity.OnBackPressedDispatcher;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
@@ -11,6 +13,7 @@ import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,7 +25,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.developer.kalert.KAlertDialog;
 import com.tatanstudios.abbaappandroid.R;
+import com.tatanstudios.abbaappandroid.activity.comunidad.SeleccionarAmigosPlanActivity;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanes;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
@@ -37,7 +42,7 @@ public class VerPlanParaSeleccionarActivity extends AppCompatActivity {
 
     private ImageView imgFlechaAtras, imgPlan;
     private TextView txtTitulo, txtSubtitulo, txtToolbar, txtDescripcion;
-    private Button btnComenzar;
+    private Button btnComenzar, btnComunidad;
 
     private RelativeLayout rootRelative;
 
@@ -59,6 +64,10 @@ public class VerPlanParaSeleccionarActivity extends AppCompatActivity {
     private boolean tema = false;
 
     private final int RETORNO_ACTUALIZAR_100 = 100;
+
+    private final int RETORNO_ACTUALIZAR_111 = 111;
+
+    private boolean boolIniciarSolo = true;
 
     RequestOptions opcionesGlide = new RequestOptions()
             .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -83,6 +92,7 @@ public class VerPlanParaSeleccionarActivity extends AppCompatActivity {
         txtToolbar = findViewById(R.id.txtToolbar);
         nestedScrollView = findViewById(R.id.nested);
         txtDescripcion = findViewById(R.id.txtDescripcion);
+        btnComunidad = findViewById(R.id.botonComunidad);
 
         txtToolbar.setText(getString(R.string.informacion_plan));
 
@@ -103,16 +113,22 @@ public class VerPlanParaSeleccionarActivity extends AppCompatActivity {
         colorEstadoBlanco = ColorStateList.valueOf(colorBlanco);
         colorEstadoNegro = ColorStateList.valueOf(colorBlack);
 
-        if(tokenManager.getToken().getTema() == 1){
+        if (tokenManager.getToken().getTema() == 1) {
             tema = true;
         }
 
-        if(tokenManager.getToken().getTema() == 1){
+        if (tokenManager.getToken().getTema() == 1) {
             btnComenzar.setBackgroundTintList(colorEstadoBlanco);
             btnComenzar.setTextColor(colorBlack);
-        }else{
+
+            btnComunidad.setBackgroundTintList(colorEstadoBlanco);
+            btnComunidad.setTextColor(colorBlack);
+        } else {
             btnComenzar.setBackgroundTintList(colorEstadoNegro);
             btnComenzar.setTextColor(colorBlanco);
+
+            btnComunidad.setBackgroundTintList(colorEstadoNegro);
+            btnComunidad.setTextColor(colorBlanco);
         }
 
         if (getIntent().getExtras() != null) {
@@ -120,16 +136,75 @@ public class VerPlanParaSeleccionarActivity extends AppCompatActivity {
             idPlan = bundle.getInt("ID");
         }
 
-        btnComenzar.setOnClickListener(v ->{
-            apiSeleccionarPlan();
+        btnComenzar.setOnClickListener(v -> {
+            preguntarIniciarSolo();
         });
 
-        imgFlechaAtras.setOnClickListener(v ->{
+        btnComunidad.setOnClickListener(v -> {
+            iniciarConAmigos();
+        });
+
+        imgFlechaAtras.setOnClickListener(v -> {
             onBackPressedDispatcher.onBackPressed();
         });
 
         apiBuscarDatos();
     }
+
+
+    private void iniciarConAmigos(){
+        Intent intent = new Intent(this, SeleccionarAmigosPlanActivity.class);
+        intent.putExtra("IDPLAN", idPlan);
+        someActivityResultLauncher.launch(intent);
+    }
+
+    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+
+                // DE ACTIVITY VerPlanParaSeleccionar.class
+                if(result.getResultCode() == RETORNO_ACTUALIZAR_111){
+                    volverAtrasActualizado();
+                }
+            });
+
+
+
+
+    private void preguntarIniciarSolo(){
+
+        if(boolIniciarSolo) {
+            boolIniciarSolo = false;
+
+            KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE, false);
+
+            pDialog.setTitleText(getString(R.string.iniciar_plan));
+            pDialog.setTitleTextGravity(Gravity.CENTER);
+            pDialog.setTitleTextSize(19);
+
+            pDialog.setContentText("");
+            pDialog.setContentTextAlignment(View.TEXT_ALIGNMENT_VIEW_START, Gravity.START);
+            pDialog.setContentTextSize(17);
+
+            pDialog.setCancelable(false);
+            pDialog.setCanceledOnTouchOutside(false);
+            pDialog.confirmButtonColor(R.drawable.codigo_kalert_dialog_corners_confirmar);
+            pDialog.setConfirmClickListener(getString(R.string.si), sDialog -> {
+                sDialog.dismissWithAnimation();
+                boolIniciarSolo = true;
+                apiSeleccionarPlan();
+            });
+
+            pDialog.cancelButtonColor(R.drawable.codigo_kalert_dialog_corners_cancelar);
+            pDialog.setCancelClickListener(getString(R.string.no), sDialog -> {
+                sDialog.dismissWithAnimation();
+                boolIniciarSolo = true;
+            });
+
+            pDialog.show();
+        }
+    }
+
 
     private void apiBuscarDatos(){
 

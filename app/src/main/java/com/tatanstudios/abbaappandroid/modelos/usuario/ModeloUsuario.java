@@ -10,6 +10,9 @@ public class ModeloUsuario {
     @SerializedName("id")
     public String id;
 
+    @SerializedName("estado")
+    public int estado;
+
     @SerializedName("token")
     public String token;
 
@@ -44,6 +47,11 @@ public class ModeloUsuario {
 
     public int getPlanCompletado() {
         return planCompletado;
+    }
+
+
+    public int getEstado() {
+        return estado;
     }
 
     private int tema;

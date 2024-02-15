@@ -256,7 +256,6 @@ public interface ApiService {
 
 
 
-
     // elimina solicitud ya sea aceptada o pendiente
     @POST("app/comunidad/solicitud/eliminar")
     @FormUrlEncoded
@@ -310,7 +309,23 @@ public interface ApiService {
                                                        @Field("idsolicitud") int idsolicitud);
 
 
+    // listado de insignias comunidad
+    @POST("app/comunidad/informacion/insignias")
+    @FormUrlEncoded
+    Observable<ModeloContenedorInsignias> listadoInsigniasComunidad(@Field("idsolicitud") int idsolicitud,
+                                                        @Field("idiomaplan") int idiomaplan,
+                                                       @Field("iduser") String iduser);
 
+
+    // enviar lista de amigos con cual iniciare plan, se enviara
+    // id solicitud
+
+    @POST("app/comunidadplan/iniciar/plan/amigos")
+    @FormUrlEncoded
+    Observable<ModeloContedorComunidad> iniciarPlanAmigos(@Field("iduser") String iduser,
+                                                           @Field("idplan") int idplan,
+                                                           @Field("idiomaplan") int idioma,
+                                                           @FieldMap Map<String, String> listado);
 
 
 

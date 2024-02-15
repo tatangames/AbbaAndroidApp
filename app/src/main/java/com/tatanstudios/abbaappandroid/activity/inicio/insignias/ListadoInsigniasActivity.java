@@ -69,7 +69,7 @@ public class ListadoInsigniasActivity extends AppCompatActivity {
         txtToolbar = findViewById(R.id.txtToolbar);
         rootRelative = findViewById(R.id.rootRelative);
 
-        txtToolbar.setText(getString(R.string.imagenes));
+        txtToolbar.setText(getString(R.string.insignias));
 
         colorProgress = ContextCompat.getColor(this, R.color.barraProgreso);
 

@@ -20,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.comunidad.AgregarAmigoComunidadActivity;
+import com.tatanstudios.abbaappandroid.activity.comunidad.ComunidadInsigniaActivity;
 import com.tatanstudios.abbaappandroid.activity.comunidad.SolicitudPendienteEnviadaActivity;
 import com.tatanstudios.abbaappandroid.activity.comunidad.SolicitudPendienteRecibidaActivity;
 import com.tatanstudios.abbaappandroid.adaptadores.comunidad.AdaptadorComunidadAceptadas;
@@ -56,11 +57,8 @@ public class FragmentTabComunidad extends Fragment {
     private int colorBlack = 0;
 
     private boolean tema = false;
-
     private AdaptadorComunidadAceptadas adaptadorComunidadAceptadas;
-
     private ArrayList<ModeloVistaComunidad> elementos = new ArrayList<>();
-
     private SwipeRefreshLayout refresh;
 
 
@@ -195,6 +193,11 @@ public class FragmentTabComunidad extends Fragment {
         }
     }
 
+    public void insigniasComunidad(int idsolicitud){
+        Intent intent = new Intent(getContext(), ComunidadInsigniaActivity.class);
+        intent.putExtra("IDSOLICITUD", idsolicitud);
+        startActivity(intent);
+    }
 
 
     private void mensajeSinConexion(){

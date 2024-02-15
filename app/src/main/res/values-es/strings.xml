@@ -220,6 +220,12 @@
     <string name="recibidas">Recibidas</string>
     <string name="aceptar_solicitud">Aceptar solicitud</string>
     <string name="eliminar">Eliminar</string>
+    <string name="bienvenidos_a_mi_caminar_con_dios">Bienvenidos a mi caminar con Dios</string>
+    <string name="iniciar_con_amigos">Iniciar con Amigos</string>
+    <string name="seleccionar_5_amigos">Seleccionar máximo 5 amigos</string>
+    <string name="iniciar_plan">Iniciar Plan</string>
+    <string name="maximo_5_amigos">Máximo 5 amigos</string>
+    <string name="minimo_1_amigo">Mínimo 1 amigo se requiere</string>
 
 
 

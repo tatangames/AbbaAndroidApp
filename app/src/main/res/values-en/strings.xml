@@ -220,6 +220,12 @@
     <string name="recibidas">Received</string>
     <string name="aceptar_solicitud">Accept request</string>
     <string name="eliminar">Delete</string>
+    <string name="bienvenidos_a_mi_caminar_con_dios">Welcome to my walk with god</string>
+    <string name="iniciar_con_amigos">Start with Friends</string>
+    <string name="seleccionar_5_amigos">Select maximum 5 friends</string>
+    <string name="iniciar_plan">Start plan</string>
+    <string name="maximo_5_amigos">Maximum 5 friends</string>
+    <string name="minimo_1_amigo">Minimum 1 friend required</string>
 
 
 

@@ -1,6 +1,7 @@
 package com.tatanstudios.abbaappandroid.modelos.insignias;
 
 import com.google.gson.annotations.SerializedName;
+import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloInicioInsignias;
 
 import java.util.List;
 
@@ -41,6 +42,13 @@ public class ModeloContenedorInsignias {
     @SerializedName("hitoarray")
     private List<ModeloInsigniaHitos> modeloInsigniaHitos;
 
+
+    @SerializedName("listado")
+    private List<ModeloInicioInsignias> modeloInicioInsignias;
+
+    public List<ModeloInicioInsignias> getModeloInicioInsignias() {
+        return modeloInicioInsignias;
+    }
 
     public String getTextofalta() {
         return textofalta;

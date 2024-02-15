@@ -50,7 +50,7 @@
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/liberation_sans_bold"
                     android:gravity="center"
-                    android:text="@string/bienvenidos_a_abba_app"
+                    android:text="@string/bienvenidos_a_mi_caminar_con_dios"
                     android:lineSpacingExtra="12dp"
                     android:textColor="@color/negro"
                     android:textSize="24sp"

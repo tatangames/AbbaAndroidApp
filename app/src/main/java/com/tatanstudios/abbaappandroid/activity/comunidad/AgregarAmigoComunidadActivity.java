@@ -145,22 +145,25 @@ public class AgregarAmigoComunidadActivity extends AppCompatActivity {
 
                                     if(apiRespuesta != null) {
 
-                                        // 1: solicitud esta pendiente de aceptacion
-                                        // 2: solicitud ya esta aceptada
-                                        // 3: solicitud enviada
-                                        // 4: correo no encontrado
+                                        // 1:segun estado
 
                                         if(apiRespuesta.getSuccess() == 1) {
-                                            alertaMensaje(getString(R.string.solicitud_pendiente_aceptacion));
+
+                                            if(apiRespuesta.getEstado() == 0){
+                                                // pendiente aceptacion
+                                                Toasty.info(this, getString(R.string.solicitud_pendiente_aceptacion), Toasty.LENGTH_SHORT).show();
+                                            }else if(apiRespuesta.getEstado() == 1){
+                                                // solicitud ya fue aceptada
+                                                Toasty.info(this, getString(R.string.solicitud_ya_esta_aceptada), Toasty.LENGTH_SHORT).show();
+                                            }
                                         }
+
                                         else if(apiRespuesta.getSuccess() == 2){
-                                            alertaMensaje(getString(R.string.solicitud_ya_esta_aceptada));
-                                        }else if(apiRespuesta.getSuccess() == 3){
                                             Toasty.success(this, getString(R.string.solicitud_enviada), Toasty.LENGTH_SHORT).show();
                                             edtCorreo.setText("");
                                             inputCorreo.setError(null);
                                         }
-                                        else if(apiRespuesta.getSuccess() == 4){
+                                        else if(apiRespuesta.getSuccess() == 3){
                                             alertaMensaje(getString(R.string.correo_no_encontrado));
                                         }
                                         else{
