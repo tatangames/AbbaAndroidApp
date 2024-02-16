@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
@@ -23,6 +24,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -80,9 +84,8 @@ import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import pub.devrel.easypermissions.EasyPermissions;
 
-public class FragmentTabInicio extends Fragment implements EasyPermissions.PermissionCallbacks{
+public class FragmentTabInicio extends Fragment{
 
     private ProgressBar progressBar;
 
@@ -110,7 +113,6 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
     private boolean tema = false;
     private boolean bloqueCompartir = true;
     private boolean bottomSheetImagen = false;
-    private final int MY_PERMISSION_STORAGE_101 = 101;
 
     private Bitmap bitmapGlobal = null;
 
@@ -133,6 +135,65 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
         fragment.onDataUpdateListener = listener;
         return fragment;
     }
+
+
+
+
+    // ******** PERMISOS *********
+    private String[] requiredPermission = new String[]{
+            Manifest.permission.READ_MEDIA_IMAGES,
+           // Manifest.permission.READ_MEDIA_VIDEO,
+           // Manifest.permission.READ_MEDIA_AUDIO,
+    };
+
+
+    private boolean is_storage_image_permitted = false;
+    //private boolean is_storage_video_permitted = false;
+   // private boolean is_storage_audio_permitted = false;
+
+
+
+    private boolean allPermissionResultCheck(){
+
+        //return is_storage_image_permitted && is_storage_video_permitted && is_storage_audio_permitted;
+        return is_storage_image_permitted;
+    }
+
+    // IMAGE code for read storage media images starts
+    private void requestPermissionStorageImage(){
+
+        if(ContextCompat.checkSelfPermission(getContext(), requiredPermission[0]) == PackageManager.PERMISSION_GRANTED){
+            is_storage_image_permitted = true;
+
+            // check for next permission, if you want only one stop it send to alert dialog
+            //if(!allPermissionResultCheck()){
+               // requestPermissionStorageVideo();
+            //}
+        } else{
+            request_permission_launcher_storage_image.launch(requiredPermission[0]);
+        }
+    }
+
+
+    private ActivityResultLauncher<String> request_permission_launcher_storage_image =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(),
+                    isGranted-> {
+                if(isGranted){
+                    is_storage_image_permitted = true;
+                }else{
+                    is_storage_image_permitted = false;
+                }
+
+                // if we want to make hierarchy of permission another check over here
+
+                       /* if(!allPermissionResultCheck()){
+                            requestPermissionStorageVideo();
+                        }*/
+
+            });
+
+    // END IMAGE code for read storage media images starts
+
 
 
     @Override
@@ -377,45 +438,31 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
             }
 
             btnDescargar.setOnClickListener(v -> {
-                String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
-                if(EasyPermissions.hasPermissions(getActivity(),
-                        perms)){
-                    // permiso autorizado
 
+                if(!allPermissionResultCheck()){
+
+                    requestPermissionStorageImage();
+
+                }else{
                     if(guardarImagen()){
                         bottomSheetProgreso.dismiss();
                     }
-
-                }else{
-                    // permiso denegado
-                    EasyPermissions.requestPermissions(getActivity(),
-                            getString(R.string.permiso_almacenamiento_es_requerido),
-                            MY_PERMISSION_STORAGE_101,
-                            perms);
                 }
 
             });
 
 
             btnCompartir.setOnClickListener(v -> {
-                String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
-                if(EasyPermissions.hasPermissions(getActivity(),
-                        perms)){
-
+                if(!allPermissionResultCheck()){
+                    requestPermissionStorageImage();
+                }else{
                     if(bloqueCompartir){
                         bloqueCompartir = false;
                         compartirImagen();
                         bottomSheetProgreso.dismiss();
                     }
-
-                }else{
-                    // permiso denegado
-                    EasyPermissions.requestPermissions(getActivity(),
-                            getString(R.string.permiso_almacenamiento_es_requerido),
-                            MY_PERMISSION_STORAGE_101,
-                            perms);
                 }
             });
 
@@ -465,32 +512,6 @@ public class FragmentTabInicio extends Fragment implements EasyPermissions.Permi
     }
 
 
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        // Propaga los resultados de la solicitud de permisos a EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
-
-    @Override
-    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-        if(requestCode == MY_PERMISSION_STORAGE_101){
-            Toasty.success(getActivity(), getString(R.string.permiso_autorizado), Toasty.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        // Permiso denegado, muestra un mensaje al usuario
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            // El usuario ha seleccionado "No volver a mostrar"
-            // Muestra un mensaje o guía al usuario para que active manualmente el permiso
-            Toasty.error(getActivity(), getString(R.string.permiso_almacenamiento_es_requerido), Toast.LENGTH_LONG).show();
-        } else {
-            // El usuario no ha seleccionado "No volver a mostrar", muestra un mensaje de solicitud de permiso estándar
-            Toasty.error(getActivity(), getString(R.string.permiso_almacenamiento_es_requerido), Toast.LENGTH_LONG).show();
-        }
-    }
 
     public void redireccionamientoVideo(int tipoRedireccionamiento, String urlVideo) {
 

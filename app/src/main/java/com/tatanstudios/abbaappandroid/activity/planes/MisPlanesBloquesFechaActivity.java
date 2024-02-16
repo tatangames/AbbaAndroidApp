@@ -228,9 +228,10 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
 
             String iduser = tokenManager.getToken().getId();
+            int idioma = tokenManager.getToken().getIdiomaTextos();
 
             compositeDisposable.add(
-                    service.actualizarBloqueFechaCheckbox(iduser, blockDeta, valor, idPlan)
+                    service.actualizarBloqueFechaCheckbox(iduser, blockDeta, valor, idPlan, idioma)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .retry()

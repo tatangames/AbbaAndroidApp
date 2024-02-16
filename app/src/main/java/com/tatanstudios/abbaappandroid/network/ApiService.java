@@ -151,7 +151,8 @@ public interface ApiService {
     Observable<ModeloUsuario> actualizarBloqueFechaCheckbox(@Field("iduser") String iduser,
                                                           @Field("idblockdeta") int idBlockDeta,
                                                           @Field("valor") int valor,
-                                                          @Field("idplan") int idplan);
+                                                          @Field("idplan") int idplan,
+                                                          @Field("idiomaplan") int idiomaplan);
 
 
     // buscar informacion del cuestionario de cada bloque detalle

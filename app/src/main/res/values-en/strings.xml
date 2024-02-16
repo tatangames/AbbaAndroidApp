@@ -226,7 +226,8 @@
     <string name="iniciar_plan">Start plan</string>
     <string name="maximo_5_amigos">Maximum 5 friends</string>
     <string name="minimo_1_amigo">Minimum 1 friend required</string>
-
+    <string name="error">Error</string>
+    <string name="plan_ya_estaba_iniciado">Plan was already started</string>
 
 
 

@@ -256,17 +256,10 @@ public class SeleccionarAmigosPlanActivity extends AppCompatActivity {
                                         if (apiRespuesta != null) {
 
                                             if (apiRespuesta.getSuccess() == 1) {
-                                                Toasty.info(this, "plan ya esta iniciado", Toasty.LENGTH_SHORT).show();
-
-                                              //  volverAtrasActualizado();
+                                               planYaRegistrado();
                                             }
-
                                             else if (apiRespuesta.getSuccess() == 2) {
-                                                Toasty.info(this, "ya hay registros", Toasty.LENGTH_SHORT).show();
-                                            }
-
-                                            else if (apiRespuesta.getSuccess() == 3) {
-                                                Toasty.success(this, getString(R.string.plan_agregado), Toasty.LENGTH_SHORT).show();
+                                               volverAtrasActualizado();
                                             }
 
                                             else {
@@ -282,6 +275,28 @@ public class SeleccionarAmigosPlanActivity extends AppCompatActivity {
                                     })
             );
         }
+    }
+
+    private void planYaRegistrado(){
+        KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE, false);
+
+        pDialog.setTitleText(getString(R.string.error));
+        pDialog.setTitleTextGravity(Gravity.CENTER);
+        pDialog.setTitleTextSize(19);
+
+        pDialog.setContentText(getString(R.string.plan_ya_estaba_iniciado));
+        pDialog.setContentTextAlignment(View.TEXT_ALIGNMENT_VIEW_START, Gravity.START);
+        pDialog.setContentTextSize(17);
+
+        pDialog.setCancelable(false);
+        pDialog.setCanceledOnTouchOutside(false);
+        pDialog.confirmButtonColor(R.drawable.codigo_kalert_dialog_corners_confirmar);
+        pDialog.setConfirmClickListener(getString(R.string.aceptar), sDialog -> {
+            sDialog.dismissWithAnimation();
+            volverAtras();
+        });
+
+        pDialog.show();
     }
 
     private void mensajeSinConexion(){
@@ -301,6 +316,12 @@ public class SeleccionarAmigosPlanActivity extends AppCompatActivity {
             compositeDisposable.clear();
         }
         super.onStop();
+    }
+
+    private void volverAtras(){
+        Intent returnIntent = new Intent();
+        setResult(RETORNO_ACTUALIZAR_111, returnIntent);
+        onBackPressedDispatcher.onBackPressed();
     }
 
     private void volverAtrasActualizado(){
