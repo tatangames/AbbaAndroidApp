@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <ProgressBar
+        android:visibility="visible"
         android:id="@+id/progressBarLoading"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -17,14 +18,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/imgImagen"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:layout_marginTop="5dp"
+        android:layout_width="0dp"
+        android:layout_height="240dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="24dp"
         android:scaleType="centerCrop"
-        android:visibility="gone"
         android:src="@drawable/camaradefecto"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBarLoading"
@@ -35,13 +38,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/codigo_boton_redondeado_v1"
         android:text="@string/descargar"
         android:textAllCaps="false"
-        android:visibility="gone"
         android:textSize="18sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgImagen" />

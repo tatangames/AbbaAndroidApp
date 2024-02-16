@@ -12,10 +12,12 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -44,6 +47,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.datatransport.backend.cct.BuildConfig;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -84,6 +88,7 @@ import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class FragmentTabInicio extends Fragment{
 
@@ -101,8 +106,6 @@ public class FragmentTabInicio extends Fragment{
 
     private ModeloInicioSeparador modeloInicioSeparador;
 
-
-
     int colorProgress = 0;
 
     private ColorStateList  colorStateTintWhite, colorStateTintBlack;
@@ -111,7 +114,6 @@ public class FragmentTabInicio extends Fragment{
     private int colorBlack = 0;
 
     private boolean tema = false;
-    private boolean bloqueCompartir = true;
     private boolean bottomSheetImagen = false;
 
     private Bitmap bitmapGlobal = null;
@@ -120,6 +122,8 @@ public class FragmentTabInicio extends Fragment{
     private boolean boolCompartirDevoDia = true;
 
     private boolean boolCompartirApi = true;
+
+    private SwipeRefreshLayout refreshLayout;
 
     RequestOptions opcionesGlideOriginal = new RequestOptions()
             .diskCacheStrategy(DiskCacheStrategy.ALL) // Forzar la carga desde la memoria caché para mejorar la velocidad
@@ -139,23 +143,23 @@ public class FragmentTabInicio extends Fragment{
 
 
 
-    // ******** PERMISOS *********
-    private String[] requiredPermission = new String[]{
+    // ******** PERMISOS ANDROID 13 O SUPERIOR *********
+
+    private final int MY_PERMISSION_STORAGE_101 = 101;
+
+
+    private int sdkVersion = Build.VERSION.SDK_INT;
+
+    private final String[] requiredPermission = new String[]{
             Manifest.permission.READ_MEDIA_IMAGES,
-           // Manifest.permission.READ_MEDIA_VIDEO,
-           // Manifest.permission.READ_MEDIA_AUDIO,
     };
 
 
     private boolean is_storage_image_permitted = false;
-    //private boolean is_storage_video_permitted = false;
-   // private boolean is_storage_audio_permitted = false;
 
 
 
     private boolean allPermissionResultCheck(){
-
-        //return is_storage_image_permitted && is_storage_video_permitted && is_storage_audio_permitted;
         return is_storage_image_permitted;
     }
 
@@ -164,35 +168,32 @@ public class FragmentTabInicio extends Fragment{
 
         if(ContextCompat.checkSelfPermission(getContext(), requiredPermission[0]) == PackageManager.PERMISSION_GRANTED){
             is_storage_image_permitted = true;
-
-            // check for next permission, if you want only one stop it send to alert dialog
-            //if(!allPermissionResultCheck()){
-               // requestPermissionStorageVideo();
-            //}
         } else{
             request_permission_launcher_storage_image.launch(requiredPermission[0]);
         }
     }
 
 
-    private ActivityResultLauncher<String> request_permission_launcher_storage_image =
+    private final ActivityResultLauncher<String> request_permission_launcher_storage_image =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(),
                     isGranted-> {
-                if(isGranted){
-                    is_storage_image_permitted = true;
-                }else{
-                    is_storage_image_permitted = false;
-                }
+                        if(isGranted){
+                            is_storage_image_permitted = true;
+                        }else{
+                            is_storage_image_permitted = false;
+                        }
+                    });
 
-                // if we want to make hierarchy of permission another check over here
 
-                       /* if(!allPermissionResultCheck()){
-                            requestPermissionStorageVideo();
-                        }*/
 
-            });
 
-    // END IMAGE code for read storage media images starts
+    // ******** END PERMISOS ANDROID 13 O SUPERIOR *********
+
+
+
+
+
+
 
 
 
@@ -202,6 +203,8 @@ public class FragmentTabInicio extends Fragment{
 
         recyclerView = vista.findViewById(R.id.recyclerView);
         rootRelative = vista.findViewById(R.id.rootRelative);
+        refreshLayout = vista.findViewById(R.id.swipe);
+
 
         tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs", MODE_PRIVATE));
         service = RetrofitBuilder.createServiceAutentificacion(ApiService.class, tokenManager);
@@ -226,12 +229,20 @@ public class FragmentTabInicio extends Fragment{
 
         apiBuscarDatos();
 
+
+        refreshLayout.setOnRefreshListener(() -> {
+            progressBar.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            refreshLayout.setRefreshing(true);
+
+            apiBuscarDatos();
+        });
+
         return vista;
     }
 
 
     private void apiBuscarDatos(){
-
 
         String iduser = tokenManager.getToken().getId();
         int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
@@ -251,6 +262,8 @@ public class FragmentTabInicio extends Fragment{
                                     if(apiRespuesta != null) {
 
                                         if(apiRespuesta.getSuccess() == 1) {
+
+                                            refreshLayout.setRefreshing(false);
                                             llenarBloques(apiRespuesta);
                                         }
                                         else{
@@ -368,12 +381,10 @@ public class FragmentTabInicio extends Fragment{
     }
 
 
-
     public void abrirModalImagenes(String urlImagen){
 
         if (!bottomSheetImagen) {
             bottomSheetImagen = true;
-
 
             // Mostrar bottomdialog de modal cargando
 
@@ -381,13 +392,14 @@ public class FragmentTabInicio extends Fragment{
             View bottomSheetViewProgreso = getLayoutInflater().inflate(R.layout.cardview_botton_sheet_imagen_loading, null);
             bottomSheetProgreso.setContentView(bottomSheetViewProgreso);
 
-
             ProgressBar barraProgress = bottomSheetProgreso.findViewById(R.id.progressBarLoading);
             barraProgress.getIndeterminateDrawable().setColorFilter(colorProgress, PorterDuff.Mode.SRC_IN);
 
-            ShapeableImageView imgImagen = bottomSheetProgreso.findViewById(R.id.imgImagen);
+            PhotoView imgImagen = bottomSheetProgreso.findViewById(R.id.imgImagen);
             Button btnDescargar = bottomSheetProgreso.findViewById(R.id.btnDescargar);
             Button btnCompartir = bottomSheetProgreso.findViewById(R.id.btnCompartir);
+
+
 
             if(urlImagen != null && !TextUtils.isEmpty(urlImagen)){
                 Glide.with(this)
@@ -404,12 +416,12 @@ public class FragmentTabInicio extends Fragment{
                                 // La imagen se ha cargado exitosamente, realizar acciones aquí
 
                                 bitmapGlobal = ((BitmapDrawable) resource).getBitmap();
-                                bloqueCompartir = true;
 
                                 barraProgress.setVisibility(View.GONE);
                                 imgImagen.setVisibility(View.VISIBLE);
                                 btnDescargar.setVisibility(View.VISIBLE);
                                 btnCompartir.setVisibility(View.VISIBLE);
+
 
                                 return false;
                             }
@@ -437,16 +449,40 @@ public class FragmentTabInicio extends Fragment{
                 btnCompartir.setTextColor(colorBlanco);
             }
 
+
+
+
             btnDescargar.setOnClickListener(v -> {
 
 
-                if(!allPermissionResultCheck()){
 
-                    requestPermissionStorageImage();
+                if (sdkVersion >= Build.VERSION_CODES.TIRAMISU) {
+                    // El dispositivo ejecuta Android 13 o superior.
 
-                }else{
-                    if(guardarImagen()){
-                        bottomSheetProgreso.dismiss();
+                    if(!allPermissionResultCheck()){
+
+                        requestPermissionStorageImage();
+
+                    }else{
+                        guardarImagen();
+                    }
+
+                } else {
+                    // El dispositivo no ejecuta Android 13.
+                    String[] perms = {android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+
+                    if(EasyPermissions.hasPermissions(getContext(),
+                            perms)){
+                        // permiso autorizado
+
+                        guardarImagen();
+
+                    }else{
+                        // permiso denegado
+                        EasyPermissions.requestPermissions(this,
+                                getString(R.string.permiso_almacenamiento_es_requerido),
+                                MY_PERMISSION_STORAGE_101,
+                                perms);
                     }
                 }
 
@@ -455,13 +491,37 @@ public class FragmentTabInicio extends Fragment{
 
             btnCompartir.setOnClickListener(v -> {
 
-                if(!allPermissionResultCheck()){
-                    requestPermissionStorageImage();
-                }else{
-                    if(bloqueCompartir){
-                        bloqueCompartir = false;
+
+
+                if (sdkVersion >= Build.VERSION_CODES.TIRAMISU) {
+                    // El dispositivo ejecuta Android 13 o superior.
+
+                    if(!allPermissionResultCheck()){
+
+                        requestPermissionStorageImage();
+
+                    }else{
                         compartirImagen();
                         bottomSheetProgreso.dismiss();
+                    }
+
+                } else {
+                    // El dispositivo no ejecuta Android 13.
+                    String[] perms = {android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+
+                    if(EasyPermissions.hasPermissions(getContext(),
+                            perms)){
+                        // permiso autorizado
+
+                        compartirImagen();
+                        bottomSheetProgreso.dismiss();
+
+                    }else{
+                        // permiso denegado
+                        EasyPermissions.requestPermissions(this,
+                                getString(R.string.permiso_almacenamiento_es_requerido),
+                                MY_PERMISSION_STORAGE_101,
+                                perms);
                     }
                 }
             });
@@ -515,12 +575,12 @@ public class FragmentTabInicio extends Fragment{
 
     public void redireccionamientoVideo(int tipoRedireccionamiento, String urlVideo) {
 
-        if (tipoRedireccionamiento == 4) {
+        if (tipoRedireccionamiento == 5) {
 
             // NO HARA NADA, HASTA FUTURA ACTUALIZACION SI SE DA
 
         } else {
-            mostrarVideo(urlVideo); // Facebook, Instagram, Youtube
+            mostrarVideo(urlVideo); // Facebook, Instagram, Youtube, TikTok
         }
     }
 

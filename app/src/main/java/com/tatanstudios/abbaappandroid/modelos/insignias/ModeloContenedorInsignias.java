@@ -14,6 +14,8 @@ public class ModeloContenedorInsignias {
     @SerializedName("imagen")
     private String imagen;
 
+    @SerializedName("hayinfo")
+    private int hayinfo;
 
     @SerializedName("titulo")
     private String titulo;
@@ -45,6 +47,10 @@ public class ModeloContenedorInsignias {
 
     @SerializedName("listado")
     private List<ModeloInicioInsignias> modeloInicioInsignias;
+
+    public int getHayinfo() {
+        return hayinfo;
+    }
 
     public List<ModeloInicioInsignias> getModeloInicioInsignias() {
         return modeloInicioInsignias;

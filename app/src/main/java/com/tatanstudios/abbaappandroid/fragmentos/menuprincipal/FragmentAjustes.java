@@ -36,6 +36,7 @@ import com.tatanstudios.abbaappandroid.activity.login.LoginActivity;
 import com.tatanstudios.abbaappandroid.activity.notificacion.ActualizarIdiomasActivity;
 import com.tatanstudios.abbaappandroid.activity.notificacion.ActualizarPasswordActivity;
 import com.tatanstudios.abbaappandroid.activity.notificacion.EditarPerfilActivity;
+import com.tatanstudios.abbaappandroid.activity.splash.SplashActivity;
 import com.tatanstudios.abbaappandroid.adaptadores.menus.AdaptadorFragmentAjustes;
 import com.tatanstudios.abbaappandroid.extras.InterfaceActualizarTema;
 import com.tatanstudios.abbaappandroid.modelos.ajustes.ModeloFragmentConfiguracion;
@@ -367,7 +368,7 @@ public class FragmentAjustes extends Fragment {
 
     void salir(){
         tokenManager.deletePreferences();
-        Intent intent = new Intent(getContext(), LoginActivity.class);
+        Intent intent = new Intent(getContext(), SplashActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

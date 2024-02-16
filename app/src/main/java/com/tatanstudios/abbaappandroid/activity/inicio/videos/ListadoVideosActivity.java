@@ -156,10 +156,10 @@ public class ListadoVideosActivity extends AppCompatActivity {
 
     public void redireccionamientoVideo(int tipoRedireccionamiento, String urlVideo) {
 
-        if (tipoRedireccionamiento == 4) { // SERVIDOR PROPIO
+        if (tipoRedireccionamiento == 5) { // SERVIDOR PROPIO
             // PARA UN FUTURO
         } else {
-            mostrarVideo(urlVideo); // Facebook, Instagram, Youtube
+            mostrarVideo(urlVideo); // Facebook, Instagram, Youtube, TikTok
         }
     }
 

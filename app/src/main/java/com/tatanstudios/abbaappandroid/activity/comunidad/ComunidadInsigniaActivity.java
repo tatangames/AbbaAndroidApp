@@ -62,6 +62,8 @@ public class ComunidadInsigniaActivity extends AppCompatActivity {
 
     private int idsolicitud = 0;
 
+    private TextView txtSinInsignias;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +72,7 @@ public class ComunidadInsigniaActivity extends AppCompatActivity {
         imgFlechaAtras = findViewById(R.id.imgFlechaAtras);
         txtToolbar = findViewById(R.id.txtToolbar);
         rootRelative = findViewById(R.id.rootRelative);
+        txtSinInsignias = findViewById(R.id.txtSinInsignias);
 
         txtToolbar.setText(getString(R.string.insignias));
 
@@ -142,12 +145,16 @@ public class ComunidadInsigniaActivity extends AppCompatActivity {
 
                                         if(apiRespuesta.getSuccess() == 1) {
 
-                                            adaptadorTodasInsigniasComunidad = new AdaptadorTodasInsigniasComunidad(getApplicationContext(), apiRespuesta.getModeloInicioInsignias());
-                                            GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
-                                            layoutManager.setOrientation(RecyclerView.VERTICAL);
-                                            recyclerView.setLayoutManager(layoutManager);
-                                            recyclerView.setAdapter(adaptadorTodasInsigniasComunidad);
-
+                                            if(apiRespuesta.getHayinfo() == 1){
+                                                adaptadorTodasInsigniasComunidad = new AdaptadorTodasInsigniasComunidad(getApplicationContext(), apiRespuesta.getModeloInicioInsignias());
+                                                GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+                                                layoutManager.setOrientation(RecyclerView.VERTICAL);
+                                                recyclerView.setLayoutManager(layoutManager);
+                                                recyclerView.setAdapter(adaptadorTodasInsigniasComunidad);
+                                            }else{
+                                                recyclerView.setVisibility(View.GONE);
+                                                txtSinInsignias.setVisibility(View.VISIBLE);
+                                            }
                                         }else{
 
                                             mensajeSinConexion();

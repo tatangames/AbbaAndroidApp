@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -55,6 +56,9 @@ public class AdaptadorInicioRecyclerVideos extends RecyclerView.Adapter<Adaptado
 
         if(m.getTitulo() != null && !TextUtils.isEmpty(m.getTitulo())){
             holder.txtTitulo.setText(m.getTitulo());
+            holder.txtTitulo.setVisibility(View.VISIBLE);
+        }else{
+            holder.txtTitulo.setVisibility(View.GONE);
         }
 
 
@@ -86,8 +90,7 @@ public class AdaptadorInicioRecyclerVideos extends RecyclerView.Adapter<Adaptado
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView txtTitulo;
         private ShapeableImageView iconImageView;
-
-        IOnRecyclerViewClickListener listener;
+        private IOnRecyclerViewClickListener listener;
 
         public void setListener(IOnRecyclerViewClickListener listener) {
             this.listener = listener;

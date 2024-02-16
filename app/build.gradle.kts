@@ -71,7 +71,8 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.13.2") // glide soporte
 
 
-
+    // para zoom imagen
+    implementation("com.github.chrisbanes:PhotoView:2.3.0")
 
 
 

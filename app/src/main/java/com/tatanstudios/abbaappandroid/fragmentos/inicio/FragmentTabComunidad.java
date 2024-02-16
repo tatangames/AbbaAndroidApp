@@ -199,6 +199,12 @@ public class FragmentTabComunidad extends Fragment {
         startActivity(intent);
     }
 
+    public void planesComunidad(int id){
+
+
+
+    }
+
 
     private void mensajeSinConexion(){
         progressBar.setVisibility(View.GONE);

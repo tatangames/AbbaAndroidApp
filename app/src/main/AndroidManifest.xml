@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"
-        android:minSdkVersion="33"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_IMAGES"
+        android:minSdkVersion="33" />
 
     <application
         android:name=".extras.SistemaController"
@@ -20,11 +22,23 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activity.comunidad.SeleccionarAmigosPlanActivity"
+            android:name=".activity.comunidad.planes.PlanesAmigosActivity"
             android:exported="false" />
         <activity
+            android:name=".EjemploActivity"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.comunidad.SeleccionarAmigosPlanActivity"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.comunidad.ComunidadInsigniaActivity"
-            android:exported="false" />
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.comunidad.SolicitudPendienteEnviadaActivity"
             android:configChanges="uiMode"
@@ -37,11 +51,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.insignias.ListadoNotificacionActivity"
-            android:configChanges="uiMode"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.comunidad.SolicitudesPendientesRecibidaActivity"
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait" />
@@ -117,11 +126,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.notificacion.EditarPerfilActivity"
-            android:configChanges="uiMode"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.notificacion.VerNotificacionesActivity"
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait" />

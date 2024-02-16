@@ -2,6 +2,8 @@ package com.tatanstudios.abbaappandroid.activity.inicio.imagenes;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcher;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,12 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -44,7 +48,6 @@ import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
@@ -88,12 +91,64 @@ public class ListadoImagenesActivity extends AppCompatActivity implements EasyPe
     private int colorBlanco = 0;
     private int colorBlack = 0;
 
-    private final int MY_PERMISSION_STORAGE_101 = 101;
 
     RequestOptions opcionesGlideOriginal = new RequestOptions()
             .diskCacheStrategy(DiskCacheStrategy.ALL) // Forzar la carga desde la memoria caché para mejorar la velocidad
             .placeholder(R.drawable.camaradefecto)
             .override(Target.SIZE_ORIGINAL); // Cargar la imagen con su resolución original
+
+
+
+
+    // ******** PERMISOS ANDROID 13 O SUPERIOR *********
+
+    private final int MY_PERMISSION_STORAGE_101 = 101;
+
+
+    private int sdkVersion = Build.VERSION.SDK_INT;
+
+    private final String[] requiredPermission = new String[]{
+            Manifest.permission.READ_MEDIA_IMAGES,
+    };
+
+
+    private boolean is_storage_image_permitted = false;
+
+
+
+    private boolean allPermissionResultCheck(){
+        return is_storage_image_permitted;
+    }
+
+    // IMAGE code for read storage media images starts
+    private void requestPermissionStorageImage(){
+
+        if(ContextCompat.checkSelfPermission(this, requiredPermission[0]) == PackageManager.PERMISSION_GRANTED){
+            is_storage_image_permitted = true;
+        } else{
+            request_permission_launcher_storage_image.launch(requiredPermission[0]);
+        }
+    }
+
+
+    private final ActivityResultLauncher<String> request_permission_launcher_storage_image =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(),
+                    isGranted-> {
+                        if(isGranted){
+                            is_storage_image_permitted = true;
+                        }else{
+                            is_storage_image_permitted = false;
+                        }
+                    });
+
+
+
+
+    // ******** END PERMISOS ANDROID 13 O SUPERIOR *********
+
+
+
+
 
 
 
@@ -267,46 +322,84 @@ public class ListadoImagenesActivity extends AppCompatActivity implements EasyPe
             btnDescargar.setOnClickListener(v -> {
 
 
-                String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
-                if(EasyPermissions.hasPermissions(this,
-                        perms)){
-                    // permiso autorizado
+                if (sdkVersion >= Build.VERSION_CODES.TIRAMISU) {
+                    // El dispositivo ejecuta Android 13 o superior.
 
-                    if(guardarImagen()){
-                        bottomSheetProgreso.dismiss();
+                    if(!allPermissionResultCheck()){
+
+                        requestPermissionStorageImage();
+
+                    }else{
+                        guardarImagen();
                     }
 
-                }else{
-                    // permiso denegado
-                    EasyPermissions.requestPermissions(this,
-                            getString(R.string.permiso_almacenamiento_es_requerido),
-                            MY_PERMISSION_STORAGE_101,
-                            perms);
+                } else {
+                    // El dispositivo no ejecuta Android 13.
+                    String[] perms = {android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+
+                    if(EasyPermissions.hasPermissions(this,
+                            perms)){
+                        // permiso autorizado
+
+                        guardarImagen();
+
+                    }else{
+                        // permiso denegado
+                        EasyPermissions.requestPermissions(this,
+                                getString(R.string.permiso_almacenamiento_es_requerido),
+                                MY_PERMISSION_STORAGE_101,
+                                perms);
+                    }
                 }
+
 
             });
 
 
             btnCompartir.setOnClickListener(v -> {
-                String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
-                if(EasyPermissions.hasPermissions(this,
-                        perms)){
+                if (sdkVersion >= Build.VERSION_CODES.TIRAMISU) {
+                    // El dispositivo ejecuta Android 13 o superior.
 
-                    if(bloqueCompartir){
-                        bloqueCompartir = false;
-                        compartirImagen();
-                        bottomSheetProgreso.dismiss();
+                    if(!allPermissionResultCheck()){
+
+                        requestPermissionStorageImage();
+
+                    }else{
+
+                        if(bloqueCompartir){
+                            bloqueCompartir = false;
+                            compartirImagen();
+                            bottomSheetProgreso.dismiss();
+                        }
+
                     }
 
-                }else{
-                    // permiso denegado
-                    EasyPermissions.requestPermissions(this,
-                            getString(R.string.permiso_almacenamiento_es_requerido),
-                            MY_PERMISSION_STORAGE_101,
-                            perms);
+                } else {
+                    // El dispositivo no ejecuta Android 13.
+                    String[] perms = {android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+
+                    if(EasyPermissions.hasPermissions(this,
+                            perms)){
+                        // permiso autorizado
+
+                        if(bloqueCompartir){
+                            bloqueCompartir = false;
+                            compartirImagen();
+                            bottomSheetProgreso.dismiss();
+                        }
+
+                    }else{
+                        // permiso denegado
+                        EasyPermissions.requestPermissions(this,
+                                getString(R.string.permiso_almacenamiento_es_requerido),
+                                MY_PERMISSION_STORAGE_101,
+                                perms);
+                    }
                 }
+
+
 
             });
 

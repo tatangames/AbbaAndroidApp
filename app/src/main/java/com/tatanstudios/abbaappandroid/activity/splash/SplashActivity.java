@@ -1,17 +1,21 @@
 package com.tatanstudios.abbaappandroid.activity.splash;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.login.LoginActivity;
 import com.tatanstudios.abbaappandroid.activity.principal.PrincipalActivity;
 import com.tatanstudios.abbaappandroid.extras.LocaleManagerIdiomaAndroid;
+import com.tatanstudios.abbaappandroid.fragmentos.login.FragmentLogin;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
 
 public class SplashActivity extends AppCompatActivity {
@@ -26,6 +30,9 @@ public class SplashActivity extends AppCompatActivity {
     private static final String APP_INGLES = "en";
     private static final String APP_ESPANOL = "es";
 
+    private ConstraintLayout constraintLayout;
+    private FrameLayout frameLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +41,10 @@ public class SplashActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_splash);
+
+        constraintLayout = findViewById(R.id.linearConstraint);
+        frameLayout = findViewById(R.id.fragmentContenedor);
+
 
         tokenManager = TokenManager.getInstance(getSharedPreferences("prefs", MODE_PRIVATE));
 
@@ -88,13 +99,16 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
 
             }else {
-                Intent intentLogin = new Intent(this, LoginActivity.class);
-                startActivity(intentLogin);
-                finish();
+
+                constraintLayout.setVisibility(View.GONE);
+                frameLayout.setVisibility(View.VISIBLE);
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContenedor, new FragmentLogin())
+                        .commit();
             }
         }, SPLASH_DISPLAY_LENGTH);
     }
-
 
 
 
