@@ -349,5 +349,30 @@ public interface ApiService {
 
 
 
+    // listado de planes que tiene ese amigo pero solo ver los que no tiene ocultos
+    @POST("app/comunidad/informacion/planes")
+    @FormUrlEncoded
+    Observable<ModeloPlanesContenedor> listadoPlanesAmigoComunidad(@Field("idsolicitud") int idsolicitud,
+                                                                   @Field("idiomaplan") int idiomaplan,
+                                                                   @Field("iduser") String iduser);
+
+
+    // listado de items de ese amigo, se envia el usuario de un solo a buscar
+    @POST("app/comunidad/informacion/planes/items")
+    @FormUrlEncoded
+    Observable<ModeloPlanesContenedor> listadoPlanesItemsAmigoComunidad(@Field("idplan") int idplan,
+                                                                   @Field("idiomaplan") int idiomaplan,
+                                                                   @Field("idusuariobuscar") int idusuariobuscar,
+                                                                   @Field("iduser") String iduser);
+
+
+    // listado de preguntas y las respuestas de ese usuario
+    @POST("app/comunidad/informacion/planes/itemspreguntas")
+    @FormUrlEncoded
+    Observable<ModeloPreguntasContenedor> listadoPlanesItemsPreguntasComunidad(@Field("idplanblockdetauser") int idplanblockdetauser,
+                                                                        @Field("idiomaplan") int idiomaplan,
+                                                                        @Field("idusuariobuscar") int idusuariobuscar);
+
+
 
 }

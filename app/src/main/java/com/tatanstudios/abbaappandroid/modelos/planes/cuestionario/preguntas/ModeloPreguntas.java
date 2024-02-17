@@ -29,6 +29,9 @@ public class ModeloPreguntas {
     @SerializedName("texto")
     private String texto;
 
+    @SerializedName("respuesta")
+    private String respuesta;
+
     @SerializedName("id_imagen_pregunta")
     private int idImagenPregunta;
 
@@ -42,6 +45,10 @@ public class ModeloPreguntas {
         this.imagen = imagen;
     }
 
+
+    public String getRespuesta() {
+        return respuesta;
+    }
 
     public String getImagen() {
         return imagen;

@@ -14,10 +14,24 @@ public class ModeloPlanesContenedor {
     @SerializedName("hayinfo")
     private int hayinfo;
 
+    @SerializedName("usuariobuscado")
+    private int usuariobuscado;
 
     @SerializedName("listado")
     private List<ModeloPlanesOcultos> modeloPlanesOcultos;
 
+    @SerializedName("listadoplan")
+    private List<ModeloMisPlanes> modeloMisPlanes;
+
+
+    public List<ModeloMisPlanes> getModeloMisPlanes() {
+        return modeloMisPlanes;
+    }
+
+
+    public int getUsuariobuscado() {
+        return usuariobuscado;
+    }
 
     public int getSuccess() {
         return success;

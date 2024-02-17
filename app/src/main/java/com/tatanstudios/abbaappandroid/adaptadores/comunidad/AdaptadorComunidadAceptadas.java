@@ -227,6 +227,7 @@ public class AdaptadorComunidadAceptadas extends RecyclerView.Adapter<RecyclerVi
                     // Planes
                     if (item.getItemId() == R.id.opcion1) {
 
+                        // se va id solicitud
                         fragmentTabComunidad.planesComunidad(mModelo.getId());
 
                         return true;
@@ -235,6 +236,7 @@ public class AdaptadorComunidadAceptadas extends RecyclerView.Adapter<RecyclerVi
                     // Insignias
                     else if (item.getItemId() == R.id.opcion2) {
 
+                        // se va id solicitud
                         fragmentTabComunidad.insigniasComunidad(mModelo.getId());
 
                         return true;

@@ -23,6 +23,7 @@ import com.tatanstudios.abbaappandroid.activity.comunidad.AgregarAmigoComunidadA
 import com.tatanstudios.abbaappandroid.activity.comunidad.ComunidadInsigniaActivity;
 import com.tatanstudios.abbaappandroid.activity.comunidad.SolicitudPendienteEnviadaActivity;
 import com.tatanstudios.abbaappandroid.activity.comunidad.SolicitudPendienteRecibidaActivity;
+import com.tatanstudios.abbaappandroid.activity.comunidad.planes.PlanesAmigosActivity;
 import com.tatanstudios.abbaappandroid.adaptadores.comunidad.AdaptadorComunidadAceptadas;
 import com.tatanstudios.abbaappandroid.modelos.comunidad.ModeloComunidad;
 import com.tatanstudios.abbaappandroid.modelos.comunidad.ModeloContedorComunidad;
@@ -199,10 +200,10 @@ public class FragmentTabComunidad extends Fragment {
         startActivity(intent);
     }
 
-    public void planesComunidad(int id){
-
-
-
+    public void planesComunidad(int idsolicitud){
+        Intent intent = new Intent(getContext(), PlanesAmigosActivity.class);
+        intent.putExtra("IDSOLICITUD", idsolicitud);
+        startActivity(intent);
     }
 
 

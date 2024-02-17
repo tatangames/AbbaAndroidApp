@@ -21,6 +21,13 @@ public class ModeloPreguntasContenedor{
     @SerializedName("ignorarpre")
     private int ignorarpre;
 
+    @SerializedName("hayinfo")
+    private int hayinfo;
+
+
+    public int getHayinfo() {
+        return hayinfo;
+    }
 
     @SerializedName("listado")
     public List<ModeloPreguntas> modeloPreguntas;

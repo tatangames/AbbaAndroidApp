@@ -25,6 +25,13 @@ public class ModeloMisPlanes {
     @SerializedName("descripcion")
     private String descripcion;
 
+    @SerializedName("fecha")
+    private String fecha;
+
+
+    public String getFecha() {
+        return fecha;
+    }
 
     private boolean checkValor;
 
