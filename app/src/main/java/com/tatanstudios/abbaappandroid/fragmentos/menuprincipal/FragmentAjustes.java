@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.developer.kalert.KAlertDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.tatanstudios.abbaappandroid.R;
+import com.tatanstudios.abbaappandroid.activity.comunidad.planes.PlanesOcultosActivity;
 import com.tatanstudios.abbaappandroid.activity.insignias.InsigniasPorGanarActivity;
 import com.tatanstudios.abbaappandroid.activity.insignias.ListadoNotificacionActivity;
 import com.tatanstudios.abbaappandroid.activity.login.LoginActivity;
@@ -162,9 +163,10 @@ public class FragmentAjustes extends Fragment {
         elementos.add(new ModeloVistaFragmentAjustes( ModeloVistaFragmentAjustes.TIPO_LINEA_SEPARACION, null, null));
 
         elementos.add(new ModeloVistaFragmentAjustes( ModeloVistaFragmentAjustes.TIPO_ITEM_NORMAL, null, new ModeloFragmentConfiguracion(3, getString(R.string.insignias_por_ganar))));
-        elementos.add(new ModeloVistaFragmentAjustes( ModeloVistaFragmentAjustes.TIPO_ITEM_NORMAL, null, new ModeloFragmentConfiguracion(4, getString(R.string.idioma))));
-        elementos.add(new ModeloVistaFragmentAjustes( ModeloVistaFragmentAjustes.TIPO_ITEM_NORMAL, null, new ModeloFragmentConfiguracion(5, getString(R.string.temas))));
-        elementos.add(new ModeloVistaFragmentAjustes( ModeloVistaFragmentAjustes.TIPO_ITEM_NORMAL, null, new ModeloFragmentConfiguracion(6, getString(R.string.cerrar_sesion))));
+        elementos.add(new ModeloVistaFragmentAjustes( ModeloVistaFragmentAjustes.TIPO_ITEM_NORMAL, null, new ModeloFragmentConfiguracion(4, getString(R.string.planes_comunidad))));
+        elementos.add(new ModeloVistaFragmentAjustes( ModeloVistaFragmentAjustes.TIPO_ITEM_NORMAL, null, new ModeloFragmentConfiguracion(5, getString(R.string.idioma))));
+        elementos.add(new ModeloVistaFragmentAjustes( ModeloVistaFragmentAjustes.TIPO_ITEM_NORMAL, null, new ModeloFragmentConfiguracion(6, getString(R.string.temas))));
+        elementos.add(new ModeloVistaFragmentAjustes( ModeloVistaFragmentAjustes.TIPO_ITEM_NORMAL, null, new ModeloFragmentConfiguracion(7, getString(R.string.cerrar_sesion))));
 
         AdaptadorFragmentAjustes adapter = new AdaptadorFragmentAjustes(getContext(), elementos, this);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
@@ -196,14 +198,19 @@ public class FragmentAjustes extends Fragment {
                     break;
 
                 case 4:
-                    vistaCambiarIdioma();
+                    // planes comunidad
+                    verPlanesParaOcultar();
                     break;
 
                 case 5:
-                    editarTema();
+                    vistaCambiarIdioma();
                     break;
 
                 case 6:
+                    editarTema();
+                    break;
+
+                case 7:
                     cerrarSesion();
                     break;
 
@@ -213,20 +220,26 @@ public class FragmentAjustes extends Fragment {
         }
     }
 
+
+    private void verPlanesParaOcultar(){
+        Intent intent = new Intent(getContext(), PlanesOcultosActivity.class);
+        startActivity(intent);
+    }
+
     private void modificarPassword(){
-        Intent intentLogin = new Intent(getContext(), ActualizarPasswordActivity.class);
-        startActivity(intentLogin);
+        Intent intent = new Intent(getContext(), ActualizarPasswordActivity.class);
+        startActivity(intent);
     }
 
     private void verInsignias(){
-        Intent intentLan = new Intent(getContext(), InsigniasPorGanarActivity.class);
-        startActivity(intentLan);
+        Intent intent = new Intent(getContext(), InsigniasPorGanarActivity.class);
+        startActivity(intent);
     }
 
 
     private void vistaCambiarIdioma(){
-        Intent intentLan = new Intent(getContext(), ActualizarIdiomasActivity.class);
-        startActivity(intentLan);
+        Intent intent = new Intent(getContext(), ActualizarIdiomasActivity.class);
+        startActivity(intent);
     }
 
 

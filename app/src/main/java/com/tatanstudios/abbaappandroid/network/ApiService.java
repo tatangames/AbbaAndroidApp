@@ -21,6 +21,7 @@ import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesP
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginateMetaDatos;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginateRequest;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.bloquefechas.ModeloBloqueFechaContenedor;
+import com.tatanstudios.abbaappandroid.modelos.planes.ocultos.ModeloPlanesContenedor;
 import com.tatanstudios.abbaappandroid.modelos.usuario.ModeloUsuario;
 
 import java.util.Map;
@@ -328,6 +329,22 @@ public interface ApiService {
                                                            @Field("idiomaplan") int idioma,
                                                            @FieldMap Map<String, String> listado);
 
+
+
+    // listado planes para ocultar
+    @POST("app/comunidad/planes/usuarios")
+    @FormUrlEncoded
+    Observable<ModeloPlanesContenedor> listadoPlanesParaOcultar(@Field("iduser") String iduser,
+                                                                @Field("idiomaplan") int idiomaplan);
+
+
+
+
+    // actualizar lista de planes ocultos
+    @POST("app/comunidad/actualizarplanes/ocultos")
+    @FormUrlEncoded
+    Observable<ModeloPlanesContenedor> actualizarPlanesOcultos(@Field("iduser") String iduser,
+                                                          @FieldMap Map<String, Integer> listado);
 
 
 

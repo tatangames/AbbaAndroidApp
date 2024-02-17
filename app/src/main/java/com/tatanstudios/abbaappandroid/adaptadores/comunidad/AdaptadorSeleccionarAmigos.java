@@ -47,6 +47,8 @@ public class AdaptadorSeleccionarAmigos extends RecyclerView.Adapter<AdaptadorSe
         this.context = context;
         this.modeloComunidad = modeloComunidad;
         this.seleccionarAmigosPlanActivity = seleccionarAmigosPlanActivity;
+
+
     }
 
     @NonNull
@@ -114,9 +116,16 @@ public class AdaptadorSeleccionarAmigos extends RecyclerView.Adapter<AdaptadorSe
                     .into(holder.imgPais);
         }
 
+
+        holder.check.setChecked(modeloComunidad.get(position).getCheckValor());
+
+
         holder.check.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-            m2.setCheckValor(isChecked);
+
+            int actualPosition = holder.getBindingAdapterPosition();
+            holder.check.setChecked(isChecked);
+            modeloComunidad.get(actualPosition).setCheckValor(isChecked);
 
             int conteo = countCheckedItems();
             if(conteo > 5){

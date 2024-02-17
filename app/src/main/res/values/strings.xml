@@ -228,6 +228,15 @@
     <string name="minimo_1_amigo">Mínimo 1 amigo se requiere</string>
     <string name="error">Error</string>
     <string name="plan_ya_estaba_iniciado">Plan ya estaba iniciado</string>
+    <string name="ocultar">Ocultar</string>
+    <string name="planes_comunidad">Planes comunidad</string>
+    <string name="los_amigos_que_tienes_agregados">Los amigos que tienes agregados en comunidad, no veran tus devocionales si los tienes marcados</string>
+
+
+
+
+
+
 
 
     <string-array name="estados_elsalvador_array">

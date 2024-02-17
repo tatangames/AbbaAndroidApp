@@ -65,6 +65,8 @@ public class AdaptadorFragmentPlanesBotonera extends RecyclerView.Adapter<Adapta
 
         holder.btnPlanes.setText(modeloFragmentPlanBotoneras.get(position).getTexto());
 
+
+
         if (position == botonSeleccionado) {
             // boton seleccionado
 
@@ -85,11 +87,11 @@ public class AdaptadorFragmentPlanesBotonera extends RecyclerView.Adapter<Adapta
         }
 
         holder.btnPlanes.setOnClickListener(v ->{
-
-            botonSeleccionado = position;
+            int actualPosition = holder.getBindingAdapterPosition();
+            botonSeleccionado = actualPosition;
             notifyDataSetChanged();
 
-            int id = modeloFragmentPlanBotoneras.get(position).getId();
+            int id = modeloFragmentPlanBotoneras.get(actualPosition).getId();
             fragmentPlanes.tipoPlan(id);
         });
     }

@@ -26,6 +26,17 @@ public class ModeloMisPlanes {
     private String descripcion;
 
 
+    private boolean checkValor;
+
+
+    public boolean getCheckValor() {
+        return checkValor;
+    }
+
+    public void setCheckValor(boolean checkValor) {
+        this.checkValor = checkValor;
+    }
+
     public int getIdPlanes() {
         return idPlanes;
     }

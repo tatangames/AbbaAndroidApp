@@ -1,30 +1,23 @@
 package com.tatanstudios.abbaappandroid.activity.insignias;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.activity.planes.completados.MisPlanesBloquesFechaCompletadosActivity;
 import com.tatanstudios.abbaappandroid.adaptadores.notificacion.AdaptadorListaNotificaciones;
-import com.tatanstudios.abbaappandroid.adaptadores.planes.completados.AdaptadorPlanesCompletados;
 import com.tatanstudios.abbaappandroid.modelos.notificacion.ModeloListaNotificacion;
 import com.tatanstudios.abbaappandroid.modelos.notificacion.ModeloListaNotificacionPaginateRequest;
-import com.tatanstudios.abbaappandroid.modelos.planes.completados.ModeloPlanesCompletados;
-import com.tatanstudios.abbaappandroid.modelos.planes.completados.ModeloPlanesCompletadosPaginateRequest;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
@@ -49,6 +42,10 @@ public class ListadoNotificacionActivity extends AppCompatActivity {
     private boolean unaVezVisibilidad = true;
     private AdaptadorListaNotificaciones adapter;
 
+    private TextView txtToolbar;
+
+    private ImageView imgFlechaAtras;
+
 
     // AJUSTES DE PAGINACION
 
@@ -67,6 +64,10 @@ public class ListadoNotificacionActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         rootRelative = findViewById(R.id.rootRelative);
         txtSinNotificacion = findViewById(R.id.txtSinNotificacion);
+        txtToolbar = findViewById(R.id.txtToolbar);
+        imgFlechaAtras = findViewById(R.id.imgFlechaAtras);
+
+        txtToolbar.setText(getString(R.string.notificaciones));
 
         tokenManager = TokenManager.getInstance(getSharedPreferences("prefs", MODE_PRIVATE));
         service = RetrofitBuilder.createServiceAutentificacion(ApiService.class, tokenManager);
@@ -98,6 +99,12 @@ public class ListadoNotificacionActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        imgFlechaAtras.setOnClickListener(v -> {
+            finish();
+        });
+
 
         apiBuscarNotificaciones();
     }

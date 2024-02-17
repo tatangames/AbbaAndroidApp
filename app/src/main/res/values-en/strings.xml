@@ -228,7 +228,9 @@
     <string name="minimo_1_amigo">Minimum 1 friend required</string>
     <string name="error">Error</string>
     <string name="plan_ya_estaba_iniciado">Plan was already started</string>
-
+    <string name="ocultar">Hide</string>
+    <string name="planes_comunidad">Community plans</string>
+    <string name="los_amigos_que_tienes_agregados">The friends you have added to the community will not see your devotions if you have them marked.</string>
 
 
 
