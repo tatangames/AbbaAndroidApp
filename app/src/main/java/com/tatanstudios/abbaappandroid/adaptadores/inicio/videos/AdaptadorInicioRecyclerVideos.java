@@ -83,8 +83,11 @@ public class AdaptadorInicioRecyclerVideos extends RecyclerView.Adapter<Adaptado
     @Override
     public int getItemCount() {
 
-
-        return modeloInicioVideos.size();
+        if(modeloInicioVideos != null){
+            return modeloInicioVideos.size();
+        }else{
+            return 0;
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

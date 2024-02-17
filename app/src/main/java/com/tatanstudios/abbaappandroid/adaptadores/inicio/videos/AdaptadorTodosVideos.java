@@ -80,15 +80,18 @@ public class AdaptadorTodosVideos extends RecyclerView.Adapter<AdaptadorTodosVid
     @Override
     public int getItemCount() {
 
-
-        return modeloInicioVideos.size();
+        if(modeloInicioVideos != null){
+            return modeloInicioVideos.size();
+        }else{
+            return 0;
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView txtTitulo;
         private ShapeableImageView iconImageView;
 
-        IOnRecyclerViewClickListener listener;
+        private IOnRecyclerViewClickListener listener;
 
         public void setListener(IOnRecyclerViewClickListener listener) {
             this.listener = listener;

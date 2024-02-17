@@ -110,7 +110,12 @@ public class AdaptadorInsigniaHitos extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemCount() {
-        return modeloVistaHitos.size();
+        if(modeloVistaHitos != null){
+            return modeloVistaHitos.size();
+        }else{
+            return 0;
+        }
+
     }
 
     @Override

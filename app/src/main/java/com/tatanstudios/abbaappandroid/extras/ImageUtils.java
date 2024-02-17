@@ -11,6 +11,9 @@ import java.io.OutputStream;
 public class ImageUtils {
 
 
+
+    // GUARDAR IMAGEN EN DIRECTORIO IMAGENES
+
     public static Uri saveImageToGallery(Bitmap bitmap, Context context, String fileName) {
 
         // Define los detalles de la imagen para la inserción en MediaStore

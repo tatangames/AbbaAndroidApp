@@ -14,7 +14,6 @@ public class ModeloPlanesCompletadosPaginate<T> {
     private T data;
 
 
-
     public T getData() {
         return data;
     }

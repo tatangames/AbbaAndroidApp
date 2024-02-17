@@ -9,6 +9,9 @@ import java.util.Locale;
 
 public class LocaleManagerIdiomaAndroid {
 
+
+    // AJUSTE DE IDIOMAS DE LA APLICACION
+
     public static void setLocale(Context context, String languageCode) {
         Locale locale = new Locale(languageCode);
         Locale.setDefault(locale);

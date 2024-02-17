@@ -6,6 +6,7 @@ import com.tatanstudios.abbaappandroid.modelos.usuario.ModeloUsuario;
 
 public class TokenManager {
 
+    // GUARDAMOS DATOS DENTRO DE LA APP
 
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
@@ -16,7 +17,6 @@ public class TokenManager {
         this.prefs = prefs;
         this.editor = prefs.edit();
     }
-
 
     public static synchronized TokenManager getInstance(SharedPreferences prefs) {
         if (INSTANCE == null) {

@@ -62,7 +62,12 @@ public class AdaptadorInicioRecyclerHitos extends RecyclerView.Adapter<Adaptador
 
     @Override
     public int getItemCount() {
-        return modeloInsigniaHitos.size();
+        if(modeloInsigniaHitos != null){
+            return modeloInsigniaHitos.size();
+        }else{
+            return 0;
+        }
+
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{

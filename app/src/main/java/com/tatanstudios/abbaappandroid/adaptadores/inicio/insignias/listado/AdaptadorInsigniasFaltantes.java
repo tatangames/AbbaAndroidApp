@@ -78,7 +78,11 @@ public class AdaptadorInsigniasFaltantes extends RecyclerView.Adapter<AdaptadorI
     @Override
     public int getItemCount() {
 
-        return modeloInicioInsignias.size();
+        if(modeloInicioInsignias != null) {
+            return modeloInicioInsignias.size();
+        }else{
+            return 0;
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{

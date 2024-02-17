@@ -166,7 +166,12 @@ public class AdaptadorSeleccionarAmigos extends RecyclerView.Adapter<AdaptadorSe
 
     @Override
     public int getItemCount() {
-        return modeloComunidad.size();
+        if(modeloComunidad != null){
+            return modeloComunidad.size();
+        }else{
+            return 0;
+        }
+
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

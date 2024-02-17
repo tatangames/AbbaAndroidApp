@@ -69,9 +69,6 @@ public class AdaptadorTodasInsignias extends RecyclerView.Adapter<AdaptadorTodas
         holder.txtNivel.setText(String.valueOf(m.getNivelVoy()));
         holder.txtTitulo.setText(m.getTitulo());
 
-
-
-
         holder.setListener((view, po) -> {
             listadoInsigniasActivity.verInformacionInsignia(m.getIdTipoInsignia());
         });
@@ -81,7 +78,12 @@ public class AdaptadorTodasInsignias extends RecyclerView.Adapter<AdaptadorTodas
     @Override
     public int getItemCount() {
 
-        return modeloInicioInsignias.size();
+        if(modeloInicioInsignias != null){
+            return modeloInicioInsignias.size();
+        }else{
+            return 0;
+        }
+
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

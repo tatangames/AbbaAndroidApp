@@ -75,7 +75,12 @@ public class AdaptadorTodosImagenes extends RecyclerView.Adapter<AdaptadorTodosI
     @Override
     public int getItemCount() {
 
-        return modeloInicioImagenes.size();
+        if(modeloInicioImagenes != null){
+            return modeloInicioImagenes.size();
+        }else{
+            return 0;
+        }
+
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

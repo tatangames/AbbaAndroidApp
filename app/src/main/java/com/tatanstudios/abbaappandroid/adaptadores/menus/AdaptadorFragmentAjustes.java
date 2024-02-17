@@ -132,8 +132,8 @@ public class AdaptadorFragmentAjustes extends RecyclerView.Adapter<RecyclerView.
     private static class PerfilViewHolder extends RecyclerView.ViewHolder {
         // Definir los elementos de la interfaz gráfica según el layout de la línea de separación
 
-        TextView txtLetra;
-        TextView txtNombre;
+        private TextView txtLetra;
+        private TextView txtNombre;
 
         public PerfilViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -152,8 +152,8 @@ public class AdaptadorFragmentAjustes extends RecyclerView.Adapter<RecyclerView.
     private static class ItemNormalViewHolder extends RecyclerView.ViewHolder{
         // Definir los elementos de la interfaz gráfica según el layout de ítem normal
 
-        TextView txtPerfil;
-        ImageView imgPerfil;
+        private TextView txtPerfil;
+        private ImageView imgPerfil;
 
         public ItemNormalViewHolder(@NonNull View itemView) {
             super(itemView);

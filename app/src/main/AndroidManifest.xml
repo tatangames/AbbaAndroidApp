@@ -33,11 +33,6 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".EjemploActivity"
-            android:configChanges="uiMode"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.comunidad.SeleccionarAmigosPlanActivity"
             android:configChanges="uiMode"
             android:exported="false"

@@ -93,8 +93,12 @@ public class AdaptadorSolicitudPendientesEnviadas extends RecyclerView.Adapter<A
     @Override
     public int getItemCount() {
 
+        if(modeloComunidad != null){
+            return modeloComunidad.size();
+        }else{
+            return 0;
+        }
 
-        return modeloComunidad.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

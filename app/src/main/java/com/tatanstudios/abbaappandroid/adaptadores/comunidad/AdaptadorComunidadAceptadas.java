@@ -323,12 +323,6 @@ public class AdaptadorComunidadAceptadas extends RecyclerView.Adapter<RecyclerVi
         }
     }
 
-
-
-
-
-
-
     @Override
     public int getItemCount() {
         if(modeloVistaComunidads != null){

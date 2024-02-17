@@ -14,7 +14,6 @@ public class ModeloBuscarPlanesPaginate<T> {
     private T data;
 
 
-
     public T getData() {
         return data;
     }

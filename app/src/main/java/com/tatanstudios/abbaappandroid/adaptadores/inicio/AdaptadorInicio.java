@@ -62,9 +62,6 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
             .placeholder(R.drawable.camaradefecto)
             .priority(Priority.NORMAL);
 
-
-    private String textoCompartir = "";
-
     public AdaptadorInicio(Context context, List<ModeloVistasInicio> modeloVistasInicios, FragmentTabInicio fragmentTabInicio,
                            boolean tema, ModeloInicioSeparador modeloInicioSeparador) {
         this.context = context;
@@ -293,7 +290,11 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return modeloVistasInicios.size();
+        if(modeloVistasInicios != null) {
+            return modeloVistasInicios.size();
+        }else {
+            return 0;
+        }
     }
 
     @Override

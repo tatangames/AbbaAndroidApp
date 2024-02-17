@@ -71,8 +71,12 @@ public class AdaptadorTodasInsigniasComunidad extends RecyclerView.Adapter<Adapt
 
     @Override
     public int getItemCount() {
+        if(modeloInicioInsignias != null){
+            return modeloInicioInsignias.size();
+        }else{
+            return 0;
+        }
 
-        return modeloInicioInsignias.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{

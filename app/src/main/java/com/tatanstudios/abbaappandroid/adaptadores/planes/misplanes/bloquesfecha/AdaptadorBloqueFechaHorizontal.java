@@ -22,6 +22,8 @@ import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.bloquefechas.Mod
 import java.util.List;
 
 public class AdaptadorBloqueFechaHorizontal extends RecyclerView.Adapter<AdaptadorBloqueFechaHorizontal.MyViewHolder> {
+
+
     private List<ModeloBloqueFecha> modeloBloqueFechas;
 
     private Context context;

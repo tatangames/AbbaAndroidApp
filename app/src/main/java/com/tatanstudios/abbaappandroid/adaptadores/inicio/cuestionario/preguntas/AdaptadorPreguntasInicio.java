@@ -45,7 +45,7 @@ public class AdaptadorPreguntasInicio extends RecyclerView.Adapter<RecyclerView.
 
     private String descripcionP = "";
 
-    ColorStateList colorStateListBlack, colorStateListWhite;
+    private ColorStateList colorStateListBlack, colorStateListWhite;
     private boolean temaActual;
 
 
@@ -60,7 +60,7 @@ public class AdaptadorPreguntasInicio extends RecyclerView.Adapter<RecyclerView.
     // obtener el texto de la pregunta para COMPARTIR
     private Map<Integer, String> hashMapTextoPregunta = new HashMap<>();
 
-    RequestOptions opcionesGlide = new RequestOptions()
+    private RequestOptions opcionesGlide = new RequestOptions()
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .skipMemoryCache(true)
             .placeholder(R.drawable.camaradefecto)
