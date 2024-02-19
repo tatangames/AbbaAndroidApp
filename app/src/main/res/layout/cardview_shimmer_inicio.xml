@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/liberation_sans_bold"
+        android:background="#DDDDDD"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imagen1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="#DDDDDD"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imagen2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="#DDDDDD"
+        app:layout_constraintStart_toEndOf="@+id/imagen1"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imagen5"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="#DDDDDD"
+        app:layout_constraintStart_toEndOf="@+id/imagen2"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="35dp"
+        android:background="#DDDDDD"
+        android:fontFamily="@font/liberation_sans_bold"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagen3" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imagen3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="#DDDDDD"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imagen4"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="#DDDDDD"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/imagen3"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imagen7"
+        android:layout_width="100dp"
+        android:background="#DDDDDD"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/imagen4"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="35dp"
+        android:background="#DDDDDD"
+        android:fontFamily="@font/liberation_sans_bold"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagen1" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imagen8"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:background="#DDDDDD"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imagen9"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="#DDDDDD"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/imagen8"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imagen10"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="#DDDDDD"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/imagen9"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

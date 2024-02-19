@@ -95,8 +95,9 @@ public class ActualizarIdiomasActivity extends AppCompatActivity {
             // defecto espanol
             txtIdiomaPlanesBiblia.setText(getString(R.string.espanol));
         }
-
     }
+
+
 
     private void cambioIdiomaApp(){
         if (bottomDialogIdiomaApp) {
@@ -227,12 +228,11 @@ public class ActualizarIdiomasActivity extends AppCompatActivity {
         pDialog.show();
     }
 
-    private void reiniciarApp(){
 
+    private void reiniciarApp(){
         Intent intentReload = new Intent(this, SplashActivity.class);
         intentReload.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intentReload);
-
     }
 
 

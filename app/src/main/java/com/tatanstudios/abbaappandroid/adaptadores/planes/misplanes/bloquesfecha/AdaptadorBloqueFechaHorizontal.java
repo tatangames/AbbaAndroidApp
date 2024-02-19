@@ -67,7 +67,11 @@ public class AdaptadorBloqueFechaHorizontal extends RecyclerView.Adapter<Adaptad
 
     @Override
     public void onBindViewHolder(@NonNull AdaptadorBloqueFechaHorizontal.MyViewHolder holder, int position) {
+
+
         ModeloBloqueFecha m = modeloBloqueFechas.get(position);
+
+
 
         if(m.getEstaPresionado()){
 
@@ -86,8 +90,10 @@ public class AdaptadorBloqueFechaHorizontal extends RecyclerView.Adapter<Adaptad
                 holder.constraintLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.codigo_bloquefecha_light_negro_on));
                 holder.txtFecha.setBackground(ContextCompat.getDrawable(context, R.drawable.codigo_boton_redondeado_v3));
                 holder.txtFecha.setTextColor(colorStateWhite);
-
             }
+
+
+
 
         }else{
 
@@ -98,7 +104,7 @@ public class AdaptadorBloqueFechaHorizontal extends RecyclerView.Adapter<Adaptad
                 if(hayDiaActual == 1){
                     if(m.getMismoDia() == 1){
                         if(m.getPrimerBloqueDrawable()){
-                            m.setPrimerBloqueDrawable(false);
+                            //m.setPrimerBloqueDrawable(false);
                             holder.constraintLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.codigo_bloquefecha_dark_white_on));
                             holder.txtFecha.setBackground(ContextCompat.getDrawable(context, R.drawable.codigo_boton_redondeado_v3));
                             holder.txtFecha.setTextColor(colorStateWhite);
@@ -121,7 +127,7 @@ public class AdaptadorBloqueFechaHorizontal extends RecyclerView.Adapter<Adaptad
                 }else{
                     if(idUltimoBloque == m.getId()){
                         if(m.getPrimerBloqueDrawable()){
-                            m.setPrimerBloqueDrawable(false);
+                            //m.setPrimerBloqueDrawable(false);
                             holder.constraintLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.codigo_bloquefecha_dark_white_on));
                             holder.txtFecha.setBackground(ContextCompat.getDrawable(context, R.drawable.codigo_boton_redondeado_v3));
                             holder.txtFecha.setTextColor(colorStateWhite);
@@ -148,7 +154,7 @@ public class AdaptadorBloqueFechaHorizontal extends RecyclerView.Adapter<Adaptad
                 if(hayDiaActual == 1){
                     if(m.getMismoDia() == 1){
                         if(m.getPrimerBloqueDrawable()){
-                            m.setPrimerBloqueDrawable(false);
+                            //m.setPrimerBloqueDrawable(false);
                             holder.constraintLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.codigo_bloquefecha_light_negro_on));
                             holder.txtFecha.setBackground(ContextCompat.getDrawable(context, R.drawable.codigo_boton_redondeado_v3));
                             holder.txtFecha.setTextColor(colorStateWhite);
@@ -169,7 +175,7 @@ public class AdaptadorBloqueFechaHorizontal extends RecyclerView.Adapter<Adaptad
                 }else{
                     if(idUltimoBloque == m.getId()){
                         if(m.getPrimerBloqueDrawable()){
-                            m.setPrimerBloqueDrawable(false);
+                            //m.setPrimerBloqueDrawable(false);
                             holder.constraintLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.codigo_bloquefecha_light_negro_on));
                             holder.txtFecha.setBackground(ContextCompat.getDrawable(context, R.drawable.codigo_boton_redondeado_v3));
                             holder.txtFecha.setTextColor(colorStateWhite);
@@ -208,15 +214,26 @@ public class AdaptadorBloqueFechaHorizontal extends RecyclerView.Adapter<Adaptad
 
 
         holder.itemView.setOnClickListener(v -> {
+            int actualPosition = holder.getBindingAdapterPosition();
 
-            for (ModeloBloqueFecha modelo : modeloBloqueFechas) {
+
+            for (int i = 0; i < modeloBloqueFechas.size(); i++) {
+                ModeloBloqueFecha modelo = modeloBloqueFechas.get(i);
+                modelo.setPrimerBloqueDrawable(false);
                 modelo.setEstaPresionado(false);
-                m.setPrimerBloqueDrawable(false);
             }
 
+
             misPlanesBloquesFechaActivity.llenarDatosAdapterVertical(modeloBloqueFechas.get(position).getModeloBloqueFechas());
-            m.setEstaPresionado(true);
+
+
+            ModeloBloqueFecha mimodelo = modeloBloqueFechas.get(actualPosition);
+            mimodelo.setEstaPresionado(true);
+
+            //modeloBloqueFechas.get(actualPosition).setEstaPresionado(true);
+            //m.setEstaPresionado(true);
             notifyDataSetChanged();
+            //notifyItemChanged(actualPosition);
         });
     }
 

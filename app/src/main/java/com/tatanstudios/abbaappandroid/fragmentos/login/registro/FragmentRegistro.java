@@ -765,7 +765,7 @@ public class FragmentRegistro extends Fragment {
         startActivity(intent);
 
         // Animación personalizada de entrada
-        getActivity().overridePendingTransition(R.anim.slide_in_right_activity, R.anim.slide_out_left_activity);
+       // getActivity().overridePendingTransition(R.anim.slide_in_right_activity, R.anim.slide_out_left_activity);
         getActivity().finish();
     }
 

@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -53,6 +54,7 @@ public class ReseteoPasswordActivity extends AppCompatActivity {
     private boolean tema = false;
     private boolean boolDialogEnviar = false;
 
+    private TextView txtToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +63,12 @@ public class ReseteoPasswordActivity extends AppCompatActivity {
 
         imgFlechaAtras = findViewById(R.id.imgFlechaAtras);
         btnEnviar = findViewById(R.id.btnEnviar);
-
+        txtToolbar = findViewById(R.id.txtToolbar);
         inputContrasena = findViewById(R.id.inputContrasena);
-
         edtContrasena = findViewById(R.id.edtContrasena);
         rootRelative = findViewById(R.id.rootRelative);
+
+        txtToolbar.setText(getString(R.string.reseteo));
 
         tokenManager = TokenManager.getInstance(getSharedPreferences("prefs", MODE_PRIVATE));
         service = RetrofitBuilder.createServiceAutentificacion(ApiService.class, tokenManager);
@@ -212,6 +215,7 @@ public class ReseteoPasswordActivity extends AppCompatActivity {
     }
 
     private void vistaAtras(){
+        Toasty.success(this, getString(R.string.actualizado)).show();
         Intent data = new Intent(this, LoginActivity.class);
         startActivity(data);
         finish();

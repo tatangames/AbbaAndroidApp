@@ -7,10 +7,12 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -62,15 +64,12 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
 
     private boolean bottomSheetShowing = false;
 
-    private int textSize = 19; // Tamaño de fuente inicial
-    private static final int MIN_TEXT_SIZE = 18;
-    private static final int MAX_TEXT_SIZE = 28;
-
     private boolean tema = false;
 
-    private ColorStateList colorStateTintWhite, colorStateTintBlack;
+    private ColorStateList colorStateTintBlack;
     private int colorBlanco, colorBlack = 0;
-    private WebView webViewTitulo, webViewTexto;
+
+    private WebView webViewTexto, webViewTitulo;
 
     public static FragmentCuestionarioPlanBloque newInstance(int dato) {
         FragmentCuestionarioPlanBloque fragment = new FragmentCuestionarioPlanBloque();
@@ -79,6 +78,7 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,16 +89,12 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
         linear = vista.findViewById(R.id.linear);
         webViewTitulo = vista.findViewById(R.id.webViewTitulo);
         webViewTexto = vista.findViewById(R.id.webViewTexto);
+
         tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs", MODE_PRIVATE));
         service = RetrofitBuilder.createServiceAutentificacion(ApiService.class, tokenManager);
 
-        webViewTitulo.setWebViewClient(new WebViewClient());
-        WebSettings webSettingsTitulo = webViewTitulo.getSettings();
-        webSettingsTitulo.setJavaScriptEnabled(true);
-
-        webViewTexto.setWebViewClient(new WebViewClient());
-        WebSettings webSettingsTexto = webViewTexto.getSettings();
-        webSettingsTexto.setJavaScriptEnabled(true);
+        webViewTitulo.getSettings().setJavaScriptEnabled(true);
+        webViewTexto.getSettings().setJavaScriptEnabled(true);
 
 
         idBloqueDeta = getArguments().getInt(ARG_DATO, 0);
@@ -120,16 +116,6 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
         colorBlanco = ContextCompat.getColor(requireContext(), R.color.blanco);
         colorBlack = ContextCompat.getColor(requireContext(), R.color.negro);
 
-
-        // verificar tamano de letra, es cuando es primera vez
-        if(tokenManager.getToken().getTamanoLetra() == 0){
-            tokenManager.guardarTamanoLetraCuestionario(textSize);
-        }else{
-            textSize = tokenManager.getToken().getTamanoLetra();
-        }
-
-
-        // transparente fondo
         webViewTitulo.setBackgroundColor(Color.TRANSPARENT);
         webViewTexto.setBackgroundColor(Color.TRANSPARENT);
 
@@ -137,10 +123,10 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
             tema = true;
         }
 
-        colorStateTintWhite = ColorStateList.valueOf(colorBlanco);
         colorStateTintBlack = ColorStateList.valueOf(colorBlack);
 
         apiBuscarCuestionario();
+
 
 
         // DETECTA SI SE TOCO EL WEBVIEW, Y AQUI SE OBTIENE A CUAL VERSICULO REDIRECCIONAR.
@@ -160,6 +146,7 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
             }
             return false;
         });
+
 
         return vista;
     }
@@ -291,37 +278,24 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
             // CAMBIAR ESTILO BOTONES
 
 
-            if(tema){ // dark
-                btnMas.setBackgroundTintList(colorStateTintWhite);
-                btnMas.setTextColor(colorBlack);
+            btnMas.setBackgroundTintList(colorStateTintBlack);
+            btnMas.setTextColor(colorBlanco);
 
-                btnMenos.setBackgroundTintList(colorStateTintWhite);
-                btnMenos.setTextColor(colorBlack);
-            }else{
-                btnMas.setBackgroundTintList(colorStateTintBlack);
-                btnMas.setTextColor(colorBlanco);
+            btnMenos.setBackgroundTintList(colorStateTintBlack);
+            btnMenos.setTextColor(colorBlanco);
 
-                btnMenos.setBackgroundTintList(colorStateTintBlack);
-                btnMenos.setTextColor(colorBlanco);
-            }
 
             // TAMANOS DE TEXTOS
 
             btnMenos.setOnClickListener(v ->{
+                webViewTitulo.evaluateJavascript("disminuirTamano();", null);
+                webViewTexto.evaluateJavascript("disminuirTamano();", null);
 
-                if (textSize > MIN_TEXT_SIZE) {
-                    textSize--;
-                    tokenManager.guardarTamanoLetraCuestionario(textSize);
-                    disminuirTamañoTexto();
-                }
             });
 
             btnMas.setOnClickListener(v -> {
-                if (textSize < MAX_TEXT_SIZE) {
-                    textSize++;
-                    tokenManager.guardarTamanoLetraCuestionario(textSize);
-                    aumentarTamañoTexto();
-                }
+                webViewTitulo.evaluateJavascript("aumentarTamano();", null);
+                webViewTexto.evaluateJavascript("aumentarTamano();", null);
             });
 
             // Configura un oyente para saber cuándo se cierra el BottomSheetDialog
@@ -332,18 +306,6 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
             bottomSheetDialog.show();
         }
     }
-
-
-    private void aumentarTamañoTexto() {
-        webViewTitulo.evaluateJavascript("aumentarTamaño();", null);
-        webViewTexto.evaluateJavascript("aumentarTamaño();", null);
-    }
-
-    private void disminuirTamañoTexto() {
-        webViewTitulo.evaluateJavascript("disminuirTamaño();", null);
-        webViewTexto.evaluateJavascript("disminuirTamaño();", null);
-    }
-
 
     private void setearTexto(String titulo, String texto){
 
@@ -379,7 +341,7 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
                     webViewTitulo.evaluateJavascript("document.body.style.fontFamily = '" + fontName + "';", null);
                 }
 
-                String javascript = String.format("document.body.style.fontSize = '%dpx';", textSize);
+                String javascript = String.format("document.body.style.fontSize = '%dpx';", 18);
                 webViewTitulo.evaluateJavascript(javascript, null);
 
                 if(tema){
@@ -393,8 +355,6 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
                 webViewTitulo.setVisibility(View.VISIBLE);
             }
         });
-
-
 
 
         webViewTexto.setWebViewClient(new WebViewClient() {
@@ -426,7 +386,7 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
                     webViewTexto.evaluateJavascript("document.body.style.fontFamily = '" + fontName + "';", null);
                 }
 
-                String javascript = String.format("document.body.style.fontSize = '%dpx';", textSize);
+                String javascript = String.format("document.body.style.fontSize = '%dpx';", 18);
                 webViewTexto.evaluateJavascript(javascript, null);
 
                 if(tema){
@@ -436,12 +396,10 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
                     String javascriptColor = String.format("document.body.style.color = '%s';", "black");
                     webViewTexto.evaluateJavascript(javascriptColor, null);
                 }
-
-                webViewTexto.setVisibility(View.VISIBLE);
             }
         });
 
-
+        webViewTexto.setVisibility(View.VISIBLE);
 
     }
 

@@ -164,7 +164,10 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
                                             modeloPreguntas = apiRespuesta.getModeloPreguntas();
 
-                                            setearAdaptador();
+
+                                            int genero = apiRespuesta.getGenero();
+
+                                            setearAdaptador(genero);
                                         }
                                         else if(apiRespuesta.getSuccess() == 2) {
                                             // BLOQUE NO TIENE CUESTIONARIO
@@ -185,9 +188,9 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
     }
 
 
-    private void setearAdaptador(){
+    private void setearAdaptador(int genero){
 
-        adapter = new AdaptadorPreguntas(getContext(), elementos, this, tituloPreguntaBloque, temaActual);
+        adapter = new AdaptadorPreguntas(getContext(), elementos, this, tituloPreguntaBloque, temaActual, genero);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);

@@ -24,6 +24,13 @@ public class ModeloPreguntasContenedor{
     @SerializedName("hayinfo")
     private int hayinfo;
 
+    @SerializedName("genero")
+    private int genero;
+
+
+    public int getGenero() {
+        return genero;
+    }
 
     public int getHayinfo() {
         return hayinfo;

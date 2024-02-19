@@ -56,7 +56,6 @@ public class ActualizarPasswordActivity extends AppCompatActivity {
 
     private TextView txtToolbar;
 
-    private OnBackPressedDispatcher onBackPressedDispatcher;
 
 
     @Override
@@ -89,8 +88,6 @@ public class ActualizarPasswordActivity extends AppCompatActivity {
         progressBar.getIndeterminateDrawable().setColorFilter(colorProgress, PorterDuff.Mode.SRC_IN);
         progressBar.setVisibility(View.GONE);
 
-        // Obtén una instancia de OnBackPressedDispatcher.
-        onBackPressedDispatcher = getOnBackPressedDispatcher();
 
         colorGris = ContextCompat.getColor(this, R.color.gris616161);
         colorBlanco = ContextCompat.getColor(this, R.color.blanco);

@@ -23,6 +23,14 @@ public class ModeloBloqueFechaContenedor {
     public List<ModeloBloqueFecha> modeloBloqueFechas;
 
 
+    @SerializedName("posrecycler")
+    private int posrecycler;
+
+
+    public int getPosrecycler() {
+        return posrecycler;
+    }
+
     public int getSuccess() {
         return success;
     }

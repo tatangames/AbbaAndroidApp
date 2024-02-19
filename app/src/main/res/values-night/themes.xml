@@ -21,7 +21,23 @@
         <item name="android:textColorPrimary">@color/bottomNavigationItemColor</item>
         <item name="bottomNavigationStyle">@style/AppBottomNavigationView</item>
 
+        <!-- SOLO PARA TEMA DARK, ES EL RADIO DE UN LAYOUT, ESQUINA REDONDEADA -->
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
+
+
+    <!-- SOLO PARA TEMA DARK, ES EL RADIO DE UN LAYOUT, ESQUINA REDONDEADA -->
+    <style name="AppBottomSheetDialogTheme"
+        parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/codigo_dialog_radio</item>
+    </style>
+
+
 
     <!-- ESTILO PARA EL DATE PICKER DIALOG -->
     <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">

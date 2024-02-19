@@ -5,6 +5,9 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -59,6 +62,18 @@ public class CuestionarioPlanActivity extends AppCompatActivity {
         // Configura el ViewPager2 con el adaptador
         AdaptadorViewPagerCuestionario pagerAdapter = new AdaptadorViewPagerCuestionario(this, cantidadFragment, idBloqueDeta);
         viewPager2.setAdapter(pagerAdapter);
+
+        // Desactivar el desplazamiento táctil del ViewPager2
+        viewPager2.setUserInputEnabled(false);
+
+// Añadir un listener para detectar cuando se cambia la página
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                // Aquí puedes realizar acciones adicionales cuando se cambia de página, si es necesario
+            }
+        });
 
         tabLayout.setBackgroundColor(colorPrimary);
         tabLayout.setTabTextColors(tabTextColor, tabStrokeColor);

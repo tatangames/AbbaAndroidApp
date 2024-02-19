@@ -385,7 +385,6 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private TextView txtTitulo;
         private TextView txtDescripcion;
 
-        private ImageView imgShare;
 
         IOnRecyclerViewClickListener listener;
 
@@ -400,7 +399,6 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
             imgPortada = itemView.findViewById(R.id.iconImageView);
             txtTitulo = itemView.findViewById(R.id.txtTitulo);
             txtDescripcion = itemView.findViewById(R.id.txtDescripcion);
-            imgShare = itemView.findViewById(R.id.imgShare);
         }
 
         @Override

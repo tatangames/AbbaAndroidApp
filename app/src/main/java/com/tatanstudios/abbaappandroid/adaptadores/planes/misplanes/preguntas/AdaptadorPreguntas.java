@@ -29,6 +29,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tatanstudios.abbaappandroid.R;
+import com.tatanstudios.abbaappandroid.adaptadores.inicio.cuestionario.preguntas.AdaptadorPreguntasInicio;
 import com.tatanstudios.abbaappandroid.fragmentos.planes.cuestionario.FragmentPreguntasPlanBloque;
 import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.preguntas.ModeloPreguntas;
 import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.preguntas.ModeloVistasPreguntas;
@@ -71,14 +72,16 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
     int colorBlanco = 0;
     int colorNegro = 0;
 
+    int genero = 1;
 
     public AdaptadorPreguntas(Context context, ArrayList<ModeloVistasPreguntas> modeloVistasPreguntas,
-                              FragmentPreguntasPlanBloque fragmentPreguntasPlanBloque, String descripcionP, boolean temaActual){
+                              FragmentPreguntasPlanBloque fragmentPreguntasPlanBloque, String descripcionP, boolean temaActual, int genero){
         this.context = context;
         this.fragmentPreguntasPlanBloque = fragmentPreguntasPlanBloque;
         this.modeloVistasPreguntas = modeloVistasPreguntas;
         this.temaActual = temaActual;
         this.descripcionP = descripcionP;
+        this.genero = genero;
 
         colorBlanco = context.getColor(R.color.blanco);
         colorStateListWhite = ColorStateList.valueOf(colorBlanco);
@@ -118,8 +121,19 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         ModeloVistasPreguntas modelo = modeloVistasPreguntas.get(position);
 
+
+        if (holder instanceof HolderVistaImagen) {
+
+            if(genero == 1){
+                ((HolderVistaImagen) holder).imgPortada.setImageResource(R.drawable.ic_nino_leyendo);
+            }else{
+                ((HolderVistaImagen) holder).imgPortada.setImageResource(R.drawable.ic_nina_leyendo);
+            }
+
+        }
+
         // TITULAR
-        if (holder instanceof HolderVistaTitular) {
+        else if (holder instanceof HolderVistaTitular) {
 
 
             if(descripcionP != null && !TextUtils.isEmpty(descripcionP)) {
@@ -299,9 +313,11 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private static class HolderVistaImagen extends RecyclerView.ViewHolder{
 
+        private ImageView imgPortada;
+
         public HolderVistaImagen(@NonNull View itemView) {
             super(itemView);
-
+            imgPortada = itemView.findViewById(R.id.imgPortada);
         }
     }
 

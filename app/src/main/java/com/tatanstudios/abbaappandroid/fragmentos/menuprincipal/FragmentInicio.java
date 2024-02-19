@@ -57,12 +57,10 @@ public class FragmentInicio extends Fragment implements OnDataUpdateListenerRach
             tabTextColor = ContextCompat.getColor(getContext(), R.color.negro); // Obtén el color para tema dark
             tabStrokeColor = ContextCompat.getColor(getContext(), R.color.blanco); // Obtén el color para tema dark
 
-
         } else {
             colorPrimary = ContextCompat.getColor(getContext(), R.color.blanco); // Obtén el color para tema light
             tabTextColor = ContextCompat.getColor(getContext(), R.color.gris616161); // Obtén el color para tema light
             tabStrokeColor = ContextCompat.getColor(getContext(), R.color.negro); // Obtén el color para tema light
-
         }
 
         tabLayout.setBackgroundColor(colorPrimary);

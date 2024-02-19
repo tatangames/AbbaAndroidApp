@@ -159,27 +159,8 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
 
                                             setearPortada(apiRespuesta.getPortada());
 
-
-                                            /*if(apiRespuesta.getHayDiaActual() == 1){
-
-                                                // conocer la posicion para mover
-                                                for (int i = 0; i < apiRespuesta.getModeloBloqueFechas().size(); i++) {
-                                                    ModeloBloqueFecha modelo = apiRespuesta.getModeloBloqueFechas().get(i);
-                                                    if (modelo.getMismoDia() == 1) {
-                                                        adapterHorizontal.moverPosicionRecycler(i);
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                            else{
-
-                                                // sino hay mismo dia colocar el ultimo posicion
-                                                int ultimaPosicion = apiRespuesta.getModeloBloqueFechas().size() - 1;
-                                                if (ultimaPosicion >= 0) {
-                                                    adapterHorizontal.moverPosicionRecycler(ultimaPosicion);
-                                                }
-                                            }*/
-
+                                            // mover de posicion el recycler
+                                            recyclerViewHorizontal.scrollToPosition(apiRespuesta.getPosrecycler());
 
                                             linearContenedor.setVisibility(View.VISIBLE);
                                         }

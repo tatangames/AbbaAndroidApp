@@ -62,6 +62,7 @@ public class TokenManager {
         editor.putInt("IDIOMACEL", code).commit();
     }
 
+
     // TAMANO DE LETRA PARA CUESTIONARIOS
     public void guardarTamanoLetraCuestionario(int tamano) {
             editor.putInt("TAMANOLETRA", tamano).commit();

@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/codigo_dialog_radio"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/float_transparent">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="0"
-                android:textColor="@color/gris616161"
+                android:textColor="@color/negro"
                 android:textSize="35sp" />
 
             <!-- Separador vertical -->
@@ -48,7 +48,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="0"
-                android:textColor="@color/fondo_textos_negro_blanco_v1"
+                android:textColor="@color/negro"
                 android:textSize="35sp" />
         </LinearLayout>
 
@@ -71,7 +71,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/racha_mas_alta"
-                android:textColor="@color/fondo_textos_negro_blanco_v1"
+                android:textColor="@color/negro"
                 android:textSize="14sp" />
 
 
@@ -84,7 +84,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/dias_seguidos"
-                android:textColor="@color/fondo_textos_negro_blanco_v1"
+                android:textColor="@color/negro"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -100,7 +100,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/racha_mas_alta"
-            android:textColor="@color/fondo_textos_negro_blanco_v1"
+            android:textColor="@color/negro"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -138,6 +138,7 @@
                     android:id="@+id/txtLunes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/gris616161"
                     android:text="@string/letra_lunes"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -162,6 +163,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/letra_martes"
+                    android:textColor="@color/gris616161"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -186,6 +188,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/letra_miercoles"
+                    android:textColor="@color/gris616161"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -209,6 +212,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/letra_jueves"
+                    android:textColor="@color/gris616161"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -233,6 +237,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/letra_viernes"
+                    android:textColor="@color/gris616161"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -257,6 +262,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/letra_sabado"
+                    android:textColor="@color/gris616161"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -280,6 +286,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/letra_domingo"
+                    android:textColor="@color/gris616161"
                     android:textSize="14sp" />
             </LinearLayout>
 

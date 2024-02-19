@@ -47,6 +47,10 @@ public class ModeloBloqueFecha {
         this.primerBloqueDrawable = primerBloqueDrawable;
     }
 
+
+
+
+
     public boolean getEstaPresionado() {
         return estaPresionado;
     }
@@ -54,6 +58,10 @@ public class ModeloBloqueFecha {
     public void setEstaPresionado(boolean estaPresionado) {
         this.estaPresionado = estaPresionado;
     }
+
+
+
+
 
     public int getId() {
         return id;

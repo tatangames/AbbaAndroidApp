@@ -96,7 +96,7 @@
     <string name="iglesia_es_requerido">Church is required</string>
     <string name="completar_registro">Complete Registration</string>
     <string name="correo_no_encontrado">Email not found</string>
-    <string name="ingresar_el_codigo_que_se">Enter the Code that has been sent to the following address: %1$s</string>
+    <string name="ingresar_el_codigo_que_se">Enter the Code that has been sent to the following address:</string>
     <string name="solicitar_codigo">Request code</string>
     <string name="codigo">Code</string>
     <string name="reintentar_en">Retry</string>
@@ -231,7 +231,8 @@
     <string name="ocultar">Hide</string>
     <string name="planes_comunidad">Community plans</string>
     <string name="los_amigos_que_tienes_agregados">The friends you have added to the community will not see your devotions if you have them marked.</string>
-
+    <string name="reseteo">Reset</string>
+    <string name="nivel">Level:</string>
 
 
     <string-array name="estados_elsalvador_array">

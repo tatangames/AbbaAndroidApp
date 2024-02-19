@@ -56,10 +56,6 @@ import io.reactivex.schedulers.Schedulers;
 
 public class FragmentAjustes extends Fragment {
 
-    // PARA GUARDAR LOS IDIOMAS DE LA APLICACION Y DEVOCIONALES
-    private static final int APP_INGLES = 2;
-    private static final int APP_ESPANOL = 1;
-
 
     private RecyclerView recyclerMas;
 
@@ -76,7 +72,6 @@ public class FragmentAjustes extends Fragment {
     private String nombreUsuario = "";
 
     private boolean bottomSheetShowing = false;
-    private boolean bottomDialogIdioma = false;
 
     private boolean bloqueoPorTema = false;
     private boolean unaVezMlistener = false;

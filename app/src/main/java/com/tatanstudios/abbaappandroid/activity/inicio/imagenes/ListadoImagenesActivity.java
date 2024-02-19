@@ -39,6 +39,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.tatanstudios.abbaappandroid.R;
@@ -265,7 +266,7 @@ public class ListadoImagenesActivity extends AppCompatActivity implements EasyPe
             ProgressBar barraProgress = bottomSheetProgreso.findViewById(R.id.progressBarLoading);
             barraProgress.getIndeterminateDrawable().setColorFilter(colorProgress, PorterDuff.Mode.SRC_IN);
 
-            ShapeableImageView imgImagen = bottomSheetProgreso.findViewById(R.id.imgImagen);
+            PhotoView imgImagen = bottomSheetProgreso.findViewById(R.id.imgImagen);
             Button btnDescargar = bottomSheetProgreso.findViewById(R.id.btnDescargar);
             Button btnCompartir = bottomSheetProgreso.findViewById(R.id.btnCompartir);
 
@@ -304,19 +305,13 @@ public class ListadoImagenesActivity extends AppCompatActivity implements EasyPe
                         .into(imgImagen);
             }
 
-            if(temaActual){ // Dark
-                btnDescargar.setBackgroundTintList(colorStateTintWhite);
-                btnDescargar.setTextColor(colorBlack);
+            // MISMO TEMA OCUPAN
 
-                btnCompartir.setBackgroundTintList(colorStateTintWhite);
-                btnCompartir.setTextColor(colorBlack);
-            }else{
-                btnDescargar.setBackgroundTintList(colorStateTintBlack);
-                btnDescargar.setTextColor(colorBlanco);
+            btnDescargar.setBackgroundTintList(colorStateTintBlack);
+            btnDescargar.setTextColor(colorBlanco);
 
-                btnCompartir.setBackgroundTintList(colorStateTintBlack);
-                btnCompartir.setTextColor(colorBlanco);
-            }
+            btnCompartir.setBackgroundTintList(colorStateTintBlack);
+            btnCompartir.setTextColor(colorBlanco);
 
 
             btnDescargar.setOnClickListener(v -> {

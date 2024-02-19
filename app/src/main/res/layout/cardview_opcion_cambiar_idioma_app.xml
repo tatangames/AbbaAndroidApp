@@ -1,52 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/codigo_boton_redondeado_v1"
     android:orientation="vertical">
 
     <!-- NO LLEVARA TEMAS -->
 
-    <TextView
-        android:id="@+id/createText"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/liberation_sans_bold"
-        android:padding="8dp"
-        android:text="@string/cambiar_idioma"
-        android:textAlignment="viewStart"
-        android:textColor="@color/gris616161"
-        android:textSize="22sp" />
-
-    <RadioGroup
-        android:layout_marginStart="30dp"
-        android:id="@+id/radio_group_language"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/radio_button_english"
+        <TextView
+            android:id="@+id/createText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/liberation_sans_regular"
-            android:text="@string/ingles"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/liberation_sans_bold"
+            android:padding="8dp"
+            android:text="@string/cambiar_idioma"
             android:textColor="@color/negro"
-            android:textSize="20sp" />
+            android:textSize="22sp" />
 
-        <RadioButton
-            android:id="@+id/radio_button_spanish"
+        <RadioGroup
+            android:layout_marginStart="30dp"
+            android:id="@+id/radio_group_language"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/liberation_sans_regular"
-            android:textColor="@color/negro"
-            android:text="@string/espanol"
-            android:textSize="20sp" />
-    </RadioGroup>
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/radio_button_english"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/liberation_sans_regular"
+                android:text="@string/ingles"
+                android:textColor="@color/negro"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/radio_button_spanish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/liberation_sans_regular"
+                android:textColor="@color/negro"
+                android:text="@string/espanol"
+                android:textSize="20sp" />
+        </RadioGroup>
 
 
-</LinearLayout>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

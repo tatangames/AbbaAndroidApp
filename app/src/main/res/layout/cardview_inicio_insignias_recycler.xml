@@ -6,14 +6,15 @@
     android:background="@color/fondo_negro_blanco_v1"
     android:layout_height="wrap_content">
 
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,9 +30,6 @@
             android:fitsSystemWindows="true">
 
 
-            <!-- Imagen a la izquierda -->
-
-            <!-- Texto centrado -->
             <ImageView
                 android:id="@+id/imgFlechaDerecha"
                 android:layout_width="30dp"

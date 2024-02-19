@@ -281,20 +281,11 @@ public class FragmentCuestionarioInicioBloque extends Fragment {
             // CAMBIAR ESTILO BOTONES
 
 
-            if(tema){ // dark
-                btnMas.setBackgroundTintList(colorStateTintWhite);
-                btnMas.setTextColor(colorBlack);
+            btnMas.setBackgroundTintList(colorStateTintBlack);
+            btnMas.setTextColor(colorBlanco);
 
-                btnMenos.setBackgroundTintList(colorStateTintWhite);
-                btnMenos.setTextColor(colorBlack);
-            }else{
-                btnMas.setBackgroundTintList(colorStateTintBlack);
-                btnMas.setTextColor(colorBlanco);
-
-                btnMenos.setBackgroundTintList(colorStateTintBlack);
-                btnMenos.setTextColor(colorBlanco);
-            }
-
+            btnMenos.setBackgroundTintList(colorStateTintBlack);
+            btnMenos.setTextColor(colorBlanco);
             // TAMANOS DE TEXTOS
 
             btnMenos.setOnClickListener(v ->{

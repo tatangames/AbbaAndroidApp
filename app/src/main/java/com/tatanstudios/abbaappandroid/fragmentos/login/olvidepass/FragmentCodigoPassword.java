@@ -93,7 +93,7 @@ public class FragmentCodigoPassword extends Fragment {
             correo = bundle.getString("CORREO");
         }
 
-        String mensaje = String.format(getString(R.string.ingresar_el_codigo_que_se), correo);
+        String mensaje = String.format(getString(R.string.ingresar_el_codigo_que_se)) + "\n" + correo;
         txtTitulo.setText(mensaje);
 
 

@@ -96,7 +96,7 @@
     <string name="iglesia_es_requerido">Iglesia es requerido</string>
     <string name="completar_registro">Completar Registro</string>
     <string name="correo_no_encontrado">Correo no encontrado</string>
-    <string name="ingresar_el_codigo_que_se">Ingresar el Código que se ha enviado a la siguiente dirección: %1$s</string>
+    <string name="ingresar_el_codigo_que_se">Ingresar el Código que se ha enviado a la siguiente dirección:</string>
     <string name="solicitar_codigo">Solicitar código</string>
     <string name="codigo">Código</string>
     <string name="reintentar_en">Reintentar en</string>
@@ -231,7 +231,8 @@
     <string name="ocultar">Ocultar</string>
     <string name="planes_comunidad">Planes comunidad</string>
     <string name="los_amigos_que_tienes_agregados">Los amigos que tienes agregados en comunidad, no veran tus devocionales si los tienes marcados</string>
-
+    <string name="reseteo">Reseteo</string>
+    <string name="nivel">Nivel:</string>
 
 
 

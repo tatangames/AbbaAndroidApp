@@ -47,6 +47,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.datatransport.backend.cct.BuildConfig;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -193,7 +194,7 @@ public class FragmentTabInicio extends Fragment{
 
 
 
-
+    private ShimmerFrameLayout shimmerFrameLayout;
 
 
 
@@ -204,6 +205,7 @@ public class FragmentTabInicio extends Fragment{
         recyclerView = vista.findViewById(R.id.recyclerView);
         rootRelative = vista.findViewById(R.id.rootRelative);
         refreshLayout = vista.findViewById(R.id.swipe);
+        shimmerFrameLayout = vista.findViewById(R.id.shimmer);
 
 
         tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs", MODE_PRIVATE));
@@ -227,13 +229,20 @@ public class FragmentTabInicio extends Fragment{
         colorStateTintWhite = ColorStateList.valueOf(colorBlanco);
         colorStateTintBlack = ColorStateList.valueOf(colorBlack);
 
+        progressBar.setVisibility(View.GONE);
+
+        shimmerFrameLayout.startShimmer();
+
         apiBuscarDatos();
 
 
         refreshLayout.setOnRefreshListener(() -> {
-            progressBar.setVisibility(View.VISIBLE);
+           // progressBar.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
             refreshLayout.setRefreshing(true);
+
+            shimmerFrameLayout.setVisibility(View.VISIBLE);
+            shimmerFrameLayout.startShimmer();
 
             apiBuscarDatos();
         });
@@ -256,8 +265,12 @@ public class FragmentTabInicio extends Fragment{
                         .retry()
                         .subscribe(apiRespuesta -> {
 
-                                    progressBar.setVisibility(View.GONE);
+                                   // progressBar.setVisibility(View.GONE);
+                                    shimmerFrameLayout.stopShimmer();
+                                    shimmerFrameLayout.setVisibility(View.GONE);
+
                                     recyclerView.setVisibility(View.VISIBLE);
+
 
                                     if(apiRespuesta != null) {
 
@@ -435,19 +448,15 @@ public class FragmentTabInicio extends Fragment{
                         .into(imgImagen);
             }
 
-            if(tema){ // Dark
-                btnDescargar.setBackgroundTintList(colorStateTintWhite);
-                btnDescargar.setTextColor(colorBlack);
 
-                btnCompartir.setBackgroundTintList(colorStateTintWhite);
-                btnCompartir.setTextColor(colorBlack);
-            }else{
-                btnDescargar.setBackgroundTintList(colorStateTintBlack);
-                btnDescargar.setTextColor(colorBlanco);
+            // COMO SIEMPRE SERA PANTALLA BLANCA, CUAL SEA EL TEMA
 
-                btnCompartir.setBackgroundTintList(colorStateTintBlack);
-                btnCompartir.setTextColor(colorBlanco);
-            }
+
+            btnDescargar.setBackgroundTintList(colorStateTintBlack);
+            btnDescargar.setTextColor(colorBlanco);
+
+            btnCompartir.setBackgroundTintList(colorStateTintBlack);
+            btnCompartir.setTextColor(colorBlanco);
 
 
 
@@ -699,7 +708,7 @@ public class FragmentTabInicio extends Fragment{
 
 
     private void mensajeSinConexion(){
-        progressBar.setVisibility(View.GONE);
+       // progressBar.setVisibility(View.GONE);
         Toasty.error(getActivity(), getString(R.string.error_intentar_de_nuevo)).show();
     }
 
