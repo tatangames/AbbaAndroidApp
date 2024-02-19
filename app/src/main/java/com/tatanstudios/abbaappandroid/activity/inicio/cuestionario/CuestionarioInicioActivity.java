@@ -14,6 +14,15 @@ import com.tatanstudios.abbaappandroid.network.TokenManager;
 
 public class CuestionarioInicioActivity extends AppCompatActivity {
 
+
+
+    //*** NO UTILIZADO YAP *****
+    // 19/02/2024
+
+
+
+
+
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
 

@@ -175,7 +175,6 @@ public class PrincipalActivity extends AppCompatActivity implements InterfaceAct
         recargarFragmentAjustes();
     }
 
-
     private void recargarFragmentAjustes(){
 
         // Obtén el FragmentManager
@@ -208,7 +207,6 @@ public class PrincipalActivity extends AppCompatActivity implements InterfaceAct
 
         // Actualiza el fragmento activo
         fragmentActivo = fragmentAjustes;
-
     }
 
     private void recargarFragmentInicio(){

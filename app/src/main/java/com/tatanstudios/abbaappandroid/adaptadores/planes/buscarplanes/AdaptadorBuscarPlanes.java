@@ -84,6 +84,7 @@ public class AdaptadorBuscarPlanes extends RecyclerView.Adapter<AdaptadorBuscarP
 
         // visualizar
         holder.itemView.setOnClickListener(v -> {
+            // VERIFICADO QUE GETID ES IDPLAN
             fragmentBuscarPlanes.verBloquePlanesVista(m.getId());
         });
     }

@@ -17,15 +17,23 @@ public class ModeloInicioDevocional {
     @SerializedName("devopreguntas")
     private int devopreguntas;
 
+    // id plan
+    @SerializedName("devoplan")
+    private int devoplan;
 
 
-    public ModeloInicioDevocional(int devohaydevocional, String devocuestionario, int devoidblockdeta, int devopreguntas) {
+    public ModeloInicioDevocional(int devohaydevocional, String devocuestionario, int devoidblockdeta,
+                                  int devopreguntas, int devoplan) {
         this.devohaydevocional = devohaydevocional;
         this.devocuestionario = devocuestionario;
         this.devoidblockdeta = devoidblockdeta;
         this.devopreguntas = devopreguntas;
+        this.devoplan = devoplan;
     }
 
+    public int getDevoplan() {
+        return devoplan;
+    }
 
     public int getDevopreguntas() {
         return devopreguntas;

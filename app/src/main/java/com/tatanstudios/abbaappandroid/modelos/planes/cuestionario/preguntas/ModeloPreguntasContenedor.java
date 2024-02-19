@@ -26,7 +26,13 @@ public class ModeloPreguntasContenedor{
 
     @SerializedName("genero")
     private int genero;
+    @SerializedName("ignorarshare")
+    private int ignorarshare;
 
+
+    public int getIgnorarshare() {
+        return ignorarshare;
+    }
 
     public int getGenero() {
         return genero;

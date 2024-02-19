@@ -2,8 +2,13 @@ package com.tatanstudios.abbaappandroid.adaptadores.comunidad;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,6 +17,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -111,6 +117,7 @@ public class AdaptadorComunidadAceptadas extends RecyclerView.Adapter<RecyclerVi
 
                 // Crea un PopupMenu
                 PopupMenu popupMenu = new PopupMenu(context, ((HolderVistaBotonera) holder).btnPendiente);
+
 
                 // Infla el menú en el PopupMenu
                 popupMenu.inflate(R.menu.menu_opciones_pendientes_opcion);

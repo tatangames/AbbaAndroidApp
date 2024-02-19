@@ -206,7 +206,6 @@ public class ActualizarIdiomasActivity extends AppCompatActivity {
 
     private void changeLanguage() {
 
-
         KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE, false);
 
         pDialog.setTitleText(getString(R.string.idioma_actualizado));

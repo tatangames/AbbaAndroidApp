@@ -74,7 +74,7 @@ dependencies {
     // para zoom imagen
     implementation("com.github.chrisbanes:PhotoView:2.3.0")
 
-
+    // efecto shimmer
     implementation("com.facebook.shimmer:shimmer:0.5.0")
 
 

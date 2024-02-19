@@ -122,7 +122,6 @@ public class AdaptadorSeleccionarAmigos extends RecyclerView.Adapter<AdaptadorSe
 
         holder.check.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-
             int actualPosition = holder.getBindingAdapterPosition();
             holder.check.setChecked(isChecked);
             modeloComunidad.get(actualPosition).setCheckValor(isChecked);

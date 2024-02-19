@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
-        android:drawableEnd="@drawable/ic_flecha_izquierda"
+        android:drawableEnd="@drawable/ic_flecha_izquierda_devocional"
         android:padding="8dp"
         android:layout_marginTop="5dp"
         android:layout_marginStart="4dp"

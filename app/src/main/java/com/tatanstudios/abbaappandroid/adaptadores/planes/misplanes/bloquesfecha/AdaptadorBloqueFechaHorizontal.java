@@ -68,10 +68,7 @@ public class AdaptadorBloqueFechaHorizontal extends RecyclerView.Adapter<Adaptad
     @Override
     public void onBindViewHolder(@NonNull AdaptadorBloqueFechaHorizontal.MyViewHolder holder, int position) {
 
-
         ModeloBloqueFecha m = modeloBloqueFechas.get(position);
-
-
 
         if(m.getEstaPresionado()){
 

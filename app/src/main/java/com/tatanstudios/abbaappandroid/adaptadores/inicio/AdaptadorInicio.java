@@ -140,10 +140,6 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     fragmentTabInicio.compartirTextoDevocionalDia(mitexto);
                 });
 
-                viewHolderDevocional.webView.setOnClickListener(v -> {
-                    fragmentTabInicio.redireccionarCuestionario(m.getDevoidblockdeta(), m.getDevopreguntas());
-                });
-
 
                 viewHolderDevocional.imgOpciones.setOnClickListener(v -> {
 
@@ -165,7 +161,7 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             if (item.getItemId() == R.id.opcion1) {
 
                                 // IR A CUESTIONARIO Y PREGUNTAS
-                                fragmentTabInicio.redireccionarCuestionario(m.getDevoidblockdeta(), m.getDevopreguntas());
+                                fragmentTabInicio.redireccionarBloqueFecha(m.getDevoplan());
 
                                 return true;
                             } else {

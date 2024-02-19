@@ -82,6 +82,9 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
     private String tituloPreguntaBloque = "";
 
+    // 0: al darle compartir tomara el primer cuadro de preguntar
+    private int ignorarShare = 0;
+
     public boolean isYaHabiaGuardado() {
         return yaHabiaGuardado;
     }
@@ -166,6 +169,7 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
 
                                             int genero = apiRespuesta.getGenero();
+                                            ignorarShare = apiRespuesta.getIgnorarshare();
 
                                             setearAdaptador(genero);
                                         }
@@ -295,6 +299,9 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
             // se ignora el primer cuadro
             boolean vuelta1 = false;
+            if(ignorarShare == 0){
+                vuelta1 = true;
+            }
 
             for (ModeloPreguntas m : modeloPreguntas){
 

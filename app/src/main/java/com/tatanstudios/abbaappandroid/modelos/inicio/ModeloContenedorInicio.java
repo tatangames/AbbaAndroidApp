@@ -35,6 +35,10 @@ public class ModeloContenedorInicio {
     @SerializedName("devoidblockdeta")
     private int devoidblockdeta;
 
+    @SerializedName("devoplan")
+    private int devoplan;
+
+
 
     // *********************
 
@@ -100,6 +104,10 @@ public class ModeloContenedorInicio {
     @SerializedName("insigniasmayor5")
     private int insigniasmayor5;
 
+
+    public int getDevoplan() {
+        return devoplan;
+    }
 
     public int getDevopreguntas() {
         return devopreguntas;

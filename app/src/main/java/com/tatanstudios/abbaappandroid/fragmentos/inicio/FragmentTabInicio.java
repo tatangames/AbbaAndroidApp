@@ -58,6 +58,7 @@ import com.tatanstudios.abbaappandroid.activity.inicio.imagenes.ListadoImagenesA
 import com.tatanstudios.abbaappandroid.activity.inicio.insignias.ListadoInsigniasActivity;
 import com.tatanstudios.abbaappandroid.activity.inicio.videos.ListadoVideosActivity;
 import com.tatanstudios.abbaappandroid.activity.insignias.InformacionInsigniaActivity;
+import com.tatanstudios.abbaappandroid.activity.planes.MisPlanesBloquesFechaActivity;
 import com.tatanstudios.abbaappandroid.adaptadores.inicio.AdaptadorInicio;
 import com.tatanstudios.abbaappandroid.extras.ImageUtils;
 import com.tatanstudios.abbaappandroid.extras.OnDataUpdateListenerRachas;
@@ -322,7 +323,8 @@ public class FragmentTabInicio extends Fragment{
                     new ModeloInicioDevocional(apiRespuesta.getDevohaydevocional(),
                             apiRespuesta.getDevocuestionario(), // DEVOCIONAL SIN HTML
                             apiRespuesta.getDevoidblockdeta(),
-                            apiRespuesta.getDevopreguntas()),
+                            apiRespuesta.getDevopreguntas(),
+                            apiRespuesta.getDevoplan()),
                     null,
                     null,
                     null,
@@ -600,8 +602,13 @@ public class FragmentTabInicio extends Fragment{
     }
 
 
+    public void redireccionarBloqueFecha(int idplan){
+        Intent intent = new Intent(getContext(), MisPlanesBloquesFechaActivity.class);
+        intent.putExtra("IDPLAN", idplan);
+        startActivity(intent);
+    }
 
-    public void redireccionarCuestionario(int idblockdeta, int devoPreguntas){
+    /*public void redireccionarCuestionario(int idblockdeta, int devoPreguntas){
 
         // devoPreguntas
         // 1: devocional
@@ -611,7 +618,7 @@ public class FragmentTabInicio extends Fragment{
         intent.putExtra("IDBLOCKDETA", idblockdeta);
         intent.putExtra("PREGUNTAS", devoPreguntas);
         startActivity(intent);
-    }
+    }*/
 
 
     public void vistaInformacionInsignia(int tipoinsignia){

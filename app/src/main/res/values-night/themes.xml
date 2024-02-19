@@ -23,6 +23,8 @@
 
         <!-- SOLO PARA TEMA DARK, ES EL RADIO DE UN LAYOUT, ESQUINA REDONDEADA -->
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+
+        <item name="android:popupMenuStyle">@style/PopupMenu</item>
     </style>
 
 
@@ -139,6 +141,21 @@
     <style name="Separador_Hitos_v1">
         <item name="android:background">@color/blanco</item>
     </style>
+
+
+
+    <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">@color/blanco</item>
+        <item name="android:textColor">@color/negro</item>
+    </style>
+
+
+
+
+
+
+
+
 
 
 

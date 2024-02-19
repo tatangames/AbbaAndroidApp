@@ -18,6 +18,7 @@
         <item name="android:textColorPrimary">@color/bottomNavigationItemColor</item>
         <item name="bottomNavigationStyle">@style/AppBottomNavigationView</item>
 
+        <item name="android:popupMenuStyle">@style/PopupMenu</item>
     </style>
 
 
@@ -118,6 +119,17 @@
     <style name="Separador_Hitos_v1">
         <item name="android:background">@color/negro</item>
     </style>
+
+
+    <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">@color/blanco</item>
+        <item name="android:textColor">@color/negro</item>
+    </style>
+
+
+
+
+
 
 
 </resources>

@@ -101,6 +101,7 @@ public class FragmentTabComunidad extends Fragment {
 
         refresh.setOnRefreshListener(() -> {
             refresh.setEnabled(false);
+            recyclerView.setVisibility(View.INVISIBLE);
             apiSolicitudesAceptadas();
         });
 
@@ -130,8 +131,8 @@ public class FragmentTabComunidad extends Fragment {
 
                                         if(apiRespuesta.getSuccess() == 1) {
                                            setearCampos(apiRespuesta);
+                                            recyclerView.setVisibility(View.VISIBLE);
                                         }
-
                                         else{
                                             mensajeSinConexion();
                                         }

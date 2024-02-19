@@ -43,7 +43,6 @@ public class AdaptadorPlanesAmigos extends RecyclerView.Adapter<AdaptadorPlanesA
             .priority(Priority.NORMAL);
 
 
-
     public AdaptadorPlanesAmigos(Context context, List<ModeloMisPlanes> modeloMisPlanes, FragmentPlanesAmigos fragmentPlanesAmigos) {
         this.context = context;
         this.modeloMisPlanes = modeloMisPlanes;
@@ -93,7 +92,12 @@ public class AdaptadorPlanesAmigos extends RecyclerView.Adapter<AdaptadorPlanesA
 
     @Override
     public int getItemCount() {
-        return modeloMisPlanes.size();
+        if(modeloMisPlanes != null){
+            return modeloMisPlanes.size();
+        }else{
+            return 0;
+        }
+
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

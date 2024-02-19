@@ -58,9 +58,7 @@ public class FragmentAjustes extends Fragment {
 
 
     private RecyclerView recyclerMas;
-
     private RelativeLayout rootRelative;
-
     private ApiService service;
     private TokenManager tokenManager;
     private ProgressBar progressBar;
@@ -146,6 +144,7 @@ public class FragmentAjustes extends Fragment {
         );
     }
 
+
     private void llenarLista(){
 
         elementos = new ArrayList<>();
@@ -171,8 +170,6 @@ public class FragmentAjustes extends Fragment {
         recyclerMas.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerMas.setAdapter(adapter);
     }
-
-
 
 
     public void verPosicion(int tipo){
@@ -304,8 +301,6 @@ public class FragmentAjustes extends Fragment {
                 }
             });
 
-
-
             // Configura un oyente para saber cuándo se cierra el BottomSheetDialog
             bottomSheetDialog.setOnDismissListener(dialog -> {
                 bottomSheetShowing = false;
@@ -314,7 +309,6 @@ public class FragmentAjustes extends Fragment {
             bottomSheetDialog.show();
         }
     }
-
 
 
 

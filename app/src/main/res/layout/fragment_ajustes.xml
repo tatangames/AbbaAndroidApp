@@ -1,33 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:id="@+id/rootRelative"
-    style="@style/Fondo_Estilo_Tema_v1">
+    style="@style/Fondo_Estilo_Tema_v1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/main_coordinator"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <include layout="@layout/toolbar_titulo_v1"></include>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerMas"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 
-            <include layout="@layout/toolbar_titulo_v1"></include>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerMas"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </androidx.recyclerview.widget.RecyclerView>
-
-        </LinearLayout>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
 
 </RelativeLayout>
 

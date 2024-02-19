@@ -42,6 +42,21 @@ import io.reactivex.schedulers.Schedulers;
 
 public class FragmentCuestionarioPreguntasInicioBloque extends Fragment {
 
+
+
+
+    //*** NO UTILIZADO YAP *****
+    // 19/02/2024
+
+
+
+
+
+
+
+
+
+
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private TokenManager tokenManager;

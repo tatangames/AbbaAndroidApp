@@ -93,17 +93,6 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-               /* int visibleItemCount = layoutManager.getChildCount();
-                int totalItemCount = layoutManager.getItemCount();
-                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-
-                if (puedeCargarYaPaginacion && !isLastPage()) {
-
-                    // Verificar si no se está cargando y si ha llegado al final de la lista
-                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0 && dy > 0) {
-                        apiBuscarPlanesNuevosPaginacion();
-                    }
-                }*/
                 if (puedeCargarYaPaginacion && !isLastPage()) {
                     if (!recyclerView.canScrollVertically(1)) {
                         // Estamos en el fondo, carga más elementos
