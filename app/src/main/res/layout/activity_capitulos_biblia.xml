@@ -17,11 +17,11 @@
         <include
             layout="@layout/toolbar_flecha_texto_v1"/>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <ExpandableListView
             android:id="@+id/recyclerView"
             android:visibility="visible"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
