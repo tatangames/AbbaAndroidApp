@@ -233,6 +233,10 @@
     <string name="los_amigos_que_tienes_agregados">The friends you have added to the community will not see your devotions if you have them marked.</string>
     <string name="reseteo">Reset</string>
     <string name="nivel">Level:</string>
+    <string name="no_hay_biblias_disponibles">No hay Biblias disponibles</string>
+    <string name="referencias">References</string>
+
+
 
 
     <string-array name="estados_elsalvador_array">

@@ -1,28 +1,21 @@
-package com.tatanstudios.abbaappandroid.fragmentos.menuprincipal;
+package com.tatanstudios.abbaappandroid.activity.biblia;
 
-import static android.content.Context.MODE_PRIVATE;
+import androidx.activity.OnBackPressedCallback;
+import androidx.activity.OnBackPressedDispatcher;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.activity.OnBackPressedDispatcher;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.activity.biblia.CapitulosBibliaActivity;
-import com.tatanstudios.abbaappandroid.adaptadores.biblia.AdaptadorBiblia;
 import com.tatanstudios.abbaappandroid.adaptadores.comunidad.AdaptadorSolicitudPendientesEnviadas;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
@@ -33,10 +26,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class FragmentBiblia extends Fragment {
+public class CapitulosBibliaActivity extends AppCompatActivity {
+
 
     private RecyclerView recyclerView;
+
     private RelativeLayout rootRelative;
+
     private ApiService service;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -44,41 +40,69 @@ public class FragmentBiblia extends Fragment {
 
     private ProgressBar progressBar;
 
-    private TextView txtSinBiblias, txtToolbar;
+    private TextView txtToolbar;
+    private ImageView imgFlechaAtras;
 
-    private AdaptadorBiblia adaptadorBiblia;
+    private OnBackPressedDispatcher onBackPressedDispatcher;
+
+    private int idbiblia = 0;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View vista = inflater.inflate(R.layout.fragment_biblia, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_capitulos_biblia);
+        recyclerView = findViewById(R.id.recyclerView);
+        imgFlechaAtras = findViewById(R.id.imgFlechaAtras);
+        txtToolbar = findViewById(R.id.txtToolbar);
+        rootRelative = findViewById(R.id.rootRelative);
 
-        recyclerView = vista.findViewById(R.id.recyclerView);
-        txtSinBiblias = vista.findViewById(R.id.txtSinBiblias);
-        rootRelative = vista.findViewById(R.id.rootRelative);
-        txtToolbar = vista.findViewById(R.id.txtToolbar);
+        txtToolbar.setText(getString(R.string.referencias));
 
-        txtToolbar.setText(getString(R.string.biblia));
 
-        int colorProgress = ContextCompat.getColor(getContext(), R.color.barraProgreso);
-        tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs", MODE_PRIVATE));
+        if (getIntent().getExtras() != null) {
+            Bundle bundle = getIntent().getExtras();
+            idbiblia = bundle.getInt("IDBIBLIA");
+        }
+
+
+        int colorProgress = ContextCompat.getColor(this, R.color.barraProgreso);
+
+        tokenManager = TokenManager.getInstance(getSharedPreferences("prefs", MODE_PRIVATE));
         service = RetrofitBuilder.createServiceAutentificacion(ApiService.class, tokenManager);
 
-        progressBar = new ProgressBar(getContext(), null, android.R.attr.progressBarStyleLarge);
+        progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleLarge);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         rootRelative.addView(progressBar, params);
         progressBar.getIndeterminateDrawable().setColorFilter(colorProgress, PorterDuff.Mode.SRC_IN);
 
-        apiBuscarBiblias();
+        onBackPressedDispatcher = getOnBackPressedDispatcher();
 
-        return vista;
+
+        imgFlechaAtras.setOnClickListener(v -> {
+            volverAtras();
+        });
+
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                volverAtras();
+            }
+        };
+
+        onBackPressedDispatcher.addCallback(onBackPressedCallback);
+
+        apiBuscarCapitulos();
     }
 
-    private void apiBuscarBiblias(){
+
+    private void apiBuscarCapitulos(){
 
         String iduser = tokenManager.getToken().getId();
+        int idioma = tokenManager.getToken().getIdiomaTextos();
 
         compositeDisposable.add(
-                service.listadoBiblias(iduser)
+                service.listadoBibliasCapitulos(iduser, idioma, idbiblia)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .retry()
@@ -89,16 +113,7 @@ public class FragmentBiblia extends Fragment {
 
                                         if(apiRespuesta.getSuccess() == 1) {
 
-
-                                            if(apiRespuesta.getHayinfo() == 1){
-
-                                                adaptadorBiblia = new AdaptadorBiblia(getContext(), apiRespuesta.getModeloBiblias(), this);
-                                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-                                                recyclerView.setAdapter(adaptadorBiblia);
-                                            }else{
-                                                recyclerView.setVisibility(View.GONE);
-                                                txtSinBiblias.setVisibility(View.VISIBLE);
-                                            }
+                                            Toasty.info(this, "entra", Toasty.LENGTH_SHORT).show();
 
                                         }else{
 
@@ -115,16 +130,15 @@ public class FragmentBiblia extends Fragment {
         );
     }
 
-    public void vistaCapitulos(int idbiblia){
-        Intent intent = new Intent(getContext(), CapitulosBibliaActivity.class);
-        intent.putExtra("IDBIBLIA", idbiblia);
-        startActivity(intent);
+    private void volverAtras(){
+        finish();
     }
 
     void mensajeSinConexion(){
         progressBar.setVisibility(View.GONE);
-        Toasty.error(getContext(), getString(R.string.error_intentar_de_nuevo)).show();
+        Toasty.error(this, getString(R.string.error_intentar_de_nuevo)).show();
     }
+
 
     @Override
     public void onDestroy(){
@@ -139,6 +153,8 @@ public class FragmentBiblia extends Fragment {
         }
         super.onStop();
     }
+
+
 
 
 }

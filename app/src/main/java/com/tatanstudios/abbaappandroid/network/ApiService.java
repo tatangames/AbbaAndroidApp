@@ -1,5 +1,7 @@
 package com.tatanstudios.abbaappandroid.network;
 
+import com.tatanstudios.abbaappandroid.modelos.biblia.ModeloBibliaContenedor;
+import com.tatanstudios.abbaappandroid.modelos.biblia.capitulo.ModeloCapituloContenedor;
 import com.tatanstudios.abbaappandroid.modelos.comunidad.ModeloContedorComunidad;
 import com.tatanstudios.abbaappandroid.modelos.iglesias.ModeloDepartamentos;
 import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloContenedorInicio;
@@ -372,6 +374,22 @@ public interface ApiService {
     Observable<ModeloPreguntasContenedor> listadoPlanesItemsPreguntasComunidad(@Field("idplanblockdetauser") int idplanblockdetauser,
                                                                         @Field("idiomaplan") int idiomaplan,
                                                                         @Field("idusuariobuscar") int idusuariobuscar);
+
+
+
+    // listado de biblias
+    @POST("app/listado/biblias")
+    @FormUrlEncoded
+    Observable<ModeloBibliaContenedor> listadoBiblias(@Field("iduser") String iduser);
+
+    // listado de capitulos (libros) de la biblia
+    @POST("app/listado/biblia/capitulos")
+    @FormUrlEncoded
+    Observable<ModeloCapituloContenedor> listadoBibliasCapitulos(@Field("iduser") String iduser,
+                                                                 @Field("idiomaplan") int idioma,
+                                                                 @Field("idbiblia") int idbiblia
+    );
+
 
 
 
