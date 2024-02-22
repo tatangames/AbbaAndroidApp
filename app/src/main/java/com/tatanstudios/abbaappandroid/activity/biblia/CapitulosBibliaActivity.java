@@ -4,6 +4,8 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tatanstudios.abbaappandroid.R;
+import com.tatanstudios.abbaappandroid.adaptadores.biblia.AdaptadorCapitulos;
 import com.tatanstudios.abbaappandroid.modelos.biblia.grupos.ModeloGrupo;
 import com.tatanstudios.abbaappandroid.modelos.biblia.grupos.ModeloSubGrupo;
 import com.tatanstudios.abbaappandroid.network.ApiService;
@@ -49,12 +52,9 @@ public class CapitulosBibliaActivity extends AppCompatActivity {
 
     private int idbiblia = 0;
 
+    private RecyclerView recyclerView;
 
-
-
-
-
-
+    private AdaptadorCapitulos adaptadorCapitulos;
 
 
 
@@ -65,6 +65,7 @@ public class CapitulosBibliaActivity extends AppCompatActivity {
         imgFlechaAtras = findViewById(R.id.imgFlechaAtras);
         txtToolbar = findViewById(R.id.txtToolbar);
         rootRelative = findViewById(R.id.rootRelative);
+        recyclerView = findViewById(R.id.recyclerView);
 
         txtToolbar.setText(getString(R.string.referencias));
 
@@ -88,7 +89,7 @@ public class CapitulosBibliaActivity extends AppCompatActivity {
         onBackPressedDispatcher = getOnBackPressedDispatcher();
 
 
-
+        progressBar.setVisibility(View.GONE);
 
 
         // Llenar el modelo de datos con marcas y modelos
@@ -96,6 +97,11 @@ public class CapitulosBibliaActivity extends AppCompatActivity {
 
 
 
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        adaptadorCapitulos = new AdaptadorCapitulos(this, listaDeGrupos, this);
+        recyclerView.setAdapter(adaptadorCapitulos);
 
 
 
@@ -113,10 +119,6 @@ public class CapitulosBibliaActivity extends AppCompatActivity {
         onBackPressedDispatcher.addCallback(onBackPressedCallback);
 
        // apiBuscarCapitulos();
-
-
-
-
     }
 
 
@@ -169,8 +171,20 @@ public class CapitulosBibliaActivity extends AppCompatActivity {
         modeloSamsung.add(new ModeloSubGrupo(3, "A3"));
         modeloSamsung.add(new ModeloSubGrupo(4, "A4"));
         modeloSamsung.add(new ModeloSubGrupo(5, "A5"));
+        modeloSamsung.add(new ModeloSubGrupo(3, "A3"));
+        modeloSamsung.add(new ModeloSubGrupo(4, "A4"));
+        modeloSamsung.add(new ModeloSubGrupo(5, "A5"));
+        modeloSamsung.add(new ModeloSubGrupo(3, "A3"));
+        modeloSamsung.add(new ModeloSubGrupo(4, "A4"));
+        modeloSamsung.add(new ModeloSubGrupo(5, "A5"));
+        modeloSamsung.add(new ModeloSubGrupo(3, "A3"));
+        modeloSamsung.add(new ModeloSubGrupo(4, "A4"));
+        modeloSamsung.add(new ModeloSubGrupo(5, "A5"));
+        modeloSamsung.add(new ModeloSubGrupo(3, "A3"));
+        modeloSamsung.add(new ModeloSubGrupo(4, "A4"));
+        modeloSamsung.add(new ModeloSubGrupo(5, "A5"));
 
-        ModeloGrupo samsung = new ModeloGrupo("Samsung", modeloSamsung);
+        ModeloGrupo samsung = new ModeloGrupo(1, "Samsung", modeloSamsung, false);
         listaDeGrupos.add(samsung);
 
         List<ModeloSubGrupo> modeloApple = new ArrayList<>();
@@ -178,9 +192,21 @@ public class CapitulosBibliaActivity extends AppCompatActivity {
         modeloApple.add(new ModeloSubGrupo(7, "P2"));
         modeloApple.add(new ModeloSubGrupo(8, "P3"));
         modeloApple.add(new ModeloSubGrupo(9, "P4"));
+        modeloApple.add(new ModeloSubGrupo(7, "P2"));
+        modeloApple.add(new ModeloSubGrupo(8, "P3"));
+        modeloApple.add(new ModeloSubGrupo(9, "P4"));
+        modeloApple.add(new ModeloSubGrupo(10, "P5"));
+        modeloApple.add(new ModeloSubGrupo(7, "P2"));
+        modeloApple.add(new ModeloSubGrupo(8, "P3"));
+        modeloApple.add(new ModeloSubGrupo(9, "P4"));
+        modeloApple.add(new ModeloSubGrupo(10, "P5"));
+        modeloApple.add(new ModeloSubGrupo(7, "P2"));
+        modeloApple.add(new ModeloSubGrupo(8, "P3"));
+        modeloApple.add(new ModeloSubGrupo(9, "P4"));
+        modeloApple.add(new ModeloSubGrupo(10, "P5"));
         modeloApple.add(new ModeloSubGrupo(10, "P5"));
 
-        ModeloGrupo apple = new ModeloGrupo("Apple", modeloApple);
+        ModeloGrupo apple = new ModeloGrupo(2, "Apple", modeloApple, false);
         listaDeGrupos.add(apple);
 
         List<ModeloSubGrupo> modeloMotorola = new ArrayList<>();
@@ -189,15 +215,32 @@ public class CapitulosBibliaActivity extends AppCompatActivity {
         modeloMotorola.add(new ModeloSubGrupo(13, "M3"));
         modeloMotorola.add(new ModeloSubGrupo(14, "M4"));
         modeloMotorola.add(new ModeloSubGrupo(15, "M5"));
+        modeloMotorola.add(new ModeloSubGrupo(11, "M1"));
+        modeloMotorola.add(new ModeloSubGrupo(12, "M2"));
+        modeloMotorola.add(new ModeloSubGrupo(13, "M3"));
+        modeloMotorola.add(new ModeloSubGrupo(14, "M4"));
+        modeloMotorola.add(new ModeloSubGrupo(15, "M5"));
+        modeloMotorola.add(new ModeloSubGrupo(11, "M1"));
+        modeloMotorola.add(new ModeloSubGrupo(12, "M2"));
+        modeloMotorola.add(new ModeloSubGrupo(13, "M3"));
+        modeloMotorola.add(new ModeloSubGrupo(14, "M4"));
+        modeloMotorola.add(new ModeloSubGrupo(15, "M5"));
+        modeloMotorola.add(new ModeloSubGrupo(11, "M1"));
+        modeloMotorola.add(new ModeloSubGrupo(12, "M2"));
+        modeloMotorola.add(new ModeloSubGrupo(13, "M3"));
+        modeloMotorola.add(new ModeloSubGrupo(14, "M4"));
+        modeloMotorola.add(new ModeloSubGrupo(15, "M5"));
 
-        ModeloGrupo motorola = new ModeloGrupo("Motorola", modeloMotorola);
+        ModeloGrupo motorola = new ModeloGrupo(3, "Motorola", modeloMotorola, false);
         listaDeGrupos.add(motorola);
 
         return listaDeGrupos;
     }
 
 
-
+    public void bloqueCapitulo(String nombre){
+        Toasty.info(this, nombre,Toasty.LENGTH_SHORT).show();
+    }
 
 
 

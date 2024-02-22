@@ -21,6 +21,10 @@
     <color name="azulFF25316D">#FF25316D</color>
     <color name="naranjaFFFD841F">#FFFD841F</color>
     <color name="gris7B7B7B">#7b7b7d</color>
+    <color name="grisEDEFEF">#edefef</color>
+
+
+
 
     <color name="bottomNavigationItemColor">#000000</color>
     <color name="fondo_negro_blanco_v1">#FFFFFF</color>
@@ -36,6 +40,8 @@
     <color name="fondo_vectores_negro_blanco_v1">#000000</color>
     <color name="circuloBlockPregunta">#C6BDBD</color>
     <color name="textoTabInicio">#616161</color>
+
+
 
 
 
