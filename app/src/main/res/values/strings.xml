@@ -235,6 +235,7 @@
     <string name="nivel">Nivel:</string>
     <string name="no_hay_biblias_disponibles">No hay Biblias disponibles</string>
     <string name="referencias">Referencias</string>
+    <string name="versiculos">Versículos</string>
 
 
     <string-array name="estados_elsalvador_array">

@@ -44,7 +44,6 @@ public class FragmentCapitulos extends Fragment {
     private ProgressBar progressBar;
 
     private TextView txtToolbar;
-    private ImageView imgFlechaAtras;
 
     private int idbiblia = 0;
     private RecyclerView recyclerView;
@@ -55,7 +54,6 @@ public class FragmentCapitulos extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_capitulos, container, false);
 
-        imgFlechaAtras = vista.findViewById(R.id.imgFlechaAtras);
         txtToolbar = vista.findViewById(R.id.txtToolbar);
         rootRelative = vista.findViewById(R.id.rootRelative);
         recyclerView = vista.findViewById(R.id.recyclerView);
@@ -82,10 +80,6 @@ public class FragmentCapitulos extends Fragment {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        imgFlechaAtras.setOnClickListener(v -> {
-            volverAtras();
-        });
 
         apiBuscarCapitulos();
 
@@ -134,9 +128,6 @@ public class FragmentCapitulos extends Fragment {
         startActivity(intent);
     }
 
-    private void volverAtras(){
-        requireActivity().getSupportFragmentManager().popBackStack();
-    }
 
     void mensajeSinConexion(){
         progressBar.setVisibility(View.GONE);

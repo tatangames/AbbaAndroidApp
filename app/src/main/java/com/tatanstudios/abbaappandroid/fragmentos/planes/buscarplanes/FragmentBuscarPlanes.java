@@ -174,9 +174,6 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
     }
 
 
-
-
-
     // UTILIZADO PARA PAGINACION
     private void apiBuscarPlanesNuevosPaginacion(){
 
