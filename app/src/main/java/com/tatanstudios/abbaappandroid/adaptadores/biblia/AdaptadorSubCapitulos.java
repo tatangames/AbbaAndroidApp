@@ -11,18 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.biblia.CapitulosBibliaActivity;
 import com.tatanstudios.abbaappandroid.extras.IOnRecyclerViewClickListener;
-import com.tatanstudios.abbaappandroid.modelos.biblia.grupos.ModeloSubGrupo;
+import com.tatanstudios.abbaappandroid.fragmentos.biblia.FragmentCapitulos;
+import com.tatanstudios.abbaappandroid.modelos.biblia.capitulo.ModeloCapituloBloque;
 
 import java.util.List;
 
 public class AdaptadorSubCapitulos extends RecyclerView.Adapter<AdaptadorSubCapitulos.AdaptadorViewHolder> {
 
-    private List<ModeloSubGrupo> mList;
-    private CapitulosBibliaActivity capitulosBibliaActivity;
+    private List<ModeloCapituloBloque> mList;
+    private FragmentCapitulos fragmentCapitulos;
 
-    public AdaptadorSubCapitulos(List<ModeloSubGrupo> mList, CapitulosBibliaActivity capitulosBibliaActivity){
+    public AdaptadorSubCapitulos(List<ModeloCapituloBloque> mList, FragmentCapitulos fragmentCapitulos){
         this.mList = mList;
-        this.capitulosBibliaActivity = capitulosBibliaActivity;
+        this.fragmentCapitulos = fragmentCapitulos;
     }
 
     @NonNull
@@ -35,14 +36,13 @@ public class AdaptadorSubCapitulos extends RecyclerView.Adapter<AdaptadorSubCapi
     @Override
     public void onBindViewHolder(@NonNull AdaptadorViewHolder holder, int position) {
 
-        ModeloSubGrupo modelo = mList.get(position);
+        ModeloCapituloBloque modelo = mList.get(position);
 
-        holder.txtSubTitulo.setText(modelo.getNombre());
+        holder.txtSubTitulo.setText(modelo.getTitulo());
 
 
         holder.setListener((view, po) -> {
-
-            capitulosBibliaActivity.bloqueCapitulo(modelo.getNombre());
+            fragmentCapitulos.bloqueCapitulo(modelo.getId());
         });
     }
 

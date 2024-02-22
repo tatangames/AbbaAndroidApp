@@ -1,7 +1,6 @@
 package com.tatanstudios.abbaappandroid.adaptadores.biblia;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,48 +12,45 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.biblia.CapitulosBibliaActivity;
 import com.tatanstudios.abbaappandroid.extras.IOnRecyclerViewClickListener;
-import com.tatanstudios.abbaappandroid.modelos.biblia.grupos.ModeloGrupo;
-import com.tatanstudios.abbaappandroid.modelos.biblia.grupos.ModeloSubGrupo;
+import com.tatanstudios.abbaappandroid.fragmentos.biblia.FragmentCapitulos;
+import com.tatanstudios.abbaappandroid.modelos.biblia.capitulo.ModeloCapitulo;
+import com.tatanstudios.abbaappandroid.modelos.biblia.capitulo.ModeloCapituloBloque;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdaptadorCapitulos extends RecyclerView.Adapter<AdaptadorCapitulos.ItemViewHolder> {
 
-    private List<ModeloGrupo> mList;
+    private List<ModeloCapitulo> modeloCapitulos;
     private Context context;
 
-    private CapitulosBibliaActivity capitulosBibliaActivity;
+    private FragmentCapitulos fragmentCapitulos;
 
-    private List<ModeloSubGrupo> list = new ArrayList<>();
+    private List<ModeloCapituloBloque> list = new ArrayList<>();
 
-    public AdaptadorCapitulos(Context context, List<ModeloGrupo> mList, CapitulosBibliaActivity capitulosBibliaActivity){
+    public AdaptadorCapitulos(Context context, List<ModeloCapitulo> modeloCapitulos, FragmentCapitulos fragmentCapitulos){
         this.context = context;
-        this.mList = mList;
-        this.capitulosBibliaActivity = capitulosBibliaActivity;
+        this.modeloCapitulos = modeloCapitulos;
+        this.fragmentCapitulos = fragmentCapitulos;
     }
-
 
 
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_capitulo, parent, false);
-
         return new ItemViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
 
-        ModeloGrupo model = mList.get(position);
+        ModeloCapitulo model = modeloCapitulos.get(position);
         holder.txtTitulo.setText(model.getTitulo());
 
         boolean isExpandable = model.isExpandlabe();
@@ -66,10 +62,9 @@ public class AdaptadorCapitulos extends RecyclerView.Adapter<AdaptadorCapitulos.
             holder.mArrowImage.setImageResource(R.drawable.arrow_down);
         }
 
+        AdaptadorSubCapitulos adaptador = new AdaptadorSubCapitulos(list, fragmentCapitulos);
 
-        AdaptadorSubCapitulos adaptador = new AdaptadorSubCapitulos(list, capitulosBibliaActivity);
-
-        GridLayoutManager layoutManager = new GridLayoutManager(context, 5);
+        GridLayoutManager layoutManager = new GridLayoutManager(context, 6);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         holder.nestedRecycler.setLayoutManager(layoutManager);
 
@@ -84,7 +79,7 @@ public class AdaptadorCapitulos extends RecyclerView.Adapter<AdaptadorCapitulos.
         holder.setListener((view, po) -> {
 
             model.setExpandlabe(!model.isExpandlabe());
-            list = model.getModeloSubGrupos();
+            list = model.getModeloCapituloBloques();
             notifyItemChanged(holder.getBindingAdapterPosition());
 
             deseleccionarTodos(model.getId());
@@ -93,7 +88,7 @@ public class AdaptadorCapitulos extends RecyclerView.Adapter<AdaptadorCapitulos.
 
 
     private void deseleccionarTodos(int idno) {
-        for (ModeloGrupo modelo : mList) {
+        for (ModeloCapitulo modelo : modeloCapitulos) {
             if(modelo.getId() != idno){
                 modelo.setExpandlabe(false);
             }
@@ -104,7 +99,11 @@ public class AdaptadorCapitulos extends RecyclerView.Adapter<AdaptadorCapitulos.
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        if(modeloCapitulos != null){
+            return modeloCapitulos.size();
+        }else{
+            return 0;
+        }
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

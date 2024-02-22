@@ -1,7 +1,6 @@
 package com.tatanstudios.abbaappandroid.modelos.biblia.capitulo;
 
 import com.google.gson.annotations.SerializedName;
-import com.tatanstudios.abbaappandroid.modelos.biblia.ModeloBiblia;
 
 import java.util.List;
 
@@ -17,6 +16,7 @@ public class ModeloCapituloContenedor {
     public int getSuccess() {
         return success;
     }
+
 
     public List<ModeloCapitulo> getModeloCapitulos() {
         return modeloCapitulos;

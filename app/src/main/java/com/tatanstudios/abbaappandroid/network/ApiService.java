@@ -2,6 +2,7 @@ package com.tatanstudios.abbaappandroid.network;
 
 import com.tatanstudios.abbaappandroid.modelos.biblia.ModeloBibliaContenedor;
 import com.tatanstudios.abbaappandroid.modelos.biblia.capitulo.ModeloCapituloContenedor;
+import com.tatanstudios.abbaappandroid.modelos.biblia.versiculo.ModeloContenedorVersiculo;
 import com.tatanstudios.abbaappandroid.modelos.comunidad.ModeloContedorComunidad;
 import com.tatanstudios.abbaappandroid.modelos.iglesias.ModeloDepartamentos;
 import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloContenedorInicio;
@@ -391,6 +392,12 @@ public interface ApiService {
     );
 
 
-
+    // listado de versiculos
+    @POST("app/listado/biblia/versiculos")
+    @FormUrlEncoded
+    Observable<ModeloContenedorVersiculo> listadoVersiculos(@Field("iduser") String iduser,
+                                                            @Field("idiomaplan") int idioma,
+                                                            @Field("idcapibloque") int idcapibloque
+    );
 
 }
