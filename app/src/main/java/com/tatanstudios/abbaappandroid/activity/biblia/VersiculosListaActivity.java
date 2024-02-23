@@ -130,6 +130,13 @@ public class VersiculosListaActivity extends AppCompatActivity {
         recyclerView.setAdapter(adaptadorVersiculos);
     }
 
+    public void verTextoVersiculo(int idversiculo){
+
+        Intent intent = new Intent(this, VersiculoTextoActivity.class);
+        intent.putExtra("IDVERSICULO", idversiculo);
+        startActivity(intent);
+    }
+
     private void volverAtras(){
         onBackPressedDispatcher.onBackPressed();
     }

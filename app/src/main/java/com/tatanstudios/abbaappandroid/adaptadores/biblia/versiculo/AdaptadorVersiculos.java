@@ -61,7 +61,7 @@ public class AdaptadorVersiculos extends RecyclerView.Adapter<AdaptadorVersiculo
 
         holder.setListener((view, po) -> {
 
-
+            versiculosListaActivity.verTextoVersiculo(model.getId());
         });
     }
 

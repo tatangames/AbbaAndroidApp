@@ -400,4 +400,16 @@ public interface ApiService {
                                                             @Field("idcapibloque") int idcapibloque
     );
 
+
+    // listado de Textos de los versiculos
+    @POST("app/listado/versiculos/textos")
+    @FormUrlEncoded
+    Observable<ModeloContenedorVersiculo> listadoTextosVersiculos(@Field("iduser") String iduser,
+                                                            @Field("idiomaplan") int idioma,
+                                                            @Field("idversiculo") int idversiculo
+    );
+
+
+
+
 }

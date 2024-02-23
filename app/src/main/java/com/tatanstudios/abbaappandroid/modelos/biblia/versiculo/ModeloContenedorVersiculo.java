@@ -13,6 +13,8 @@ public class ModeloContenedorVersiculo {
     @SerializedName("listado")
     public List<ModeloVersiculo> modeloVersiculos;
 
+    @SerializedName("contenido")
+    public String contenido;
 
     public int getSuccess() {
         return success;
@@ -20,5 +22,9 @@ public class ModeloContenedorVersiculo {
 
     public List<ModeloVersiculo> getModeloVersiculos() {
         return modeloVersiculos;
+    }
+
+    public String getContenido() {
+        return contenido;
     }
 }
