@@ -17,10 +17,20 @@ public class ModeloCuestionario {
     @SerializedName("texto")
     public String texto;
 
+
+    @SerializedName("devocional")
+    public String devocional;
+
+
     public ModeloCuestionario(Integer id, String titulo, String texto) {
         this.id = id;
         this.titulo = titulo;
         this.texto = texto;
+    }
+
+
+    public String getDevocional() {
+        return devocional;
     }
 
     public String getTexto() {

@@ -6,13 +6,16 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
@@ -22,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.tatanstudios.abbaappandroid.R;
@@ -59,9 +63,9 @@ public class VersiculoTextoActivity extends AppCompatActivity {
     private ColorStateList colorStateTintBlack;
     private int colorBlanco, colorBlack = 0;
 
-    private int normalTextSize = 18;
-    private int maxTextSize = 32;
-    private int minTextSize = 15;
+    private int currentFontSize = 18;
+    private static final int MIN_FONT_SIZE = 15;
+    private static final int MAX_FONT_SIZE = 30;
 
     private boolean tema = false;
 
@@ -94,11 +98,21 @@ public class VersiculoTextoActivity extends AppCompatActivity {
         progressBar.getIndeterminateDrawable().setColorFilter(colorProgress, PorterDuff.Mode.SRC_IN);
 
         webView.getSettings().setJavaScriptEnabled(true);
+        // Agrega la interfaz JavaScript a tu WebView
+        //webView.addJavascriptInterface(new WebAppInterface(this), "Android");
+        webView.setBackgroundColor(Color.TRANSPARENT);
+
+
 
         colorBlanco = ContextCompat.getColor(this, R.color.blanco);
         colorBlack = ContextCompat.getColor(this, R.color.negro);
 
-        webView.setBackgroundColor(Color.TRANSPARENT);
+
+        // TAMANO DE LETRA POR DEFECTO
+        if(tokenManager.getToken().getTamanoLetra() > 0){
+            currentFontSize = tokenManager.getToken().getTamanoLetra();
+        }
+
 
         if(tokenManager.getToken().getTema() == 1){ // dark
             tema = true;
@@ -196,7 +210,7 @@ public class VersiculoTextoActivity extends AppCompatActivity {
                     webView.evaluateJavascript("document.body.style.fontFamily = '" + fontName + "';", null);
                 }
 
-                String javascript = String.format("document.body.style.fontSize = '%dpx';", 18);
+                String javascript = String.format("document.body.style.fontSize = '%dpx';", currentFontSize);
                 webView.evaluateJavascript(javascript, null);
 
                 if(tema){
@@ -264,7 +278,6 @@ public class VersiculoTextoActivity extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 
-
                         if (position == 0) {
                             // NOTO SANS LIGHT
                             String fontName = "Fuente1";
@@ -300,8 +313,6 @@ public class VersiculoTextoActivity extends AppCompatActivity {
                             webView.evaluateJavascript("document.body.style.fontFamily = '" + fontName + "';", null);
                         }
 
-
-
                 }
 
                 @Override
@@ -325,26 +336,25 @@ public class VersiculoTextoActivity extends AppCompatActivity {
             btnMenos.setOnClickListener(v -> {
                // webView.evaluateJavascript("disminuirTamano();", null);
 
-                normalTextSize -= 2;
-                if (normalTextSize > maxTextSize) {
-                    normalTextSize = maxTextSize;
-                }
+                if (currentFontSize > MIN_FONT_SIZE) {
+                    currentFontSize--; // Disminuir el tamaño de letra
+                    tokenManager.guardarTamanoLetraCuestionario(currentFontSize);
 
-                String javascript = String.format("document.body.style.fontSize = '%dpx';", normalTextSize);
-                webView.evaluateJavascript(javascript, null);
+                    String javascript = String.format("document.body.style.fontSize = '%dpx';", currentFontSize);
+                    webView.evaluateJavascript(javascript, null);
+                }
             });
 
             btnMas.setOnClickListener(v -> {
                 //webView.evaluateJavascript("aumentarTamano();", null);
 
-                normalTextSize += 2;
-                if (normalTextSize < minTextSize) {
-                    normalTextSize = minTextSize; // Asegurar que el tamaño mínimo sea 10
+                if (currentFontSize  < MAX_FONT_SIZE) {
+                    currentFontSize++; // Aumentar el tamaño de letra
+                    tokenManager.guardarTamanoLetraCuestionario(currentFontSize);
+
+                    String javascript = String.format("document.body.style.fontSize = '%dpx';", currentFontSize);
+                    webView.evaluateJavascript(javascript, null);
                 }
-
-
-                String javascript = String.format("document.body.style.fontSize = '%dpx';", normalTextSize);
-                webView.evaluateJavascript(javascript, null);
             });
 
             // Configura un oyente para saber cuándo se cierra el BottomSheetDialog
@@ -355,8 +365,6 @@ public class VersiculoTextoActivity extends AppCompatActivity {
             bottomSheetDialog.show();
         }
     }
-
-
 
 
     void mensajeSinConexion(){
@@ -381,3 +389,4 @@ public class VersiculoTextoActivity extends AppCompatActivity {
 
 
 }
+
