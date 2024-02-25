@@ -334,7 +334,6 @@ public class VersiculoTextoActivity extends AppCompatActivity {
             // TAMANOS DE TEXTOS
 
             btnMenos.setOnClickListener(v -> {
-               // webView.evaluateJavascript("disminuirTamano();", null);
 
                 if (currentFontSize > MIN_FONT_SIZE) {
                     currentFontSize--; // Disminuir el tamaño de letra
@@ -346,7 +345,6 @@ public class VersiculoTextoActivity extends AppCompatActivity {
             });
 
             btnMas.setOnClickListener(v -> {
-                //webView.evaluateJavascript("aumentarTamano();", null);
 
                 if (currentFontSize  < MAX_FONT_SIZE) {
                     currentFontSize++; // Aumentar el tamaño de letra

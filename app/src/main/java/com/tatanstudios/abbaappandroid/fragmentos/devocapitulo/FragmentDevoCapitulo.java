@@ -1,40 +1,36 @@
-package com.tatanstudios.abbaappandroid.fragmentos.planes.cuestionario;
+package com.tatanstudios.abbaappandroid.fragmentos.devocapitulo;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.activity.biblia.LecturaDevoCapituloActivity;
+import com.tatanstudios.abbaappandroid.adaptadores.comunidad.AdaptadorComunidadAceptadas;
+import com.tatanstudios.abbaappandroid.adaptadores.devobiblia.AdaptadorSpinVersionBiblia;
 import com.tatanstudios.abbaappandroid.adaptadores.planes.misplanes.cuestionario.AdaptadorSpinnerTipoLetraCuestionario;
-import com.tatanstudios.abbaappandroid.adaptadores.planes.misplanes.preguntas.AdaptadorPreguntas;
+import com.tatanstudios.abbaappandroid.fragmentos.planes.cuestionario.FragmentCuestionarioPlanBloque;
+import com.tatanstudios.abbaappandroid.modelos.devocapitulos.ModeloVersiones;
+import com.tatanstudios.abbaappandroid.modelos.iglesias.ModeloIglesias;
 import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.ModeloTipoLetraCuestionario;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
@@ -48,40 +44,27 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class FragmentCuestionarioPlanBloque extends Fragment {
+public class FragmentDevoCapitulo extends Fragment {
+
+
+    private int iddevobiblia = 0;
+
+    private ImageView imgFlechaAtras, imgTuerca;
+    private WebView webViewTexto;
+
 
     private ProgressBar progressBar;
     private TokenManager tokenManager;
-
-    private FloatingActionButton fabButton;
-
     private ApiService service;
     private RelativeLayout rootRelative;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-
-    private static final String ARG_DATO = "IDBLOQUE";
-
-    private FrameLayout linear;
-
-    private int idBloqueDeta = 0;
+    private ColorStateList colorStateTintBlack;
+    private int colorBlanco, colorBlack = 0;
 
     private boolean bottomSheetShowing = false;
 
     private boolean tema = false;
-
-    private ColorStateList colorStateTintBlack;
-    private int colorBlanco, colorBlack = 0;
-
-    private WebView webViewTexto;
-
-    public static FragmentCuestionarioPlanBloque newInstance(int dato) {
-        FragmentCuestionarioPlanBloque fragment = new FragmentCuestionarioPlanBloque();
-        Bundle args = new Bundle();
-        args.putInt(ARG_DATO, dato);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
 
     private int currentFontSize = 18;
@@ -90,25 +73,37 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
 
 
 
-    private boolean redireccionarTextoBiblico = false;
-    private int iddevobiblia = 0;
+    // necesito una lista de versiones de textos
+
+    private boolean unaVezModeloVersiones = true;
+
+    private List<ModeloVersiones> modeloSpinner = new ArrayList<>();
+
+    private boolean unaVezTuerca = true;
+
 
 
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View vista = inflater.inflate(R.layout.fragment_cuestionario_plan_bloque, container, false);
+        View vista = inflater.inflate(R.layout.fragment_devo_capitulo, container, false);
 
+
+        imgFlechaAtras = vista.findViewById(R.id.imgFlechaAtras);
+        webViewTexto = vista.findViewById(R.id.webView);
         rootRelative = vista.findViewById(R.id.rootRelative);
-        fabButton = vista.findViewById(R.id.fabButton);
-        linear = vista.findViewById(R.id.linear);
-        webViewTexto = vista.findViewById(R.id.webViewTexto);
+        imgTuerca = vista.findViewById(R.id.imgTuerca);
+
 
         tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs", MODE_PRIVATE));
         service = RetrofitBuilder.createServiceAutentificacion(ApiService.class, tokenManager);
 
-        idBloqueDeta = getArguments().getInt(ARG_DATO, 0);
+
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            iddevobiblia = bundle.getInt("IDDEVOBIBLIA");
+        }
 
         int colorProgress = ContextCompat.getColor(requireContext(), R.color.barraProgreso);
 
@@ -118,70 +113,46 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
         rootRelative.addView(progressBar, params);
         progressBar.getIndeterminateDrawable().setColorFilter(colorProgress, PorterDuff.Mode.SRC_IN);
 
-        fabButton.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.blanco)));
-
-        fabButton.setOnClickListener(v -> {
-            verOpciones();
-        });
-
         colorBlanco = ContextCompat.getColor(requireContext(), R.color.blanco);
         colorBlack = ContextCompat.getColor(requireContext(), R.color.negro);
         colorStateTintBlack = ColorStateList.valueOf(colorBlack);
 
+        if(tokenManager.getToken().getTema() == 1){
+            tema = true;
+        }
 
         // TAMANO DE LETRA POR DEFECTO
         if(tokenManager.getToken().getTamanoLetra() > 0){
             currentFontSize = tokenManager.getToken().getTamanoLetra();
         }
 
+        imgTuerca.setOnClickListener(v ->{
+            verOpcionesTuerca();
+        });
+
         // detectar que toque el titulo para redireccinar biblia
         webViewTexto.getSettings().setJavaScriptEnabled(true);
-        webViewTexto.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
         webViewTexto.setBackgroundColor(Color.TRANSPARENT);
 
+        imgFlechaAtras.setOnClickListener(v -> {
+            getActivity().finish();
+        });
 
-        if(tokenManager.getToken().getTema() == 1){ // dark
-            tema = true;
-        }
+        apiBuscarTexto();
 
-        apiBuscarCuestionario();
+
 
         return vista;
     }
 
 
-    public class WebAppInterface {
-        Context mContext;
-
-        /** Instantiate the interface and set the context */
-        WebAppInterface(Context c) {
-            mContext = c;
-        }
-
-        /** Método llamado desde el código JavaScript */
-        @JavascriptInterface
-        public void notifyClickToJava() {
-
-            if(redireccionarTextoBiblico){
-                Intent intent = new Intent(getContext(), LecturaDevoCapituloActivity.class);
-                intent.putExtra("IDDEVOBIBLIA", iddevobiblia);
-                startActivity(intent);
-            }
-
-        }
-    }
-
-
-
-
-
-    private void apiBuscarCuestionario(){
+    private void apiBuscarTexto(){
 
         String iduser = tokenManager.getToken().getId();
         int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
 
         compositeDisposable.add(
-                service.informacionCuestionarioBloqueDetalle(iduser, idBloqueDeta, idiomaPlan)
+                service.informacionTextoDevoCapitulo(iduser, idiomaPlan, iddevobiblia)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .retry()
@@ -193,19 +164,14 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
 
                                         if(apiRespuesta.getSuccess() == 1) {
 
-                                            String devocional = apiRespuesta.getDevocional();
+                                            String texto = apiRespuesta.getContenido();
 
-                                            if(apiRespuesta.getRedireccionar() == 1){
-                                                iddevobiblia = apiRespuesta.getIddevobiblia();
-                                                redireccionarTextoBiblico = true;
+                                            if(unaVezModeloVersiones){
+                                                unaVezModeloVersiones = false;
+                                                llenarLista(apiRespuesta.getModeloVersiones());
                                             }
 
-                                            setearTexto(devocional);
-                                        }
-                                        else if(apiRespuesta.getSuccess() == 2) {
-                                            // BLOQUE NO TIENE CUESTIONARIO
-                                            Toasty.info(getContext(), getString(R.string.cuestionario_no_encontrado), Toasty.LENGTH_SHORT).show();
-                                            linear.setVisibility(View.INVISIBLE);
+                                            setearTexto(texto);
                                         }
                                         else{
                                             mensajeSinConexion();
@@ -220,10 +186,17 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
         );
     }
 
+    private void llenarLista(List<ModeloVersiones> modeloVersiones){
 
-    private void setearTexto(String devocional){
+        for(ModeloVersiones mm : modeloVersiones){
+            modeloSpinner.add(new ModeloVersiones(mm.getId(), mm.getTitulo()));
+        }
+    }
 
-        webViewTexto.loadDataWithBaseURL(null, devocional, "text/html", "UTF-8", null);
+
+    private void setearTexto(String texto){
+
+        webViewTexto.loadDataWithBaseURL(null, texto, "text/html", "UTF-8", null);
 
         webViewTexto.setWebViewClient(new WebViewClient() {
             @Override
@@ -279,15 +252,65 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
                 webViewTexto.setVisibility(View.VISIBLE);
             }
         });
-
-
-
     }
 
 
 
-    // carga opciones para el texto html
-    private void verOpciones(){
+
+    private void verOpcionesTuerca(){
+
+        if(unaVezTuerca){
+            unaVezTuerca = false;
+
+            new Handler().postDelayed(() -> {
+                unaVezTuerca = true;
+            }, 1000);
+
+
+            // Crea un PopupMenu
+            PopupMenu popupMenu = new PopupMenu(getContext(), imgTuerca);
+
+            // Infla el menú en el PopupMenu
+            popupMenu.inflate(R.menu.menu_opciones_devo_biblia);
+
+            // Establece un listener para manejar los clics en los elementos del menú
+            popupMenu.setOnMenuItemClickListener(item -> {
+                // Marcar que el menú está cerrado
+                // menuAbierto = false;
+
+                // modal opciones webview
+                if (item.getItemId() == R.id.opcion1) {
+
+                    opcionesWebView();
+
+                    return true;
+                }
+
+                // mas versiones de biblia devocional
+                else if (item.getItemId() == R.id.opcion2) {
+
+                    opcionesBiblias();
+
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+
+            // Agrega un listener para detectar cuando se cierra el menú
+            popupMenu.setOnDismissListener(menu -> {
+                // Marcar que el menú está cerrado
+                // menuAbierto = false;
+            });
+
+            // Muestra el menú emergente
+            popupMenu.show();
+        }
+    }
+
+
+    private void opcionesWebView(){
 
         if (!bottomSheetShowing) {
             bottomSheetShowing = true;
@@ -329,7 +352,6 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
             spinEstiloTexto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-
 
 
                     if (position == 0) {
@@ -431,6 +453,90 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
         }
     }
 
+    private boolean usuarioSeleccionoSpinner = false;
+
+    private void opcionesBiblias(){
+
+        usuarioSeleccionoSpinner = false;
+
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
+        View bottomSheetView = getLayoutInflater().inflate(R.layout.cardview_devo_biblias_spinner, null);
+        bottomSheetDialog.setContentView(bottomSheetView);
+
+        Spinner spinVersion = bottomSheetDialog.findViewById(R.id.estiloSpinner);
+
+        AdaptadorSpinVersionBiblia adapterModelo = new AdaptadorSpinVersionBiblia(getContext(), modeloSpinner, tema);
+        spinVersion.setAdapter(adapterModelo);
+
+
+        // GUARDAR TEXTO SELECCIONADO
+        spinVersion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                if(usuarioSeleccionoSpinner) {
+                    // Aquí pones el código que quieres ejecutar cuando el usuario selecciona un elemento en el Spinner
+
+                    ModeloVersiones modeloSeleccionado = (ModeloVersiones) parentView.getItemAtPosition(position);
+
+                    if (modeloSeleccionado != null) {
+
+                        bottomSheetDialog.dismiss();
+                        recargarDatos(modeloSeleccionado.getId());
+                    }
+                } else {
+                    usuarioSeleccionoSpinner = true;
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // Implementa según sea necesario
+            }
+        });
+
+
+
+
+                // CAMBIAR POSICION
+
+        for (int i = 0; i < modeloSpinner.size(); i++) {
+            ModeloVersiones modelo = modeloSpinner.get(i);
+            if (modelo.getId() == iddevobiblia) {
+                // Cuando encuentres el modelo con el id deseado, selecciona el elemento en el Spinner
+                spinVersion.setSelection(i);
+                break; // Rompe el bucle una vez que encuentres el modelo deseado
+            }
+        }
+
+
+
+        /*int posTexto = tokenManager.getToken().getTipoLetra();
+
+        if (posTexto >= 0 && posTexto < spinEstiloTexto.getAdapter().getCount()) {
+            spinEstiloTexto.setSelection(posTexto);
+        }else{
+            spinEstiloTexto.setSelection(0);
+        }*/
+
+        // Configura un oyente para saber cuándo se cierra el BottomSheetDialog
+        bottomSheetDialog.setOnDismissListener(dialog -> {
+            bottomSheetShowing = false;
+        });
+
+        bottomSheetDialog.show();
+    }
+
+
+    private void recargarDatos(int newIdDevoBiblia){
+
+        webViewTexto.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
+        iddevobiblia = newIdDevoBiblia;
+        apiBuscarTexto();
+    }
+
+
 
 
     private void mensajeSinConexion(){
@@ -451,5 +557,7 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
         }
         super.onStop();
     }
-}
 
+
+
+}

@@ -21,6 +21,12 @@ public class ModeloCuestionario {
     @SerializedName("devocional")
     public String devocional;
 
+    @SerializedName("redireccionar")
+    private int redireccionar;
+
+    @SerializedName("iddevobiblia")
+    private int iddevobiblia;
+
 
     public ModeloCuestionario(Integer id, String titulo, String texto) {
         this.id = id;
@@ -28,6 +34,14 @@ public class ModeloCuestionario {
         this.texto = texto;
     }
 
+
+    public int getIddevobiblia() {
+        return iddevobiblia;
+    }
+
+    public int getRedireccionar() {
+        return redireccionar;
+    }
 
     public String getDevocional() {
         return devocional;

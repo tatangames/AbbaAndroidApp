@@ -4,6 +4,7 @@ import com.tatanstudios.abbaappandroid.modelos.biblia.ModeloBibliaContenedor;
 import com.tatanstudios.abbaappandroid.modelos.biblia.capitulo.ModeloCapituloContenedor;
 import com.tatanstudios.abbaappandroid.modelos.biblia.versiculo.ModeloContenedorVersiculo;
 import com.tatanstudios.abbaappandroid.modelos.comunidad.ModeloContedorComunidad;
+import com.tatanstudios.abbaappandroid.modelos.devocapitulos.ModeloDevoCapitulo;
 import com.tatanstudios.abbaappandroid.modelos.iglesias.ModeloDepartamentos;
 import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloContenedorInicio;
 import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloContenedorInsignias;
@@ -408,6 +409,22 @@ public interface ApiService {
                                                             @Field("idiomaplan") int idioma,
                                                             @Field("idversiculo") int idversiculo
     );
+
+
+
+    // informacion textos devo capitulos
+    @POST("app/listado/biblia/devocionales")
+    @FormUrlEncoded
+    Observable<ModeloDevoCapitulo> informacionTextoDevoCapitulo(@Field("iduser") String iduser,
+                                                                @Field("idiomaplan") int idioma,
+                                                                @Field("iddevobiblia") int iddevobiblia
+    );
+
+
+
+
+
+
 
 
 
