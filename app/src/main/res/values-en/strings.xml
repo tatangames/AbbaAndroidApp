@@ -2,12 +2,12 @@
 <resources>
 
     <string name="app_name">Mi caminar con Dios</string>
-    <string name="version_app">V. 1.0.0</string>
+    <string name="version_app">V. 1.0.2</string>
 
     <string name="abba_app">Mi caminar con Dios</string>
     <string name="abba_internacional">Abba International</string>
     <string name="logo">Logo</string>
-    <string name="continuar_con_correo">Continuar con correo</string>
+    <string name="continuar_con_correo">Continue with email</string>
     <string name="registrarse">Register</string>
     <string name="ya_tines_una_cuenta">¿Do you already have an account?</string>
     <string name="ingresar">Enter</string>
@@ -124,7 +124,7 @@
     <string name="guardar">Save</string>
     <string name="campo_requerido">Required field</string>
     <string name="completar_campos">Complete fields</string>
-    <string name="meditacion_no_disponible">Meditación no disponible</string>
+    <string name="meditacion_no_disponible">Meditation not available</string>
     <string name="devocional_completado">Completed Devotional</string>
     <string name="no_hay_devocionales_completados">No Devotionals completed</string>
     <string name="mis_planes">My plans</string>
@@ -133,7 +133,7 @@
     <string name="compartidos">Shared</string>
     <string name="comunidad">Community</string>
     <string name="devocional_del_dia">Devotional of the day</string>
-    <string name="compartir_con">share with</string>
+    <string name="compartir_con">Share with</string>
     <string name="imagenes_del_dia">Images of the Day</string>
     <string name="abrir_con">To open with</string>
     <string name="informacion">Information</string>
@@ -156,7 +156,7 @@
     <string name="letra_sabado">S</string>
     <string name="letra_domingo">S</string>
     <string name="dias_app_este_anio">days in the app this year</string>
-    <string name="seleccionar_opcion">Seleccionar Opción</string>
+    <string name="seleccionar_opcion">Select option</string>
     <string name="el_salvador">El Salvador</string>
     <string name="guatemala">Guatemala</string>
     <string name="honduras">Honduras</string>

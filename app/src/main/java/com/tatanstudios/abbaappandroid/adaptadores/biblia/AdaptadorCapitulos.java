@@ -76,6 +76,8 @@ public class AdaptadorCapitulos extends RecyclerView.Adapter<AdaptadorCapitulos.
         holder.nestedRecycler.setLayoutManager(layoutManager);
         holder.nestedRecycler.setAdapter(adaptador);
 
+
+
         holder.setListener((view, po) -> {
 
             model.setExpandlabe(!model.isExpandlabe());

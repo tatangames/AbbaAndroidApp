@@ -39,9 +39,9 @@ public class AdaptadorInicioRecyclerHitos extends RecyclerView.Adapter<Adaptador
     public void onBindViewHolder(@NonNull AdaptadorInicioRecyclerHitos.ViewHolder holder, int position) {
         ModeloInsigniaHitos m = modeloInsigniaHitos.get(position);
 
-        if(m.getFechaFormat() != null && !TextUtils.isEmpty(m.getFechaFormat())){
+        /*if(m.getFechaFormat() != null && !TextUtils.isEmpty(m.getFechaFormat())){
             holder.txtTitulo.setText(m.getFechaFormat());
-        }
+        }*/
 
         // son los normales ganado
         if(m.getEsNextLevel() == 0){

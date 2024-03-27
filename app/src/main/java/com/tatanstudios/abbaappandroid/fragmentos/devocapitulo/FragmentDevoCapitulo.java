@@ -509,15 +509,6 @@ public class FragmentDevoCapitulo extends Fragment {
         }
 
 
-
-        /*int posTexto = tokenManager.getToken().getTipoLetra();
-
-        if (posTexto >= 0 && posTexto < spinEstiloTexto.getAdapter().getCount()) {
-            spinEstiloTexto.setSelection(posTexto);
-        }else{
-            spinEstiloTexto.setSelection(0);
-        }*/
-
         // Configura un oyente para saber cuándo se cierra el BottomSheetDialog
         bottomSheetDialog.setOnDismissListener(dialog -> {
             bottomSheetShowing = false;

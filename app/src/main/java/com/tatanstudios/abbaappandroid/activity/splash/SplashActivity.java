@@ -49,7 +49,7 @@ public class SplashActivity extends AppCompatActivity {
         tokenManager = TokenManager.getInstance(getSharedPreferences("prefs", MODE_PRIVATE));
 
 
-        // buscando idioma del telefono por defecto
+        // buscando idioma del cel por defecto
         if(tokenManager.getToken().getIdiomaCel() == 0){
             String valor = LocaleManagerIdiomaAndroid.obtenerIdioma(this);
 

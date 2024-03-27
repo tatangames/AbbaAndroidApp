@@ -95,7 +95,7 @@ public interface ApiService {
 
 
     // actualizar contrasena en editar perfil
-    @POST("app/actualizar/contrasena/")
+    @POST("app/actualizar/contrasena")
     @FormUrlEncoded
     Observable<ModeloUsuario> actualizarPassword(@Field("iduser") String iduser,
                                                  @Field("password") String password);
