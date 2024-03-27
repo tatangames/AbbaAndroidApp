@@ -98,7 +98,6 @@ public class ActualizarIdiomasActivity extends AppCompatActivity {
     }
 
 
-
     private void cambioIdiomaApp(){
         if (bottomDialogIdiomaApp) {
             bottomDialogIdiomaApp = false;

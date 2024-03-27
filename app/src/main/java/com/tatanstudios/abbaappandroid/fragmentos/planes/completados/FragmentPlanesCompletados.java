@@ -49,17 +49,11 @@ public class FragmentPlanesCompletados extends Fragment {
     private RelativeLayout rootRelative;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private TextView txtSinPlanes;
-    private boolean unaVezVisibilidad = true;
     private AdaptadorPlanesCompletados adapter;
     private int RETORNO_ACTUALIZAR_100 = 100;
 
 
-    // AJUSTES DE PAGINACION
 
-    private boolean estaCargandoApi = false;
-    private boolean puedeCargarYaPaginacion = false;
-    private int currentPage = 1;
-    private int lastPage = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,32 +78,6 @@ public class FragmentPlanesCompletados extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        // PAGINACION
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                /*int visibleItemCount = layoutManager.getChildCount();
-                int totalItemCount = layoutManager.getItemCount();
-                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-
-                if (puedeCargarYaPaginacion && !isLastPage()) {
-
-                    // Verificar si no se está cargando y si ha llegado al final de la lista
-                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0 && dy > 0) {
-                        apiBuscarPlanesCompletadosPaginacion();
-                    }
-                }*/
-                if (puedeCargarYaPaginacion && !isLastPage()) {
-
-                    if (!recyclerView.canScrollVertically(1)) {
-                        // Estamos en el fondo, carga más elementos
-                        apiBuscarPlanesCompletadosPaginacion();
-                    }
-                }
-            }
-        });
 
         apiBuscarPlanesCompletados();
 
@@ -117,14 +85,6 @@ public class FragmentPlanesCompletados extends Fragment {
     }
 
 
-    // verificar estado de carga para paginacion
-    private boolean isLastPage(){
-        if(currentPage > lastPage){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
 
     private void apiBuscarPlanesCompletados(){
@@ -134,14 +94,9 @@ public class FragmentPlanesCompletados extends Fragment {
         String iduser = tokenManager.getToken().getId();
         int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
 
-        ModeloPlanesCompletadosPaginateRequest paginationRequest = new ModeloPlanesCompletadosPaginateRequest();
-        paginationRequest.setPage(currentPage);
-        paginationRequest.setLimit(10);
-        paginationRequest.setIdiomaplan(idiomaPlan);
-        paginationRequest.setIduser(iduser);
 
         compositeDisposable.add(
-                service.listadoPlanesCompletados(paginationRequest)
+                service.listadoPlanesCompletados(iduser, idiomaPlan)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .retry()
@@ -152,25 +107,17 @@ public class FragmentPlanesCompletados extends Fragment {
                                     if(apiRespuesta.getSuccess() == 1){
 
                                         if(apiRespuesta.getHayinfo() == 1){
-                                            if (!apiRespuesta.getData().getData().isEmpty()) {
-                                                List<ModeloPlanesCompletados> newData = apiRespuesta.getData().getData();
 
-                                                lastPage = apiRespuesta.getData().getLastPage();
-                                                currentPage++;
 
-                                                setearAdapter(newData);
+                                                adapter = new AdaptadorPlanesCompletados(getContext(), apiRespuesta.getModeloPlanesCompletados(), this);
+                                                recyclerView.setAdapter(adapter);
 
-                                                unaVezVisibilidad = false;
-                                                puedeCargarYaPaginacion = true;
                                                 recyclerView.setVisibility(View.VISIBLE);
-                                            }
+
                                         }else{
 
-                                            if(unaVezVisibilidad){
-                                                unaVezVisibilidad = false;
                                                 recyclerView.setVisibility(View.GONE);
                                                 txtSinPlanes.setVisibility(View.VISIBLE);
-                                            }
                                         }
 
                                     }else{
@@ -185,68 +132,6 @@ public class FragmentPlanesCompletados extends Fragment {
 
 
 
-    // UTILIZADO PARA PAGINACION
-    private void apiBuscarPlanesCompletadosPaginacion(){
-
-        if(!estaCargandoApi){
-            estaCargandoApi = true;
-
-            progressBar.setVisibility(View.VISIBLE);
-
-            String iduser = tokenManager.getToken().getId();
-            int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
-
-            ModeloPlanesCompletadosPaginateRequest paginationRequest = new ModeloPlanesCompletadosPaginateRequest();
-            paginationRequest.setPage(currentPage);
-            paginationRequest.setLimit(10);
-            paginationRequest.setIdiomaplan(idiomaPlan);
-            paginationRequest.setIduser(iduser);
-
-            compositeDisposable.add(
-                    service.listadoPlanesCompletados(paginationRequest)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .retry()
-                            .subscribe(
-                                    apiRespuesta -> {
-
-                                        progressBar.setVisibility(View.GONE);
-
-                                        if(apiRespuesta.getSuccess() == 1){
-
-                                            if(apiRespuesta.getHayinfo() == 1){
-                                                if (!apiRespuesta.getData().getData().isEmpty()) {
-                                                    List<ModeloPlanesCompletados> newData = apiRespuesta.getData().getData();
-
-                                                    lastPage = apiRespuesta.getData().getLastPage();
-                                                    currentPage++;
-
-                                                    adapter.addData(newData);
-
-                                                    estaCargandoApi = false;
-                                                    recyclerView.setVisibility(View.VISIBLE);
-                                                }
-                                            }
-
-                                        }else{
-                                            mensajeSinConexion();
-                                            estaCargandoApi = false;
-                                        }
-                                    },
-                                    throwable -> {
-                                        mensajeSinConexion();
-                                        estaCargandoApi = false;
-                                        //String errorMessage = throwable.getMessage();
-                                    }
-                            ));
-        }
-    }
-
-
-    private void setearAdapter(List<ModeloPlanesCompletados> modeloPlanesCompletados) {
-        adapter = new AdaptadorPlanesCompletados(getContext(), modeloPlanesCompletados, this);
-        recyclerView.setAdapter(adapter);
-    }
 
 
     // Vista para ver todos completados
@@ -263,8 +148,6 @@ public class FragmentPlanesCompletados extends Fragment {
                 // DE ACTIVITY VerPlanParaSeleccionar.class
                 if(result.getResultCode() == RETORNO_ACTUALIZAR_100){
 
-                    currentPage = 1;
-                    unaVezVisibilidad = true;
                     recyclerView.setVisibility(View.INVISIBLE);
                     apiBuscarPlanesCompletados();
                 }

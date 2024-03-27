@@ -46,20 +46,9 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
 
     private TextView txtSinPlanes;
 
-    private boolean unaVezVisibilidad = true;
-
     private AdaptadorBuscarPlanes adapter;
 
     private int RETORNO_ACTUALIZAR_100 = 100;
-
-
-
-    // AJUSTES DE PAGINACION
-
-    private boolean estaCargandoApi = false;
-    private boolean puedeCargarYaPaginacion = false;
-    private int currentPage = 1;
-    private int lastPage = 1;
 
 
 
@@ -87,34 +76,10 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        // PAGINACION
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (puedeCargarYaPaginacion && !isLastPage()) {
-                    if (!recyclerView.canScrollVertically(1)) {
-                        // Estamos en el fondo, carga más elementos
-                        apiBuscarPlanesNuevosPaginacion();
-                    }
-                }
-            }
-        });
 
         apiBuscarPlanesNuevos();
 
         return vista;
-    }
-
-
-    // verificar estado de carga para paginacion
-    private boolean isLastPage(){
-        if(currentPage > lastPage){
-            return true;
-        }else{
-            return false;
-        }
     }
 
 
@@ -125,14 +90,8 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
         String iduser = tokenManager.getToken().getId();
         int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
 
-        ModeloBuscarPlanesPaginateRequest paginationRequest = new ModeloBuscarPlanesPaginateRequest();
-        paginationRequest.setPage(currentPage);
-        paginationRequest.setLimit(10);
-        paginationRequest.setIdiomaplan(idiomaPlan);
-        paginationRequest.setIduser(iduser);
-
         compositeDisposable.add(
-                service.listadoNuevosPlanes(paginationRequest)
+                service.listadoNuevosPlanes(iduser, idiomaPlan)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .retry()
@@ -143,24 +102,13 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
                                     if(apiRespuesta.getSuccess() == 1){
 
                                         if(apiRespuesta.getHayinfo() == 1){
-                                            if (!apiRespuesta.getData().getData().isEmpty()) {
-                                                List<ModeloBuscarPlanes> newData = apiRespuesta.getData().getData();
 
-                                                lastPage = apiRespuesta.getData().getLastPage();
-                                                currentPage++;
-
-                                                setearAdapter(newData);
-
-                                                unaVezVisibilidad = false;
-                                                puedeCargarYaPaginacion = true;
-                                                recyclerView.setVisibility(View.VISIBLE);
-                                            }
+                                            adapter = new AdaptadorBuscarPlanes(getContext(), apiRespuesta.getModeloBuscarPlanes(), this);
+                                            recyclerView.setAdapter(adapter);
+                                            recyclerView.setVisibility(View.VISIBLE);
                                         }else{
-                                            if(unaVezVisibilidad){
-                                                unaVezVisibilidad = false;
-                                                recyclerView.setVisibility(View.GONE);
-                                                txtSinPlanes.setVisibility(View.VISIBLE);
-                                            }
+                                            recyclerView.setVisibility(View.GONE);
+                                            txtSinPlanes.setVisibility(View.VISIBLE);
                                         }
 
                                     }else{
@@ -174,68 +122,6 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
     }
 
 
-    // UTILIZADO PARA PAGINACION
-    private void apiBuscarPlanesNuevosPaginacion(){
-
-        if(!estaCargandoApi){
-            estaCargandoApi = true;
-
-            progressBar.setVisibility(View.VISIBLE);
-
-            String iduser = tokenManager.getToken().getId();
-            int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
-
-            ModeloBuscarPlanesPaginateRequest paginationRequest = new ModeloBuscarPlanesPaginateRequest();
-            paginationRequest.setPage(currentPage);
-            paginationRequest.setLimit(10);
-            paginationRequest.setIdiomaplan(idiomaPlan);
-            paginationRequest.setIduser(iduser);
-
-            compositeDisposable.add(
-                    service.listadoNuevosPlanes(paginationRequest)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .retry()
-                            .subscribe(
-                                    apiRespuesta -> {
-
-                                        progressBar.setVisibility(View.GONE);
-
-                                        if(apiRespuesta.getSuccess() == 1){
-
-                                            if(apiRespuesta.getHayinfo() == 1){
-                                                if (!apiRespuesta.getData().getData().isEmpty()) {
-                                                    List<ModeloBuscarPlanes> newData = apiRespuesta.getData().getData();
-
-                                                    lastPage = apiRespuesta.getData().getLastPage();
-                                                    currentPage++;
-
-                                                    adapter.addData(newData);
-
-                                                    estaCargandoApi = false;
-                                                    recyclerView.setVisibility(View.VISIBLE);
-                                                }
-                                            }
-
-                                        }else{
-                                            mensajeSinConexion();
-                                            estaCargandoApi = false;
-                                        }
-                                    },
-                                    throwable -> {
-                                        mensajeSinConexion();
-                                        estaCargandoApi = false;
-                                        //String errorMessage = throwable.getMessage();
-                                    }
-                            ));
-        }
-    }
-
-
-    private void setearAdapter(List<ModeloBuscarPlanes> modeloBuscarPlanes) {
-        adapter = new AdaptadorBuscarPlanes(getContext(), modeloBuscarPlanes, this);
-        recyclerView.setAdapter(adapter);
-    }
 
 
     // vista para informacion del plan y seleccionarlo
@@ -252,8 +138,6 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
                 // DE ACTIVITY VerPlanParaSeleccionar.class
                 if(result.getResultCode() == RETORNO_ACTUALIZAR_100){
 
-                    currentPage = 1;
-                    unaVezVisibilidad = true;
                     recyclerView.setVisibility(View.INVISIBLE);
                     apiBuscarPlanesNuevos();
                 }

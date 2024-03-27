@@ -2,7 +2,7 @@ package com.tatanstudios.abbaappandroid.modelos.amigos;
 
 public class ModeloAmigos {
 
-    // sila solicitud
+    // id solicitud
     private int idsolicitud;
 
     // id quien dara los puntos

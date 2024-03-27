@@ -178,6 +178,9 @@ public class AdaptadorComunidadAceptadas extends RecyclerView.Adapter<RecyclerVi
                 ((HolderVistaRecycler) holder).txtPais.setText(pais + " " + m2.getPais());
             }
 
+            ((HolderVistaRecycler) holder).imgPais.setVisibility(View.VISIBLE);
+
+
             if(m2.getIdpais() == 1){ // el salvador
                 int flagElsalvador = R.drawable.flag_elsalvador;
                 Glide.with(context)
@@ -208,7 +211,10 @@ public class AdaptadorComunidadAceptadas extends RecyclerView.Adapter<RecyclerVi
                         .load(flagMexico)
                         .apply(opcionesGlide)
                         .into(((HolderVistaRecycler) holder).imgPais);
-            }else{
+            }else if(m2.getIdpais() == 6) { // otros
+                ((HolderVistaRecycler) holder).imgPais.setVisibility(View.GONE);
+            }
+            else{
                 int flagCamara = R.drawable.camaradefecto;
                 Glide.with(context)
                         .load(flagCamara)

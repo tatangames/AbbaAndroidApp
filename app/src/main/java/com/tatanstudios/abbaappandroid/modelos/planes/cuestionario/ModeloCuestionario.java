@@ -28,12 +28,30 @@ public class ModeloCuestionario {
     private int iddevobiblia;
 
 
+    @SerializedName("redirecweb")
+    private int redirecweb;
+
+    @SerializedName("urllink")
+    private String urllink;
+
+
+
     public ModeloCuestionario(Integer id, String titulo, String texto) {
         this.id = id;
         this.titulo = titulo;
         this.texto = texto;
     }
 
+
+
+
+    public int getRedirecweb() {
+        return redirecweb;
+    }
+
+    public String getUrllink() {
+        return urllink;
+    }
 
     public int getIddevobiblia() {
         return iddevobiblia;

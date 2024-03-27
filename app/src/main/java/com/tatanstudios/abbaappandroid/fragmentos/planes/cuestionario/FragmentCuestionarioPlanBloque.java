@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -94,6 +96,8 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
     private int iddevobiblia = 0;
 
 
+    private boolean redireccionarPaginaWeb = false;
+    private String urlWeb = "";
 
 
     @Override
@@ -162,10 +166,18 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
         @JavascriptInterface
         public void notifyClickToJava() {
 
-            if(redireccionarTextoBiblico){
-                Intent intent = new Intent(getContext(), LecturaDevoCapituloActivity.class);
-                intent.putExtra("IDDEVOBIBLIA", iddevobiblia);
-                startActivity(intent);
+            if(redireccionarPaginaWeb){
+
+                if(!TextUtils.isEmpty(urlWeb)) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlWeb));
+                    startActivity(intent);
+                }
+            }else{
+                if(redireccionarTextoBiblico){
+                    Intent intent = new Intent(getContext(), LecturaDevoCapituloActivity.class);
+                    intent.putExtra("IDDEVOBIBLIA", iddevobiblia);
+                    startActivity(intent);
+                }
             }
 
         }
@@ -198,6 +210,13 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
                                             if(apiRespuesta.getRedireccionar() == 1){
                                                 iddevobiblia = apiRespuesta.getIddevobiblia();
                                                 redireccionarTextoBiblico = true;
+                                            }
+
+                                            if(apiRespuesta.getRedirecweb() == 1){
+                                                redireccionarPaginaWeb = true;
+                                                if(apiRespuesta.getUrllink() != null){
+                                                    urlWeb = apiRespuesta.getUrllink();
+                                                }
                                             }
 
                                             setearTexto(devocional);

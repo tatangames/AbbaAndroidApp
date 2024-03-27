@@ -204,9 +204,10 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
     }
 
 
-    public void actualizarCheck(int blockDeta, int valor){
+    public void actualizarCheck(int blockDeta, int valor, int posFila){
 
             progressBar.setVisibility(View.VISIBLE);
+
 
             String iduser = tokenManager.getToken().getId();
             int idioma = tokenManager.getToken().getIdiomaTextos();
@@ -220,23 +221,24 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
 
                                         progressBar.setVisibility(View.GONE);
 
-                                        if(apiRespuesta != null) {
+                                        Log.i("ETIQUETA", "llamado");
 
+                                        if(apiRespuesta != null) {
 
                                             if (apiRespuesta.getSuccess() == 1) {
                                                 // no ha respondido preguntas y hay activas y requeridas
 
                                                 Toasty.info(this, getString(R.string.completar_devocional),Toasty.LENGTH_SHORT).show();
-
+                                                setearFila(posFila, false, valor);
                                             }
                                             else if (apiRespuesta.getSuccess() == 2) {
                                                 Toasty.success(this, getString(R.string.actualizado),Toasty.LENGTH_SHORT).show();
 
                                                 if(apiRespuesta.getPlanCompletado() == 1){
-
                                                     boolActualizarVistaAtras = true;
                                                 }
 
+                                                setearFila(posFila, true, valor);
                                             }else{
                                                 mensajeSinConexion();
                                             }
@@ -245,10 +247,13 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                                         }
                                     },
                                     throwable -> {
-
                                         mensajeSinConexion();
                                     })
             );
+    }
+
+    private void setearFila(int posFila, boolean valor, int valorTenia){
+        adapterVertical.retornoRespuesta(posFila, valor, valorTenia);
     }
 
 

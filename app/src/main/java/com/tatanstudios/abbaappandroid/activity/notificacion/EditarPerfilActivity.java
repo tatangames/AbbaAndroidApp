@@ -1,19 +1,31 @@
 package com.tatanstudios.abbaappandroid.activity.notificacion;
 
 import androidx.activity.OnBackPressedDispatcher;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import okhttp3.MediaType;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.PorterDuff;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.View;
@@ -25,14 +37,23 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.developer.kalert.KAlertDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tatanstudios.abbaappandroid.R;
+import com.tatanstudios.abbaappandroid.extras.ImageUtils;
+import com.tatanstudios.abbaappandroid.extras.MultipartUtil;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -40,6 +61,9 @@ import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class EditarPerfilActivity extends AppCompatActivity {
 
@@ -80,6 +104,61 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
     private boolean tema = false;
 
+
+    private ImageView imgPerfil;
+
+
+
+
+
+    // ******** PERMISOS ANDROID 13 O SUPERIOR *********
+
+    private final int MY_PERMISSION_STORAGE_101 = 101;
+
+
+    private int sdkVersion = Build.VERSION.SDK_INT;
+
+    private final String[] requiredPermission = new String[]{
+            Manifest.permission.READ_MEDIA_IMAGES,
+    };
+
+
+    private boolean is_storage_image_permitted = false;
+
+
+
+    private boolean allPermissionResultCheck(){
+        return is_storage_image_permitted;
+    }
+
+    // IMAGE code for read storage media images starts
+    private void requestPermissionStorageImage(){
+
+        if(ContextCompat.checkSelfPermission(this, requiredPermission[0]) == PackageManager.PERMISSION_GRANTED){
+            is_storage_image_permitted = true;
+        } else{
+            request_permission_launcher_storage_image.launch(requiredPermission[0]);
+        }
+    }
+
+
+    private final ActivityResultLauncher<String> request_permission_launcher_storage_image =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(),
+                    isGranted-> {
+                        if(isGranted){
+                            is_storage_image_permitted = true;
+                        }else{
+                            is_storage_image_permitted = false;
+                        }
+                    });
+
+
+
+
+    // ******** END PERMISOS ANDROID 13 O SUPERIOR *********
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +174,8 @@ public class EditarPerfilActivity extends AppCompatActivity {
         edtApellido = findViewById(R.id.edtApellido);
         edtCorreo = findViewById(R.id.edtCorreo);
         linearContenedor = findViewById(R.id.linearContenedor);
+
+        imgPerfil = findViewById(R.id.imgPerfil);
 
         txtToolbar.setText(getString(R.string.editar_perfil));
 
@@ -134,7 +215,11 @@ public class EditarPerfilActivity extends AppCompatActivity {
         });
 
         btnActualizar.setOnClickListener(v -> {
-            actualizarPerfil();
+            try {
+                actualizarPerfil();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         edtNombre.addTextChangedListener(new TextWatcher() {
@@ -203,8 +288,96 @@ public class EditarPerfilActivity extends AppCompatActivity {
             }
         });
 
+        imgPerfil.setOnClickListener(v -> {
+            verPermisos();
+        });
+
         solicitarPerfil();
     }
+
+    private void verPermisos(){
+
+
+        if (sdkVersion >= Build.VERSION_CODES.TIRAMISU) {
+            // El dispositivo ejecuta Android 13 o superior.
+
+            if(!allPermissionResultCheck()){
+
+                requestPermissionStorageImage();
+
+            }else{
+                // aqui ya puede abrir galeria
+                abrirGaleria();
+            }
+
+        } else {
+            // El dispositivo no ejecuta Android 13.
+            String[] perms = {android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+
+            if(EasyPermissions.hasPermissions(this,
+                    perms)){
+                // permiso autorizado
+
+               // aqui ya puede abrir galeria
+                abrirGaleria();
+
+            }else{
+                // permiso denegado
+                EasyPermissions.requestPermissions(this,
+                        getString(R.string.permiso_almacenamiento_es_requerido),
+                        MY_PERMISSION_STORAGE_101,
+                        perms);
+            }
+        }
+    }
+
+
+    private void abrirGaleria(){
+
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        launcher.launch(intent);
+    }
+
+    private boolean hayUriNueva = false;
+    private Uri uriImagen = null;
+
+    ActivityResultLauncher<Intent> launcher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK) {
+                        // Handle successful image selection
+                        Intent data = result.getData();
+                        if (data != null) {
+                            Uri imageUri = data.getData();
+                            hayUriNueva = true;
+                            uriImagen = data.getData();
+                            cargar(imageUri);
+                        }
+                    }
+                }
+            }
+    );
+
+
+    private void cargar(Uri uri){
+        Glide.with(this)
+                .load(uri)
+                .apply(opcionesGlide)
+                .circleCrop()
+                .into(imgPerfil);
+    }
+
+
+
+    RequestOptions opcionesGlide = new RequestOptions()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
+            .placeholder(R.drawable.camaradefecto)
+            .priority(Priority.NORMAL);
+
+
 
     private void solicitarPerfil(){
 
@@ -229,6 +402,10 @@ public class EditarPerfilActivity extends AppCompatActivity {
                                             edtCorreo.setText(apiRespuesta.getCorreo());
                                             fechaNacimiento = apiRespuesta.getFechaNacimientoRaw();
 
+                                            if(apiRespuesta.getHayImagen() == 1){
+                                                cargarFoto(apiRespuesta.getImagen());
+                                            }
+
                                             linearContenedor.setVisibility(View.VISIBLE);
                                         }
                                         else{
@@ -244,6 +421,14 @@ public class EditarPerfilActivity extends AppCompatActivity {
         );
     }
 
+    private void cargarFoto(String imagen){
+
+        Glide.with(this)
+                .load(RetrofitBuilder.urlImagenes + imagen)
+                .apply(opcionesGlide)
+                .circleCrop()
+                .into(imgPerfil);
+    }
 
 
     private void elegirFecha(){
@@ -310,7 +495,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
     }
 
 
-    private void actualizarPerfil(){
+    private void actualizarPerfil() throws IOException {
 
         closeKeyboard();
 
@@ -322,8 +507,18 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
+        byte[] bytes = null;
+        if(hayUriNueva){
+            ContentResolver resolver = getContentResolver();
+            InputStream inputStream = resolver.openInputStream(uriImagen);
+            bytes = ImageUtils.inputStreamToByteArray(inputStream);
+        }
+
+        MultipartBody multipartBody = MultipartUtil.createMultipart(bytes, iduser, txtNombre, txtApellido, fechaNacimiento, txtCorreo);
+
+
         compositeDisposable.add(
-                service.actualizarPerfilUsuario(iduser, txtNombre, txtApellido, fechaNacimiento, txtCorreo)
+                service.actualizarPerfilUsuario(multipartBody)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .retry()
@@ -353,6 +548,11 @@ public class EditarPerfilActivity extends AppCompatActivity {
                                 })
         );
     }
+
+
+
+
+
 
     private void volverAtrasActualizado(){
         Intent returnIntent = new Intent();

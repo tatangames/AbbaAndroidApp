@@ -173,8 +173,6 @@ public class SolicitudPendienteEnviadaActivity extends AppCompatActivity {
                                     if(apiRespuesta != null) {
 
                                         if(apiRespuesta.getSuccess() == 1) {
-
-
                                             Toasty.success(this, getString(R.string.eliminado), Toasty.LENGTH_SHORT).show();
                                             apiBuscarSolicitudesPendientes();
                                         }else{

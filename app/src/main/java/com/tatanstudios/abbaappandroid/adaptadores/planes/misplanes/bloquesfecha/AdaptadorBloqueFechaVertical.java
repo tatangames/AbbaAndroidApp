@@ -89,16 +89,17 @@ public class AdaptadorBloqueFechaVertical extends RecyclerView.Adapter<Adaptador
         holder.txtTitulo.setText(m.getTitulo());
 
         holder.idCheck.setOnCheckedChangeListener((buttonView, isChecked) -> {
-
+            int adapterPosition = holder.getBindingAdapterPosition();
             int valor = 0;
             if(isChecked){ valor = 1; }
             m.setCompletado(valor);
 
-            misPlanesBloquesFechaActivity.actualizarCheck(m.getId(), valor);
+            misPlanesBloquesFechaActivity.actualizarCheck(m.getId(), valor,  adapterPosition);
         });
 
 
         holder.txtTitulo.setOnClickListener(v -> {
+
             int idBlockDeta = m.getId();
             int tienePreguntas = m.getTienePreguntas();
             misPlanesBloquesFechaActivity.redireccionarCuestionario(idBlockDeta, tienePreguntas);
@@ -110,6 +111,21 @@ public class AdaptadorBloqueFechaVertical extends RecyclerView.Adapter<Adaptador
     }
 
 
+    public void retornoRespuesta(int postFila, boolean valor, int valorTenia){
+
+        ModeloBloqueFechaDetalle m = modeloMisPlanesBloqueDetalles.get(postFila);
+
+        // solo modificar si sera true
+        if(valor){
+
+            // valor que tenia
+            m.setCompletado(valorTenia);
+        }else{
+            m.setCompletado(0);
+        }
+
+        notifyItemChanged(postFila);
+    }
 
 
     @Override

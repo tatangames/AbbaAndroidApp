@@ -110,7 +110,7 @@ public class FragmentTabInicio extends Fragment{
 
     int colorProgress = 0;
 
-    private ColorStateList  colorStateTintWhite, colorStateTintBlack;
+    private ColorStateList  colorStateTintBlack;
 
     private int colorBlanco = 0;
     private int colorBlack = 0;
@@ -227,7 +227,6 @@ public class FragmentTabInicio extends Fragment{
         colorBlanco = ContextCompat.getColor(requireContext(), R.color.blanco);
         colorBlack = ContextCompat.getColor(requireContext(), R.color.negro);
 
-        colorStateTintWhite = ColorStateList.valueOf(colorBlanco);
         colorStateTintBlack = ColorStateList.valueOf(colorBlack);
 
         progressBar.setVisibility(View.GONE);
@@ -236,9 +235,7 @@ public class FragmentTabInicio extends Fragment{
 
         apiBuscarDatos();
 
-
         refreshLayout.setOnRefreshListener(() -> {
-           // progressBar.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
             refreshLayout.setRefreshing(true);
 
@@ -271,7 +268,6 @@ public class FragmentTabInicio extends Fragment{
                                     shimmerFrameLayout.setVisibility(View.GONE);
 
                                     recyclerView.setVisibility(View.VISIBLE);
-
 
                                     if(apiRespuesta != null) {
 
@@ -460,12 +456,7 @@ public class FragmentTabInicio extends Fragment{
             btnCompartir.setBackgroundTintList(colorStateTintBlack);
             btnCompartir.setTextColor(colorBlanco);
 
-
-
-
             btnDescargar.setOnClickListener(v -> {
-
-
 
                 if (sdkVersion >= Build.VERSION_CODES.TIRAMISU) {
                     // El dispositivo ejecuta Android 13 o superior.
@@ -608,17 +599,7 @@ public class FragmentTabInicio extends Fragment{
         startActivity(intent);
     }
 
-    /*public void redireccionarCuestionario(int idblockdeta, int devoPreguntas){
 
-        // devoPreguntas
-        // 1: devocional
-        // 2: devo y preguntas
-
-        Intent intent = new Intent(getContext(), CuestionarioInicioActivity.class);
-        intent.putExtra("IDBLOCKDETA", idblockdeta);
-        intent.putExtra("PREGUNTAS", devoPreguntas);
-        startActivity(intent);
-    }*/
 
 
     public void vistaInformacionInsignia(int tipoinsignia){

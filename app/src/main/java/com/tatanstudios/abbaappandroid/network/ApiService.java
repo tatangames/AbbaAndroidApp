@@ -9,6 +9,7 @@ import com.tatanstudios.abbaappandroid.modelos.iglesias.ModeloDepartamentos;
 import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloContenedorInicio;
 import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloContenedorInsignias;
 import com.tatanstudios.abbaappandroid.modelos.insignias.faltantes.ModeloInsigniaFaltantesContenedor;
+import com.tatanstudios.abbaappandroid.modelos.listaplanes.ModeloContenedorPlanesV2;
 import com.tatanstudios.abbaappandroid.modelos.notificacion.ModeloListaNotificacionPaginate;
 import com.tatanstudios.abbaappandroid.modelos.notificacion.ModeloListaNotificacionPaginateMetaDato;
 import com.tatanstudios.abbaappandroid.modelos.notificacion.ModeloListaNotificacionPaginateRequest;
@@ -21,6 +22,7 @@ import com.tatanstudios.abbaappandroid.modelos.planes.completados.ModeloPlanesCo
 import com.tatanstudios.abbaappandroid.modelos.planes.completados.ModeloPlanesCompletadosPaginateRequest;
 import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.ModeloCuestionario;
 import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.preguntas.ModeloPreguntasContenedor;
+import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanes;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginate;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginateMetaDatos;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginateRequest;
@@ -31,11 +33,15 @@ import com.tatanstudios.abbaappandroid.modelos.usuario.ModeloUsuario;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface ApiService {
 
@@ -55,7 +61,7 @@ public interface ApiService {
 
 
     // registrarse
-    @POST("app/registro/usuario")
+    @POST("app/registro/usuario/v2")
     @FormUrlEncoded
     Observable<ModeloUsuario> registroUsuario(@Field("nombre") String nombre,
                                               @Field("apellido") String apellido,
@@ -65,7 +71,10 @@ public interface ApiService {
                                               @Field("correo") String correo,
                                               @Field("password") String password,
                                               @Field("idonesignal") String idonesignal,
-                                              @Field("version") String version);
+                                              @Field("version") String version,
+                                              @Field("paisotros") String paisotros,
+                                              @Field("ciudadotros") String ciudadotros
+                                              );
 
 
     // solicitar codigo para recuperacion de contraseña
@@ -95,7 +104,7 @@ public interface ApiService {
 
 
     // actualizar contrasena en editar perfil
-    @POST("app/actualizar/contrasena/")
+    @POST("app/actualizar/contrasena")
     @FormUrlEncoded
     Observable<ModeloUsuario> actualizarPassword(@Field("iduser") String iduser,
                                                  @Field("password") String password);
@@ -107,20 +116,26 @@ public interface ApiService {
 
 
     // editar la informacion del perfil
-    @POST("app/actualizar/perfil/usuario")
+   /* @POST("app/actualizar/perfil/usuario")
     @FormUrlEncoded
     Observable<ModeloUsuario> actualizarPerfilUsuario(@Field("iduser") String idUsuario,
                                                       @Field("nombre") String nombre,
                                                       @Field("apellido") String apellido,
                                                       @Field("fechanac") String fechaNacimiento,
-                                                      @Field("correo") String correo);
+                                                      @Field("correo") String correo
+    );*/
+
+
+    @POST("app/actualizar/perfil/usuario")
+    Observable<ModeloUsuario> actualizarPerfilUsuario(@Body RequestBody body
+    );
 
 
 
     // listado de planes nuevos con paginacion
-    @POST("app/buscar/planes/nuevos")
+   /* @POST("app/buscar/planes/nuevos")
     Observable<ModeloBuscarPlanesPaginate<ModeloBuscarPlanesPaginateMetaDatos>> listadoNuevosPlanes(
-            @Body ModeloBuscarPlanesPaginateRequest request);
+            @Body ModeloBuscarPlanesPaginateRequest request);*/
 
 
     // ver informacion de un plan para poder seleccionarlo
@@ -138,9 +153,9 @@ public interface ApiService {
 
 
     // listado de mis planes
-    @POST("app/plan/listado/misplanes")
+   /* @POST("app/plan/listado/misplanes")
     Observable<ModeloMisPlanesPaginate<ModeloMisPlanesPaginateMetaDatos>> listadoMisPlanes(
-            @Body ModeloMisPlanesPaginateRequest request);
+            @Body ModeloMisPlanesPaginateRequest request);*/
 
 
     // informacion de bloque fechas de un plan
@@ -193,9 +208,9 @@ public interface ApiService {
 
 
     // listado de planes completados
-    @POST("app/plan/misplanes/completados")
+    /*@POST("app/plan/misplanes/completados")
     Observable<ModeloPlanesCompletadosPaginate<ModeloPlanesCompletadosPaginateMetaDatos>> listadoPlanesCompletados(
-            @Body ModeloPlanesCompletadosPaginateRequest request);
+            @Body ModeloPlanesCompletadosPaginateRequest request);*/
 
 
     // informacion de tods el inicio
@@ -423,8 +438,23 @@ public interface ApiService {
 
 
 
+    // FIX 30/04/2024
+    @POST("app/plan/listado/misplanes/nopagination")
+    @FormUrlEncoded
+    Observable<ModeloContenedorPlanesV2> listadoMisPlanes(@Field("iduser") String iduser,
+                                                          @Field("idiomaplan") int idiomaplan);
 
 
+
+    @POST("app/buscar/planes/nuevos/nopagination")
+    @FormUrlEncoded
+    Observable<ModeloContenedorPlanesV2> listadoNuevosPlanes(@Field("iduser") String iduser,
+                                                          @Field("idiomaplan") int idiomaplan);
+
+    @POST("app/plan/misplanes/completados/nopagination")
+    @FormUrlEncoded
+    Observable<ModeloContenedorPlanesV2> listadoPlanesCompletados(@Field("iduser") String iduser,
+                                                             @Field("idiomaplan") int idiomaplan);
 
 
 

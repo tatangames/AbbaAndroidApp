@@ -41,6 +41,22 @@ public class ModeloUsuario {
     public String letra;
 
 
+    @SerializedName("hayimagen")
+    private int hayImagen;
+
+
+    @SerializedName("imagen")
+    private String imagen;
+
+
+    public int getHayImagen() {
+        return hayImagen;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
     public String getLetra() {
         return letra;
     }

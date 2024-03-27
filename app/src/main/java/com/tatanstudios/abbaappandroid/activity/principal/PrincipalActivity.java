@@ -87,9 +87,9 @@ public class PrincipalActivity extends AppCompatActivity implements InterfaceAct
 
             } else if (itemId == R.id.menu_planes) {
                 cambioMenuPlanes();
-                if(boolRecargarFragmentPlanes){
+                //if(boolRecargarFragmentPlanes){
                     recargarFragmentPlanes();
-                }
+                //}
 
             }
             else if (itemId == R.id.menu_mas) {

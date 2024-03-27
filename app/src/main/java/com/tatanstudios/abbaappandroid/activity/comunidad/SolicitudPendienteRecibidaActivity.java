@@ -213,7 +213,15 @@ public class SolicitudPendienteRecibidaActivity extends AppCompatActivity {
                                         if(apiRespuesta.getSuccess() == 1) {
                                             Toasty.success(this, getString(R.string.actualizado), Toasty.LENGTH_SHORT).show();
                                             apiBuscarSolicitudesPendientes();
-                                        }else{
+                                        }
+                                        else if(apiRespuesta.getSuccess() == 2) {
+
+                                            // SOLICITUD NO EXISTE
+                                            Toasty.error(this, getString(R.string.error_intentar_de_nuevo), Toasty.LENGTH_SHORT).show();
+                                            apiBuscarSolicitudesPendientes();
+
+                                        }
+                                        else{
 
                                             mensajeSinConexion();
                                         }

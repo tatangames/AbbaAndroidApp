@@ -166,6 +166,7 @@ public class AgregarAmigoComunidadActivity extends AppCompatActivity {
                                         else if(apiRespuesta.getSuccess() == 3){
                                             alertaMensaje(getString(R.string.correo_no_encontrado));
                                         }
+
                                         else{
                                             mensajeSinConexion();
                                         }

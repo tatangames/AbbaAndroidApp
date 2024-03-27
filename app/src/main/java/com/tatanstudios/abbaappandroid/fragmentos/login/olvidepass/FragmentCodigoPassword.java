@@ -51,7 +51,6 @@ public class FragmentCodigoPassword extends Fragment {
 
     private ApiService service;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private TextInputLayout inputCodigo;
     private TextInputEditText edtCodigo;
     private RelativeLayout rootRelative;
     private ImageView imgFlechaAtras;
@@ -81,7 +80,6 @@ public class FragmentCodigoPassword extends Fragment {
         txtTitulo = vista.findViewById(R.id.txtMensaje);
         imgFlechaAtras = vista.findViewById(R.id.imgFlechaAtras);
         btnEnviarCodigo = vista.findViewById(R.id.btnEnviar);
-        inputCodigo = vista.findViewById(R.id.inputCodigo);
         edtCodigo = vista.findViewById(R.id.edtCodigo);
         rootRelative = vista.findViewById(R.id.rootRelative);
         txtReintento = vista.findViewById(R.id.txtReintento);

@@ -64,6 +64,14 @@ public class FragmentRegistro extends Fragment {
     private TextInputLayout inputNombre, inputApellido, inputCorreo, inputContrasena;
     private TextInputEditText edtNombre, edtApellido, edtCorreo, edtContrasena;
 
+
+    private TextInputLayout inputPaisOtros, inputCiudadOtros;
+    private TextInputEditText edtPaisOtros, edtCiudadOtros;
+
+
+
+
+
     private ApiService service;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private ProgressBar progressBar;
@@ -100,6 +108,12 @@ public class FragmentRegistro extends Fragment {
 
     private String oneSignalId = null;
 
+
+    private boolean boolPaisOtros = false;
+
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_registro, container, false);
@@ -110,11 +124,16 @@ public class FragmentRegistro extends Fragment {
         inputApellido = vista.findViewById(R.id.inputApellido);
         inputCorreo = vista.findViewById(R.id.inputCorreo);
         inputContrasena = vista.findViewById(R.id.inputContrasena);
+        inputPaisOtros = vista.findViewById(R.id.inputPaisOtros);
+        inputCiudadOtros = vista.findViewById(R.id.inputCiudadOtros);
 
         edtNombre = vista.findViewById(R.id.edtNombre);
         edtApellido = vista.findViewById(R.id.edtApellido);
         edtCorreo = vista.findViewById(R.id.edtCorreo);
         edtContrasena = vista.findViewById(R.id.edtContrasena);
+        edtPaisOtros = vista.findViewById(R.id.edtPaisOtros);
+        edtCiudadOtros = vista.findViewById(R.id.edtCiudadOtros);
+
         rootRelative = vista.findViewById(R.id.rootRelative);
 
         spinGenero = vista.findViewById(R.id.generoSpinner);
@@ -357,12 +376,13 @@ public class FragmentRegistro extends Fragment {
         modeloPais.add(new ModeloPais(3, getString(R.string.honduras)));
         modeloPais.add(new ModeloPais(4, getString(R.string.nicaragua)));
         modeloPais.add(new ModeloPais(5, getString(R.string.mexico)));
+        modeloPais.add(new ModeloPais(6, getString(R.string.otros)));
 
         AdaptadorSpinnerPais paisAdapter = new AdaptadorSpinnerPais(getContext(), android.R.layout.simple_spinner_item, modeloPais, tema);
         paisAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinPais.setAdapter(paisAdapter);
 
-        List<ModeloDepartamentos> modeloDepartamento = new ArrayList<>();
+
 
         // ** Adaptador Departamentos
 
@@ -385,6 +405,31 @@ public class FragmentRegistro extends Fragment {
                     puedeAddIglesiaSpin = false;
 
                     updateAdapterEstado(paisSeleccionado.getId());
+
+                    if(paisSeleccionado.getId() == 6){
+                        // cuando selecciona otros
+
+                        spinEstado.setVisibility(View.GONE);
+                        spinIglesia.setVisibility(View.GONE);
+
+                        edtPaisOtros.setText("");
+                        edtCiudadOtros.setText("");
+
+                        inputPaisOtros.setVisibility(View.VISIBLE);
+                        inputCiudadOtros.setVisibility(View.VISIBLE);
+
+                        boolPaisOtros = true;
+                    }else{
+
+                        inputPaisOtros.setVisibility(View.GONE);
+                        inputCiudadOtros.setVisibility(View.GONE);
+
+                        spinEstado.setVisibility(View.VISIBLE);
+                        spinIglesia.setVisibility(View.VISIBLE);
+
+                        boolPaisOtros = false;
+                    }
+
                 }
             }
 
@@ -662,16 +707,31 @@ public class FragmentRegistro extends Fragment {
             return;
         }
 
-        if(idSpinnerGenero == 0){
+        if(boolPaisOtros) {
+
+            if(TextUtils.isEmpty(edtPaisOtros.getText().toString())){
+                Toasty.error(getContext(), getString(R.string.escribir_pais)).show();
+                return;
+            }
+
+            if(TextUtils.isEmpty(edtCiudadOtros.getText().toString())){
+                Toasty.error(getContext(), getString(R.string.escribir_ciudad)).show();
+                return;
+            }
+
+        }else{
+
+            if (idSpinnerIglesia == 0) {
+                Toasty.error(getContext(), getString(R.string.iglesia_es_requerido)).show();
+                return;
+            }
+        }
+
+        if (idSpinnerGenero == 0) {
             Toasty.error(getContext(), getString(R.string.genero_es_requerido)).show();
             return;
         }
 
-
-        if(idSpinnerIglesia == 0){
-            Toasty.error(getContext(), getString(R.string.iglesia_es_requerido)).show();
-            return;
-        }
         if(boolDialogoEnviar){
             boolDialogoEnviar = false;
 
@@ -717,10 +777,17 @@ public class FragmentRegistro extends Fragment {
             String txtCorreo = Objects.requireNonNull(edtCorreo.getText()).toString();
             String txtContrasena = Objects.requireNonNull(edtContrasena.getText()).toString();
 
+            String txtPaisOtros = Objects.requireNonNull(edtCorreo.getText()).toString();
+            String txtCiudadOtros = Objects.requireNonNull(edtContrasena.getText()).toString();
+
+            if(boolPaisOtros){
+                // FIJO DE LA BASE DE DATOS
+                idSpinnerIglesia = 503;
+            }
 
             compositeDisposable.add(
                     service.registroUsuario(txtNombre, txtApellido, fechaNacimiento, idSpinnerGenero,
-                                    idSpinnerIglesia, txtCorreo, txtContrasena, oneSignalId, version)
+                                    idSpinnerIglesia, txtCorreo, txtContrasena, oneSignalId, version, txtPaisOtros, txtCiudadOtros)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread()) // NO RETRY
                             .subscribe(apiRespuesta -> {

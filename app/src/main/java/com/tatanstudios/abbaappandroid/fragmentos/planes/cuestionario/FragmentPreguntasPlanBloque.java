@@ -201,6 +201,8 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
 
@@ -353,19 +355,6 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
             );
         }
     }
-
-
-
-    public void redireccionarBiblia(){
-
-        Toasty.success(getActivity(), "biblia").show();
-    }
-
-
-
-
-
-
 
 
 

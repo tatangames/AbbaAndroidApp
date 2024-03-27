@@ -152,6 +152,9 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
         ));
 
 
+
+
+
         List<ModeloInsigniaHitos> mm = new ArrayList<>();
 
 
@@ -173,6 +176,11 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
                 null,
                 mm
         ));
+
+
+
+
+
 
         // llenar adaptador de los hitos, y le estoy pasando textoFalta o remaining
         adaptadorInsigniaHitos = new AdaptadorInsigniaHitos(getApplicationContext(), elementos, apiRespuesta.getTextofalta());
