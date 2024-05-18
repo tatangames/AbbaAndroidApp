@@ -21,6 +21,10 @@ public class ModeloBloqueFecha {
     @SerializedName("contador")
     private int contador;
 
+    @SerializedName("contador2")
+    private int contador2;
+
+
     @SerializedName("mismodia")
     private int mismoDia;
 
@@ -32,6 +36,8 @@ public class ModeloBloqueFecha {
 
 
     // ******* EXTRAS
+
+
 
 
     private boolean estaPresionado;
@@ -60,8 +66,9 @@ public class ModeloBloqueFecha {
     }
 
 
-
-
+    public int getContador2() {
+        return contador2;
+    }
 
     public int getId() {
         return id;

@@ -69,6 +69,9 @@ public class AdaptadorSpinnerPais extends ArrayAdapter<ModeloPais> {
             case 5:
                 imgBandera.setImageResource(R.drawable.flag_mexico);
                 break;
+            case 6:
+                imgBandera.setImageResource(R.drawable.localizacion);
+                break;
             default:
                 imgBandera.setVisibility(View.INVISIBLE);
                 break;

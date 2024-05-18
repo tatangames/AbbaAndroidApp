@@ -36,6 +36,7 @@ public class AdaptadorBloqueFechaHorizontal extends RecyclerView.Adapter<Adaptad
 
     private MisPlanesBloquesFechaActivity misPlanesBloquesFechaActivity;
 
+    private boolean unaVez = true;
 
     public AdaptadorBloqueFechaHorizontal(Context context, List<ModeloBloqueFecha>
             modeloBloqueFechas, RecyclerView recyclerView, boolean tema, int hayDiaActual, int idUltimoBloque,
@@ -70,6 +71,108 @@ public class AdaptadorBloqueFechaHorizontal extends RecyclerView.Adapter<Adaptad
 
         ModeloBloqueFecha m = modeloBloqueFechas.get(position);
 
+
+        if(tema){ // negro
+            holder.constraintLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.codigo_bloquefecha_dark_white_on));
+            holder.txtFecha.setTextColor(colorStateWhite);
+            holder.txtContador.setTextColor(colorStateWhite);
+        }else{
+            holder.constraintLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.codigo_bloquefecha_light_negro_on));
+            holder.txtFecha.setTextColor(colorStateBlack);
+            holder.txtContador.setTextColor(colorStateBlack);
+        }
+
+        if (m.getContador() == 1) {
+            if(unaVez) {
+                unaVez = false;
+                misPlanesBloquesFechaActivity.llenarDatosAdapterVertical(modeloBloqueFechas.get(position).getModeloBloqueFechas());
+            }
+        }
+
+        if(m.getTextoPersonalizado() == 1){
+
+            // mostrar los 2
+
+
+
+            if(m.getTxtPersonalizado() != null && !TextUtils.isEmpty(m.getTxtPersonalizado())){
+                holder.txtFecha.setText(m.getTxtPersonalizado());
+                holder.txtContador.setText("");
+            }else{
+                holder.txtFecha.setText("");
+                holder.txtContador.setText("");
+            }
+
+        }else{
+            holder.txtContador.setText(String.valueOf(m.getContador()));
+            holder.txtFecha.setText(m.getAbreviatura());
+
+            // mostrar los 2
+
+        }
+
+
+
+        holder.itemView.setOnClickListener(v -> {
+            int actualPosition = holder.getBindingAdapterPosition();
+
+
+            for (int i = 0; i < modeloBloqueFechas.size(); i++) {
+                ModeloBloqueFecha modelo = modeloBloqueFechas.get(i);
+                modelo.setPrimerBloqueDrawable(false);
+                modelo.setEstaPresionado(false);
+            }
+
+
+            misPlanesBloquesFechaActivity.llenarDatosAdapterVertical(modeloBloqueFechas.get(position).getModeloBloqueFechas());
+
+
+            ModeloBloqueFecha mimodelo = modeloBloqueFechas.get(actualPosition);
+            mimodelo.setEstaPresionado(true);
+
+            //modeloBloqueFechas.get(actualPosition).setEstaPresionado(true);
+            //m.setEstaPresionado(true);
+            notifyDataSetChanged();
+            //notifyItemChanged(actualPosition);
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+
+        if(modeloBloqueFechas != null){
+            return modeloBloqueFechas.size();
+        }
+        else{
+            return 0;
+        }
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView txtContador;
+        private TextView txtFecha;
+        private ConstraintLayout constraintLayout;
+
+        public MyViewHolder(View itemView){
+            super(itemView);
+
+            txtContador = itemView.findViewById(R.id.textviewContador);
+            txtFecha = itemView.findViewById(R.id.textviewFecha);
+            constraintLayout = itemView.findViewById(R.id.constraintLayout);
+        }
+    }
+
+
+    // MOVER DE POSICION AL RECYCLER
+    public void moverPosicionRecycler(int posicion) {
+       // recyclerView.smoothScrollToPosition(posicion);
+    }
+
+
+    private void codigoCopia(){
+
+/*
         if(m.getEstaPresionado()){
 
             if(tema){
@@ -191,80 +294,10 @@ public class AdaptadorBloqueFechaHorizontal extends RecyclerView.Adapter<Adaptad
                     }
                 }
             }
-        }
+        }*/
 
-
-        if(m.getTextoPersonalizado() == 1){
-
-            if(m.getTxtPersonalizado() != null && !TextUtils.isEmpty(m.getTxtPersonalizado())){
-                holder.txtFecha.setText(m.getTxtPersonalizado());
-                holder.txtContador.setText("");
-            }else{
-                holder.txtFecha.setText("");
-                holder.txtContador.setText("");
-            }
-
-        }else{
-            holder.txtContador.setText(String.valueOf(m.getContador()));
-            holder.txtFecha.setText(m.getAbreviatura());
-        }
-
-
-        holder.itemView.setOnClickListener(v -> {
-            int actualPosition = holder.getBindingAdapterPosition();
-
-
-            for (int i = 0; i < modeloBloqueFechas.size(); i++) {
-                ModeloBloqueFecha modelo = modeloBloqueFechas.get(i);
-                modelo.setPrimerBloqueDrawable(false);
-                modelo.setEstaPresionado(false);
-            }
-
-
-            misPlanesBloquesFechaActivity.llenarDatosAdapterVertical(modeloBloqueFechas.get(position).getModeloBloqueFechas());
-
-
-            ModeloBloqueFecha mimodelo = modeloBloqueFechas.get(actualPosition);
-            mimodelo.setEstaPresionado(true);
-
-            //modeloBloqueFechas.get(actualPosition).setEstaPresionado(true);
-            //m.setEstaPresionado(true);
-            notifyDataSetChanged();
-            //notifyItemChanged(actualPosition);
-        });
     }
 
-    @Override
-    public int getItemCount() {
-
-        if(modeloBloqueFechas != null){
-            return modeloBloqueFechas.size();
-        }
-        else{
-            return 0;
-        }
-    }
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-
-        private TextView txtContador;
-        private TextView txtFecha;
-        private ConstraintLayout constraintLayout;
-
-        public MyViewHolder(View itemView){
-            super(itemView);
-
-            txtContador = itemView.findViewById(R.id.textviewContador);
-            txtFecha = itemView.findViewById(R.id.textviewFecha);
-            constraintLayout = itemView.findViewById(R.id.constraintLayout);
-        }
-    }
-
-
-    // MOVER DE POSICION AL RECYCLER
-    public void moverPosicionRecycler(int posicion) {
-        recyclerView.smoothScrollToPosition(posicion);
-    }
 
 
 }

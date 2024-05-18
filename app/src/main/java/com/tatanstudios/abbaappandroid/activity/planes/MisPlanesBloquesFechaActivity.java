@@ -159,9 +159,6 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
 
                                             setearPortada(apiRespuesta.getPortada());
 
-                                            // mover de posicion el recycler
-                                            recyclerViewHorizontal.scrollToPosition(apiRespuesta.getPosrecycler());
-
                                             linearContenedor.setVisibility(View.VISIBLE);
                                         }
                                         else{
@@ -176,6 +173,10 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                                 })
         );
     }
+
+
+
+
 
     private void setearPortada(String urlPortada){
 
@@ -221,7 +222,6 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
 
                                         progressBar.setVisibility(View.GONE);
 
-                                        Log.i("ETIQUETA", "llamado");
 
                                         if(apiRespuesta != null) {
 

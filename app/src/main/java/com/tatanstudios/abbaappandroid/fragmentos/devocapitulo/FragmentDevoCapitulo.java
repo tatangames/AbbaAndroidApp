@@ -140,8 +140,6 @@ public class FragmentDevoCapitulo extends Fragment {
 
         apiBuscarTexto();
 
-
-
         return vista;
     }
 

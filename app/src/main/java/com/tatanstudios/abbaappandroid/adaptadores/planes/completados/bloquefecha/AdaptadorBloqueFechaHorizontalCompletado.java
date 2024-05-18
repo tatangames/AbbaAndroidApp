@@ -4,6 +4,7 @@ package com.tatanstudios.abbaappandroid.adaptadores.planes.completados.bloquefec
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class AdaptadorBloqueFechaHorizontalCompletado extends RecyclerView.Adapt
 
     private MisPlanesBloquesFechaCompletadosActivity misPlanesBloquesFechaCompletadosActivity;
 
+    private boolean unaVez = true;
 
     public AdaptadorBloqueFechaHorizontalCompletado(Context context, List<ModeloBloqueFecha>
             modeloBloqueFechas, RecyclerView recyclerView, boolean tema, int hayDiaActual, int idUltimoBloque,
@@ -66,7 +68,91 @@ public class AdaptadorBloqueFechaHorizontalCompletado extends RecyclerView.Adapt
     public void onBindViewHolder(@NonNull AdaptadorBloqueFechaHorizontalCompletado.MyViewHolder holder, int position) {
         ModeloBloqueFecha m = modeloBloqueFechas.get(position);
 
-            if(m.getEstaPresionado()){
+
+        if(tema){ // negro
+            holder.constraintLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.codigo_bloquefecha_dark_white_on));
+            holder.txtFecha.setTextColor(colorStateWhite);
+            holder.txtContador.setTextColor(colorStateWhite);
+        }else{
+            holder.constraintLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.codigo_bloquefecha_light_negro_on));
+            holder.txtFecha.setTextColor(colorStateBlack);
+            holder.txtContador.setTextColor(colorStateBlack);
+        }
+
+        if (m.getContador() == 1) {
+            if(unaVez) {
+                unaVez = false;
+                misPlanesBloquesFechaCompletadosActivity.llenarDatosAdapterVertical(modeloBloqueFechas.get(position).getModeloBloqueFechas());
+            }
+        }
+
+
+        if(m.getTextoPersonalizado() == 1){
+
+            if(m.getTxtPersonalizado() != null && !TextUtils.isEmpty(m.getTxtPersonalizado())){
+                holder.txtFecha.setText(m.getTxtPersonalizado());
+                holder.txtContador.setText("");
+            }else{
+                holder.txtFecha.setText("");
+                holder.txtContador.setText("");
+            }
+
+        }else{
+            holder.txtContador.setText(String.valueOf(m.getContador()));
+            holder.txtFecha.setText(m.getAbreviatura());
+        }
+
+
+        holder.itemView.setOnClickListener(v -> {
+
+            for (ModeloBloqueFecha modelo : modeloBloqueFechas) {
+                modelo.setEstaPresionado(false);
+                m.setPrimerBloqueDrawable(false);
+            }
+
+            misPlanesBloquesFechaCompletadosActivity.llenarDatosAdapterVertical(modeloBloqueFechas.get(position).getModeloBloqueFechas());
+            m.setEstaPresionado(true);
+            notifyDataSetChanged();
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+
+        if(modeloBloqueFechas != null){
+            return modeloBloqueFechas.size();
+        }
+        else{
+            return 0;
+        }
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView txtContador;
+        private TextView txtFecha;
+        private ConstraintLayout constraintLayout;
+
+        public MyViewHolder(View itemView){
+            super(itemView);
+
+            txtContador = itemView.findViewById(R.id.textviewContador);
+            txtFecha = itemView.findViewById(R.id.textviewFecha);
+            constraintLayout = itemView.findViewById(R.id.constraintLayout);
+        }
+    }
+
+
+    // MOVER DE POSICION AL RECYCLER
+    public void moverPosicionRecycler(int posicion) {
+        recyclerView.scrollToPosition(posicion);
+    }
+
+
+    private void estaba(){
+
+
+            /*if(m.getEstaPresionado()){
 
                 if(tema){
 
@@ -185,69 +271,9 @@ public class AdaptadorBloqueFechaHorizontalCompletado extends RecyclerView.Adapt
                         }
                     }
                 }
-            }
+            }*/
 
 
-        if(m.getTextoPersonalizado() == 1){
-
-            if(m.getTxtPersonalizado() != null && !TextUtils.isEmpty(m.getTxtPersonalizado())){
-                holder.txtFecha.setText(m.getTxtPersonalizado());
-                holder.txtContador.setText("");
-            }else{
-                holder.txtFecha.setText("");
-                holder.txtContador.setText("");
-            }
-
-        }else{
-            holder.txtContador.setText(String.valueOf(m.getContador()));
-            holder.txtFecha.setText(m.getAbreviatura());
-        }
-
-
-        holder.itemView.setOnClickListener(v -> {
-
-            for (ModeloBloqueFecha modelo : modeloBloqueFechas) {
-                modelo.setEstaPresionado(false);
-                m.setPrimerBloqueDrawable(false);
-            }
-
-            misPlanesBloquesFechaCompletadosActivity.llenarDatosAdapterVertical(modeloBloqueFechas.get(position).getModeloBloqueFechas());
-            m.setEstaPresionado(true);
-            notifyDataSetChanged();
-        });
     }
-
-    @Override
-    public int getItemCount() {
-
-        if(modeloBloqueFechas != null){
-            return modeloBloqueFechas.size();
-        }
-        else{
-            return 0;
-        }
-    }
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-
-        private TextView txtContador;
-        private TextView txtFecha;
-        private ConstraintLayout constraintLayout;
-
-        public MyViewHolder(View itemView){
-            super(itemView);
-
-            txtContador = itemView.findViewById(R.id.textviewContador);
-            txtFecha = itemView.findViewById(R.id.textviewFecha);
-            constraintLayout = itemView.findViewById(R.id.constraintLayout);
-        }
-    }
-
-
-    // MOVER DE POSICION AL RECYCLER
-    public void moverPosicionRecycler(int posicion) {
-        recyclerView.scrollToPosition(posicion);
-    }
-
 
 }
