@@ -34,6 +34,10 @@ import io.reactivex.schedulers.Schedulers;
 
 public class VersiculosListaActivity extends AppCompatActivity {
 
+
+    // YA NO SE USARA ESTA PANTALLA
+    // 18/06/2024
+
     private int idcapibloque = 0;
 
     private RelativeLayout rootRelative;

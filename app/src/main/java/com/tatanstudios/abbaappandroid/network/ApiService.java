@@ -417,16 +417,18 @@ public interface ApiService {
     );
 
 
-    // listado de Textos de los versiculos
-    @POST("app/listado/versiculos/textos")
+    // MODIFICADO: 18/06/2024
+    // listado de Textos del capitulo
+    @POST("app/listado/bibliacapitulo/textos")
     @FormUrlEncoded
     Observable<ModeloContenedorVersiculo> listadoTextosVersiculos(@Field("iduser") String iduser,
                                                             @Field("idiomaplan") int idioma,
-                                                            @Field("idversiculo") int idversiculo
+                                                            @Field("idcapitulo") int idcapitulo
     );
 
 
 
+    // MODIFICADO 18/06/2024
     // informacion textos devo capitulos
     @POST("app/listado/biblia/devocionales")
     @FormUrlEncoded

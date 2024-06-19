@@ -162,7 +162,7 @@ public class MisPlanesBloquesFechaCompletadosActivity extends AppCompatActivity 
 
                                             setearAdapter(apiRespuesta.getPortada());
 
-                                            if(apiRespuesta.getHayDiaActual() == 1){
+                                            /*if(apiRespuesta.getHayDiaActual() == 1){
 
                                                 // conocer la posicion para mover
                                                 for (int i = 0; i < apiRespuesta.getModeloBloqueFechas().size(); i++) {
@@ -180,7 +180,7 @@ public class MisPlanesBloquesFechaCompletadosActivity extends AppCompatActivity 
                                                 if (ultimaPosicion >= 0) {
                                                     adapterHorizontal.moverPosicionRecycler(ultimaPosicion);
                                                 }
-                                            }
+                                            }*/
 
                                             linearContenedor.setVisibility(View.VISIBLE);
                                         }

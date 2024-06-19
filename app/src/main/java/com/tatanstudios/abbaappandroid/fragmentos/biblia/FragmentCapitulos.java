@@ -8,22 +8,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.activity.OnBackPressedDispatcher;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tatanstudios.abbaappandroid.R;
+import com.tatanstudios.abbaappandroid.activity.biblia.VersiculoTextoActivity;
 import com.tatanstudios.abbaappandroid.activity.biblia.VersiculosListaActivity;
 import com.tatanstudios.abbaappandroid.adaptadores.biblia.AdaptadorCapitulos;
-import com.tatanstudios.abbaappandroid.fragmentos.login.registro.FragmentRegistro;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
@@ -34,6 +31,9 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class FragmentCapitulos extends Fragment {
+
+
+    // CAPITULOS DE LA BIBLIA
 
 
     private RelativeLayout rootRelative;
@@ -121,10 +121,13 @@ public class FragmentCapitulos extends Fragment {
     }
 
 
-    // Vista versiculos
+    // 18/06/2024
+    // SE VA DIRECTO AL TEXTO, YA NO ELIGE VERSICULO
     public void bloqueCapitulo(int idcapibloque) {
-        Intent intent = new Intent(getContext(), VersiculosListaActivity.class);
-        intent.putExtra("IDCAPIBLOQUE", idcapibloque);
+
+
+        Intent intent = new Intent(getContext(), VersiculoTextoActivity.class);
+        intent.putExtra("IDCAPITULO", idcapibloque);
         startActivity(intent);
     }
 

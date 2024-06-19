@@ -7,7 +7,7 @@
         android:id="@+id/linearConstraint"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/micaminar_fondo"
+        android:background="@drawable/fondov2"
         android:visibility="visible">
 
     </androidx.constraintlayout.widget.ConstraintLayout>

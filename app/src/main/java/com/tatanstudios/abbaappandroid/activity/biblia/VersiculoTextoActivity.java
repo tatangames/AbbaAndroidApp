@@ -3,19 +3,13 @@ package com.tatanstudios.abbaappandroid.activity.biblia;
 import androidx.activity.OnBackPressedDispatcher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
@@ -24,12 +18,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.adaptadores.biblia.versiculo.AdaptadorVersiculos;
 import com.tatanstudios.abbaappandroid.adaptadores.planes.misplanes.cuestionario.AdaptadorSpinnerTipoLetraCuestionario;
 import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.ModeloTipoLetraCuestionario;
 import com.tatanstudios.abbaappandroid.network.ApiService;
@@ -46,7 +37,10 @@ import io.reactivex.schedulers.Schedulers;
 
 public class VersiculoTextoActivity extends AppCompatActivity {
 
-    private int idversiculo = 0;
+    // NUEVA ACTUALIZACION: SE VIENE DIRECTO DEL CAPITULO
+    // 18/06/2024
+
+    private int idcapitulo = 0;
     private RelativeLayout rootRelative;
     private ApiService service;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -81,7 +75,7 @@ public class VersiculoTextoActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null) {
             Bundle bundle = getIntent().getExtras();
-            idversiculo = bundle.getInt("IDVERSICULO");
+            idcapitulo = bundle.getInt("IDCAPITULO");
         }
 
         onBackPressedDispatcher = getOnBackPressedDispatcher();
@@ -137,7 +131,7 @@ public class VersiculoTextoActivity extends AppCompatActivity {
         int idioma = tokenManager.getToken().getIdiomaTextos();
 
         compositeDisposable.add(
-                service.listadoTextosVersiculos(iduser, idioma, idversiculo)
+                service.listadoTextosVersiculos(iduser, idioma, idcapitulo)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .retry()
@@ -166,9 +160,10 @@ public class VersiculoTextoActivity extends AppCompatActivity {
 
     private void setearDatos(String contenido){
         webView.loadDataWithBaseURL(null, contenido, "text/html", "UTF-8", null);
-        String idpos = "verso" + idversiculo;
 
-        String versoPosicion = "javascript:document.getElementById('" + idpos + "').scrollIntoView();";
+        // YA NO SE MOVERA DE POSICION 18/06/2024
+        //String idpos = "verso" + idcapitulo;
+        //String versoPosicion = "javascript:document.getElementById('" + idpos + "').scrollIntoView();";
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -223,7 +218,8 @@ public class VersiculoTextoActivity extends AppCompatActivity {
 
 
                 new Handler().postDelayed(() -> {
-                    webView.loadUrl(versoPosicion);
+
+                    //webView.loadUrl(versoPosicion);
 
                     webView.setVisibility(View.VISIBLE);
                 }, 500);

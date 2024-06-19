@@ -75,14 +75,9 @@ public class FragmentDevoCapitulo extends Fragment {
 
     // necesito una lista de versiones de textos
 
-    private boolean unaVezModeloVersiones = true;
-
     private List<ModeloVersiones> modeloSpinner = new ArrayList<>();
 
     private boolean unaVezTuerca = true;
-
-
-
 
 
     @Override
@@ -127,7 +122,7 @@ public class FragmentDevoCapitulo extends Fragment {
         }
 
         imgTuerca.setOnClickListener(v ->{
-            verOpcionesTuerca();
+            opcionesWebView();
         });
 
         // detectar que toque el titulo para redireccinar biblia
@@ -162,14 +157,8 @@ public class FragmentDevoCapitulo extends Fragment {
 
                                         if(apiRespuesta.getSuccess() == 1) {
 
-                                            String texto = apiRespuesta.getContenido();
 
-                                            if(unaVezModeloVersiones){
-                                                unaVezModeloVersiones = false;
-                                                llenarLista(apiRespuesta.getModeloVersiones());
-                                            }
-
-                                            setearTexto(texto);
+                                            setearTexto(apiRespuesta.getContenido());
                                         }
                                         else{
                                             mensajeSinConexion();
@@ -184,12 +173,7 @@ public class FragmentDevoCapitulo extends Fragment {
         );
     }
 
-    private void llenarLista(List<ModeloVersiones> modeloVersiones){
 
-        for(ModeloVersiones mm : modeloVersiones){
-            modeloSpinner.add(new ModeloVersiones(mm.getId(), mm.getTitulo()));
-        }
-    }
 
 
     private void setearTexto(String texto){
@@ -255,7 +239,7 @@ public class FragmentDevoCapitulo extends Fragment {
 
 
 
-    private void verOpcionesTuerca(){
+    /*private void verOpcionesTuerca(){
 
         if(unaVezTuerca){
             unaVezTuerca = false;
@@ -305,7 +289,7 @@ public class FragmentDevoCapitulo extends Fragment {
             // Muestra el menú emergente
             popupMenu.show();
         }
-    }
+    }*/
 
 
     private void opcionesWebView(){
