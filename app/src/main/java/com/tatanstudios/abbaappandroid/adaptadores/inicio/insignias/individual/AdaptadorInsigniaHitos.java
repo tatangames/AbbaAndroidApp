@@ -22,6 +22,8 @@ import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloInsigniaHitos;
 import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloVistaHitos;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class AdaptadorInsigniaHitos extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -36,10 +38,13 @@ public class AdaptadorInsigniaHitos extends RecyclerView.Adapter<RecyclerView.Vi
             .placeholder(R.drawable.camaradefecto)
             .priority(Priority.NORMAL);
 
-    public AdaptadorInsigniaHitos(Context context, List<ModeloVistaHitos> modeloVistaHitos, String textoFalta) {
+    private int contadorActual = 0;
+
+    public AdaptadorInsigniaHitos(Context context, List<ModeloVistaHitos> modeloVistaHitos, String textoFalta, int contadorActual) {
         this.context = context;
         this.modeloVistaHitos = modeloVistaHitos;
         this.textoFalta = textoFalta;
+        this.contadorActual = contadorActual;
     }
 
     @NonNull
@@ -98,6 +103,11 @@ public class AdaptadorInsigniaHitos extends RecyclerView.Adapter<RecyclerView.Vi
 
                 viewHolderDescripcion.txtNivel.setText(String.valueOf(mDescripcion.getNivelvoy()));
 
+                String texto = context.getString(R.string.contador_actual) + ": " + contadorActual;
+
+                viewHolderDescripcion.txtContador.setText(texto);
+
+
                 break;
             case ModeloVistaHitos.TIPO_RECYCLER:
 
@@ -140,12 +150,15 @@ public class AdaptadorInsigniaHitos extends RecyclerView.Adapter<RecyclerView.Vi
         private TextView txtTitulo;
         private TextView txtDescripcion;
 
+        private TextView txtContador;
+
         DescripcionViewHolder(View itemView) {
             super(itemView);
             imgLogo = itemView.findViewById(R.id.imgLogo);
             txtNivel = itemView.findViewById(R.id.txtNivel);
             txtTitulo = itemView.findViewById(R.id.txtTitulo);
             txtDescripcion = itemView.findViewById(R.id.txtDescripcion);
+            txtContador = itemView.findViewById(R.id.txtContador);
         }
     }
 

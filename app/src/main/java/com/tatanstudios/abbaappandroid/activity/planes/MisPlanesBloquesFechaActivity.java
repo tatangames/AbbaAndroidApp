@@ -149,11 +149,8 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
 
                                         if(apiRespuesta.getSuccess() == 1) {
 
-                                            int hayDiaActual = apiRespuesta.getHayDiaActual();
-                                            int idUltimoBloque = apiRespuesta.getIdUltimoBloque();
-
-                                            adapterHorizontal = new AdaptadorBloqueFechaHorizontal(this, apiRespuesta.getModeloBloqueFechas(), recyclerViewHorizontal, tema,
-                                                    hayDiaActual, idUltimoBloque, this);
+                                            adapterHorizontal = new AdaptadorBloqueFechaHorizontal(this, apiRespuesta.getModeloBloqueFechas(),  tema,
+                                                    this);
                                             recyclerViewHorizontal.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
                                             recyclerViewHorizontal.setAdapter(adapterHorizontal);
 
@@ -173,9 +170,6 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                                 })
         );
     }
-
-
-
 
 
     private void setearPortada(String urlPortada){
@@ -285,13 +279,8 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                                             }
                                             else if(apiRespuesta.getSuccess() == 2) {
 
-                                                int ignorar = apiRespuesta.getIgnorarpre();
                                                 String textoGlobal = "";
 
-                                                boolean noevitarPrimero = true;
-                                                if(ignorar == 1){
-                                                    noevitarPrimero = false;
-                                                }
 
                                                 if(apiRespuesta.getDescripcion() != null && !TextUtils.isEmpty(apiRespuesta.getDescripcion())){
                                                     textoGlobal += apiRespuesta.getDescripcion() + "\n";
@@ -300,19 +289,15 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                                                 // Preguntas
                                                 for (ModeloPreguntas arrayPreguntas : apiRespuesta.getModeloPreguntas()) {
 
-                                                    if(noevitarPrimero){
-                                                        if(arrayPreguntas.getTitulo() != null && !TextUtils.isEmpty(arrayPreguntas.getTitulo())){
-                                                            String textoSinHTMLTitulo = HtmlCompat.fromHtml(arrayPreguntas.getTitulo(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
+                                                    if(arrayPreguntas.getTitulo() != null && !TextUtils.isEmpty(arrayPreguntas.getTitulo())){
+                                                        String textoSinHTMLTitulo = HtmlCompat.fromHtml(arrayPreguntas.getTitulo(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
 
-                                                            textoGlobal += textoSinHTMLTitulo + "\n";
-                                                        }
-
-                                                        if(arrayPreguntas.getTexto() != null && !TextUtils.isEmpty(arrayPreguntas.getTexto())){
-                                                            textoGlobal += arrayPreguntas.getTexto() + "\n";
-                                                        }
+                                                        textoGlobal += textoSinHTMLTitulo + "\n";
                                                     }
 
-                                                    noevitarPrimero = true;
+                                                    if(arrayPreguntas.getTexto() != null && !TextUtils.isEmpty(arrayPreguntas.getTexto())){
+                                                        textoGlobal += arrayPreguntas.getTexto() + "\n";
+                                                    }
                                                 }
 
                                                 Intent intent = new Intent(Intent.ACTION_SEND);
@@ -348,11 +333,10 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
     }
 
 
-    public void redireccionarCuestionario(int idBlockDeta, int tienePreguntas){
+    public void redireccionarCuestionario(int idBlockDeta){
 
         Intent intent = new Intent(this, CuestionarioPlanActivity.class);
         intent.putExtra("IDBLOQUE", idBlockDeta);
-        intent.putExtra("PREGUNTAS", tienePreguntas);
         startActivity(intent);
     }
 

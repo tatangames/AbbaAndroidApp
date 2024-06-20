@@ -19,8 +19,6 @@ public class ModeloBloqueFechaDetalle {
     @SerializedName("completado")
     private int completado;
 
-    @SerializedName("tiene_preguntas")
-    private int tienePreguntas;
 
 
     public void setCompletado(int completado) {
@@ -47,7 +45,6 @@ public class ModeloBloqueFechaDetalle {
         return completado;
     }
 
-    public int getTienePreguntas() {
-        return tienePreguntas;
-    }
+
+
 }

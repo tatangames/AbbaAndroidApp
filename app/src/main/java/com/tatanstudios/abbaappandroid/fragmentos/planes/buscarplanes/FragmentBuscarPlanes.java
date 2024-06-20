@@ -22,13 +22,9 @@ import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.planes.VerPlanParaSeleccionarActivity;
 import com.tatanstudios.abbaappandroid.adaptadores.planes.buscarplanes.AdaptadorBuscarPlanes;
 import com.tatanstudios.abbaappandroid.fragmentos.menuprincipal.FragmentPlanes;
-import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanes;
-import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateRequest;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
-
-import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;

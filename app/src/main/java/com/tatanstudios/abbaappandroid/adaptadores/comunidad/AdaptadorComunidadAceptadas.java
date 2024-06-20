@@ -100,12 +100,18 @@ public class AdaptadorComunidadAceptadas extends RecyclerView.Adapter<RecyclerVi
 
                 ((AdaptadorComunidadAceptadas.HolderVistaBotonera) holder).btnPendiente.setBackgroundTintList(colorStateListWhite);
                 ((AdaptadorComunidadAceptadas.HolderVistaBotonera) holder).btnPendiente.setTextColor(colorStateListBlack);
+
+                ((HolderVistaBotonera) holder).btnPlanComunidad.setBackgroundTintList(colorStateListWhite);
+                ((AdaptadorComunidadAceptadas.HolderVistaBotonera) holder).btnPlanComunidad.setTextColor(colorStateListBlack);
             }else{
                 ((AdaptadorComunidadAceptadas.HolderVistaBotonera) holder).btnAgregar.setBackgroundTintList(colorStateListBlack);
                 ((AdaptadorComunidadAceptadas.HolderVistaBotonera) holder).btnAgregar.setTextColor(colorStateListWhite);
 
                 ((AdaptadorComunidadAceptadas.HolderVistaBotonera) holder).btnPendiente.setBackgroundTintList(colorStateListBlack);
                 ((AdaptadorComunidadAceptadas.HolderVistaBotonera) holder).btnPendiente.setTextColor(colorStateListWhite);
+
+                ((HolderVistaBotonera) holder).btnPlanComunidad.setBackgroundTintList(colorStateListBlack);
+                ((AdaptadorComunidadAceptadas.HolderVistaBotonera) holder).btnPlanComunidad.setTextColor(colorStateListWhite);
             }
 
             ((HolderVistaBotonera) holder).btnAgregar.setOnClickListener(v -> {
@@ -113,7 +119,6 @@ public class AdaptadorComunidadAceptadas extends RecyclerView.Adapter<RecyclerVi
             });
 
             ((HolderVistaBotonera) holder).btnPendiente.setOnClickListener(v -> {
-
 
                 // Crea un PopupMenu
                 PopupMenu popupMenu = new PopupMenu(context, ((HolderVistaBotonera) holder).btnPendiente);
@@ -156,6 +161,63 @@ public class AdaptadorComunidadAceptadas extends RecyclerView.Adapter<RecyclerVi
                 // Muestra el menú emergente
                 popupMenu.show();
             });
+
+
+
+            // NUEVO BOTON PARA SABER QUIEN ME UNIO A SU PLAN COMUNIDAD
+
+
+            ((HolderVistaBotonera) holder).btnPlanComunidad.setOnClickListener(v -> {
+
+                // Crea un PopupMenu
+                PopupMenu popupMenu = new PopupMenu(context, ((HolderVistaBotonera) holder).btnPlanComunidad);
+
+
+                // Infla el menú en el PopupMenu
+                popupMenu.inflate(R.menu.menu_opciones_plancomunidad_opcion);
+
+                // Establece un listener para manejar los clics en los elementos del menú
+                popupMenu.setOnMenuItemClickListener(item -> {
+                    // Marcar que el menú está cerrado
+                    // menuAbierto = false;
+
+                    // AGREGADO (ES DECIR: YO AGREGUE ESTOS AMIGOS A UN PLAN)
+                    if (item.getItemId() == R.id.opcion1) {
+
+                        fragmentTabComunidad.vistaInformacionAmigosPlan(1);
+
+                        return true;
+                    }
+
+                    // ME HAN AGREGADO (LOS AMIGOS QUE ME HAN AGREGADO A SU PLAN)
+                    else if (item.getItemId() == R.id.opcion2) {
+
+                        fragmentTabComunidad.vistaInformacionAmigosPlan(2);
+
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                });
+
+                // Agrega un listener para detectar cuando se cierra el menú
+                popupMenu.setOnDismissListener(menu -> {
+                    // Marcar que el menú está cerrado
+                    // menuAbierto = false;
+                });
+
+                // Muestra el menú emergente
+                popupMenu.show();
+            });
+
+
+
+
+
+
+
+
         }
 
         // VISTA LISTADO ACEPTADO SOLICITUDES
@@ -289,15 +351,16 @@ public class AdaptadorComunidadAceptadas extends RecyclerView.Adapter<RecyclerVi
         private Button btnAgregar;
         private Button btnPendiente;
 
+        private Button btnPlanComunidad;
+
         public HolderVistaBotonera(@NonNull View itemView) {
             super(itemView);
 
             btnAgregar = itemView.findViewById(R.id.btnAgregar);
             btnPendiente = itemView.findViewById(R.id.btnPendientes);
+            btnPlanComunidad = itemView.findViewById(R.id.btnPlanComunidad);
         }
     }
-
-
 
 
 

@@ -15,12 +15,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.material.imageview.ShapeableImageView;
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.adaptadores.inicio.cuestionario.preguntas.AdaptadorPreguntasInicio;
-import com.tatanstudios.abbaappandroid.fragmentos.planes.completados.FragmentPlanesCompletados;
 import com.tatanstudios.abbaappandroid.modelos.notificacion.ModeloListaNotificacion;
-import com.tatanstudios.abbaappandroid.modelos.planes.completados.ModeloPlanesCompletados;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 
 import java.util.List;

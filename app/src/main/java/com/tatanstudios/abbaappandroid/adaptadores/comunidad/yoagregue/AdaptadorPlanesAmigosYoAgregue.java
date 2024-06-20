@@ -1,4 +1,4 @@
-package com.tatanstudios.abbaappandroid.adaptadores.comunidad.planes;
+package com.tatanstudios.abbaappandroid.adaptadores.comunidad.yoagregue;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -16,6 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.tatanstudios.abbaappandroid.R;
+import com.tatanstudios.abbaappandroid.activity.comunidad.agregados.PlanesAgregueComunidadActivity;
 import com.tatanstudios.abbaappandroid.extras.IOnRecyclerViewClickListener;
 import com.tatanstudios.abbaappandroid.fragmentos.comunidad.FragmentPlanesAmigos;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanes;
@@ -23,12 +24,12 @@ import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 
 import java.util.List;
 
-public class AdaptadorPlanesAmigos extends RecyclerView.Adapter<AdaptadorPlanesAmigos.ViewHolder> {
+public class AdaptadorPlanesAmigosYoAgregue extends RecyclerView.Adapter<AdaptadorPlanesAmigosYoAgregue.ViewHolder> {
 
     private List<ModeloMisPlanes> modeloMisPlanes;
     private Context context;
 
-    private FragmentPlanesAmigos fragmentPlanesAmigos;
+    private PlanesAgregueComunidadActivity planesAgregueComunidadActivity;
 
 
     RequestOptions opcionesGlide = new RequestOptions()
@@ -38,22 +39,22 @@ public class AdaptadorPlanesAmigos extends RecyclerView.Adapter<AdaptadorPlanesA
             .priority(Priority.NORMAL);
 
 
-    public AdaptadorPlanesAmigos(Context context, List<ModeloMisPlanes> modeloMisPlanes, FragmentPlanesAmigos fragmentPlanesAmigos) {
+    public AdaptadorPlanesAmigosYoAgregue(Context context, List<ModeloMisPlanes> modeloMisPlanes, PlanesAgregueComunidadActivity planesAgregueComunidadActivity) {
         this.context = context;
         this.modeloMisPlanes = modeloMisPlanes;
-        this.fragmentPlanesAmigos = fragmentPlanesAmigos;
+        this.planesAgregueComunidadActivity = planesAgregueComunidadActivity;
     }
 
     @NonNull
     @Override
-    public AdaptadorPlanesAmigos.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdaptadorPlanesAmigosYoAgregue.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View itemView = inflater.inflate(R.layout.cardview_planes_amigos, parent, false);
-        return new AdaptadorPlanesAmigos.ViewHolder(itemView);
+        View itemView = inflater.inflate(R.layout.cardview_planes_amigos_yoagregue, parent, false);
+        return new AdaptadorPlanesAmigosYoAgregue.ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdaptadorPlanesAmigos.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdaptadorPlanesAmigosYoAgregue.ViewHolder holder, int position) {
 
         ModeloMisPlanes currentItem = modeloMisPlanes.get(position);
 
@@ -78,7 +79,7 @@ public class AdaptadorPlanesAmigos extends RecyclerView.Adapter<AdaptadorPlanesA
         }
 
         holder.itemView.setOnClickListener(view -> {
-            fragmentPlanesAmigos.verItemsPlan(currentItem.getIdPlanes());
+            planesAgregueComunidadActivity.cambioVista(currentItem.getIdPlanes()); // id_planes
         });
     }
 

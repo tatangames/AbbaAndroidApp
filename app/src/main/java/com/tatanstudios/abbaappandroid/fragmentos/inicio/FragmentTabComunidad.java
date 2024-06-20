@@ -23,6 +23,8 @@ import com.tatanstudios.abbaappandroid.activity.comunidad.AgregarAmigoComunidadA
 import com.tatanstudios.abbaappandroid.activity.comunidad.ComunidadInsigniaActivity;
 import com.tatanstudios.abbaappandroid.activity.comunidad.SolicitudPendienteEnviadaActivity;
 import com.tatanstudios.abbaappandroid.activity.comunidad.SolicitudPendienteRecibidaActivity;
+import com.tatanstudios.abbaappandroid.activity.comunidad.agregados.PlanesAgregueComunidadActivity;
+import com.tatanstudios.abbaappandroid.activity.comunidad.mehanagregado.PlanesAmigosMeHanAgregadoActivity;
 import com.tatanstudios.abbaappandroid.activity.comunidad.planes.PlanesAmigosActivity;
 import com.tatanstudios.abbaappandroid.adaptadores.comunidad.AdaptadorComunidadAceptadas;
 import com.tatanstudios.abbaappandroid.modelos.comunidad.ModeloComunidad;
@@ -52,10 +54,6 @@ public class FragmentTabComunidad extends Fragment {
 
     int colorProgress = 0;
 
-    private ColorStateList colorStateTintGrey, colorStateTintWhite, colorStateTintBlack;
-
-    private int colorBlanco = 0;
-    private int colorBlack = 0;
 
     private boolean tema = false;
     private AdaptadorComunidadAceptadas adaptadorComunidadAceptadas;
@@ -87,13 +85,8 @@ public class FragmentTabComunidad extends Fragment {
         rootRelative.addView(progressBar, params);
         progressBar.getIndeterminateDrawable().setColorFilter(colorProgress, PorterDuff.Mode.SRC_IN);
 
-        colorBlanco = ContextCompat.getColor(requireContext(), R.color.blanco);
-        colorBlack = ContextCompat.getColor(requireContext(), R.color.negro);
-        int colorGris = ContextCompat.getColor(requireContext(), R.color.gris616161);
 
-        colorStateTintGrey = ColorStateList.valueOf(colorGris);
-        colorStateTintWhite = ColorStateList.valueOf(colorBlanco);
-        colorStateTintBlack = ColorStateList.valueOf(colorBlack);
+
 
         refresh.setEnabled(false);
 
@@ -131,7 +124,7 @@ public class FragmentTabComunidad extends Fragment {
 
                                         if(apiRespuesta.getSuccess() == 1) {
                                            setearCampos(apiRespuesta);
-                                            recyclerView.setVisibility(View.VISIBLE);
+                                           recyclerView.setVisibility(View.VISIBLE);
                                         }
                                         else{
                                             mensajeSinConexion();
@@ -194,6 +187,24 @@ public class FragmentTabComunidad extends Fragment {
             startActivity(intent);
         }
     }
+
+
+    // VISTA PARA SABER QUIEN ME A AGREGADO A SU PLAN COMUNIDAD Y QUIEN YO AGREGUE
+    public void vistaInformacionAmigosPlan(int vista){
+        // 1: YO AGREGUE ESTOS AMIGOS A MI PLAN
+        // 2: ME HAN AGREGADO A SU PLAN
+
+        if(vista == 1){
+            Intent intent = new Intent(getContext(), PlanesAgregueComunidadActivity.class);
+            startActivity(intent);
+        }else{
+            Intent intent = new Intent(getContext(), PlanesAmigosMeHanAgregadoActivity.class);
+            startActivity(intent);
+        }
+    }
+
+
+
 
     public void insigniasComunidad(int idsolicitud){
         Intent intent = new Intent(getContext(), ComunidadInsigniaActivity.class);

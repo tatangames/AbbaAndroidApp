@@ -1,11 +1,4 @@
-package com.tatanstudios.abbaappandroid.activity.insignias;
-
-import androidx.activity.OnBackPressedCallback;
-import androidx.activity.OnBackPressedDispatcher;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.tatanstudios.abbaappandroid.activity.comunidad.mehanagregado;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -16,66 +9,63 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
+import androidx.activity.OnBackPressedDispatcher;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.adaptadores.inicio.insignias.individual.AdaptadorInsigniaHitos;
-import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloContenedorInsignias;
-import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloDescripcionHitos;
-import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloInsigniaHitos;
-import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloVistaHitos;
+import com.tatanstudios.abbaappandroid.activity.comunidad.agregados.PlanesListadoAmigoAgregadoActivity;
+import com.tatanstudios.abbaappandroid.adaptadores.comunidad.mehanagregado.AdaptadorPlanesAmigosMeHanAgregado;
+import com.tatanstudios.abbaappandroid.adaptadores.comunidad.yoagregue.AdaptadorPlanesAmigosYoAgregue;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class InformacionInsigniaActivity extends AppCompatActivity {
+public class PlanesMeHanAgregadoActivity extends AppCompatActivity {
 
-
-    private int idTipoInsignia = 0;
+    int id = 0;
 
     private RelativeLayout rootRelative;
-
     private ApiService service;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-
     private TokenManager tokenManager;
-
     private ProgressBar progressBar;
-
-    private ImageView imgFlechaAtras, imgTuerca;
-
+    private ImageView imgFlechaAtras;
     private OnBackPressedDispatcher onBackPressedDispatcher;
     private RecyclerView recyclerView;
+    private TextView txtToolbar;
 
-    private AdaptadorInsigniaHitos adaptadorInsigniaHitos;
-
-    private ArrayList<ModeloVistaHitos> elementos = new ArrayList<>();
-
-    private boolean yaPuedeTuerca = false;
-
-    private int contadorActual = 0;
+    private AdaptadorPlanesAmigosMeHanAgregado adaptadorPlanesAmigosMeHanAgregado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_informacion_insignia);
-
-        recyclerView = findViewById(R.id.recyclerView);
-        imgFlechaAtras = findViewById(R.id.imgFlechaAtras);
-        imgTuerca = findViewById(R.id.imgTuerca);
-        rootRelative = findViewById(R.id.rootRelative);
+        setContentView(R.layout.activity_planes_me_han_agregado);
 
         if (getIntent().getExtras() != null) {
             Bundle bundle = getIntent().getExtras();
-            idTipoInsignia = bundle.getInt("IDINSIGNIA");
+            id = bundle.getInt("ID");
         }
 
+        recyclerView = findViewById(R.id.recyclerView);
+        imgFlechaAtras = findViewById(R.id.imgFlechaAtras);
+        rootRelative = findViewById(R.id.rootRelative);
+        txtToolbar = findViewById(R.id.txtToolbar);
+
+        txtToolbar.setText(getString(R.string.planes));
 
         int colorProgress = ContextCompat.getColor(this, R.color.barraProgreso);
 
@@ -90,13 +80,8 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
 
         onBackPressedDispatcher = getOnBackPressedDispatcher();
 
-
         imgFlechaAtras.setOnClickListener(v -> {
             volverAtras();
-        });
-
-        imgTuerca.setOnClickListener(v -> {
-            informacionNiveles();
         });
 
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
@@ -108,17 +93,16 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
 
         onBackPressedDispatcher.addCallback(onBackPressedCallback);
 
-        apiBuscarInfoInsignia();
+        apiBuscarInformacion();
     }
 
 
-    private void apiBuscarInfoInsignia(){
+    private void apiBuscarInformacion(){
 
-        String iduser = tokenManager.getToken().getId();
         int idioma = tokenManager.getToken().getIdiomaTextos();
 
         compositeDisposable.add(
-                service.informacionInsigniaSeleccionada(iduser, idioma, idTipoInsignia)
+                service.listadoPlanesComunidadYoAdd(idioma)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .retry()
@@ -129,9 +113,15 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
 
                                         if (apiRespuesta.getSuccess() == 1) {
 
-                                            contadorActual = apiRespuesta.getContador();
-
-                                            setearCampos(apiRespuesta);
+                                            if(apiRespuesta.getHayinfo() == 1){
+                                                adaptadorPlanesAmigosMeHanAgregado = new AdaptadorPlanesAmigosMeHanAgregado(this, apiRespuesta.getModeloMisPlanes(), this);
+                                                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+                                                recyclerView.addItemDecoration(dividerItemDecoration);
+                                                recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+                                                recyclerView.setAdapter(adaptadorPlanesAmigosMeHanAgregado);
+                                            }else{
+                                                Toasty.info(this, getString(R.string.no_hay_informacion), Toasty.LENGTH_SHORT).show();
+                                            }
 
                                         }else{
                                             mensajeSinConexion();
@@ -145,63 +135,6 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
                                 })
         );
     }
-
-
-    private void setearCampos(ModeloContenedorInsignias apiRespuesta){
-
-        elementos.add(new ModeloVistaHitos( ModeloVistaHitos.TIPO_IMAGEN,
-                new ModeloDescripcionHitos(apiRespuesta.getImagen(), apiRespuesta.getTitulo(),
-                        apiRespuesta.getDescripcion(), apiRespuesta.getNivelvoy()),
-                null
-        ));
-
-
-        List<ModeloInsigniaHitos> mm = new ArrayList<>();
-
-
-        // verificar si hay siguiente nivel
-        /*if(apiRespuesta.getHitoHayNextLevel() == 1){
-            mm.add(new ModeloInsigniaHitos("", 1, apiRespuesta.getCualNextLevel(),0, apiRespuesta.getHitoCuantoFalta(),
-                    ""
-            ));
-        }*/
-
-
-        for (ModeloInsigniaHitos m : apiRespuesta.getModeloInsigniaHitos()){
-            mm.add(new ModeloInsigniaHitos(m.getFechaFormat(), 0, 0,m.getNivel(), 0,
-                    m.getTextoCompletado()));
-        }
-
-
-        elementos.add(new ModeloVistaHitos( ModeloVistaHitos.TIPO_RECYCLER,
-                null,
-                mm
-        ));
-
-
-        // llenar adaptador de los hitos, y le estoy pasando textoFalta o remaining
-        adaptadorInsigniaHitos = new AdaptadorInsigniaHitos(getApplicationContext(), elementos, apiRespuesta.getTextofalta(), contadorActual);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adaptadorInsigniaHitos);
-
-
-        yaPuedeTuerca = true;
-    }
-
-
-
-    private void informacionNiveles(){
-
-        if(yaPuedeTuerca){
-
-            Intent i = new Intent(this, NivelesInsigniasActivity.class);
-            i.putExtra("IDTIPOINSIGNIA", idTipoInsignia);
-            startActivity(i);
-        }
-
-    }
-
-
 
 
     private void volverAtras(){
@@ -227,4 +160,5 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
         }
         super.onStop();
     }
+
 }

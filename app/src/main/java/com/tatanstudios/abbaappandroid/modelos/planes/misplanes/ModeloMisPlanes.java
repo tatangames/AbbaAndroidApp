@@ -28,6 +28,34 @@ public class ModeloMisPlanes {
     @SerializedName("fecha")
     private String fecha;
 
+    @SerializedName("nombre")
+    private String nombre;
+
+    @SerializedName("correo")
+    private String correo;
+
+    @SerializedName("conteo")
+    private int conteo;
+
+    @SerializedName("nombrecompleto")
+    private String nombrecompleto;
+
+
+    public String getNombrecompleto() {
+        return nombrecompleto;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public int getConteo() {
+        return conteo;
+    }
 
     public String getFecha() {
         return fecha;

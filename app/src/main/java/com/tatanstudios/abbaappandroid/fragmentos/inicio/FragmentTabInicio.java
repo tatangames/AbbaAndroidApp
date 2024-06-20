@@ -3,7 +3,6 @@ package com.tatanstudios.abbaappandroid.fragmentos.inicio;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -17,22 +16,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,15 +39,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.github.chrisbanes.photoview.PhotoView;
-import com.google.android.datatransport.backend.cct.BuildConfig;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.imageview.ShapeableImageView;
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.activity.inicio.cuestionario.CuestionarioInicioActivity;
 import com.tatanstudios.abbaappandroid.activity.inicio.imagenes.ListadoImagenesActivity;
 import com.tatanstudios.abbaappandroid.activity.inicio.insignias.ListadoInsigniasActivity;
 import com.tatanstudios.abbaappandroid.activity.inicio.videos.ListadoVideosActivity;
@@ -72,19 +62,7 @@ import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
 
-
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -156,9 +134,7 @@ public class FragmentTabInicio extends Fragment{
             Manifest.permission.READ_MEDIA_IMAGES,
     };
 
-
     private boolean is_storage_image_permitted = false;
-
 
 
     private boolean allPermissionResultCheck(){

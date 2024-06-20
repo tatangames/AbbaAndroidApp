@@ -47,6 +47,10 @@ import io.reactivex.schedulers.Schedulers;
 public class FragmentDevoCapitulo extends Fragment {
 
 
+    // MUESTRA CAPITULO DE LA BIBLIA CUANDO SE HACE CLICK AL TITULO DEL DEVOCIONAL
+
+
+
     private int iddevobiblia = 0;
 
     private ImageView imgFlechaAtras, imgTuerca;
@@ -77,7 +81,6 @@ public class FragmentDevoCapitulo extends Fragment {
 
     private List<ModeloVersiones> modeloSpinner = new ArrayList<>();
 
-    private boolean unaVezTuerca = true;
 
 
     @Override

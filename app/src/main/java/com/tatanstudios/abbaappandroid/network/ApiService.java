@@ -152,11 +152,6 @@ public interface ApiService {
                                                    @Field("iduser") String iduser);
 
 
-    // listado de mis planes
-   /* @POST("app/plan/listado/misplanes")
-    Observable<ModeloMisPlanesPaginate<ModeloMisPlanesPaginateMetaDatos>> listadoMisPlanes(
-            @Body ModeloMisPlanesPaginateRequest request);*/
-
 
     // informacion de bloque fechas de un plan
     @POST("app/plan/misplanes/informacion/bloque")
@@ -207,11 +202,6 @@ public interface ApiService {
                                                                             @Field("idiomaplan") int idioma);
 
 
-    // listado de planes completados
-    /*@POST("app/plan/misplanes/completados")
-    Observable<ModeloPlanesCompletadosPaginate<ModeloPlanesCompletadosPaginateMetaDatos>> listadoPlanesCompletados(
-            @Body ModeloPlanesCompletadosPaginateRequest request);*/
-
 
     // informacion de tods el inicio
     @POST("app/inicio/bloque/completa")
@@ -241,6 +231,16 @@ public interface ApiService {
     Observable<ModeloContenedorInsignias> informacionInsigniaSeleccionada(@Field("iduser") String iduser,
                                                                           @Field("idiomaplan") int idiomaplan,
                                                                           @Field("idinsignia") int idinsignia);
+
+
+    // informacion de niveles de insignias
+    @POST("app/insignia/niveles/informacion")
+    @FormUrlEncoded
+    Observable<ModeloContenedorInsignias> listadoNivelesInsigniasInfo(@Field("idtipoinsignia") int idtipoinsignia);
+
+
+
+
 
 
 
@@ -350,20 +350,32 @@ public interface ApiService {
 
 
 
-    // listado planes para ocultar
-    @POST("app/comunidad/planes/usuarios")
+    @POST("app/comunidad/yoagregue/planeslistado")
     @FormUrlEncoded
-    Observable<ModeloPlanesContenedor> listadoPlanesParaOcultar(@Field("iduser") String iduser,
-                                                                @Field("idiomaplan") int idiomaplan);
+    Observable<ModeloPlanesContenedor> listadoPlanesComunidadYoAdd(@Field("idiomaplan") int idiomaplan);
 
-
-
-
-    // actualizar lista de planes ocultos
-    @POST("app/comunidad/actualizarplanes/ocultos")
+    @POST("app/comunidad/yoagregue/planeslistado/informacion")
     @FormUrlEncoded
-    Observable<ModeloPlanesContenedor> actualizarPlanesOcultos(@Field("iduser") String iduser,
-                                                          @FieldMap Map<String, Integer> listado);
+    Observable<ModeloPlanesContenedor> listadoPlanesComunidadYoAddComoVan(@Field("idiomaplan") int idiomaplan,
+                                                                          @Field("idplan") int idplan);
+
+
+
+    // LISTADO DE AMIGOS QUE ME TIENEN AGREGADO A UN PLAN
+    @POST("app/comunidad/mehanagregado/planes/amigos")
+    @FormUrlEncoded
+    Observable<ModeloPlanesContenedor> listadoAmigosMeAgregaronSuPlan(@Field("idiomaplan") int idiomaplan);
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -441,14 +453,14 @@ public interface ApiService {
 
 
     // FIX 30/04/2024
-    @POST("app/plan/listado/misplanes/nopagination")
+    @POST("app/plan/listado/misplanes")
     @FormUrlEncoded
     Observable<ModeloContenedorPlanesV2> listadoMisPlanes(@Field("iduser") String iduser,
                                                           @Field("idiomaplan") int idiomaplan);
 
 
 
-    @POST("app/buscar/planes/nuevos/nopagination")
+    @POST("app/buscar/planes/nuevos")
     @FormUrlEncoded
     Observable<ModeloContenedorPlanesV2> listadoNuevosPlanes(@Field("iduser") String iduser,
                                                           @Field("idiomaplan") int idiomaplan);

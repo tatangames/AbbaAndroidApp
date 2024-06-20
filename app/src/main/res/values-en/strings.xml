@@ -241,7 +241,13 @@
     <string name="escribir_ciudad">Write city</string>
     <string name="ciudad">City</string>
     <string name="otros">Other</string>
-
+    <string name="niveles">Levels</string>
+    <string name="contador_actual">current counter</string>
+    <string name="agregado">aggregate</string>
+    <string name="me_han_agregado">I have been added</string>
+    <string name="no_hay_informacion">There is no information</string>
+    <string name="devocional_total">Total Devotional</string>
+    <string name="devocional_realizados">Devotional Performed</string>
 
     <string-array name="estados_elsalvador_array">
         <item>Seleccionar Área</item>

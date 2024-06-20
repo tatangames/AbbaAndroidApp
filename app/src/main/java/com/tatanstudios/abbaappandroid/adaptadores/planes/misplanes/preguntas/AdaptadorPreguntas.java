@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.text.HtmlCompat;
@@ -29,7 +27,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.adaptadores.inicio.cuestionario.preguntas.AdaptadorPreguntasInicio;
 import com.tatanstudios.abbaappandroid.fragmentos.planes.cuestionario.FragmentPreguntasPlanBloque;
 import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.preguntas.ModeloPreguntas;
 import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.preguntas.ModeloVistasPreguntas;
@@ -129,7 +126,6 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
             }else{
                 ((HolderVistaImagen) holder).imgPortada.setImageResource(R.drawable.ic_nina_leyendo);
             }
-
         }
 
         // TITULAR
@@ -227,7 +223,7 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             txtInputMap.put(m.getId(), ((HolderVistaBloquePregunta) holder).txtInput);
 
-            txtInputMapRequerido.put(m.getId(), m.getRequerido());
+            txtInputMapRequerido.put(m.getId(), 1);
 
             // recupera y setea el texto de la pregunta
             if(m.getTexto() != null && !TextUtils.isEmpty(m.getTexto())){
@@ -264,10 +260,8 @@ public class AdaptadorPreguntas extends RecyclerView.Adapter<RecyclerView.ViewHo
                 public void afterTextChanged(Editable s) {
 
                     if(TextUtils.isEmpty(s)){
-                        if(m.getRequerido() == 1){
                             String texto = context.getString(R.string.campo_requerido);
                             ((HolderVistaBloquePregunta) holder).txtInput.setError(texto);
-                        }
                     }else{
                         ((HolderVistaBloquePregunta) holder).txtInput.setError(null);
                     }

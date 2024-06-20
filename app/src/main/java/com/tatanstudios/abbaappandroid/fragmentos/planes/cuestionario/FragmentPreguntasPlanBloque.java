@@ -154,7 +154,6 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
                                             for (ModeloPreguntas arrayPreguntas : apiRespuesta.getModeloPreguntas()) {
                                                 elementos.add(new ModeloVistasPreguntas( ModeloVistasPreguntas.TIPO_PREGUNTA, new ModeloPreguntas(
                                                         arrayPreguntas.getId(),
-                                                        arrayPreguntas.getRequerido(),
                                                         arrayPreguntas.getTitulo(),
                                                         arrayPreguntas.getTexto(),
                                                         arrayPreguntas.getIdImagenPregunta(),

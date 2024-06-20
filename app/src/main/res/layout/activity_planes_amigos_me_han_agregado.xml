@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/toolbar_flecha_v3" />
+        <include layout="@layout/toolbar_flecha_texto_v1" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

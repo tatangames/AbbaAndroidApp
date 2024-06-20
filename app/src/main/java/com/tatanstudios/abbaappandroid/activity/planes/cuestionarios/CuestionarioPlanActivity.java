@@ -5,9 +5,6 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.View;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -24,7 +21,6 @@ public class CuestionarioPlanActivity extends AppCompatActivity {
     private TokenManager tokenManager;
     private int tabStrokeColor, tabTextColor, colorPrimary;
     private int idBloqueDeta = 0;
-    private int idTienePreguntas = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +34,8 @@ public class CuestionarioPlanActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             Bundle bundle = getIntent().getExtras();
             idBloqueDeta = bundle.getInt("IDBLOQUE");
-            idTienePreguntas = bundle.getInt("PREGUNTAS");
         }
 
-        int cantidadFragment = 1;
-
-        if(idTienePreguntas == 1){
-            // si hay preguntas
-            cantidadFragment = 2;
-        }
 
         if (tokenManager.getToken().getTema() == 1) {
             colorPrimary = ContextCompat.getColor(this, R.color.blanco); // Obtén el color para tema dark
@@ -60,13 +49,13 @@ public class CuestionarioPlanActivity extends AppCompatActivity {
 
 
         // Configura el ViewPager2 con el adaptador
-        AdaptadorViewPagerCuestionario pagerAdapter = new AdaptadorViewPagerCuestionario(this, cantidadFragment, idBloqueDeta);
+        AdaptadorViewPagerCuestionario pagerAdapter = new AdaptadorViewPagerCuestionario(this, 2, idBloqueDeta);
         viewPager2.setAdapter(pagerAdapter);
 
         // Desactivar el desplazamiento táctil del ViewPager2
         viewPager2.setUserInputEnabled(false);
 
-// Añadir un listener para detectar cuando se cambia la página
+        // Añadir un listener para detectar cuando se cambia la página
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {

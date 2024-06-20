@@ -75,15 +75,9 @@ public class AdaptadorBloqueFechaVertical extends RecyclerView.Adapter<Adaptador
         }
 
         if(m.getCompletado() == 1){
-            holder.idCheck.setChecked(true);
+            holder.idCheck.setVisibility(View.GONE);
         }else{
-            holder.idCheck.setChecked(false);
-        }
-
-        if(m.getTienePreguntas() == 1){
-            holder.imgCompartir.setVisibility(View.VISIBLE);
-        }else{
-            holder.imgCompartir.setVisibility(View.GONE);
+            holder.idCheck.setVisibility(View.VISIBLE);
         }
 
         holder.txtTitulo.setText(m.getTitulo());
@@ -99,10 +93,8 @@ public class AdaptadorBloqueFechaVertical extends RecyclerView.Adapter<Adaptador
 
 
         holder.txtTitulo.setOnClickListener(v -> {
-
             int idBlockDeta = m.getId();
-            int tienePreguntas = m.getTienePreguntas();
-            misPlanesBloquesFechaActivity.redireccionarCuestionario(idBlockDeta, tienePreguntas);
+            misPlanesBloquesFechaActivity.redireccionarCuestionario(idBlockDeta);
         });
 
         holder.imgCompartir.setOnClickListener(v ->{
@@ -117,7 +109,6 @@ public class AdaptadorBloqueFechaVertical extends RecyclerView.Adapter<Adaptador
 
         // solo modificar si sera true
         if(valor){
-
             // valor que tenia
             m.setCompletado(valorTenia);
         }else{

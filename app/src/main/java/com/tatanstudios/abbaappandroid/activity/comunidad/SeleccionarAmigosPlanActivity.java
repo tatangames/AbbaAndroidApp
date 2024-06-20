@@ -60,12 +60,7 @@ public class SeleccionarAmigosPlanActivity extends AppCompatActivity {
     private ImageView imgFlechaAtras;
     int colorProgress = 0;
 
-    private ColorStateList colorStateTintGrey, colorStateTintWhite, colorStateTintBlack;
 
-    private int colorBlanco = 0;
-    private int colorBlack = 0;
-
-    private boolean tema = false;
     private AdaptadorSeleccionarAmigos adaptadorSeleccionarAmigos;
     private int idplan = 0;
 
@@ -103,9 +98,7 @@ public class SeleccionarAmigosPlanActivity extends AppCompatActivity {
 
         colorProgress = ContextCompat.getColor(this, R.color.barraProgreso);
 
-        if(tokenManager.getToken().getTema() == 1){
-            tema = true;
-        }
+
 
         progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleLarge);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
@@ -113,13 +106,8 @@ public class SeleccionarAmigosPlanActivity extends AppCompatActivity {
         rootRelative.addView(progressBar, params);
         progressBar.getIndeterminateDrawable().setColorFilter(colorProgress, PorterDuff.Mode.SRC_IN);
 
-        colorBlanco = ContextCompat.getColor(this, R.color.blanco);
-        colorBlack = ContextCompat.getColor(this, R.color.negro);
-        int colorGris = ContextCompat.getColor(this, R.color.gris616161);
 
-        colorStateTintGrey = ColorStateList.valueOf(colorGris);
-        colorStateTintWhite = ColorStateList.valueOf(colorBlanco);
-        colorStateTintBlack = ColorStateList.valueOf(colorBlack);
+
 
         txtIniciar.setOnClickListener(v -> {
             revisarDatos();

@@ -16,10 +16,6 @@ public class ModeloPreguntas {
     @SerializedName("posicion")
     private int posicion;
 
-
-    @SerializedName("requerido")
-    private int requerido;
-
     @SerializedName("titulo")
     private String titulo;
 
@@ -36,9 +32,8 @@ public class ModeloPreguntas {
     private int idImagenPregunta;
 
 
-    public ModeloPreguntas(int id, int requerido, String titulo, String texto, int imgPregunta, String imagen) {
+    public ModeloPreguntas(int id,  String titulo, String texto, int imgPregunta, String imagen) {
         this.id = id;
-        this.requerido = requerido;
         this.titulo = titulo;
         this.texto = texto;
         this.idImagenPregunta = imgPregunta;
@@ -94,13 +89,6 @@ public class ModeloPreguntas {
         this.posicion = posicion;
     }
 
-    public int getRequerido() {
-        return requerido;
-    }
-
-    public void setRequerido(int requerido) {
-        this.requerido = requerido;
-    }
 
     public String getTitulo() {
         return titulo;

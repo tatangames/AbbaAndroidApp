@@ -1,7 +1,6 @@
 package com.tatanstudios.abbaappandroid.modelos.planes.ocultos;
 
 import com.google.gson.annotations.SerializedName;
-import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloInsigniaHitos;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanes;
 
 import java.util.List;
@@ -17,6 +16,10 @@ public class ModeloPlanesContenedor {
     @SerializedName("usuariobuscado")
     private int usuariobuscado;
 
+    @SerializedName("itemtotal")
+    private int itemtotal;
+
+
     @SerializedName("listado")
     private List<ModeloPlanesOcultos> modeloPlanesOcultos;
 
@@ -28,6 +31,9 @@ public class ModeloPlanesContenedor {
         return modeloMisPlanes;
     }
 
+    public int getItemtotal() {
+        return itemtotal;
+    }
 
     public int getUsuariobuscado() {
         return usuariobuscado;

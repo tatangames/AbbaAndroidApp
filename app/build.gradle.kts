@@ -67,7 +67,8 @@ dependencies {
 
 
     // manejador de imagenes
-    implementation("com.github.bumptech.glide:glide:4.13.2") // glide imagenes
+    implementation("com.github.bumptech.glide:glide:4.13.2")
+    implementation("androidx.activity:activity:1.8.0") // glide imagenes
     annotationProcessor("com.github.bumptech.glide:compiler:4.13.2") // glide soporte
 
 

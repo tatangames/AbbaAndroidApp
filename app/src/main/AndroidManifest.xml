@@ -22,15 +22,40 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activity.biblia.LecturaDevoCapituloActivity"
+            android:name=".activity.comunidad.mehanagregado.PlanesAmigosMeHanAgregadoActivity"
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait"  />
         <activity
-            android:name=".activity.biblia.VersiculoTextoActivity"
+            android:name=".activity.comunidad.mehanagregado.PlanesMeHanAgregadoActivity"
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait"  />
+        <activity
+            android:name=".activity.comunidad.agregados.PlanesListadoAmigoAgregadoActivity"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.comunidad.agregados.PlanesAgregueComunidadActivity"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.insignias.NivelesInsigniasActivity"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.biblia.LecturaDevoCapituloActivity"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.biblia.VersiculoTextoActivity"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.biblia.VersiculosListaActivity"
             android:configChanges="uiMode"
@@ -168,8 +193,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.splash.SplashActivity"
-            android:screenOrientation="portrait"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

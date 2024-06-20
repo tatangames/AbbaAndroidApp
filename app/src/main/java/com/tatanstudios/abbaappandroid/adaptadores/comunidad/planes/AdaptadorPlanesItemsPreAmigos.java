@@ -15,12 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.adaptadores.inicio.cuestionario.preguntas.AdaptadorPreguntasInicio;
-import com.tatanstudios.abbaappandroid.extras.IOnRecyclerViewClickListener;
-import com.tatanstudios.abbaappandroid.fragmentos.comunidad.FragmentPlanesItemsAmigos;
 import com.tatanstudios.abbaappandroid.fragmentos.comunidad.FragmentPlanesItemsPreAmigos;
 import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.preguntas.ModeloPreguntas;
-import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanes;
 
 import java.util.List;
 

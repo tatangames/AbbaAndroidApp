@@ -28,9 +28,6 @@ public class ModeloVistasPreguntas {
         return modeloPreguntas;
     }
 
-    public void setTipoVista(int tipoVista) {
-        this.tipoVista = tipoVista;
-    }
 
 
 }

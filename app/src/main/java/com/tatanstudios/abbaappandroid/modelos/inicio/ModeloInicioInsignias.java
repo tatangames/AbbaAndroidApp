@@ -17,6 +17,9 @@ public class ModeloInicioInsignias {
     @SerializedName("fecha")
     private String fecha;
 
+    @SerializedName("nivel")
+    private int nivel;
+
     @SerializedName("titulo")
     private String titulo;
 
@@ -41,6 +44,10 @@ public class ModeloInicioInsignias {
     @SerializedName("imagen")
     private String imagen;
 
+
+    public int getNivel() {
+        return nivel;
+    }
 
     public ModeloInicioInsignias(int id, String titulo, String descripcion, int nivelVoy, String imageninsignia) {
         this.id = id;

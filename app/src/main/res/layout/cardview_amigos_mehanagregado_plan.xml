@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
@@ -24,29 +25,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
-            <CheckBox
-                android:id="@+id/check"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/txtNombre"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/fondo_textos_negro_blanco_v1"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txtTitulo"
-                android:layout_width="0dp"
+                android:id="@+id/txtCorreo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="18dp"
                 android:layout_marginEnd="8dp"
-                android:fontFamily="@font/liberation_sans_bold"
+                android:layout_marginBottom="12dp"
                 android:textColor="@color/fondo_textos_negro_blanco_v1"
                 android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/check"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtNombre" />
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

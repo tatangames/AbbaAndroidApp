@@ -17,7 +17,6 @@ import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.adaptadores.menus.AdaptadorFragmentPlanesBotonera;
 import com.tatanstudios.abbaappandroid.fragmentos.planes.buscarmisplanes.FragmentMisPlanes;
 import com.tatanstudios.abbaappandroid.fragmentos.planes.buscarplanes.FragmentBuscarPlanes;
-import com.tatanstudios.abbaappandroid.fragmentos.planes.completados.FragmentPlanesCompletados;
 import com.tatanstudios.abbaappandroid.modelos.menus.ModeloFragmentPlanBotonera;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
 
@@ -65,7 +64,6 @@ public class FragmentPlanes extends Fragment {
         List<ModeloFragmentPlanBotonera> modeloBotoneraPlanes = new ArrayList<>();
         modeloBotoneraPlanes.add(new ModeloFragmentPlanBotonera(1, getString(R.string.mis_planes)));
         modeloBotoneraPlanes.add(new ModeloFragmentPlanBotonera(2, getString(R.string.buscar_planes)));
-        modeloBotoneraPlanes.add(new ModeloFragmentPlanBotonera(3, getString(R.string.completados)));
 
         adaptadorFragmentPlanesBotonera = new AdaptadorFragmentPlanesBotonera(getContext(), modeloBotoneraPlanes, this, tema);
         recyclerView.setAdapter(adaptadorFragmentPlanesBotonera);
@@ -90,12 +88,6 @@ public class FragmentPlanes extends Fragment {
         else if(identificador == 2){ // NUEVOS PLANES
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainer, new FragmentBuscarPlanes())
-                    .addToBackStack(null)
-                    .commit();
-        }
-        else if(identificador == 3){ // PLANES COMPLETADOS
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentContainer, new FragmentPlanesCompletados())
                     .addToBackStack(null)
                     .commit();
         }
