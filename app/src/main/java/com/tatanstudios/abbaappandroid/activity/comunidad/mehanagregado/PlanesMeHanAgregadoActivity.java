@@ -102,7 +102,7 @@ public class PlanesMeHanAgregadoActivity extends AppCompatActivity {
         int idioma = tokenManager.getToken().getIdiomaTextos();
 
         compositeDisposable.add(
-                service.listadoPlanesComunidadYoAdd(idioma)
+                service.listadoMeHanAgregadoPlanes(idioma, id)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .retry()
@@ -113,15 +113,11 @@ public class PlanesMeHanAgregadoActivity extends AppCompatActivity {
 
                                         if (apiRespuesta.getSuccess() == 1) {
 
-                                            if(apiRespuesta.getHayinfo() == 1){
-                                                adaptadorPlanesAmigosMeHanAgregado = new AdaptadorPlanesAmigosMeHanAgregado(this, apiRespuesta.getModeloMisPlanes(), this);
-                                                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
-                                                recyclerView.addItemDecoration(dividerItemDecoration);
-                                                recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-                                                recyclerView.setAdapter(adaptadorPlanesAmigosMeHanAgregado);
-                                            }else{
-                                                Toasty.info(this, getString(R.string.no_hay_informacion), Toasty.LENGTH_SHORT).show();
-                                            }
+                                            adaptadorPlanesAmigosMeHanAgregado = new AdaptadorPlanesAmigosMeHanAgregado(this, apiRespuesta.getModeloMisPlanes(), this);
+                                            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+                                            recyclerView.addItemDecoration(dividerItemDecoration);
+                                            recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+                                            recyclerView.setAdapter(adaptadorPlanesAmigosMeHanAgregado);
 
                                         }else{
                                             mensajeSinConexion();

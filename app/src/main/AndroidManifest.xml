@@ -66,11 +66,7 @@
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.comunidad.planes.PlanesOcultosActivity"
-            android:configChanges="uiMode"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.comunidad.planes.PlanesAmigosActivity"
             android:configChanges="uiMode"
@@ -111,11 +107,7 @@
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.inicio.cuestionario.CuestionarioInicioActivity"
-            android:configChanges="uiMode"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.inicio.insignias.ListadoInsigniasActivity"
             android:configChanges="uiMode"
@@ -136,16 +128,7 @@
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.planes.completados.cuestionario.CuestionarioPlanCompletadoActivity"
-            android:configChanges="uiMode"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.planes.completados.MisPlanesBloquesFechaCompletadosActivity"
-            android:configChanges="uiMode"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.planes.cuestionarios.CuestionarioPlanActivity"
             android:configChanges="uiMode"

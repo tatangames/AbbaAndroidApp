@@ -366,7 +366,10 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<ModeloPlanesContenedor> listadoAmigosMeAgregaronSuPlan(@Field("idiomaplan") int idiomaplan);
 
-
+    @POST("app/comunidad/mehanagregado/planes/listado")
+    @FormUrlEncoded
+    Observable<ModeloPlanesContenedor> listadoMeHanAgregadoPlanes(@Field("idiomaplan") int idiomaplan,
+                                                                  @Field("id") int id);
 
 
 
