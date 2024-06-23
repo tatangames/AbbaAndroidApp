@@ -9,21 +9,16 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.adaptadores.comunidad.mehanagregado.AdaptadorAmigosMeHanAgregado;
-import com.tatanstudios.abbaappandroid.adaptadores.comunidad.yoagregue.AdaptadorPlanesAmigosYoAgregueComoVan;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
@@ -96,7 +91,7 @@ public class PlanesAmigosMeHanAgregadoActivity extends AppCompatActivity {
 
     private void apiBuscarInformacion(){
 
-        int idioma = tokenManager.getToken().getIdiomaTextos();
+        int idioma = tokenManager.getToken().getIdiomaApp();
 
         compositeDisposable.add(
                 service.listadoAmigosMeAgregaronSuPlan(idioma)
@@ -110,12 +105,18 @@ public class PlanesAmigosMeHanAgregadoActivity extends AppCompatActivity {
 
                                         if (apiRespuesta.getSuccess() == 1) {
 
-                                            adaptadorAmigosMeHanAgregado = new AdaptadorAmigosMeHanAgregado(this, apiRespuesta.getModeloMisPlanes(),
-                                                    this);
-                                            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
-                                            recyclerView.addItemDecoration(dividerItemDecoration);
-                                            recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-                                            recyclerView.setAdapter(adaptadorAmigosMeHanAgregado);
+                                            int hayinfo = apiRespuesta.getHayinfo();
+
+                                            if(hayinfo == 1){
+                                                adaptadorAmigosMeHanAgregado = new AdaptadorAmigosMeHanAgregado(this, apiRespuesta.getModeloMisPlanes(),
+                                                        this);
+                                                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+                                                recyclerView.addItemDecoration(dividerItemDecoration);
+                                                recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+                                                recyclerView.setAdapter(adaptadorAmigosMeHanAgregado);
+                                            }else{
+                                                mensajeSinInfo();
+                                            }
 
                                         }else{
                                             mensajeSinConexion();
@@ -128,6 +129,11 @@ public class PlanesAmigosMeHanAgregadoActivity extends AppCompatActivity {
                                     mensajeSinConexion();
                                 })
         );
+    }
+
+    void mensajeSinInfo(){
+        progressBar.setVisibility(View.GONE);
+        Toasty.info(this, getString(R.string.no_hay_informacion)).show();
     }
 
 

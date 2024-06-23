@@ -46,10 +46,7 @@ public class TokenManager {
         editor.putInt("IDIOMAAPP", code).commit();
     }
 
-    // IDIOMA QUE VERA LOS TEXTOS TRAIDOS DEL SERVIDOR
-    public void guardarIdiomaTexto(int code) {
-        editor.putInt("IDIOMATEXTO", code).commit();
-    }
+
 
     // TIPO DE LETRA PARA LEER DEVOCIONALES
     public void guardarTipoLetraTexto(int code) {
@@ -80,10 +77,9 @@ public class TokenManager {
         token.setId(prefs.getString("ID", ""));
         token.setTema(prefs.getInt("TEMA", 0));
         token.setIdiomaApp(prefs.getInt("IDIOMAAPP", 0));
-        token.setIdiomaTextos(prefs.getInt("IDIOMATEXTO", 0));
         token.setToken(prefs.getString("TOKEN", ""));
         token.setTipoLetra(prefs.getInt("TIPOTEXTO", 0));
-        token.setIdiomaCel(prefs.getInt("IDIOMACEL", 0));
+        token.setIdiomaCel(prefs.getInt("IDIOMACEL", 0)); // NO TOCAR
         token.setTamanoLetra(prefs.getInt("TAMANOLETRA", 0));
 
         return token;

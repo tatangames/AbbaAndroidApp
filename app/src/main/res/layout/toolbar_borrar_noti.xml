@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Texto -->
+        <ImageView
+            android:id="@+id/imgFlechaAtras"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            style="@style/Flecha_Tema_V1"
+            android:contentDescription="@string/flecha_atras"
+            android:src="@drawable/ic_flecha_izquierda" />
+
+        <!-- Botón a la derecha del texto -->
+        <TextView
+            android:id="@+id/txtToolbar"
+            android:layout_width="284dp"
+            android:layout_height="29dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toEndOf="@id/imgFlechaAtras"
+            android:fontFamily="@font/liberation_sans_bold"
+            android:textColor="@color/fondo_textos_negro_blanco_v1"
+            android:textSize="21sp"
+            app:layout_constraintEnd_toStartOf="@+id/imgTuerca"
+            app:layout_constraintStart_toEndOf="@+id/imgFlechaAtras"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imgTuerca"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_toEndOf="@id/imgFlechaAtras"
+            android:src="@drawable/ic_tuercav2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:background="@color/gris616161"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgFlechaAtras" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</RelativeLayout>

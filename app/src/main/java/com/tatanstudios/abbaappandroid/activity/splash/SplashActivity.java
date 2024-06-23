@@ -12,7 +12,6 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.activity.login.LoginActivity;
 import com.tatanstudios.abbaappandroid.activity.principal.PrincipalActivity;
 import com.tatanstudios.abbaappandroid.extras.LocaleManagerIdiomaAndroid;
 import com.tatanstudios.abbaappandroid.fragmentos.login.FragmentLogin;
@@ -56,16 +55,13 @@ public class SplashActivity extends AppCompatActivity {
 
             if(valor.equals(APP_INGLES)){ // ingles
                 tokenManager.guardarIdiomaApp(2);
-                tokenManager.guardarIdiomaTexto(2);
                 LocaleManagerIdiomaAndroid.setLocale(this, APP_INGLES);
             }else if(valor.equals(APP_ESPANOL)){ // espanol
                 tokenManager.guardarIdiomaApp(1);
-                tokenManager.guardarIdiomaTexto(1);
                 LocaleManagerIdiomaAndroid.setLocale(this, APP_ESPANOL);
             }else{
                 // defecto sera espanol
                 tokenManager.guardarIdiomaApp(1);
-                tokenManager.guardarIdiomaTexto(1);
                 LocaleManagerIdiomaAndroid.setLocale(this, APP_ESPANOL);
             }
 

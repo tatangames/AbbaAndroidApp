@@ -4,8 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.onesignal.Continue;
-import com.onesignal.OneSignal;
+
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.fragmentos.login.FragmentLogin;
 

@@ -134,7 +134,7 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
 
     private void apiBuscarPlanesbloques(){
 
-        int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
+        int idiomaPlan = tokenManager.getToken().getIdiomaApp();
         String iduser = tokenManager.getToken().getId();
 
         compositeDisposable.add(
@@ -205,7 +205,7 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
 
 
             String iduser = tokenManager.getToken().getId();
-            int idioma = tokenManager.getToken().getIdiomaTextos();
+            int idioma = tokenManager.getToken().getIdiomaApp();
 
             compositeDisposable.add(
                     service.actualizarBloqueFechaCheckbox(iduser, blockDeta, valor, idPlan, idioma)
@@ -259,7 +259,7 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
 
             String iduser = tokenManager.getToken().getId();
-            int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
+            int idiomaPlan = tokenManager.getToken().getIdiomaApp();
 
             compositeDisposable.add(
                     service.infoPreguntasTextosParaCompartir(iduser, idblockdeta, idiomaPlan)
@@ -282,21 +282,17 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                                                 String textoGlobal = "";
 
 
-                                                if(apiRespuesta.getDescripcion() != null && !TextUtils.isEmpty(apiRespuesta.getDescripcion())){
-                                                    textoGlobal += apiRespuesta.getDescripcion() + "\n";
-                                                }
-
                                                 // Preguntas
                                                 for (ModeloPreguntas arrayPreguntas : apiRespuesta.getModeloPreguntas()) {
 
                                                     if(arrayPreguntas.getTitulo() != null && !TextUtils.isEmpty(arrayPreguntas.getTitulo())){
                                                         String textoSinHTMLTitulo = HtmlCompat.fromHtml(arrayPreguntas.getTitulo(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
 
-                                                        textoGlobal += textoSinHTMLTitulo + "\n";
+                                                        textoGlobal += textoSinHTMLTitulo + "R// ";
                                                     }
 
                                                     if(arrayPreguntas.getTexto() != null && !TextUtils.isEmpty(arrayPreguntas.getTexto())){
-                                                        textoGlobal += arrayPreguntas.getTexto() + "\n";
+                                                        textoGlobal += arrayPreguntas.getTexto() + "\n\n";
                                                     }
                                                 }
 

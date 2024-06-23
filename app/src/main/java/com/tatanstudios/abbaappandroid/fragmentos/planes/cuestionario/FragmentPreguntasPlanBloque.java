@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,7 +120,7 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
     private void apiBuscarPreguntas(){
 
         String iduser = tokenManager.getToken().getId();
-        int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
+        int idiomaPlan = tokenManager.getToken().getIdiomaApp();
 
         compositeDisposable.add(
                 service.informacionPreguntasBloqueDetalle(iduser, idBloqueDeta, idiomaPlan)
@@ -242,7 +240,7 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
             progressBar.setVisibility(View.VISIBLE);
 
             String iduser = tokenManager.getToken().getId();
-            int idioma = tokenManager.getToken().getIdiomaTextos();
+            int idioma = tokenManager.getToken().getIdiomaApp();
 
 
             compositeDisposable.add(
@@ -310,7 +308,7 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
                     String textoPregunta = adapter.getTextoPregunta(m.getId());
                     String textoEdt = adapter.getTextoFromEditText(m.getId());
 
-                    String linea = textoPregunta + "\n" + "R// " + textoEdt + "\n" + "\n";
+                    String linea = textoPregunta + "R// " + textoEdt + "\n\n";
                     textoGlobal += linea;
                 }
 
@@ -339,7 +337,7 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
             boolCompartirDevo = false;
 
             String iduser = tokenManager.getToken().getId();
-            int idioma = tokenManager.getToken().getIdiomaTextos();
+            int idioma = tokenManager.getToken().getIdiomaApp();
 
             compositeDisposable.add(
                     service.compartirDevocional(iduser, idioma)

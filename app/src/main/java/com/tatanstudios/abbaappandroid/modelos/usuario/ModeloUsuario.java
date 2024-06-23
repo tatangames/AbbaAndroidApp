@@ -72,7 +72,6 @@ public class ModeloUsuario {
 
     private int tema;
     private int idiomaApp; // 1: espanol, 2: ingles
-    private int idiomaTextos; // 1 espanol, 2: ingles
 
     private int tipoLetra; // tipo de letra que tiene asignado en leer devocional
     private int idiomaCel; // saber el idioma del telefono
@@ -113,13 +112,9 @@ public class ModeloUsuario {
         this.idiomaApp = idiomaApp;
     }
 
-    public int getIdiomaTextos() {
-        return idiomaTextos;
-    }
 
-    public void setIdiomaTextos(int idiomaTextos) {
-        this.idiomaTextos = idiomaTextos;
-    }
+
+
 
     public String getToken() {
         return token;

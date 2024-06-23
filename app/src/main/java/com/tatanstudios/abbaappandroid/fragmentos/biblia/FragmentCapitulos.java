@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.biblia.VersiculoTextoActivity;
-import com.tatanstudios.abbaappandroid.activity.biblia.VersiculosListaActivity;
 import com.tatanstudios.abbaappandroid.adaptadores.biblia.AdaptadorCapitulos;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
@@ -90,7 +89,7 @@ public class FragmentCapitulos extends Fragment {
     private void apiBuscarCapitulos(){
 
         String iduser = tokenManager.getToken().getId();
-        int idioma = tokenManager.getToken().getIdiomaTextos();
+        int idioma = tokenManager.getToken().getIdiomaApp();
 
         compositeDisposable.add(
                 service.listadoBibliasCapitulos(iduser, idioma, idbiblia)

@@ -43,6 +43,7 @@ import com.bumptech.glide.request.target.Target;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.onesignal.OneSignal;
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.inicio.imagenes.ListadoImagenesActivity;
 import com.tatanstudios.abbaappandroid.activity.inicio.insignias.ListadoInsigniasActivity;
@@ -174,6 +175,7 @@ public class FragmentTabInicio extends Fragment{
     private ShimmerFrameLayout shimmerFrameLayout;
 
 
+    String oneSignalId = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -227,19 +229,23 @@ public class FragmentTabInicio extends Fragment{
 
     private void apiBuscarDatos(){
 
+        // obtener identificador id one signal
+
+        oneSignalId = OneSignal.getUser().getPushSubscription().getId();
+
+
         String iduser = tokenManager.getToken().getId();
-        int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
+        int idiomaPlan = tokenManager.getToken().getIdiomaApp();
 
         elementos = new ArrayList<>();
 
         compositeDisposable.add(
-                service.informacionBloqueInicio(iduser, idiomaPlan)
+                service.informacionBloqueInicio(iduser, idiomaPlan, oneSignalId)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .retry()
                         .subscribe(apiRespuesta -> {
 
-                                   // progressBar.setVisibility(View.GONE);
                                     shimmerFrameLayout.stopShimmer();
                                     shimmerFrameLayout.setVisibility(View.GONE);
 
@@ -613,7 +619,7 @@ public class FragmentTabInicio extends Fragment{
                 boolCompartirApi = false;
 
                 String iduser = tokenManager.getToken().getId();
-                int idioma = tokenManager.getToken().getIdiomaTextos();
+                int idioma = tokenManager.getToken().getIdiomaApp();
 
                 compositeDisposable.add(
                         service.compartirApp(iduser, idioma)

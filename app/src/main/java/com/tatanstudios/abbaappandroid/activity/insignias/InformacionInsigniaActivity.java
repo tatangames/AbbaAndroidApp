@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.adaptadores.inicio.insignias.individual.AdaptadorInsigniaHitos;
@@ -61,6 +60,8 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
 
     private int contadorActual = 0;
 
+    private String textoNivel = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +76,8 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
             Bundle bundle = getIntent().getExtras();
             idTipoInsignia = bundle.getInt("IDINSIGNIA");
         }
+
+        textoNivel = getString(R.string.contador_actual);
 
 
         int colorProgress = ContextCompat.getColor(this, R.color.barraProgreso);
@@ -115,7 +118,7 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
     private void apiBuscarInfoInsignia(){
 
         String iduser = tokenManager.getToken().getId();
-        int idioma = tokenManager.getToken().getIdiomaTextos();
+        int idioma = tokenManager.getToken().getIdiomaApp();
 
         compositeDisposable.add(
                 service.informacionInsigniaSeleccionada(iduser, idioma, idTipoInsignia)
@@ -129,7 +132,7 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
 
                                         if (apiRespuesta.getSuccess() == 1) {
 
-                                            contadorActual = apiRespuesta.getContador();
+                                            textoNivel = textoNivel + ": " + apiRespuesta.getContador();
 
                                             setearCampos(apiRespuesta);
 
@@ -159,14 +162,6 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
         List<ModeloInsigniaHitos> mm = new ArrayList<>();
 
 
-        // verificar si hay siguiente nivel
-        /*if(apiRespuesta.getHitoHayNextLevel() == 1){
-            mm.add(new ModeloInsigniaHitos("", 1, apiRespuesta.getCualNextLevel(),0, apiRespuesta.getHitoCuantoFalta(),
-                    ""
-            ));
-        }*/
-
-
         for (ModeloInsigniaHitos m : apiRespuesta.getModeloInsigniaHitos()){
             mm.add(new ModeloInsigniaHitos(m.getFechaFormat(), 0, 0,m.getNivel(), 0,
                     m.getTextoCompletado()));
@@ -180,7 +175,7 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
 
 
         // llenar adaptador de los hitos, y le estoy pasando textoFalta o remaining
-        adaptadorInsigniaHitos = new AdaptadorInsigniaHitos(getApplicationContext(), elementos, apiRespuesta.getTextofalta(), contadorActual);
+        adaptadorInsigniaHitos = new AdaptadorInsigniaHitos(getApplicationContext(), elementos, textoNivel);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adaptadorInsigniaHitos);
 

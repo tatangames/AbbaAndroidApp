@@ -59,7 +59,6 @@ public class FragmentLoginDatos extends Fragment {
     private ColorStateList colorEstadoGris, colorEstadoBlanco, colorEstadoNegro;
     private boolean tema;
 
-    private String oneSignalId = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -139,10 +138,6 @@ public class FragmentLoginDatos extends Fragment {
 
         edtCorreo.addTextChangedListener(textWatcher);
         edtContrasena.addTextChangedListener(textWatcher);
-
-
-        // obtener identificador id one signal
-        oneSignalId = OneSignal.getUser().getPushSubscription().getId();
 
         return vista;
     }
@@ -233,7 +228,7 @@ public class FragmentLoginDatos extends Fragment {
         String txtContrasena = Objects.requireNonNull(edtContrasena.getText()).toString();
 
         compositeDisposable.add(
-                service.inicioSesion(txtCorreo, txtContrasena, oneSignalId)
+                service.inicioSesion(txtCorreo, txtContrasena)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .retry()

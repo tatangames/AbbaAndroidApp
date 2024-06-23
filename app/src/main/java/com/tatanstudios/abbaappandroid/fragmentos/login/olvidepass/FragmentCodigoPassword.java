@@ -3,7 +3,6 @@ package com.tatanstudios.abbaappandroid.fragmentos.login.olvidepass;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
@@ -30,7 +29,6 @@ import androidx.fragment.app.Fragment;
 
 import com.developer.kalert.KAlertDialog;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.login.ReseteoPasswordActivity;
 import com.tatanstudios.abbaappandroid.network.ApiService;

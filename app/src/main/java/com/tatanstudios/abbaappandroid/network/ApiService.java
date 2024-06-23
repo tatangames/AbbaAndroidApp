@@ -14,18 +14,8 @@ import com.tatanstudios.abbaappandroid.modelos.notificacion.ModeloListaNotificac
 import com.tatanstudios.abbaappandroid.modelos.notificacion.ModeloListaNotificacionPaginateMetaDato;
 import com.tatanstudios.abbaappandroid.modelos.notificacion.ModeloListaNotificacionPaginateRequest;
 import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanes;
-import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginate;
-import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateMetaDatos;
-import com.tatanstudios.abbaappandroid.modelos.planes.buscarplanes.ModeloBuscarPlanesPaginateRequest;
-import com.tatanstudios.abbaappandroid.modelos.planes.completados.ModeloPlanesCompletadosPaginate;
-import com.tatanstudios.abbaappandroid.modelos.planes.completados.ModeloPlanesCompletadosPaginateMetaDatos;
-import com.tatanstudios.abbaappandroid.modelos.planes.completados.ModeloPlanesCompletadosPaginateRequest;
 import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.ModeloCuestionario;
 import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.preguntas.ModeloPreguntasContenedor;
-import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanes;
-import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginate;
-import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginateMetaDatos;
-import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.ModeloMisPlanesPaginateRequest;
 import com.tatanstudios.abbaappandroid.modelos.planes.misplanes.bloquefechas.ModeloBloqueFechaContenedor;
 import com.tatanstudios.abbaappandroid.modelos.planes.ocultos.ModeloPlanesContenedor;
 import com.tatanstudios.abbaappandroid.modelos.usuario.ModeloUsuario;
@@ -33,15 +23,12 @@ import com.tatanstudios.abbaappandroid.modelos.usuario.ModeloUsuario;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 
 public interface ApiService {
 
@@ -50,8 +37,7 @@ public interface ApiService {
     @POST("app/login")
     @FormUrlEncoded
     Observable<ModeloUsuario> inicioSesion(@Field("correo") String correo,
-                                           @Field("password") String password,
-                                           @Field("idonesignal") String idonesignal);
+                                           @Field("password") String password);
 
 
 
@@ -115,27 +101,9 @@ public interface ApiService {
     Observable<ModeloUsuario> informacionPerfil(@Field("iduser") String idUsuario);
 
 
-    // editar la informacion del perfil
-   /* @POST("app/actualizar/perfil/usuario")
-    @FormUrlEncoded
-    Observable<ModeloUsuario> actualizarPerfilUsuario(@Field("iduser") String idUsuario,
-                                                      @Field("nombre") String nombre,
-                                                      @Field("apellido") String apellido,
-                                                      @Field("fechanac") String fechaNacimiento,
-                                                      @Field("correo") String correo
-    );*/
-
-
     @POST("app/actualizar/perfil/usuario")
     Observable<ModeloUsuario> actualizarPerfilUsuario(@Body RequestBody body
     );
-
-
-
-    // listado de planes nuevos con paginacion
-   /* @POST("app/buscar/planes/nuevos")
-    Observable<ModeloBuscarPlanesPaginate<ModeloBuscarPlanesPaginateMetaDatos>> listadoNuevosPlanes(
-            @Body ModeloBuscarPlanesPaginateRequest request);*/
 
 
     // ver informacion de un plan para poder seleccionarlo
@@ -207,7 +175,8 @@ public interface ApiService {
     @POST("app/inicio/bloque/completa")
     @FormUrlEncoded
     Observable<ModeloContenedorInicio> informacionBloqueInicio(@Field("iduser") String iduser,
-                                                               @Field("idiomaplan") int idiomaplan);
+                                                               @Field("idiomaplan") int idiomaplan,
+                                                               @Field("idonesignal") String idonesignal);
 
 
     // obtener listado de todos los videos
@@ -293,10 +262,10 @@ public interface ApiService {
 
     // compartir devocional
     // AQUI SE UTILIZA EN PANTALLAS BOTON COMPARTIR EN 2
-    // FragmentCuestionarioPreguntasInicioBloque
     // FragmentPreguntasPlanBloque
-    // Es al llenar todos los input edit text, puede darle al boton compartir
-    // aqui no se mostrara titulo de blockdeta
+
+    // AL LLENAR TODOS LO CAMPOS Y DARLE AL BOTON COMPARTIR, MUESTRA LA PANTALLA CON
+    // EL TEXTO ORDENADO Y MANDA PETICION API SUMAR CONTADOR
     @POST("app/compartir/devocional")
     @FormUrlEncoded
     Observable<ModeloContedorComunidad> compartirDevocional(@Field("iduser") String iduser,
@@ -373,16 +342,6 @@ public interface ApiService {
 
 
 
-
-
-
-
-
-
-
-
-
-
     // listado de planes que tiene ese amigo pero solo ver los que no tiene ocultos
     @POST("app/comunidad/informacion/planes")
     @FormUrlEncoded
@@ -423,14 +382,6 @@ public interface ApiService {
     );
 
 
-    // listado de versiculos
-    @POST("app/listado/biblia/versiculos")
-    @FormUrlEncoded
-    Observable<ModeloContenedorVersiculo> listadoVersiculos(@Field("iduser") String iduser,
-                                                            @Field("idiomaplan") int idioma,
-                                                            @Field("idcapibloque") int idcapibloque
-    );
-
 
     // MODIFICADO: 18/06/2024
     // listado de Textos del capitulo
@@ -453,8 +404,6 @@ public interface ApiService {
     );
 
 
-
-
     // FIX 30/04/2024
     @POST("app/plan/listado/misplanes")
     @FormUrlEncoded
@@ -468,10 +417,12 @@ public interface ApiService {
     Observable<ModeloContenedorPlanesV2> listadoNuevosPlanes(@Field("iduser") String iduser,
                                                           @Field("idiomaplan") int idiomaplan);
 
-    @POST("app/plan/misplanes/completados/nopagination")
+
+
+    // BORRAR NOTIFICACIONES
+    @POST("app/notificacion/borrarlistado")
     @FormUrlEncoded
-    Observable<ModeloContenedorPlanesV2> listadoPlanesCompletados(@Field("iduser") String iduser,
-                                                             @Field("idiomaplan") int idiomaplan);
+    Observable<ModeloUsuario> borrarListadoNotificaciones(@Field("idiomaplan") int idiomaplan);
 
 
 

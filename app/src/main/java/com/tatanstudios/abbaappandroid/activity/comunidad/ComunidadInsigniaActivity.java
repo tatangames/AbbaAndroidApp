@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -18,9 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.activity.insignias.InformacionInsigniaActivity;
 import com.tatanstudios.abbaappandroid.adaptadores.comunidad.AdaptadorTodasInsigniasComunidad;
-import com.tatanstudios.abbaappandroid.adaptadores.inicio.insignias.listado.AdaptadorTodasInsignias;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
@@ -52,13 +49,8 @@ public class ComunidadInsigniaActivity extends AppCompatActivity {
 
     private  int colorProgress = 0;
 
-    private boolean temaActual = false;
 
 
-    private ColorStateList colorStateTintWhite, colorStateTintBlack;
-
-    private int colorBlanco = 0;
-    private int colorBlack = 0;
 
     private int idsolicitud = 0;
 
@@ -89,12 +81,6 @@ public class ComunidadInsigniaActivity extends AppCompatActivity {
         progressBar.getIndeterminateDrawable().setColorFilter(colorProgress, PorterDuff.Mode.SRC_IN);
 
 
-        colorBlanco = ContextCompat.getColor(this, R.color.blanco);
-        colorBlack = ContextCompat.getColor(this, R.color.negro);
-
-        colorStateTintWhite = ColorStateList.valueOf(colorBlanco);
-        colorStateTintBlack = ColorStateList.valueOf(colorBlack);
-
 
         if (getIntent().getExtras() != null) {
             Bundle bundle = getIntent().getExtras();
@@ -102,9 +88,6 @@ public class ComunidadInsigniaActivity extends AppCompatActivity {
         }
 
 
-        if(tokenManager.getToken().getTema() == 1){
-            temaActual = true;
-        }
 
 
         onBackPressedDispatcher = getOnBackPressedDispatcher();
@@ -131,7 +114,7 @@ public class ComunidadInsigniaActivity extends AppCompatActivity {
     private void apiBuscarTodosLasInsignias(){
 
         String iduser = tokenManager.getToken().getId();
-        int idioma = tokenManager.getToken().getIdiomaTextos();
+        int idioma = tokenManager.getToken().getIdiomaApp();
 
         compositeDisposable.add(
                 service.listadoInsigniasComunidad(idsolicitud, idioma, iduser)

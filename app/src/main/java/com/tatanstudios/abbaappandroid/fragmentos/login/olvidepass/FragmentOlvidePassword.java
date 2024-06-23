@@ -3,7 +3,6 @@ package com.tatanstudios.abbaappandroid.fragmentos.login.olvidepass;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.os.Bundle;

@@ -94,7 +94,7 @@ public class ListadoVideosActivity extends AppCompatActivity {
 
     private void apiBuscarTodosLosVideos(){
 
-        int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
+        int idiomaPlan = tokenManager.getToken().getIdiomaApp();
         String iduser = tokenManager.getToken().getId();
 
         compositeDisposable.add(

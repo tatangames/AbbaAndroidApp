@@ -77,11 +77,9 @@ public class AdaptadorPlanesItemsPreAmigos extends RecyclerView.Adapter<Adaptado
         });
 
 
-
-
-
         if(currentItem.getRespuesta() != null && !TextUtils.isEmpty(currentItem.getRespuesta())){
-            holder.txtRespuesta.setText(currentItem.getRespuesta());
+            String texto = "R// " + currentItem.getRespuesta();
+            holder.txtRespuesta.setText(texto);
         }
 
 

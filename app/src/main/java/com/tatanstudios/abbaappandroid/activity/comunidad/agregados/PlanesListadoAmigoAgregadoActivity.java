@@ -103,7 +103,7 @@ public class PlanesListadoAmigoAgregadoActivity extends AppCompatActivity {
 
     private void apiBuscarInformacion(){
 
-        int idioma = tokenManager.getToken().getIdiomaTextos();
+        int idioma = tokenManager.getToken().getIdiomaApp();
 
         compositeDisposable.add(
                 service.listadoPlanesComunidadYoAddComoVan(idioma, idPlan)

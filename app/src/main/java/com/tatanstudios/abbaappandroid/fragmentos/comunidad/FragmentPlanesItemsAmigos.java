@@ -108,7 +108,7 @@ public class FragmentPlanesItemsAmigos extends Fragment {
 
     private void apiBuscarPlanes(){
 
-        int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
+        int idiomaPlan = tokenManager.getToken().getIdiomaApp();
         String iduser = tokenManager.getToken().getId();
 
         compositeDisposable.add(
@@ -174,9 +174,6 @@ public class FragmentPlanesItemsAmigos extends Fragment {
     }
 
 
-    private void volverAtras(){
-
-    }
 
     void mensajeSinConexion(){
         progressBar.setVisibility(View.GONE);

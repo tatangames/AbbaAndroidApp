@@ -120,7 +120,7 @@ public class ListadoInsigniasActivity extends AppCompatActivity {
     private void apiBuscarTodosLasInsignias(){
 
         String iduser = tokenManager.getToken().getId();
-        int idioma = tokenManager.getToken().getIdiomaTextos();
+        int idioma = tokenManager.getToken().getIdiomaApp();
 
         compositeDisposable.add(
                 service.obtenerTodosLasInsignias(iduser, idioma)

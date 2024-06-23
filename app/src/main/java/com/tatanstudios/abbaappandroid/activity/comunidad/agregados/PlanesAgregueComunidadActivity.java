@@ -9,33 +9,19 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.activity.insignias.NivelesInsigniasActivity;
-import com.tatanstudios.abbaappandroid.adaptadores.comunidad.planes.AdaptadorPlanesAmigos;
 import com.tatanstudios.abbaappandroid.adaptadores.comunidad.yoagregue.AdaptadorPlanesAmigosYoAgregue;
-import com.tatanstudios.abbaappandroid.adaptadores.inicio.insignias.individual.AdaptadorInsigniaHitos;
-import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloContenedorInsignias;
-import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloDescripcionHitos;
-import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloInsigniaHitos;
-import com.tatanstudios.abbaappandroid.modelos.insignias.ModeloVistaHitos;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -103,7 +89,7 @@ public class PlanesAgregueComunidadActivity extends AppCompatActivity {
 
     private void apiBuscarInformacion(){
 
-        int idioma = tokenManager.getToken().getIdiomaTextos();
+        int idioma = tokenManager.getToken().getIdiomaApp();
 
         compositeDisposable.add(
                 service.listadoPlanesComunidadYoAdd(idioma)

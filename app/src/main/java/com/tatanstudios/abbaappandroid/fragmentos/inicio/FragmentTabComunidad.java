@@ -3,7 +3,6 @@ package com.tatanstudios.abbaappandroid.fragmentos.inicio;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;

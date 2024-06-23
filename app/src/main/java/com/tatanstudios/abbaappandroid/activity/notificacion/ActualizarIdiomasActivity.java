@@ -26,9 +26,9 @@ public class ActualizarIdiomasActivity extends AppCompatActivity {
 
 
     private ImageView imgFlechaAtras;
-    private TextView txtIdiomaApp, txtIdiomaPlanesBiblia, txtToolbar;
+    private TextView txtIdiomaApp,  txtToolbar;
     private TokenManager tokenManager;
-    private boolean bottomDialogIdiomaApp, unaVezRadioIdioma, bottomDialogIdiomaTextos;
+    private boolean bottomDialogIdiomaApp, unaVezRadioIdioma;
 
     private OnBackPressedDispatcher onBackPressedDispatcher;
 
@@ -39,13 +39,11 @@ public class ActualizarIdiomasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_actualizar_idiomas);
 
         txtIdiomaApp = findViewById(R.id.txtIdiomaApp);
-        txtIdiomaPlanesBiblia = findViewById(R.id.txtIdiomaPlanesBiblia);
         imgFlechaAtras = findViewById(R.id.imgFlechaAtras);
         txtToolbar = findViewById(R.id.txtToolbar);
 
         tokenManager = TokenManager.getInstance(getSharedPreferences("prefs", MODE_PRIVATE));
         bottomDialogIdiomaApp = true;
-        bottomDialogIdiomaTextos = true;
         unaVezRadioIdioma = true;
 
         txtToolbar.setText(getString(R.string.idioma));
@@ -63,9 +61,6 @@ public class ActualizarIdiomasActivity extends AppCompatActivity {
             cambioIdiomaApp();
         });
 
-        txtIdiomaPlanesBiblia.setOnClickListener(v -> {
-            cambioIdiomaTextos();
-        });
     }
 
     private void volverAtras(){
@@ -84,16 +79,6 @@ public class ActualizarIdiomasActivity extends AppCompatActivity {
         }else{
             // defecto espanol
             txtIdiomaApp.setText(getString(R.string.espanol));
-        }
-
-        if(tokenManager.getToken().getIdiomaTextos() == 1){ // espanol
-            txtIdiomaPlanesBiblia.setText(getString(R.string.espanol));
-        }
-        else if(tokenManager.getToken().getIdiomaTextos() == 2){ // ingles
-            txtIdiomaPlanesBiblia.setText(getString(R.string.ingles));
-        }else{
-            // defecto espanol
-            txtIdiomaPlanesBiblia.setText(getString(R.string.espanol));
         }
     }
 
@@ -151,56 +136,7 @@ public class ActualizarIdiomasActivity extends AppCompatActivity {
         }
     }
 
-    private void cambioIdiomaTextos(){
-        if (bottomDialogIdiomaTextos) {
-            bottomDialogIdiomaTextos = false;
 
-            BottomSheetDialog bottomSheetDialogIdiomaTexto = new BottomSheetDialog(this);
-            View bottomSheetView = getLayoutInflater().inflate(R.layout.cardview_opcion_cambiar_idioma_app, null);
-            bottomSheetDialogIdiomaTexto.setContentView(bottomSheetView);
-
-            RadioButton radioIngles = bottomSheetDialogIdiomaTexto.findViewById(R.id.radio_button_english);
-            RadioButton radioEspanol = bottomSheetDialogIdiomaTexto.findViewById(R.id.radio_button_spanish);
-
-            if(tokenManager.getToken().getIdiomaTextos() == 1){ // espanol
-                radioEspanol.setChecked(true);
-                radioIngles.setChecked(false);
-            }
-            else if(tokenManager.getToken().getIdiomaTextos() == 2){ // ingles
-                radioIngles.setChecked(true);
-                radioEspanol.setChecked(false);
-            }else{
-                // defecto espanol
-                radioEspanol.setChecked(true);
-                radioIngles.setChecked(false);
-            }
-
-            radioIngles.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    txtIdiomaPlanesBiblia.setText(getString(R.string.ingles));
-                    tokenManager.guardarIdiomaTexto(APP_INGLES);
-                    bottomSheetDialogIdiomaTexto.dismiss();
-                }
-            });
-
-            radioEspanol.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    txtIdiomaPlanesBiblia.setText(getString(R.string.espanol));
-                    tokenManager.guardarIdiomaTexto(APP_ESPANOL);
-                    bottomSheetDialogIdiomaTexto.dismiss();
-                }
-            });
-
-            // Configura un oyente para saber cuándo se cierra el BottomSheetDialog
-            bottomSheetDialogIdiomaTexto.setOnDismissListener(dialog -> {
-                bottomDialogIdiomaTextos = true;
-            });
-
-            bottomSheetDialogIdiomaTexto.show();
-        }
-    }
 
 
     private void changeLanguage() {

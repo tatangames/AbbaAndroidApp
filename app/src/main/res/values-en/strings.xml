@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Mi caminar con Dios</string>
-    <string name="version_app">V. 1.1.1</string>
+    <string name="version_app">V. 1.1.4</string>
 
     <string name="abba_app">Mi caminar con Dios</string>
     <string name="abba_internacional">Abba International</string>
@@ -242,12 +242,17 @@
     <string name="ciudad">City</string>
     <string name="otros">Other</string>
     <string name="niveles">Levels</string>
-    <string name="contador_actual">current counter</string>
-    <string name="agregado">aggregate</string>
+    <string name="contador_actual">Current counter</string>
+    <string name="agregado">Aggregate</string>
     <string name="me_han_agregado">I have been added</string>
     <string name="no_hay_informacion">There is no information</string>
-    <string name="devocional_total">Total Devotional</string>
-    <string name="devocional_realizados">Devotional Performed</string>
+    <string name="devocional_total">Total devotional</string>
+    <string name="devocional_realizados">Devotional performed</string>
+    <string name="borrar">Delete</string>
+    <string name="borrar_notificaciones">Delete notifications</string>
+    <string name="borrado">Erased</string>
+
+
 
     <string-array name="estados_elsalvador_array">
         <item>Seleccionar Área</item>

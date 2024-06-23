@@ -208,7 +208,7 @@ public class VerPlanParaSeleccionarActivity extends AppCompatActivity {
 
     private void apiBuscarDatos(){
 
-        int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
+        int idiomaPlan = tokenManager.getToken().getIdiomaApp();
 
         compositeDisposable.add(
                 service.informacionPlanSeleccionado(idPlan, idiomaPlan)

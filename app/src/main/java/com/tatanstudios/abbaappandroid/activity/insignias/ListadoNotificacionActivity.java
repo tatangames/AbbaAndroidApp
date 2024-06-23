@@ -8,12 +8,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.developer.kalert.KAlertDialog;
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.adaptadores.notificacion.AdaptadorListaNotificaciones;
 import com.tatanstudios.abbaappandroid.modelos.notificacion.ModeloListaNotificacion;
@@ -54,6 +57,8 @@ public class ListadoNotificacionActivity extends AppCompatActivity {
     private int currentPage = 1;
     private int lastPage = 1;
 
+    private ImageView imgTuerca;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,7 @@ public class ListadoNotificacionActivity extends AppCompatActivity {
         txtSinNotificacion = findViewById(R.id.txtSinNotificacion);
         txtToolbar = findViewById(R.id.txtToolbar);
         imgFlechaAtras = findViewById(R.id.imgFlechaAtras);
+        imgTuerca = findViewById(R.id.imgTuerca);
 
         txtToolbar.setText(getString(R.string.notificaciones));
 
@@ -101,6 +107,11 @@ public class ListadoNotificacionActivity extends AppCompatActivity {
         });
 
 
+        imgTuerca.setOnClickListener(v -> {
+            modalBorrarNoti();
+        });
+
+
         imgFlechaAtras.setOnClickListener(v -> {
             finish();
         });
@@ -108,6 +119,78 @@ public class ListadoNotificacionActivity extends AppCompatActivity {
 
         apiBuscarNotificaciones();
     }
+
+    private boolean seguroBorrar = true;
+
+    private void modalBorrarNoti(){
+
+        if(seguroBorrar){
+            seguroBorrar = false;
+
+            new Handler().postDelayed(() -> {
+                seguroBorrar = true;
+            }, 2000);
+
+
+            int colorVerdeSuccess = ContextCompat.getColor(this, R.color.verdeSuccess);
+            KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE, false);
+            pDialog.getProgressHelper().setBarColor(colorVerdeSuccess);
+
+            pDialog.setTitleText(getString(R.string.borrar_notificaciones));
+            pDialog.setTitleTextGravity(Gravity.CENTER);
+            pDialog.setTitleTextSize(19);
+
+            pDialog.setContentText("");
+            pDialog.setContentTextAlignment(View.TEXT_ALIGNMENT_VIEW_START, Gravity.START);
+            pDialog.setContentTextSize(17);
+
+            pDialog.setCancelable(false);
+            pDialog.setCanceledOnTouchOutside(false);
+            pDialog.confirmButtonColor(R.drawable.codigo_kalert_dialog_corners_confirmar);
+            pDialog.setConfirmClickListener(getString(R.string.borrar), sDialog -> {
+                sDialog.dismissWithAnimation();
+                apiBorrarNotificaciones();
+            });
+
+            pDialog.cancelButtonColor(R.drawable.codigo_kalert_dialog_corners_cancelar);
+            pDialog.setCancelClickListener(getString(R.string.cancelar), sDialog -> {
+                sDialog.dismissWithAnimation();
+
+            });
+            pDialog.show();
+        }
+    }
+
+
+    private void apiBorrarNotificaciones(){
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        int idiomaPlan = tokenManager.getToken().getIdiomaApp();
+
+        compositeDisposable.add(
+                service.borrarListadoNotificaciones(idiomaPlan)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .retry()
+                        .subscribe(
+                                apiRespuesta -> {
+
+                                    progressBar.setVisibility(View.GONE);
+                                    if(apiRespuesta.getSuccess() == 1){
+
+                                        Toasty.success(this, getString(R.string.borrado), Toasty.LENGTH_SHORT).show();
+                                        finish();
+                                    }else{
+                                        mensajeSinConexion();
+                                    }
+                                },
+                                throwable -> {
+                                    mensajeSinConexion();
+                                }
+                        ));
+    }
+
 
 
 
@@ -126,7 +209,7 @@ public class ListadoNotificacionActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         String iduser = tokenManager.getToken().getId();
-        int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
+        int idiomaPlan = tokenManager.getToken().getIdiomaApp();
 
         ModeloListaNotificacionPaginateRequest paginationRequest = new ModeloListaNotificacionPaginateRequest();
         paginationRequest.setPage(currentPage);
@@ -188,7 +271,7 @@ public class ListadoNotificacionActivity extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
 
             String iduser = tokenManager.getToken().getId();
-            int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
+            int idiomaPlan = tokenManager.getToken().getIdiomaApp();
 
 
             ModeloListaNotificacionPaginateRequest paginationRequest = new ModeloListaNotificacionPaginateRequest();

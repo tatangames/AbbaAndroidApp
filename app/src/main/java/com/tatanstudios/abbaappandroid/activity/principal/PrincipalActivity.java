@@ -41,7 +41,6 @@ public class PrincipalActivity extends AppCompatActivity implements InterfaceAct
 
     private boolean boolRecargarFragmentInicio;
     private boolean boolRecargarFragmentBiblia;
-    private boolean boolRecargarFragmentPlanes;
 
 
     @Override
@@ -62,7 +61,6 @@ public class PrincipalActivity extends AppCompatActivity implements InterfaceAct
 
         boolRecargarFragmentInicio = false;
         boolRecargarFragmentBiblia = false;
-        boolRecargarFragmentPlanes = false;
 
         fm.beginTransaction().add(R.id.main_container, fragmentAjustes, "4").hide(fragmentAjustes).commit();
         fm.beginTransaction().add(R.id.main_container, fragmentBiblia, "3").hide(fragmentBiblia).commit();
@@ -169,7 +167,6 @@ public class PrincipalActivity extends AppCompatActivity implements InterfaceAct
 
         boolRecargarFragmentInicio = true;
         boolRecargarFragmentBiblia = true;
-        boolRecargarFragmentPlanes = true;
         recargarFragmentAjustes();
     }
 
@@ -283,7 +280,6 @@ public class PrincipalActivity extends AppCompatActivity implements InterfaceAct
 
     private void recargarFragmentPlanes(){
 
-        boolRecargarFragmentPlanes = false;
 
         // Obtén el FragmentManager
         FragmentManager fragmentManager = getSupportFragmentManager();

@@ -128,7 +128,7 @@ public class VersiculoTextoActivity extends AppCompatActivity {
     private void apiBuscarTextos(){
 
         String iduser = tokenManager.getToken().getId();
-        int idioma = tokenManager.getToken().getIdiomaTextos();
+        int idioma = tokenManager.getToken().getIdiomaApp();
 
         compositeDisposable.add(
                 service.listadoTextosVersiculos(iduser, idioma, idcapitulo)

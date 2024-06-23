@@ -2,7 +2,7 @@
 
 
     <string name="app_name">Mi caminar con Dios</string>
-    <string name="version_app">V. 1.1.1</string>
+    <string name="version_app">V. 1.1.4</string>
 
     <string name="abba_app">Mi caminar con Dios</string>
     <string name="abba_internacional">Abba Internacional</string>
@@ -248,6 +248,10 @@
     <string name="no_hay_informacion">No hay información</string>
     <string name="devocional_total">Devocional Total</string>
     <string name="devocional_realizados">Devocional Realizado</string>
+    <string name="borrar">Borrar</string>
+    <string name="borrar_notificaciones">Borrar notificaciones</string>
+    <string name="borrado">Borrado</string>
+
 
 
     <string-array name="estados_elsalvador_array">

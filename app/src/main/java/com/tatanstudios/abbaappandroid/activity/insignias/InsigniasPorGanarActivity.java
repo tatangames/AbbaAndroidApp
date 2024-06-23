@@ -7,8 +7,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +17,6 @@ import android.widget.TextView;
 
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.adaptadores.inicio.insignias.listado.AdaptadorInsigniasFaltantes;
-import com.tatanstudios.abbaappandroid.adaptadores.inicio.insignias.listado.AdaptadorTodasInsignias;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
@@ -102,7 +99,7 @@ public class InsigniasPorGanarActivity extends AppCompatActivity {
     private void apiBuscarTodosLasInsignias(){
 
         String iduser = tokenManager.getToken().getId();
-        int idioma = tokenManager.getToken().getIdiomaTextos();
+        int idioma = tokenManager.getToken().getIdiomaApp();
 
         compositeDisposable.add(
                 service.obtenerTodosLasInsigniasFaltantes(iduser, idioma)

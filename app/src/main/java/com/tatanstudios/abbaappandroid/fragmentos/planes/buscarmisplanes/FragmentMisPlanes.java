@@ -99,7 +99,7 @@ public class FragmentMisPlanes extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
 
         String iduser = tokenManager.getToken().getId();
-        int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
+        int idiomaPlan = tokenManager.getToken().getIdiomaApp();
 
 
         compositeDisposable.add(

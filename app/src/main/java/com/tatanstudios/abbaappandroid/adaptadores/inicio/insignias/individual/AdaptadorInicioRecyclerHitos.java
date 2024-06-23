@@ -19,12 +19,10 @@ public class AdaptadorInicioRecyclerHitos extends RecyclerView.Adapter<Adaptador
 
     private List<ModeloInsigniaHitos> modeloInsigniaHitos;
     private Context context;
-    private String textoFalta;
 
-    public AdaptadorInicioRecyclerHitos(Context context, List<ModeloInsigniaHitos> modeloInsigniaHitos, String textoFalta) {
+    public AdaptadorInicioRecyclerHitos(Context context, List<ModeloInsigniaHitos> modeloInsigniaHitos) {
         this.context = context;
         this.modeloInsigniaHitos = modeloInsigniaHitos;
-        this.textoFalta = textoFalta;
     }
 
     @NonNull
@@ -39,25 +37,10 @@ public class AdaptadorInicioRecyclerHitos extends RecyclerView.Adapter<Adaptador
     public void onBindViewHolder(@NonNull AdaptadorInicioRecyclerHitos.ViewHolder holder, int position) {
         ModeloInsigniaHitos m = modeloInsigniaHitos.get(position);
 
-        /*if(m.getFechaFormat() != null && !TextUtils.isEmpty(m.getFechaFormat())){
-            holder.txtTitulo.setText(m.getFechaFormat());
-        }*/
+        String formatoFinal = m.getTextoCompletado() + " " + m.getFechaFormat();
+        holder.txtTitulo.setText(formatoFinal);
+        holder.txtNivel.setText(String.valueOf(m.getNivel()));
 
-        // son los normales ganado
-        if(m.getEsNextLevel() == 0){
-
-
-            String formatoFinal = m.getTextoCompletado() + " " + m.getFechaFormat();
-            holder.txtTitulo.setText(formatoFinal);
-            holder.txtNivel.setText(String.valueOf(m.getNivel()));
-
-        }else{
-            // es el del siguiente nivel
-            String formatoFinal = textoFalta + " " + m.getHitCuantoFalta();
-            holder.txtTitulo.setText(formatoFinal);
-
-            holder.txtNivel.setText(String.valueOf(m.getCualNextLevel()));
-        }
     }
 
     @Override

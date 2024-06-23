@@ -48,6 +48,11 @@ public class SolicitudPendienteRecibidaActivity extends AppCompatActivity {
 
     private AdaptadorSolicitudPendientesRecibidas adaptadorSolicitudPendientesRecibidas;
 
+    private String textoCorreo = "";
+    private String textoFecha = "";
+
+    private String textoAceptarSoli = "";
+    private String textoBorrarSoli = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,12 @@ public class SolicitudPendienteRecibidaActivity extends AppCompatActivity {
         txtToolbar.setText(getString(R.string.recibidas));
 
         int colorProgress = ContextCompat.getColor(this, R.color.barraProgreso);
+
+        textoCorreo = getString(R.string.correo);
+        textoFecha = getString(R.string.fecha_de_solicitud);
+        textoAceptarSoli = getString(R.string.aceptar_solicitud);
+        textoBorrarSoli = getString(R.string.borrar_solicitud);
+
 
         tokenManager = TokenManager.getInstance(getSharedPreferences("prefs", MODE_PRIVATE));
         service = RetrofitBuilder.createServiceAutentificacion(ApiService.class, tokenManager);
@@ -108,7 +119,8 @@ public class SolicitudPendienteRecibidaActivity extends AppCompatActivity {
                                         if(apiRespuesta.getSuccess() == 1) {
 
                                             if(apiRespuesta.getHayinfo() == 1){
-                                                adaptadorSolicitudPendientesRecibidas = new AdaptadorSolicitudPendientesRecibidas(getApplicationContext(), apiRespuesta.getModeloComunidads(), this);
+                                                adaptadorSolicitudPendientesRecibidas = new AdaptadorSolicitudPendientesRecibidas(getApplicationContext(), apiRespuesta.getModeloComunidads(), this,
+                                                        textoCorreo, textoFecha, textoAceptarSoli, textoBorrarSoli);
                                                 recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
                                                 recyclerView.setAdapter(adaptadorSolicitudPendientesRecibidas);
                                             }else{
@@ -154,6 +166,10 @@ public class SolicitudPendienteRecibidaActivity extends AppCompatActivity {
         }
         super.onStop();
     }
+
+
+
+
 
 
     public void borrarSolicitud(int idsolicitud) {

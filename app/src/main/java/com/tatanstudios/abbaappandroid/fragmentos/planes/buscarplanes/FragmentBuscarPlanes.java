@@ -84,7 +84,7 @@ public class FragmentBuscarPlanes extends FragmentPlanes {
         progressBar.setVisibility(View.VISIBLE);
 
         String iduser = tokenManager.getToken().getId();
-        int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
+        int idiomaPlan = tokenManager.getToken().getIdiomaApp();
 
         compositeDisposable.add(
                 service.listadoNuevosPlanes(iduser, idiomaPlan)

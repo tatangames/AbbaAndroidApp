@@ -2,7 +2,6 @@ package com.tatanstudios.abbaappandroid.activity.comunidad;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
@@ -10,20 +9,16 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
-import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.developer.kalert.KAlertDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.fragmentos.login.olvidepass.FragmentCodigoPassword;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
@@ -36,7 +31,6 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class AgregarAmigoComunidadActivity extends AppCompatActivity {
-
 
     private ApiService service;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();

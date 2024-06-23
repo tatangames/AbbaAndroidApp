@@ -3,6 +3,7 @@ package com.tatanstudios.abbaappandroid.adaptadores.comunidad;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
@@ -25,10 +26,19 @@ public class AdaptadorSolicitudPendientesEnviadas extends RecyclerView.Adapter<A
 
     private SolicitudPendienteEnviadaActivity solicitudPendienteEnviadaActivity;
 
-    public AdaptadorSolicitudPendientesEnviadas(Context context, List<ModeloComunidad> modeloComunidad, SolicitudPendienteEnviadaActivity solicitudPendienteEnviadaActivity) {
+    private String textoEliminar = "";
+    private String textoCorreo = "";
+    private String textoFechaSoli = "";
+
+
+    public AdaptadorSolicitudPendientesEnviadas(Context context, List<ModeloComunidad> modeloComunidad, SolicitudPendienteEnviadaActivity solicitudPendienteEnviadaActivity,
+                                                String textoEliminar, String textoCorreo, String textoFechaSoli) {
         this.context = context;
         this.modeloComunidad = modeloComunidad;
         this.solicitudPendienteEnviadaActivity = solicitudPendienteEnviadaActivity;
+        this.textoEliminar = textoEliminar;
+        this.textoCorreo = textoCorreo;
+        this.textoFechaSoli = textoFechaSoli;
     }
 
     @NonNull
@@ -44,24 +54,25 @@ public class AdaptadorSolicitudPendientesEnviadas extends RecyclerView.Adapter<A
         ModeloComunidad m = modeloComunidad.get(position);
 
         if(m.getCorreo() != null && !TextUtils.isEmpty(m.getCorreo())){
-            String correo = context.getString(R.string.correo) + ": " + m.getCorreo();
+            String correo = textoCorreo + ": " + m.getCorreo();
             holder.txtCorreo.setText(correo);
         }
 
         if(m.getFecha() != null && !TextUtils.isEmpty(m.getFecha())){
-            String fechaSolicitud = context.getString(R.string.fecha_de_solicitud) + ": " + m.getFecha();
+            String fechaSolicitud = textoFechaSoli + ": " + m.getFecha();
             holder.txtFecha.setText(fechaSolicitud);
         }
 
         holder.setListener((view, po) -> {
-            //solicitudesPendientesActivity.abrirPanelMenu(holder.txtFecha);
-
 
             // Crea un PopupMenu
             PopupMenu popupMenu = new PopupMenu(context, holder.txtFecha);
 
             // Infla el menú en el PopupMenu
             popupMenu.inflate(R.menu.menu_opciones_pendientes_borrar);
+
+            MenuItem opcion1 = popupMenu.getMenu().findItem(R.id.opcion2);
+            opcion1.setTitle(textoEliminar);
 
             // Establece un listener para manejar los clics en los elementos del menú
             popupMenu.setOnMenuItemClickListener(item -> {

@@ -11,8 +11,8 @@ android {
         applicationId = "com.tatanstudios.micaminarcondios"
         minSdk = 25
         targetSdk = 33
-        versionCode = 11
-        versionName = "1.1.1"
+        versionCode = 14
+        versionName = "1.1.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

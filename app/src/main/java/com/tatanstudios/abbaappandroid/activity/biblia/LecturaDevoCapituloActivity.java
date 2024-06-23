@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.fragmentos.biblia.FragmentCapitulos;
 import com.tatanstudios.abbaappandroid.fragmentos.devocapitulo.FragmentDevoCapitulo;
 
 public class LecturaDevoCapituloActivity extends AppCompatActivity {

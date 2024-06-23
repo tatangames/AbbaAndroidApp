@@ -30,7 +30,6 @@ public class AdaptadorInsigniaHitos extends RecyclerView.Adapter<RecyclerView.Vi
     private List<ModeloVistaHitos> modeloVistaHitos;
     private Context context;
 
-    private String textoFalta = "";
 
     RequestOptions opcionesGlide = new RequestOptions()
             .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -38,13 +37,14 @@ public class AdaptadorInsigniaHitos extends RecyclerView.Adapter<RecyclerView.Vi
             .placeholder(R.drawable.camaradefecto)
             .priority(Priority.NORMAL);
 
-    private int contadorActual = 0;
 
-    public AdaptadorInsigniaHitos(Context context, List<ModeloVistaHitos> modeloVistaHitos, String textoFalta, int contadorActual) {
+    private String textoNivel = "";
+
+
+    public AdaptadorInsigniaHitos(Context context, List<ModeloVistaHitos> modeloVistaHitos,  String textoNivel) {
         this.context = context;
         this.modeloVistaHitos = modeloVistaHitos;
-        this.textoFalta = textoFalta;
-        this.contadorActual = contadorActual;
+        this.textoNivel = textoNivel;
     }
 
     @NonNull
@@ -103,9 +103,7 @@ public class AdaptadorInsigniaHitos extends RecyclerView.Adapter<RecyclerView.Vi
 
                 viewHolderDescripcion.txtNivel.setText(String.valueOf(mDescripcion.getNivelvoy()));
 
-                String texto = context.getString(R.string.contador_actual) + ": " + contadorActual;
-
-                viewHolderDescripcion.txtContador.setText(texto);
+                viewHolderDescripcion.txtContador.setText(textoNivel);
 
 
                 break;
@@ -136,7 +134,7 @@ public class AdaptadorInsigniaHitos extends RecyclerView.Adapter<RecyclerView.Vi
 
     private void configurarRecyclerHitos(RecyclerView recyclerView, List<ModeloInsigniaHitos> modeloInsigniaHitos) {
 
-        RecyclerView.Adapter adaptadorInterno = new AdaptadorInicioRecyclerHitos(context, modeloInsigniaHitos, textoFalta);
+        RecyclerView.Adapter adaptadorInterno = new AdaptadorInicioRecyclerHitos(context, modeloInsigniaHitos);
         recyclerView.setAdapter(adaptadorInterno);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
     }

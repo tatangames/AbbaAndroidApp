@@ -3,18 +3,14 @@ package com.tatanstudios.abbaappandroid.activity.comunidad;
 import androidx.activity.OnBackPressedDispatcher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -23,19 +19,12 @@ import android.widget.Toast;
 
 import com.developer.kalert.KAlertDialog;
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.adaptadores.comunidad.AdaptadorComunidadAceptadas;
 import com.tatanstudios.abbaappandroid.adaptadores.comunidad.AdaptadorSeleccionarAmigos;
-import com.tatanstudios.abbaappandroid.adaptadores.inicio.videos.AdaptadorTodosVideos;
-import com.tatanstudios.abbaappandroid.adaptadores.notificacion.AdaptadorListaNotificaciones;
 import com.tatanstudios.abbaappandroid.modelos.amigos.ModeloAmigos;
-import com.tatanstudios.abbaappandroid.modelos.comunidad.ModeloComunidad;
-import com.tatanstudios.abbaappandroid.modelos.comunidad.ModeloVistaComunidad;
-import com.tatanstudios.abbaappandroid.modelos.notificacion.ModeloListaNotificacion;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -229,7 +218,7 @@ public class SeleccionarAmigosPlanActivity extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
 
             String iduser = tokenManager.getToken().getId();
-            int idioma = tokenManager.getToken().getIdiomaTextos();
+            int idioma = tokenManager.getToken().getIdiomaApp();
 
             compositeDisposable.add(
                     service.iniciarPlanAmigos(iduser, idplan, idioma, hashMapAmigos)

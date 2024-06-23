@@ -3,6 +3,7 @@ package com.tatanstudios.abbaappandroid.adaptadores.comunidad;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
@@ -23,12 +24,25 @@ public class AdaptadorSolicitudPendientesRecibidas extends RecyclerView.Adapter<
     private List<ModeloComunidad> modeloComunidad;
     private Context context;
 
+    private String textoCorreo = "";
+    private String textoFecha = "";
+
+    private String textoAceptarSolic = "";
+    private String textoBorrarSolic = "";
+
     private SolicitudPendienteRecibidaActivity solicitudPendienteRecibidaActivity;
 
-    public AdaptadorSolicitudPendientesRecibidas(Context context, List<ModeloComunidad> modeloComunidad, SolicitudPendienteRecibidaActivity solicitudPendienteRecibidaActivity) {
+    public AdaptadorSolicitudPendientesRecibidas(Context context, List<ModeloComunidad> modeloComunidad,
+                                                 SolicitudPendienteRecibidaActivity solicitudPendienteRecibidaActivity,
+                                                 String textoCorreo, String textoFecha,
+                                                 String textoAceptarSoli, String textoBorrarSolic) {
         this.context = context;
         this.modeloComunidad = modeloComunidad;
         this.solicitudPendienteRecibidaActivity = solicitudPendienteRecibidaActivity;
+        this.textoCorreo = textoCorreo;
+        this.textoFecha = textoFecha;
+        this.textoAceptarSolic = textoAceptarSoli;
+        this.textoBorrarSolic = textoBorrarSolic;
     }
 
     @NonNull
@@ -44,12 +58,12 @@ public class AdaptadorSolicitudPendientesRecibidas extends RecyclerView.Adapter<
         ModeloComunidad m = modeloComunidad.get(position);
 
         if(m.getCorreo() != null && !TextUtils.isEmpty(m.getCorreo())){
-            String correo = context.getString(R.string.correo) + ": " + m.getCorreo();
+            String correo = textoCorreo + ": " + m.getCorreo();
             holder.txtCorreo.setText(correo);
         }
 
         if(m.getFecha() != null && !TextUtils.isEmpty(m.getFecha())){
-            String fechaSolicitud = context.getString(R.string.fecha_de_solicitud) + ": " + m.getFecha();
+            String fechaSolicitud = textoFecha + ": " + m.getFecha();
             holder.txtFecha.setText(fechaSolicitud);
         }
 
@@ -60,6 +74,14 @@ public class AdaptadorSolicitudPendientesRecibidas extends RecyclerView.Adapter<
 
             // Infla el menú en el PopupMenu
             popupMenu.inflate(R.menu.menu_opciones_pendientes_opciones);
+
+
+            MenuItem opcion1 = popupMenu.getMenu().findItem(R.id.opcion1);
+            opcion1.setTitle(textoAceptarSolic);
+
+            MenuItem opcion2 = popupMenu.getMenu().findItem(R.id.opcion2);
+            opcion2.setTitle(textoBorrarSolic);
+
 
             // Establece un listener para manejar los clics en los elementos del menú
             popupMenu.setOnMenuItemClickListener(item -> {

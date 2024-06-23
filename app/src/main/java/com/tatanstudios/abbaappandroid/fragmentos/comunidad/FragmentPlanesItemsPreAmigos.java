@@ -20,19 +20,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tatanstudios.abbaappandroid.R;
-import com.tatanstudios.abbaappandroid.adaptadores.comunidad.planes.AdaptadorPlanesItemsAmigos;
 import com.tatanstudios.abbaappandroid.adaptadores.comunidad.planes.AdaptadorPlanesItemsPreAmigos;
-import com.tatanstudios.abbaappandroid.modelos.planes.cuestionario.preguntas.ModeloPreguntasContenedor;
 import com.tatanstudios.abbaappandroid.network.ApiService;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
 
 import es.dmoral.toasty.Toasty;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.http.Field;
 
 public class FragmentPlanesItemsPreAmigos extends Fragment {
 
@@ -103,15 +99,15 @@ public class FragmentPlanesItemsPreAmigos extends Fragment {
             onBackPressedDispatcher.onBackPressed();
         });
 
+
         apiBuscarPlanes();
 
         return vista;
     }
 
-
     private void apiBuscarPlanes(){
 
-        int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
+        int idiomaPlan = tokenManager.getToken().getIdiomaApp();
 
         compositeDisposable.add(
                 service.listadoPlanesItemsPreguntasComunidad(idplanblockDetaUser, idiomaPlan, usuariobuscado)

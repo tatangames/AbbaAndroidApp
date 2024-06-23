@@ -2,7 +2,6 @@ package com.tatanstudios.abbaappandroid.fragmentos.menuprincipal;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

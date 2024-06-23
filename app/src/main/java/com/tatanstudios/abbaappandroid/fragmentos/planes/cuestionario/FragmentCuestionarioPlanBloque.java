@@ -184,7 +184,7 @@ public class FragmentCuestionarioPlanBloque extends Fragment {
     private void apiBuscarCuestionario(){
 
         String iduser = tokenManager.getToken().getId();
-        int idiomaPlan = tokenManager.getToken().getIdiomaTextos();
+        int idiomaPlan = tokenManager.getToken().getIdiomaApp();
 
         compositeDisposable.add(
                 service.informacionCuestionarioBloqueDetalle(iduser, idBloqueDeta, idiomaPlan)

@@ -48,6 +48,10 @@ public class SolicitudPendienteEnviadaActivity extends AppCompatActivity {
 
     private AdaptadorSolicitudPendientesEnviadas adaptadorSolicitudPendientesEnviadas;
 
+    private String textoEliminar = "";
+    private String textoCorreo = "";
+    private String textoFechaSoli = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +63,9 @@ public class SolicitudPendienteEnviadaActivity extends AppCompatActivity {
         txtSinDatos = findViewById(R.id.txtSinDatos);
 
         txtToolbar.setText(getString(R.string.pendientes));
+        textoEliminar = getString(R.string.eliminar);
+        textoCorreo = getString(R.string.correo);
+        textoFechaSoli = getString(R.string.fecha_de_solicitud);
 
         int colorProgress = ContextCompat.getColor(this, R.color.barraProgreso);
 
@@ -108,7 +115,8 @@ public class SolicitudPendienteEnviadaActivity extends AppCompatActivity {
                                         if(apiRespuesta.getSuccess() == 1) {
 
                                             if(apiRespuesta.getHayinfo() == 1){
-                                                adaptadorSolicitudPendientesEnviadas = new AdaptadorSolicitudPendientesEnviadas(getApplicationContext(), apiRespuesta.getModeloComunidads(), this);
+                                                adaptadorSolicitudPendientesEnviadas = new AdaptadorSolicitudPendientesEnviadas(getApplicationContext(), apiRespuesta.getModeloComunidads(), this,
+                                                        textoEliminar, textoCorreo, textoFechaSoli);
                                                 recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
                                                 recyclerView.setAdapter(adaptadorSolicitudPendientesEnviadas);
                                             }else{
