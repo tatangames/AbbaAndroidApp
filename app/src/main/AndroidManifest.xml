@@ -22,15 +22,20 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activity.comunidad.mehanagregado.PlanesAmigosMeHanAgregadoActivity"
+            android:name=".activity.pruebas.BibliaActivity"
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait"  />
         <activity
+            android:name=".activity.comunidad.mehanagregado.PlanesAmigosMeHanAgregadoActivity"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.comunidad.mehanagregado.PlanesMeHanAgregadoActivity"
             android:configChanges="uiMode"
             android:exported="false"
-            android:screenOrientation="portrait"  />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.comunidad.agregados.PlanesListadoAmigoAgregadoActivity"
             android:configChanges="uiMode"
@@ -66,7 +71,6 @@
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.comunidad.planes.PlanesAmigosActivity"
             android:configChanges="uiMode"
@@ -107,7 +111,6 @@
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.inicio.insignias.ListadoInsigniasActivity"
             android:configChanges="uiMode"
@@ -128,7 +131,6 @@
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.planes.cuestionarios.CuestionarioPlanActivity"
             android:configChanges="uiMode"

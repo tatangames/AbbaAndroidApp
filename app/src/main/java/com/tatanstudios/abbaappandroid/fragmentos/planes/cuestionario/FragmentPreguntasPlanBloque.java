@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.http.Field;
 
 public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
@@ -80,8 +82,7 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
     private String tituloPreguntaBloque = "";
 
-    // 0: al darle compartir tomara el primer cuadro de preguntar
-    private int ignorarShare = 0;
+
 
     public boolean isYaHabiaGuardado() {
         return yaHabiaGuardado;
@@ -166,7 +167,6 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
 
                                             int genero = apiRespuesta.getGenero();
-                                            ignorarShare = apiRespuesta.getIgnorarshare();
 
                                             setearAdaptador(genero);
                                         }
@@ -274,7 +274,80 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
     public void compartirDatosPreguntas(){
 
-        String textoGlobal = "";
+        progressBar.setVisibility(View.VISIBLE);
+
+        String iduser = tokenManager.getToken().getId();
+        int idioma = tokenManager.getToken().getIdiomaApp();
+
+        compositeDisposable.add(
+                service.infoPreguntasTextosParaCompartir(iduser, idBloqueDeta, idioma)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread()) // NO RETRY
+                        .subscribe(apiRespuesta -> {
+
+                                    progressBar.setVisibility(View.GONE);
+
+                                    if(apiRespuesta != null) {
+
+                                        if(apiRespuesta.getSuccess() == 1) {
+                                            // falta responder preguntas
+                                            Toasty.info(getActivity(), getString(R.string.completar_devocional),Toasty.LENGTH_SHORT).show();
+                                        }
+                                        else if(apiRespuesta.getSuccess() == 2) {
+
+                                            String textoGlobal = apiRespuesta.getFormatoPregunta();
+
+                                            if(!TextUtils.isEmpty(textoGlobal)){
+                                                Intent intent = new Intent(Intent.ACTION_SEND);
+                                                intent.setType("text/plain");
+                                                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                                                intent.putExtra(Intent.EXTRA_TEXT, textoGlobal);
+
+                                                try {
+                                                    startActivity(Intent.createChooser(intent, getString(R.string.compartir)));
+                                                } catch (Exception e) {
+
+                                                }
+                                            }
+
+                                            // Preguntas
+                                               /* for (ModeloPreguntas arrayPreguntas : apiRespuesta.getModeloPreguntas()) {
+
+                                                    if(arrayPreguntas.getTitulo() != null && !TextUtils.isEmpty(arrayPreguntas.getTitulo())){
+                                                        String textoSinHTMLTitulo = HtmlCompat.fromHtml(arrayPreguntas.getTitulo(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
+
+                                                        textoGlobal += textoSinHTMLTitulo + "R// ";
+                                                    }
+
+                                                    if(arrayPreguntas.getTexto() != null && !TextUtils.isEmpty(arrayPreguntas.getTexto())){
+                                                        textoGlobal += arrayPreguntas.getTexto() + "\n\n";
+                                                    }
+                                                }*/
+
+
+                                        }
+
+                                        else if(apiRespuesta.getSuccess() == 3) {
+
+                                            // no hay preguntas disponibles, es que estan inactivas
+                                            Toasty.info(getContext(), getString(R.string.devocional_no_disponible), Toasty.LENGTH_SHORT).show();
+                                        }
+                                        else{
+                                            mensajeSinConexion();
+                                        }
+
+
+                                    }else{
+                                        mensajeSinConexion();
+                                    }
+                                },
+                                throwable -> {
+                                    boolApiActualizar = true;
+                                    mensajeSinConexion();
+                                })
+        );
+
+        /*String textoGlobal = "";
 
         boolean valor = false;
         for (ModeloPreguntas m : modeloPreguntas){
@@ -296,23 +369,15 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
                 modalCompartir = false;
             }, 1000);
 
-            // se ignora el primer cuadro
-            boolean vuelta1 = false;
-            if(ignorarShare == 0){
-                vuelta1 = true;
-            }
 
             for (ModeloPreguntas m : modeloPreguntas){
 
-                if(vuelta1){
+
                     String textoPregunta = adapter.getTextoPregunta(m.getId());
                     String textoEdt = adapter.getTextoFromEditText(m.getId());
 
-                    String linea = textoPregunta + "R// " + textoEdt + "\n\n";
-                    textoGlobal += linea;
-                }
-
-                vuelta1 = true;
+                    //String linea = textoPregunta + "R// " + textoEdt + "\n\n";
+                    textoGlobal = textoGlobal + textoPregunta +  "R// " + textoEdt + "\n\n";
             }
 
             Intent intent = new Intent(Intent.ACTION_SEND);
@@ -327,11 +392,12 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
             }
 
             compartirDevoApi();
-        }
+        }*/
     }
 
 
-    private void compartirDevoApi(){
+
+    /*private void compartirDevoApi(){
 
         if(boolCompartirDevo){
             boolCompartirDevo = false;
@@ -351,7 +417,7 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
                                     })
             );
         }
-    }
+    }*/
 
 
 

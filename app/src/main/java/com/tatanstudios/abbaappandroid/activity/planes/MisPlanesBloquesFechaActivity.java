@@ -279,11 +279,23 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                                             }
                                             else if(apiRespuesta.getSuccess() == 2) {
 
-                                                String textoGlobal = "";
+                                                String textoGlobal = apiRespuesta.getFormatoPregunta();
 
+                                                if(!TextUtils.isEmpty(textoGlobal)){
+                                                    Intent intent = new Intent(Intent.ACTION_SEND);
+                                                    intent.setType("text/plain");
+                                                    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                                                    intent.putExtra(Intent.EXTRA_TEXT, textoGlobal);
+
+                                                    try {
+                                                        startActivity(Intent.createChooser(intent, getString(R.string.compartir)));
+                                                    } catch (Exception e) {
+
+                                                    }
+                                                }
 
                                                 // Preguntas
-                                                for (ModeloPreguntas arrayPreguntas : apiRespuesta.getModeloPreguntas()) {
+                                               /* for (ModeloPreguntas arrayPreguntas : apiRespuesta.getModeloPreguntas()) {
 
                                                     if(arrayPreguntas.getTitulo() != null && !TextUtils.isEmpty(arrayPreguntas.getTitulo())){
                                                         String textoSinHTMLTitulo = HtmlCompat.fromHtml(arrayPreguntas.getTitulo(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
@@ -294,18 +306,9 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                                                     if(arrayPreguntas.getTexto() != null && !TextUtils.isEmpty(arrayPreguntas.getTexto())){
                                                         textoGlobal += arrayPreguntas.getTexto() + "\n\n";
                                                     }
-                                                }
+                                                }*/
 
-                                                Intent intent = new Intent(Intent.ACTION_SEND);
-                                                intent.setType("text/plain");
-                                                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                                                intent.putExtra(Intent.EXTRA_TEXT, textoGlobal);
 
-                                                try {
-                                                    startActivity(Intent.createChooser(intent, getString(R.string.compartir)));
-                                                } catch (Exception e) {
-
-                                                }
                                             }
 
                                             else if(apiRespuesta.getSuccess() == 3) {

@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.activity.principal.PrincipalActivity;
+import com.tatanstudios.abbaappandroid.activity.pruebas.BibliaActivity;
 import com.tatanstudios.abbaappandroid.extras.LocaleManagerIdiomaAndroid;
 import com.tatanstudios.abbaappandroid.fragmentos.login.FragmentLogin;
 import com.tatanstudios.abbaappandroid.network.TokenManager;
@@ -79,6 +80,12 @@ public class SplashActivity extends AppCompatActivity {
                 LocaleManagerIdiomaAndroid.setLocale(this, APP_ESPANOL);
             }
         }
+
+
+        // Siguiente Actvity
+      /*  Intent intent = new Intent(this, BibliaActivity.class);
+        startActivity(intent);
+        finish();*/
 
 
         new Handler().postDelayed(() -> {

@@ -29,6 +29,10 @@ public class ModeloPreguntasContenedor{
     @SerializedName("ignorarshare")
     private int ignorarshare;
 
+    @SerializedName("formatoPregu")
+    private String formatoPregunta;
+
+
 
     public int getIgnorarshare() {
         return ignorarshare;
@@ -45,6 +49,10 @@ public class ModeloPreguntasContenedor{
     @SerializedName("listado")
     public List<ModeloPreguntas> modeloPreguntas;
 
+
+    public String getFormatoPregunta() {
+        return formatoPregunta;
+    }
 
     public int getIgnorarpre() {
         return ignorarpre;

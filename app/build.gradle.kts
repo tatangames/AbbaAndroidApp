@@ -10,9 +10,9 @@ android {
     defaultConfig {
         applicationId = "com.tatanstudios.micaminarcondios"
         minSdk = 25
-        targetSdk = 33
-        versionCode = 14
-        versionName = "1.1.4"
+        targetSdk = 34
+        versionCode = 17
+        versionName = "1.1.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
