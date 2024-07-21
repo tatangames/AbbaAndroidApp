@@ -61,11 +61,7 @@
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.biblia.VersiculosListaActivity"
-            android:configChanges="uiMode"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.biblia.CapitulosBibliaActivity"
             android:configChanges="uiMode"
