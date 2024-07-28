@@ -619,7 +619,7 @@ public class FragmentRegistro extends Fragment {
     private void llenarSpinnerIglesias(List<ModeloIglesias> modeloIglesias){
 
         List<ModeloIglesias> modeloSet = new ArrayList<>();
-        modeloSet.add(new ModeloIglesias(0, getString(R.string.seleccionar_iglesia)));
+        modeloSet.add(new ModeloIglesias(0, getString(R.string.seleccionar_municipio)));
 
         for (ModeloIglesias m : modeloIglesias){
             modeloSet.add(new ModeloIglesias(m.getId(), m.getNombre()));
@@ -721,7 +721,7 @@ public class FragmentRegistro extends Fragment {
         }else{
 
             if (idSpinnerIglesia == 0) {
-                Toasty.error(getContext(), getString(R.string.iglesia_es_requerido)).show();
+                Toasty.error(getContext(), getString(R.string.seleccionar_municipio)).show();
                 return;
             }
         }

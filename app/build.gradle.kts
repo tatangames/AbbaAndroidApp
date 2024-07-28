@@ -11,8 +11,8 @@ android {
         applicationId = "com.tatanstudios.micaminarcondios"
         minSdk = 25
         targetSdk = 34
-        versionCode = 18
-        versionName = "1.1.7"
+        versionCode = 20
+        versionName = "1.1.9"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -78,7 +78,7 @@ dependencies {
     // efecto shimmer
     implementation("com.facebook.shimmer:shimmer:0.5.0")
 
-
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
     implementation("com.google.android.exoplayer:exoplayer:2.18.7")
     implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
