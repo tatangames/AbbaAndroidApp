@@ -1,5 +1,7 @@
 package com.tatanstudios.abbaappandroid.modelos.inicio;
 
+import com.tatanstudios.abbaappandroid.modelos.redes.ModeloRedesSociales;
+
 import java.util.List;
 
 public class ModeloVistasInicio {
@@ -18,6 +20,8 @@ public class ModeloVistasInicio {
 
     public static final int TIPO_INSIGNIAS = 4;
 
+    public static final int TIPO_REDESSOCIALES = 5;
+
 
     private ModeloInicioDevocional modeloInicioDevocional;
     private List<ModeloInicioVideos> modeloInicioVideos;
@@ -26,13 +30,16 @@ public class ModeloVistasInicio {
     private ModeloInicioComparteApp modeloInicioComparteApp;
     private List<ModeloInicioInsignias> modeloInicioInsignias;
 
+    private List<ModeloRedesSociales> modeloRedesSociales;
+
 
 
     public ModeloVistasInicio(int tipoVista, ModeloInicioDevocional modeloInicioDevocional,
                               List<ModeloInicioVideos> modeloInicioVideos,
                               List<ModeloInicioImagenes> modeloInicioImagenes,
                               ModeloInicioComparteApp modeloInicioComparteApp,
-                              List<ModeloInicioInsignias> modeloInicioInsignias
+                              List<ModeloInicioInsignias> modeloInicioInsignias,
+                              List<ModeloRedesSociales> modeloRedesSociales
 
     ) {
         this.tipoVista = tipoVista;
@@ -41,7 +48,7 @@ public class ModeloVistasInicio {
         this.modeloInicioImagenes = modeloInicioImagenes;
         this.modeloInicioComparteApp = modeloInicioComparteApp;
         this.modeloInicioInsignias = modeloInicioInsignias;
-
+        this.modeloRedesSociales = modeloRedesSociales;
     }
 
     public int getTipoVista() {
@@ -49,6 +56,9 @@ public class ModeloVistasInicio {
     }
 
 
+    public List<ModeloRedesSociales> getModeloRedesSociales() {
+        return modeloRedesSociales;
+    }
 
 
     public List<ModeloInicioVideos> getModeloInicioVideos() {

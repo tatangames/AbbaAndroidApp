@@ -2,6 +2,7 @@ package com.tatanstudios.abbaappandroid.modelos.inicio;
 
 import com.google.gson.annotations.SerializedName;
 import com.tatanstudios.abbaappandroid.modelos.rachas.ModeloRachas;
+import com.tatanstudios.abbaappandroid.modelos.redes.ModeloRedesSociales;
 
 import java.util.List;
 
@@ -104,6 +105,24 @@ public class ModeloContenedorInicio {
     @SerializedName("insigniasmayor5")
     private int insigniasmayor5;
 
+
+    //********************
+
+
+    @SerializedName("hayredes")
+    private int hayRedes;
+
+    @SerializedName("arrayredes")
+    public List<ModeloRedesSociales> modeloRedesSociales;
+
+
+    public List<ModeloRedesSociales> getModeloRedesSociales() {
+        return modeloRedesSociales;
+    }
+
+    public int getHayRedes() {
+        return hayRedes;
+    }
 
     public int getDevoplan() {
         return devoplan;

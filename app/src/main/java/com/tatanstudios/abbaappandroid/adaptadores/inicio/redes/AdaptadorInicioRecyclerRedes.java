@@ -1,32 +1,31 @@
-package com.tatanstudios.abbaappandroid.adaptadores.inicio.videos;
+package com.tatanstudios.abbaappandroid.adaptadores.inicio.redes;
 
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.material.imageview.ShapeableImageView;
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.extras.IOnRecyclerViewClickListener;
 import com.tatanstudios.abbaappandroid.fragmentos.inicio.FragmentTabInicio;
-import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloInicioVideos;
+import com.tatanstudios.abbaappandroid.modelos.redes.ModeloRedesSociales;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 
 import java.util.List;
 
-public class AdaptadorInicioRecyclerVideos extends RecyclerView.Adapter<AdaptadorInicioRecyclerVideos.ViewHolder> {
+public class AdaptadorInicioRecyclerRedes extends RecyclerView.Adapter<AdaptadorInicioRecyclerRedes.ViewHolder> {
 
-    private List<ModeloInicioVideos> modeloInicioVideos;
+    private List<ModeloRedesSociales> modeloRedesSociales;
     private Context context;
     private FragmentTabInicio fragmentTabInicio;
 
@@ -36,54 +35,57 @@ public class AdaptadorInicioRecyclerVideos extends RecyclerView.Adapter<Adaptado
             .placeholder(R.drawable.camaradefecto)
             .priority(Priority.NORMAL);
 
-    public AdaptadorInicioRecyclerVideos(Context context, List<ModeloInicioVideos> modeloInicioVideos, FragmentTabInicio fragmentTabInicio) {
+    public AdaptadorInicioRecyclerRedes(Context context, List<ModeloRedesSociales> modeloRedesSociales, FragmentTabInicio fragmentTabInicio) {
         this.context = context;
-        this.modeloInicioVideos = modeloInicioVideos;
+        this.modeloRedesSociales = modeloRedesSociales;
         this.fragmentTabInicio = fragmentTabInicio;
     }
 
     @NonNull
     @Override
-    public AdaptadorInicioRecyclerVideos.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdaptadorInicioRecyclerRedes.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View itemView = inflater.inflate(R.layout.cardview_inicio_video, parent, false);
-        return new AdaptadorInicioRecyclerVideos.ViewHolder(itemView);
+        View itemView = inflater.inflate(R.layout.cardview_inicio_redes, parent, false);
+        return new AdaptadorInicioRecyclerRedes.ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdaptadorInicioRecyclerVideos.ViewHolder holder, int position) {
-        ModeloInicioVideos m = modeloInicioVideos.get(position);
+    public void onBindViewHolder(@NonNull AdaptadorInicioRecyclerRedes.ViewHolder holder, int position) {
+        ModeloRedesSociales m = modeloRedesSociales.get(position);
 
-        if(m.getTitulo() != null && !TextUtils.isEmpty(m.getTitulo())){
-            holder.txtTitulo.setText(m.getTitulo());
+        if(m.getNombre() != null && !TextUtils.isEmpty(m.getNombre())){
+            holder.txtTitulo.setText(m.getNombre());
             holder.txtTitulo.setVisibility(View.VISIBLE);
         }else{
             holder.txtTitulo.setVisibility(View.GONE);
         }
 
+
         if(m.getImagen() != null && !TextUtils.isEmpty(m.getImagen())){
             Glide.with(context)
                     .load(RetrofitBuilder.urlImagenes + m.getImagen())
                     .apply(opcionesGlide)
-                    .into(holder.iconImageView);
+                    .into(holder.imgLogo);
         }else{
             int resourceId = R.drawable.camaradefecto;
             Glide.with(context)
                     .load(resourceId)
                     .apply(opcionesGlide)
-                    .into(holder.iconImageView);
+                    .into(holder.imgLogo);
         }
 
         holder.setListener((view, po) -> {
-            fragmentTabInicio.redireccionamientoVideo(m.getId_tipo_video(), m.getUrl_video());
+
+
+            fragmentTabInicio.redireccionarRedSocial(m.getLink());
         });
     }
 
     @Override
     public int getItemCount() {
 
-        if(modeloInicioVideos != null){
-            return modeloInicioVideos.size();
+        if(modeloRedesSociales != null){
+            return modeloRedesSociales.size();
         }else{
             return 0;
         }
@@ -91,7 +93,7 @@ public class AdaptadorInicioRecyclerVideos extends RecyclerView.Adapter<Adaptado
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView txtTitulo;
-        private ShapeableImageView iconImageView;
+        private ImageView imgLogo;
         private IOnRecyclerViewClickListener listener;
 
         public void setListener(IOnRecyclerViewClickListener listener) {
@@ -101,7 +103,7 @@ public class AdaptadorInicioRecyclerVideos extends RecyclerView.Adapter<Adaptado
         ViewHolder(View itemView) {
             super(itemView);
             txtTitulo = itemView.findViewById(R.id.txtTitulo);
-            iconImageView = itemView.findViewById(R.id.iconImageView);
+            imgLogo = itemView.findViewById(R.id.imgLogo);
 
             itemView.setOnClickListener(this);
         }

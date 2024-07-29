@@ -28,13 +28,10 @@ public class FragmentInicio extends Fragment implements OnDataUpdateListenerRach
     private TokenManager tokenManager;
     private int tabStrokeColor, tabTextColor, colorPrimary;
     private ImageView imgNoti;
-
     private TextView txtRacha;
-
-
     private boolean hayInfoRachas = false;
-
     private ModeloRachas modeloRachas = null;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,7 +58,6 @@ public class FragmentInicio extends Fragment implements OnDataUpdateListenerRach
         tabLayout.setBackgroundColor(colorPrimary);
         tabLayout.setTabTextColors(tabTextColor, tabStrokeColor);
 
-
         txtRacha.setOnClickListener(v -> {
             if(hayInfoRachas){
                 informacionRacha();
@@ -77,7 +73,6 @@ public class FragmentInicio extends Fragment implements OnDataUpdateListenerRach
         TabPagerInicioAdapter adapter = new TabPagerInicioAdapter(getContext(), getChildFragmentManager(), this);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
-
 
         return vista;
     }

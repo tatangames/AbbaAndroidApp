@@ -1,13 +1,10 @@
 package com.tatanstudios.abbaappandroid.adaptadores.inicio;
 
 import android.content.Context;
-import android.content.Intent;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -27,6 +24,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.adaptadores.inicio.imagenes.AdaptadorInicioRecyclerImagenes;
 import com.tatanstudios.abbaappandroid.adaptadores.inicio.insignias.AdaptadorInicioRecyclerInsignias;
+import com.tatanstudios.abbaappandroid.adaptadores.inicio.redes.AdaptadorInicioRecyclerRedes;
 import com.tatanstudios.abbaappandroid.adaptadores.inicio.videos.AdaptadorInicioRecyclerVideos;
 import com.tatanstudios.abbaappandroid.extras.IOnRecyclerViewClickListener;
 import com.tatanstudios.abbaappandroid.fragmentos.inicio.FragmentTabInicio;
@@ -37,14 +35,12 @@ import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloInicioInsignias;
 import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloInicioVideos;
 import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloVistasInicio;
 import com.tatanstudios.abbaappandroid.modelos.inicio.bloques.separador.ModeloInicioSeparador;
+import com.tatanstudios.abbaappandroid.modelos.redes.ModeloRedesSociales;
 import com.tatanstudios.abbaappandroid.network.RetrofitBuilder;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Entities;
-import org.jsoup.nodes.Node;
-import org.jsoup.nodes.TextNode;
 
 import java.util.List;
 
@@ -96,6 +92,10 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
             case ModeloVistasInicio.TIPO_INSIGNIAS:
                 itemView = inflater.inflate(R.layout.cardview_inicio_insignias_recycler, parent, false);
                 return new RecyclerInsigniasViewHolder(itemView);
+
+            case ModeloVistasInicio.TIPO_REDESSOCIALES:
+                itemView = inflater.inflate(R.layout.cardview_inicio_redes_recycler, parent, false);
+                return new RecyclerRedesViewHolder(itemView);
 
             default:
                 throw new IllegalArgumentException("Tipo de vista desconocido");
@@ -281,6 +281,18 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 configurarRecyclerInsignias(viewHolderInsignias.recyclerViewInsignias, mVista.getModeloInicioInsignias());
                 break;
+
+
+            case ModeloVistasInicio.TIPO_REDESSOCIALES:
+
+                RecyclerRedesViewHolder viewHolderRedes = (RecyclerRedesViewHolder) holder;
+
+                viewHolderRedes.txtToolbar.setText(context.getString(R.string.redes_sociales));
+
+                configurarRecyclerRedes(viewHolderRedes.recyclerViewRedes, mVista.getModeloRedesSociales());
+                break;
+
+
         }
     }
 
@@ -323,6 +335,15 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
         recyclerView.setAdapter(adaptadorInterno);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false));
     }
+
+
+    private void configurarRecyclerRedes(RecyclerView recyclerView, List<ModeloRedesSociales> modeloRedesSociales) {
+
+        RecyclerView.Adapter adaptadorInterno = new AdaptadorInicioRecyclerRedes(context, modeloRedesSociales, fragmentTabInicio);
+        recyclerView.setAdapter(adaptadorInterno);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false));
+    }
+
 
 
 
@@ -417,5 +438,22 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
             imgFlechaDerecha = itemView.findViewById(R.id.imgFlechaDerecha);
         }
     }
+
+
+
+    // BLOQUE REDES SOCIALES
+    private static class RecyclerRedesViewHolder extends RecyclerView.ViewHolder {
+        private RecyclerView recyclerViewRedes;
+        private TextView txtToolbar;
+
+        RecyclerRedesViewHolder(View itemView) {
+            super(itemView);
+            recyclerViewRedes = itemView.findViewById(R.id.recyclerViewRedes);
+            txtToolbar = itemView.findViewById(R.id.txtToolbar);
+        }
+    }
+
+
+
 
 }

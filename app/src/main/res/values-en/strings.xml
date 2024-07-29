@@ -52,7 +52,7 @@
     <string name="oscuro">Dark</string>
     <string name="claro">Light</string>
     <string name="eventos">Events</string>
-    <string name="insignias">Insignias</string>
+    <string name="insignias">Badges</string>
     <string name="acerca_de">About</string>
     <string name="idioma">Language</string>
     <string name="configuracion">Setting</string>
@@ -252,6 +252,7 @@
     <string name="borrar_notificaciones">Delete notifications</string>
     <string name="borrado">Erased</string>
     <string name="seleccionar_municipio">Select municipality</string>
+    <string name="redes_sociales">Social Networks</string>
 
 
 

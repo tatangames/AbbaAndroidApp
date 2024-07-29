@@ -306,6 +306,7 @@ public class FragmentTabInicio extends Fragment{
                     null,
                     null,
                     null,
+                    null,
                     null
 
             ));
@@ -319,6 +320,7 @@ public class FragmentTabInicio extends Fragment{
                     apiRespuesta.getModeloInicioVideos(),
                     null,
                     null,
+                    null,
                     null
             ));
         }
@@ -329,6 +331,7 @@ public class FragmentTabInicio extends Fragment{
             elementos.add(new ModeloVistasInicio( ModeloVistasInicio.TIPO_IMAGENES,null,
                     null,
                     apiRespuesta.getModeloInicioImagenes(),
+                    null,
                     null,
                     null
             ));
@@ -345,6 +348,7 @@ public class FragmentTabInicio extends Fragment{
                     new ModeloInicioComparteApp(apiRespuesta.getComparteappimagen(),
                             apiRespuesta.getComparteapptitulo(),
                             apiRespuesta.getComparteappdescrip()),
+                    null,
                     null
             ));
 
@@ -356,9 +360,24 @@ public class FragmentTabInicio extends Fragment{
                     null,
                     null,
                     null,
-                    apiRespuesta.getModeloInicioInsignias()
+                    apiRespuesta.getModeloInicioInsignias(),
+                    null
             ));
         }
+
+        // BLOQUE DE POSICION 6 - REDES SOCIALES
+
+
+        if(apiRespuesta.getHayRedes() == 1){
+            elementos.add(new ModeloVistasInicio( ModeloVistasInicio.TIPO_REDESSOCIALES,null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    apiRespuesta.getModeloRedesSociales()
+            ));
+        }
+
 
         setearAdaptador();
     }
@@ -567,6 +586,15 @@ public class FragmentTabInicio extends Fragment{
             mostrarVideo(urlVideo); // Facebook, Instagram, Youtube, TikTok
         }
     }
+
+
+    public void redireccionarRedSocial(String link) {
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+        startActivity(Intent.createChooser(intent, getString(R.string.abrir_con)));
+    }
+
+
 
 
     private void mostrarVideo(String urlVideo){
