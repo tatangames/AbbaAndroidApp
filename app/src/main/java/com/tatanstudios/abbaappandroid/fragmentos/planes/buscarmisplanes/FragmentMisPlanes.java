@@ -66,7 +66,7 @@ public class FragmentMisPlanes extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View vista = inflater.inflate(R.layout.fragment_buscar_planes, container, false);
+        View vista = inflater.inflate(R.layout.fragment_mis_planes, container, false);
 
         recyclerView = vista.findViewById(R.id.recyclerView);
         rootRelative = vista.findViewById(R.id.rootRelative);
