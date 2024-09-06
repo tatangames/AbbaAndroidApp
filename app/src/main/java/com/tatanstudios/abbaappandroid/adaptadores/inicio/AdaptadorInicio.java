@@ -24,6 +24,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.tatanstudios.abbaappandroid.R;
 import com.tatanstudios.abbaappandroid.adaptadores.inicio.imagenes.AdaptadorInicioRecyclerImagenes;
 import com.tatanstudios.abbaappandroid.adaptadores.inicio.insignias.AdaptadorInicioRecyclerInsignias;
+import com.tatanstudios.abbaappandroid.adaptadores.inicio.recursos.AdaptadorInicioRecyclerRecursos;
 import com.tatanstudios.abbaappandroid.adaptadores.inicio.redes.AdaptadorInicioRecyclerRedes;
 import com.tatanstudios.abbaappandroid.adaptadores.inicio.videos.AdaptadorInicioRecyclerVideos;
 import com.tatanstudios.abbaappandroid.extras.IOnRecyclerViewClickListener;
@@ -33,6 +34,7 @@ import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloInicioDevocional;
 import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloInicioImagenes;
 import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloInicioInsignias;
 import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloInicioVideos;
+import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloRecursos;
 import com.tatanstudios.abbaappandroid.modelos.inicio.ModeloVistasInicio;
 import com.tatanstudios.abbaappandroid.modelos.inicio.bloques.separador.ModeloInicioSeparador;
 import com.tatanstudios.abbaappandroid.modelos.redes.ModeloRedesSociales;
@@ -92,6 +94,10 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
             case ModeloVistasInicio.TIPO_INSIGNIAS:
                 itemView = inflater.inflate(R.layout.cardview_inicio_insignias_recycler, parent, false);
                 return new RecyclerInsigniasViewHolder(itemView);
+
+            case ModeloVistasInicio.TIPO_RECURSOS:
+                itemView = inflater.inflate(R.layout.cardview_inicio_recursos_recycler, parent, false);
+                return new RecyclerRecursosViewHolder(itemView);
 
             case ModeloVistasInicio.TIPO_REDESSOCIALES:
                 itemView = inflater.inflate(R.layout.cardview_inicio_redes_recycler, parent, false);
@@ -283,6 +289,15 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 break;
 
 
+            case ModeloVistasInicio.TIPO_RECURSOS:
+
+                RecyclerRecursosViewHolder viewHolderRecursos = (RecyclerRecursosViewHolder) holder;
+
+                viewHolderRecursos.txtToolbar.setText(context.getString(R.string.recursos));
+
+                configurarRecyclerRecrusos(viewHolderRecursos.recyclerViewRecursos, mVista.getModeloRecursos());
+                break;
+
             case ModeloVistasInicio.TIPO_REDESSOCIALES:
 
                 RecyclerRedesViewHolder viewHolderRedes = (RecyclerRedesViewHolder) holder;
@@ -291,8 +306,6 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 configurarRecyclerRedes(viewHolderRedes.recyclerViewRedes, mVista.getModeloRedesSociales());
                 break;
-
-
         }
     }
 
@@ -344,6 +357,12 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false));
     }
 
+    private void configurarRecyclerRecrusos(RecyclerView recyclerView, List<ModeloRecursos> modeloRecursos) {
+
+        RecyclerView.Adapter adaptadorInterno = new AdaptadorInicioRecyclerRecursos(context, modeloRecursos, fragmentTabInicio);
+        recyclerView.setAdapter(adaptadorInterno);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false));
+    }
 
 
 
@@ -454,6 +473,17 @@ public class AdaptadorInicio extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
+    // BLOQUE RECURSOS
+    private static class RecyclerRecursosViewHolder extends RecyclerView.ViewHolder {
+        private RecyclerView recyclerViewRecursos;
+        private TextView txtToolbar;
+
+        RecyclerRecursosViewHolder(View itemView) {
+            super(itemView);
+            recyclerViewRecursos = itemView.findViewById(R.id.recyclerViewRecursos);
+            txtToolbar = itemView.findViewById(R.id.txtToolbar);
+        }
+    }
 
 
 }

@@ -10,6 +10,9 @@ public class ModeloInsigniaHitos {
     @SerializedName("nivel")
     private int nivel;
 
+    @SerializedName("niveltexto")
+    private int nivelTexto;
+
 
     // para saber si existe el siguiente nivel
     private int esNextLevel;
@@ -34,6 +37,10 @@ public class ModeloInsigniaHitos {
         this.textoCompletado = textoCompletado;
     }
 
+
+    public int getNivelTexto() {
+        return nivelTexto;
+    }
 
     public String getTextoCompletado() {
         return textoCompletado;

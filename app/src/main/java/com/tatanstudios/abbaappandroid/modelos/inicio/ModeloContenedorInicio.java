@@ -116,6 +116,24 @@ public class ModeloContenedorInicio {
     public List<ModeloRedesSociales> modeloRedesSociales;
 
 
+    //********************
+
+
+    @SerializedName("hayrecursos")
+    private int hayRecursos;
+
+    @SerializedName("arrayrecursos")
+    public List<ModeloRecursos> modeloRecursos;
+
+
+    public int getHayRecursos() {
+        return hayRecursos;
+    }
+
+    public List<ModeloRecursos> getModeloRecursos() {
+        return modeloRecursos;
+    }
+
     public List<ModeloRedesSociales> getModeloRedesSociales() {
         return modeloRedesSociales;
     }

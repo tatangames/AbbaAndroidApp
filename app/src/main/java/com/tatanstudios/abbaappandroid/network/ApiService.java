@@ -371,7 +371,8 @@ public interface ApiService {
     // listado de biblias
     @POST("app/listado/biblias")
     @FormUrlEncoded
-    Observable<ModeloBibliaContenedor> listadoBiblias(@Field("iduser") String iduser);
+    Observable<ModeloBibliaContenedor> listadoBiblias(@Field("iduser") String iduser,
+                                                      @Field("idioma") int idioma);
 
     // listado de capitulos (libros) de la biblia
     @POST("app/listado/biblia/capitulos")

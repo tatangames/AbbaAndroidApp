@@ -154,7 +154,7 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
 
         elementos.add(new ModeloVistaHitos( ModeloVistaHitos.TIPO_IMAGEN,
                 new ModeloDescripcionHitos(apiRespuesta.getImagen(), apiRespuesta.getTitulo(),
-                        apiRespuesta.getDescripcion(), apiRespuesta.getNivelvoy()),
+                        apiRespuesta.getDescripcion(), apiRespuesta.getNiveltexto()),
                 null
         ));
 
@@ -163,7 +163,7 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
 
 
         for (ModeloInsigniaHitos m : apiRespuesta.getModeloInsigniaHitos()){
-            mm.add(new ModeloInsigniaHitos(m.getFechaFormat(), 0, 0,m.getNivel(), 0,
+            mm.add(new ModeloInsigniaHitos(m.getFechaFormat(), 0, 0,m.getNivelTexto(), 0,
                     m.getTextoCompletado()));
         }
 

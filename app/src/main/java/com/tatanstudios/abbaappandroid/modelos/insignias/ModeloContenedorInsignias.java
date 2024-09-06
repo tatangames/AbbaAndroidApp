@@ -43,6 +43,9 @@ public class ModeloContenedorInsignias {
     @SerializedName("cualnextlevel")
     private int cualNextLevel;
 
+    @SerializedName("niveltexto")
+    private int niveltexto;
+
 
     @SerializedName("hitoarray")
     private List<ModeloInsigniaHitos> modeloInsigniaHitos;
@@ -51,6 +54,10 @@ public class ModeloContenedorInsignias {
     @SerializedName("listado")
     private List<ModeloInicioInsignias> modeloInicioInsignias;
 
+
+    public int getNiveltexto() {
+        return niveltexto;
+    }
 
     public int getContador() {
         return contador;

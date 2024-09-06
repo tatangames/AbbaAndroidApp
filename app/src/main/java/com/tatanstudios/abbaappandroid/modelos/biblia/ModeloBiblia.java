@@ -10,7 +10,8 @@ public class ModeloBiblia {
 
     @SerializedName("titulo")
     private String titulo;
-
+    @SerializedName("imagen")
+    private String imagen;
 
     public int getId() {
         return id;
@@ -18,5 +19,9 @@ public class ModeloBiblia {
 
     public String getTitulo() {
         return titulo;
+    }
+
+    public String getImagen() {
+        return imagen;
     }
 }

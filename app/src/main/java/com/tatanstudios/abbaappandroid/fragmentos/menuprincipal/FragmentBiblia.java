@@ -47,12 +47,11 @@ public class FragmentBiblia extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_biblia, container, false);
 
-        //recyclerView = vista.findViewById(R.id.recyclerView);
-        //txtSinBiblias = vista.findViewById(R.id.txtSinBiblias);
+        recyclerView = vista.findViewById(R.id.recyclerView);
         rootRelative = vista.findViewById(R.id.rootRelative);
-        //txtToolbar = vista.findViewById(R.id.txtToolbar);
+        txtToolbar = vista.findViewById(R.id.txtToolbar);
 
-       // txtToolbar.setText(getString(R.string.biblia));
+        txtToolbar.setText(getString(R.string.biblia));
 
         int colorProgress = ContextCompat.getColor(getContext(), R.color.barraProgreso);
         tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs", MODE_PRIVATE));
@@ -66,59 +65,7 @@ public class FragmentBiblia extends Fragment {
 
         progressBar.setVisibility(View.GONE);
 
-        //apiBuscarBiblias();
-
-
-
-        /*
-
-
-         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <include
-                android:id="@+id/include"
-                layout="@layout/toolbar_titulo_v1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-
-            <ImageView
-                android:layout_width="290dp"
-                android:layout_height="311dp"
-                android:layout_gravity="center"
-                android:contentDescription="@string/logo"
-                android:src="@drawable/obra" />
-
-            <TextView
-                android:id="@+id/txtSinBiblias"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:gravity="center"
-                android:layout_marginTop="30dp"
-                android:text="@string/no_hay_biblias_disponibles"
-                android:textColor="@color/fondo_textos_negro_blanco_v1"
-                android:textSize="17sp"
-                android:visibility="gone" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintTop_toBottomOf="@+id/include" />
-
-        </LinearLayout>
-
-        * */
-
-
-
+        apiBuscarBiblias();
 
         return vista;
     }
@@ -126,42 +73,35 @@ public class FragmentBiblia extends Fragment {
     private void apiBuscarBiblias(){
 
         String iduser = tokenManager.getToken().getId();
+        int idioma = tokenManager.getToken().getIdiomaApp();
 
         compositeDisposable.add(
-                service.listadoBiblias(iduser)
+                service.listadoBiblias(iduser, idioma)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .retry()
                         .subscribe(apiRespuesta -> {
 
-                                    progressBar.setVisibility(View.GONE);
-                                    if(apiRespuesta != null) {
+                        progressBar.setVisibility(View.GONE);
+                        if(apiRespuesta != null) {
 
-                                        if(apiRespuesta.getSuccess() == 1) {
+                            if(apiRespuesta.getSuccess() == 1) {
 
+                                adaptadorBiblia = new AdaptadorBiblia(getContext(), apiRespuesta.getModeloBiblias(), this);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                                recyclerView.setAdapter(adaptadorBiblia);
 
-                                            if(apiRespuesta.getHayinfo() == 1){
+                            }else{
+                                mensajeSinConexion();
+                            }
+                        }else{
+                            mensajeSinConexion();
+                        }
+                    },
+                    throwable -> {
 
-                                                adaptadorBiblia = new AdaptadorBiblia(getContext(), apiRespuesta.getModeloBiblias(), this);
-                                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-                                                recyclerView.setAdapter(adaptadorBiblia);
-                                            }else{
-                                                recyclerView.setVisibility(View.GONE);
-                                                txtSinBiblias.setVisibility(View.VISIBLE);
-                                            }
-
-                                        }else{
-
-                                            mensajeSinConexion();
-                                        }
-                                    }else{
-                                        mensajeSinConexion();
-                                    }
-                                },
-                                throwable -> {
-
-                                    mensajeSinConexion();
-                                })
+                        mensajeSinConexion();
+                    })
         );
     }
 

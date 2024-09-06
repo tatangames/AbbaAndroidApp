@@ -20,7 +20,9 @@ public class ModeloVistasInicio {
 
     public static final int TIPO_INSIGNIAS = 4;
 
-    public static final int TIPO_REDESSOCIALES = 5;
+    public static final int TIPO_RECURSOS = 5;
+
+    public static final int TIPO_REDESSOCIALES = 6;
 
 
     private ModeloInicioDevocional modeloInicioDevocional;
@@ -31,6 +33,7 @@ public class ModeloVistasInicio {
     private List<ModeloInicioInsignias> modeloInicioInsignias;
 
     private List<ModeloRedesSociales> modeloRedesSociales;
+    private List<ModeloRecursos> modeloRecursos;
 
 
 
@@ -39,7 +42,8 @@ public class ModeloVistasInicio {
                               List<ModeloInicioImagenes> modeloInicioImagenes,
                               ModeloInicioComparteApp modeloInicioComparteApp,
                               List<ModeloInicioInsignias> modeloInicioInsignias,
-                              List<ModeloRedesSociales> modeloRedesSociales
+                              List<ModeloRedesSociales> modeloRedesSociales,
+                              List<ModeloRecursos> modeloRecursos
 
     ) {
         this.tipoVista = tipoVista;
@@ -49,6 +53,7 @@ public class ModeloVistasInicio {
         this.modeloInicioComparteApp = modeloInicioComparteApp;
         this.modeloInicioInsignias = modeloInicioInsignias;
         this.modeloRedesSociales = modeloRedesSociales;
+        this.modeloRecursos = modeloRecursos;
     }
 
     public int getTipoVista() {
@@ -81,5 +86,10 @@ public class ModeloVistasInicio {
 
     public List<ModeloInicioInsignias> getModeloInicioInsignias() {
         return modeloInicioInsignias;
+    }
+
+
+    public List<ModeloRecursos> getModeloRecursos() {
+        return modeloRecursos;
     }
 }

@@ -307,6 +307,7 @@ public class FragmentTabInicio extends Fragment{
                     null,
                     null,
                     null,
+                    null,
                     null
 
             ));
@@ -321,6 +322,7 @@ public class FragmentTabInicio extends Fragment{
                     null,
                     null,
                     null,
+                    null,
                     null
             ));
         }
@@ -331,6 +333,7 @@ public class FragmentTabInicio extends Fragment{
             elementos.add(new ModeloVistasInicio( ModeloVistasInicio.TIPO_IMAGENES,null,
                     null,
                     apiRespuesta.getModeloInicioImagenes(),
+                    null,
                     null,
                     null,
                     null
@@ -349,6 +352,7 @@ public class FragmentTabInicio extends Fragment{
                             apiRespuesta.getComparteapptitulo(),
                             apiRespuesta.getComparteappdescrip()),
                     null,
+                    null,
                     null
             ));
 
@@ -361,12 +365,28 @@ public class FragmentTabInicio extends Fragment{
                     null,
                     null,
                     apiRespuesta.getModeloInicioInsignias(),
+                    null,
                     null
             ));
         }
 
-        // BLOQUE DE POSICION 6 - REDES SOCIALES
+        // BLOQUE DE POSICION 6 - RECURSOS WEB
 
+
+        if(apiRespuesta.getHayRecursos() == 1){
+            elementos.add(new ModeloVistasInicio( ModeloVistasInicio.TIPO_RECURSOS,null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    apiRespuesta.getModeloRecursos()
+            ));
+        }
+
+
+
+        // BLOQUE DE POSICION 7 - REDES SOCIALES
 
         if(apiRespuesta.getHayRedes() == 1){
             elementos.add(new ModeloVistasInicio( ModeloVistasInicio.TIPO_REDESSOCIALES,null,
@@ -374,9 +394,12 @@ public class FragmentTabInicio extends Fragment{
                     null,
                     null,
                     null,
-                    apiRespuesta.getModeloRedesSociales()
+                    apiRespuesta.getModeloRedesSociales(),
+                    null
             ));
         }
+
+
 
 
         setearAdaptador();
@@ -594,7 +617,11 @@ public class FragmentTabInicio extends Fragment{
         startActivity(Intent.createChooser(intent, getString(R.string.abrir_con)));
     }
 
+    public void redireccionarRecursos(String link) {
 
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+        startActivity(Intent.createChooser(intent, getString(R.string.abrir_con)));
+    }
 
 
     private void mostrarVideo(String urlVideo){
