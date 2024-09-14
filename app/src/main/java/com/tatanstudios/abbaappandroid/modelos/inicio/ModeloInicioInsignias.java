@@ -44,6 +44,10 @@ public class ModeloInicioInsignias {
     @SerializedName("imagen")
     private String imagen;
 
+    @SerializedName("niveltexto")
+    private String niveltexto;
+
+
 
     public int getNivel() {
         return nivel;
@@ -57,6 +61,10 @@ public class ModeloInicioInsignias {
         this.imageninsignia = imageninsignia;
     }
 
+
+    public String getNiveltexto() {
+        return niveltexto;
+    }
 
     public String getImagen() {
         return imagen;

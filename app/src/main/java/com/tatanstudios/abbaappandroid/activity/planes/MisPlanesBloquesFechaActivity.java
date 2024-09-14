@@ -188,7 +188,6 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
         }
     }
 
-
     public void llenarDatosAdapterVertical(List<
         ModeloBloqueFechaDetalle> modeloMisPlanesBloqueDetalles){
 
@@ -199,7 +198,7 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
     }
 
 
-    public void actualizarCheck(int blockDeta, int valor, int posFila){
+   /* public void actualizarCheck(int blockDeta, int valor, int posFila){
 
             progressBar.setVisibility(View.VISIBLE);
 
@@ -244,11 +243,11 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
                                         mensajeSinConexion();
                                     })
             );
-    }
+    }*/
 
-    private void setearFila(int posFila, boolean valor, int valorTenia){
+    /*private void setearFila(int posFila, boolean valor, int valorTenia){
         adapterVertical.retornoRespuesta(posFila, valor, valorTenia);
-    }
+    }*/
 
 
     public void informacionCompartir(int idblockdeta){
@@ -293,22 +292,6 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
 
                                                     }
                                                 }
-
-                                                // Preguntas
-                                               /* for (ModeloPreguntas arrayPreguntas : apiRespuesta.getModeloPreguntas()) {
-
-                                                    if(arrayPreguntas.getTitulo() != null && !TextUtils.isEmpty(arrayPreguntas.getTitulo())){
-                                                        String textoSinHTMLTitulo = HtmlCompat.fromHtml(arrayPreguntas.getTitulo(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
-
-                                                        textoGlobal += textoSinHTMLTitulo + "R// ";
-                                                    }
-
-                                                    if(arrayPreguntas.getTexto() != null && !TextUtils.isEmpty(arrayPreguntas.getTexto())){
-                                                        textoGlobal += arrayPreguntas.getTexto() + "\n\n";
-                                                    }
-                                                }*/
-
-
                                             }
 
                                             else if(apiRespuesta.getSuccess() == 3) {
@@ -330,7 +313,6 @@ public class MisPlanesBloquesFechaActivity extends AppCompatActivity {
             );
         }
     }
-
 
     public void redireccionarCuestionario(int idBlockDeta){
 

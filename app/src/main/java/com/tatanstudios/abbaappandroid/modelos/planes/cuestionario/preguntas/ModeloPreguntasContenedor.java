@@ -32,7 +32,13 @@ public class ModeloPreguntasContenedor{
     @SerializedName("formatoPregu")
     private String formatoPregunta;
 
+    @SerializedName("idplan")
+    private int idPlan;
 
+
+    public int getIdPlan() {
+        return idPlan;
+    }
 
     public int getIgnorarshare() {
         return ignorarshare;

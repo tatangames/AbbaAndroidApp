@@ -129,13 +129,13 @@ public interface ApiService {
                                                                   @Field("idplan") int idplan);
 
     // actualizar check de bloque detalle fecha
-    @POST("app/plan/misplanes/actualizar/check")
+    /*@POST("app/plan/misplanes/actualizar/check")
     @FormUrlEncoded
     Observable<ModeloUsuario> actualizarBloqueFechaCheckbox(@Field("iduser") String iduser,
                                                           @Field("idblockdeta") int idBlockDeta,
                                                           @Field("valor") int valor,
                                                           @Field("idplan") int idplan,
-                                                          @Field("idiomaplan") int idiomaplan);
+                                                          @Field("idiomaplan") int idiomaplan);*/
 
 
     // buscar informacion del cuestionario de cada bloque detalle
@@ -153,12 +153,27 @@ public interface ApiService {
                                                                             @Field("idiomaplan") int idioma);
 
 
-    @POST("app/plan/misplanes/preguntas/usuario/actualizar")
+    // NUEVA VERSION
+
+
+
+
+
+
+    @POST("app/plan/misplanes/preguntas/usuario/actualizar/v2")
     @FormUrlEncoded
     Observable<ModeloPreguntasContenedor> actualizarPreguntasUsuarioPlanes(@Field("iduser") String iduser,
                                                                            @Field("idblockdeta") int idBlockDeta,
                                                                            @Field("idiomaplan") int idioma,
+                                                                           @Field("idplan") int idplan,
+                                                                           @Field("sistemaos") int sistemaAndroid,
                                                                            @FieldMap Map<String, String> listado);
+
+
+
+
+
+
 
 
 

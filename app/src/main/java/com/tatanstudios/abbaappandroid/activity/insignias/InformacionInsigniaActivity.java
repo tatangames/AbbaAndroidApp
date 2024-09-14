@@ -58,7 +58,6 @@ public class InformacionInsigniaActivity extends AppCompatActivity {
 
     private boolean yaPuedeTuerca = false;
 
-    private int contadorActual = 0;
 
     private String textoNivel = "";
 

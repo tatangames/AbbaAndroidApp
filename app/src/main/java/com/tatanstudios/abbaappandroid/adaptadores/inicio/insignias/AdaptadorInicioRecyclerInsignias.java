@@ -75,7 +75,10 @@ public class AdaptadorInicioRecyclerInsignias extends RecyclerView.Adapter<Adapt
             holder.txtTitulo.setVisibility(View.GONE);
         }
 
-        holder.txtNivel.setText(String.valueOf(m.getNivelVoy()));
+        if(m.getNiveltexto() != null && !TextUtils.isEmpty(m.getNiveltexto())){
+            holder.txtNivel.setText(String.valueOf(m.getNiveltexto()));
+        }
+
 
         holder.setListener((view, po) -> {
             fragmentTabInicio.vistaInformacionInsignia(m.getIdTipoInsignia());

@@ -68,29 +68,11 @@ public class AdaptadorBloqueFechaVertical extends RecyclerView.Adapter<Adaptador
 
         if(tema){ // DARK
             holder.txtTitulo.setTextColor(colorStateWhite);
-            CompoundButtonCompat.setButtonTintList(holder.idCheck, ColorStateList.valueOf(colorBlanco));
-        }else{
+       }else{
             holder.txtTitulo.setTextColor(colorStateBlack);
-            CompoundButtonCompat.setButtonTintList(holder.idCheck, ColorStateList.valueOf(colorNegro));
-        }
-
-        if(m.getCompletado() == 1){
-            holder.idCheck.setVisibility(View.GONE);
-        }else{
-            holder.idCheck.setVisibility(View.VISIBLE);
         }
 
         holder.txtTitulo.setText(m.getTitulo());
-
-        holder.idCheck.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            int adapterPosition = holder.getBindingAdapterPosition();
-            int valor = 0;
-            if(isChecked){ valor = 1; }
-            m.setCompletado(valor);
-
-            misPlanesBloquesFechaActivity.actualizarCheck(m.getId(), valor,  adapterPosition);
-        });
-
 
         holder.txtTitulo.setOnClickListener(v -> {
             int idBlockDeta = m.getId();
@@ -131,13 +113,11 @@ public class AdaptadorBloqueFechaVertical extends RecyclerView.Adapter<Adaptador
     static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView txtTitulo;
         private ImageView imgCompartir;
-        private CheckBox idCheck;
 
         ViewHolder(View itemView) {
             super(itemView);
             txtTitulo = itemView.findViewById(R.id.txtTitulo);
             imgCompartir = itemView.findViewById(R.id.imgCompartir);
-            idCheck = itemView.findViewById(R.id.idcheck);
         }
     }
 }

@@ -41,6 +41,7 @@ import retrofit2.http.Field;
 public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
 
+    private int idPlan = 0;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private TokenManager tokenManager;
@@ -59,7 +60,6 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
     private TextView txtSinPreguntas;
 
-    private boolean boolCompartirDevo = true;
 
     public static FragmentPreguntasPlanBloque newInstance(int dato) {
         FragmentPreguntasPlanBloque fragment = new FragmentPreguntasPlanBloque();
@@ -78,7 +78,6 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
     private boolean yaHabiaGuardado = false;
     private boolean boolApiActualizar = true;
-    private boolean modalCompartir = false;
 
     private String tituloPreguntaBloque = "";
 
@@ -138,6 +137,9 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
                                             // colocado en un webview
                                             tituloPreguntaBloque = apiRespuesta.getDescripcion();
+
+                                            idPlan = apiRespuesta.getIdPlan();
+
 
                                             if(apiRespuesta.getHayRespuesta() == 1){
                                                 yaHabiaGuardado = true;
@@ -241,10 +243,10 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
             String iduser = tokenManager.getToken().getId();
             int idioma = tokenManager.getToken().getIdiomaApp();
-
+            int sistemaos = 1; // ANDROID
 
             compositeDisposable.add(
-                    service.actualizarPreguntasUsuarioPlanes(iduser, idBloqueDeta, idioma, hashMapPreguntas)
+                    service.actualizarPreguntasUsuarioPlanes(iduser, idBloqueDeta, idioma, idPlan, sistemaos, hashMapPreguntas)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread()) // NO RETRY
                             .subscribe(apiRespuesta -> {
@@ -254,7 +256,8 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
                                         if(apiRespuesta != null) {
 
-                                            if(apiRespuesta.getSuccess() == 1) {
+                                            // NUEVA VERSION HARA AQUI TODOS LOS REGISTROS
+                                            if(apiRespuesta.getSuccess() == 10) {
                                                 Toasty.success(getContext(), getString(R.string.actualizado), Toasty.LENGTH_SHORT).show();
                                             }
                                             else{
@@ -309,22 +312,6 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
 
                                                 }
                                             }
-
-                                            // Preguntas
-                                               /* for (ModeloPreguntas arrayPreguntas : apiRespuesta.getModeloPreguntas()) {
-
-                                                    if(arrayPreguntas.getTitulo() != null && !TextUtils.isEmpty(arrayPreguntas.getTitulo())){
-                                                        String textoSinHTMLTitulo = HtmlCompat.fromHtml(arrayPreguntas.getTitulo(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
-
-                                                        textoGlobal += textoSinHTMLTitulo + "R// ";
-                                                    }
-
-                                                    if(arrayPreguntas.getTexto() != null && !TextUtils.isEmpty(arrayPreguntas.getTexto())){
-                                                        textoGlobal += arrayPreguntas.getTexto() + "\n\n";
-                                                    }
-                                                }*/
-
-
                                         }
 
                                         else if(apiRespuesta.getSuccess() == 3) {
@@ -346,79 +333,7 @@ public class FragmentPreguntasPlanBloque extends FragmentCuestionarioPlanBloque{
                                     mensajeSinConexion();
                                 })
         );
-
-        /*String textoGlobal = "";
-
-        boolean valor = false;
-        for (ModeloPreguntas m : modeloPreguntas){
-            if(adapter.getBoolFromEditText(m.getId())){
-
-                valor = true;
-            }
-        }
-
-        if(valor){
-            Toasty.error(getContext(), getString(R.string.completar_campos), Toasty.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (!modalCompartir) {
-            modalCompartir = true;
-
-            new Handler().postDelayed(() -> {
-                modalCompartir = false;
-            }, 1000);
-
-
-            for (ModeloPreguntas m : modeloPreguntas){
-
-
-                    String textoPregunta = adapter.getTextoPregunta(m.getId());
-                    String textoEdt = adapter.getTextoFromEditText(m.getId());
-
-                    //String linea = textoPregunta + "R// " + textoEdt + "\n\n";
-                    textoGlobal = textoGlobal + textoPregunta +  "R// " + textoEdt + "\n\n";
-            }
-
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-            intent.putExtra(Intent.EXTRA_TEXT, textoGlobal);
-
-            try {
-                startActivity(Intent.createChooser(intent, getString(R.string.compartir)));
-            } catch (Exception e) {
-
-            }
-
-            compartirDevoApi();
-        }*/
     }
-
-
-
-    /*private void compartirDevoApi(){
-
-        if(boolCompartirDevo){
-            boolCompartirDevo = false;
-
-            String iduser = tokenManager.getToken().getId();
-            int idioma = tokenManager.getToken().getIdiomaApp();
-
-            compositeDisposable.add(
-                    service.compartirDevocional(iduser, idioma)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread()) // NO RETRY
-                            .subscribe(apiRespuesta -> {
-                                        boolCompartirDevo = true;
-                                    },
-                                    throwable -> {
-                                        boolCompartirDevo = true;
-                                    })
-            );
-        }
-    }*/
-
 
 
     private void mensajeSinConexion(){

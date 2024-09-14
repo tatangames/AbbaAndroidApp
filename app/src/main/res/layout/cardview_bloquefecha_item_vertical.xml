@@ -7,21 +7,12 @@
     android:layout_marginTop="10dp"
     android:background="@color/fondo_negro_blanco_v1">
 
-    <CheckBox
-        android:id="@+id/idcheck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:buttonTint="@color/blanco"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtTitulo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/liberation_sans_regular"
@@ -29,7 +20,7 @@
         android:padding="8dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/imgCompartir"
-        app:layout_constraintStart_toEndOf="@+id/idcheck"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView

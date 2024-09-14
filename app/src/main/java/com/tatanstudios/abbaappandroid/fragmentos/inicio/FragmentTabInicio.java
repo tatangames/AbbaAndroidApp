@@ -399,9 +399,6 @@ public class FragmentTabInicio extends Fragment{
             ));
         }
 
-
-
-
         setearAdaptador();
     }
 
